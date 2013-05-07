@@ -19,8 +19,8 @@
 #ifndef VLCQT_METAMANAGER_H_
 #define VLCQT_METAMANAGER_H_
 
-#include <Qtcore/QDate>
-#include <Qtcore/QString>
+#include <QtCore/QDate>
+#include <QtCore/QString>
 
 #include "SharedExportCore.h"
 

@@ -19,9 +19,9 @@
 #ifndef VLCQT_MEDIAPLAYER_H_
 #define VLCQT_MEDIAPLAYER_H_
 
-#include <Qtcore/QObject>
-#include <Qtcore/QString>
-#include <Qtcore/QTimer>
+#include <QtCore/QObject>
+#include <QtCore/QString>
+#include <QtCore/QTimer>
 
 #include <QtGui/qwindowdefs.h>
 

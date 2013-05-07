@@ -19,8 +19,8 @@
 #ifndef VLCQT_MEDIALISTPLAYER_H_
 #define VLCQT_MEDIALISTPLAYER_H_
 
-#include <Qtcore/QObject>
-#include <Qtcore/QString>
+#include <QtCore/QObject>
+#include <QtCore/QString>
 
 #include "Enums.h"
 #include "SharedExportCore.h"

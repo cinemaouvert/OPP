@@ -19,7 +19,7 @@
 #ifndef VLCQT_ENUMS_H_
 #define VLCQT_ENUMS_H_
 
-#include <Qtcore/QStringList>
+#include <QtCore/QStringList>
 
 #include "SharedExportCore.h"
 

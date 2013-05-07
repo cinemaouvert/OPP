@@ -19,7 +19,7 @@
 #ifndef VLCQT_SHARED_EXPORT_CORE_H
 #define VLCQT_SHARED_EXPORT_CORE_H
 
-#include <Qtcore/qglobal.h>
+#include <QtCore/qglobal.h>
 
 #if defined(VLCQT_CORE_LIBRARY)
 #  define VLCQT_CORE_EXPORT Q_DECL_EXPORT

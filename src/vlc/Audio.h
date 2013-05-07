@@ -19,8 +19,8 @@
 #ifndef VLCQT_AUDIO_H_
 #define VLCQT_AUDIO_H_
 
-#include <Qtcore/QObject>
-#include <Qtcore/QStringList>
+#include <QtCore/QObject>
+#include <QtCore/QStringList>
 
 #include "SharedExportCore.h"
 

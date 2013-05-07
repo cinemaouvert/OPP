@@ -19,7 +19,7 @@
 #ifndef VLCQT_VLCINSTANCE_H_
 #define VLCQT_VLCINSTANCE_H_
 
-#include <Qtcore/QObject>
+#include <QtCore/QObject>
 
 #include "SharedExportCore.h"
 

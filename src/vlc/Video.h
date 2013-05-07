@@ -19,10 +19,10 @@
 #ifndef VLCQT_VIDEO_H_
 #define VLCQT_VIDEO_H_
 
-#include <Qtcore/QList>
-#include <Qtcore/QSize>
-#include <Qtcore/QString>
-#include <Qtcore/QStringList>
+#include <QtCore/QList>
+#include <QtCore/QSize>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
 
 #include "Enums.h"
 #include "SharedExportCore.h"

@@ -19,8 +19,8 @@
 #ifndef VLCQT_COMMON_H_
 #define VLCQT_COMMON_H_
 
-#include <Qtcore/QString>
-#include <Qtcore/QStringList>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
 
 #include "SharedExportCore.h"
 

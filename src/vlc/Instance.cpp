@@ -16,8 +16,8 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-#include <Qtcore/QDebug>
-#include <Qtcore/QStringList>
+#include <QtCore/QDebug>
+#include <QtCore/QStringList>
 
 #include <vlc/vlc.h>
 
