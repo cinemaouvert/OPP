@@ -3,7 +3,8 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = 
+TARGET = opp
+QT += xml
 DEPENDPATH += ./src
 INCLUDEPATH += ./src
 
