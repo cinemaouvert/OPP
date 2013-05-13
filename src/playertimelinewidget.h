@@ -6,9 +6,6 @@
 namespace Ui {
 class PlayerTimelineWidget;
 }
-namespace opp {
-class Playlist;
-}
 
 class PlayerTimelineWidget : public QWidget
 {
@@ -17,18 +14,9 @@ class PlayerTimelineWidget : public QWidget
 public:
     explicit PlayerTimelineWidget(QWidget *parent = 0);
     ~PlayerTimelineWidget();
-   void setPlaylist(Playlist *);
-
-public slots:
-    void step();
-    void reset();
-    void next();
-    void previous();
 
 private:
     Ui::PlayerTimelineWidget *ui;
-
-    Playlist *m_playlist;
 };
 
 #endif // PLAYERTIMELINEWIDGET_H

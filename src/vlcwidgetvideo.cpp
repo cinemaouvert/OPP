@@ -47,7 +47,7 @@ VlcWidgetVideo::VlcWidgetVideo(QWidget *parent)
 #if defined(Q_OS_MAC)
       QMacCocoaViewContainer(0, parent)
 #else
-      QFrame(parent)
+      QWidget(parent)
 #endif
       /*,_vlcMediaPlayer(0)*/
 {

@@ -6,7 +6,6 @@ PlayerTimelineWidget::PlayerTimelineWidget(QWidget *parent) :
    ui(new Ui::PlayerTimelineWidget)
 {
    ui->setupUi(this);
-   ui->currentPlaybackVideo->setStyleSheet("background-color: black");
 }
 
 PlayerTimelineWidget::~PlayerTimelineWidget()

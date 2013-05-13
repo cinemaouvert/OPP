@@ -31,7 +31,8 @@ HEADERS += src/vlcwidgetvideo.h \
     src/vlc/Audio.h \
     src/vlc/VideoDelegate.h \
     src/playertimelinewidget.h \
-    src/mainwindow.h
+    src/mainwindow.h \
+    src/bin.h
 
 SOURCES += src/vlcwidgetvideo.cpp \
     src/vlc/Video.cpp \
@@ -47,10 +48,12 @@ SOURCES += src/vlcwidgetvideo.cpp \
     src/vlc/Audio.cpp \
     src/playertimelinewidget.cpp \
     src/mainwindow.cpp \
-    src/main.cpp
+    src/main.cpp \
+    src/bin.cpp
 
 FORMS += src/playertimelinewidget.ui \
-    src/mainwindow.ui
+    src/mainwindow.ui \
+    src/bin.ui
 
 mac:LIBVLC_LIB_DIR = "/Applications/VLC.app/Contents/MacOS/lib"
 mac:LIBVLC_INCLUDE_DIR = "/Applications/VLC.app/Contents/MacOS/include"

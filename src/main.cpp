@@ -2,7 +2,7 @@
 #include <QtGui/QDesktopWidget>
 #include <QDebug>
 
-#include "MainWindow.h"
+#include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
