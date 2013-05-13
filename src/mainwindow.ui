@@ -25,7 +25,7 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="DetailsWidget" name="ResumeDetail" native="true"/>
+        <widget class="ResumeDetailsWidget" name="ResumeDetail" native="true"/>
        </item>
        <item>
         <widget class="QWidget" name="Automisation" native="true">
@@ -167,7 +167,7 @@
      <x>0</x>
      <y>0</y>
      <width>797</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">
@@ -348,9 +348,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>DetailsWidget</class>
+   <class>ResumeDetailsWidget</class>
    <extends>QWidget</extends>
-   <header>detailswidget.h</header>
+   <header>resumedetailswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
