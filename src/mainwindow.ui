@@ -28,7 +28,7 @@
         <widget class="ResumeDetailsWidget" name="ResumeDetail" native="true"/>
        </item>
        <item>
-        <widget class="QWidget" name="Automisation" native="true">
+        <widget class="AutomationWidget" name="Automisation" native="true">
          <widget class="QLabel" name="label_2">
           <property name="geometry">
            <rect>
@@ -39,7 +39,7 @@
            </rect>
           </property>
           <property name="text">
-           <string>Automatisation</string>
+           <string/>
           </property>
          </widget>
         </widget>
@@ -66,95 +66,25 @@
            <widget class="QFrame" name="verticalFrame_3">
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
-              <widget class="QWidget" name="Vignettes" native="true">
-               <widget class="QLabel" name="label_4">
-                <property name="geometry">
-                 <rect>
-                  <x>60</x>
-                  <y>30</y>
-                  <width>66</width>
-                  <height>17</height>
-                 </rect>
-                </property>
-                <property name="text">
-                 <string>Vignettes</string>
-                </property>
-               </widget>
-              </widget>
+              <widget class="PreviewWidget" name="Vignettes" native="true"/>
              </item>
              <item>
-              <widget class="QWidget" name="Parametres" native="true">
-               <widget class="QLabel" name="label_5">
-                <property name="geometry">
-                 <rect>
-                  <x>60</x>
-                  <y>30</y>
-                  <width>81</width>
-                  <height>17</height>
-                 </rect>
-                </property>
-                <property name="text">
-                 <string>Paramètres</string>
-                </property>
-               </widget>
-              </widget>
+              <widget class="ParametersWidget" name="Parametres" native="true"/>
              </item>
             </layout>
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="VisualisationSon" native="true">
-            <widget class="QLabel" name="label_6">
-             <property name="geometry">
-              <rect>
-               <x>20</x>
-               <y>60</y>
-               <width>141</width>
-               <height>31</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string>Visualisation sonore</string>
-             </property>
-            </widget>
-           </widget>
+           <widget class="SaturationWidget" name="VisualisationSon" native="true"/>
           </item>
          </layout>
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="Playlists" native="true">
-         <widget class="QLabel" name="label_7">
-          <property name="geometry">
-           <rect>
-            <x>160</x>
-            <y>90</y>
-            <width>66</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Playlists</string>
-          </property>
-         </widget>
-        </widget>
+        <widget class="PlaylistsWidget" name="Playlists" native="true"/>
        </item>
        <item>
-        <widget class="QWidget" name="ControleLecture" native="true">
-         <widget class="QLabel" name="label_8">
-          <property name="geometry">
-           <rect>
-            <x>140</x>
-            <y>60</y>
-            <width>111</width>
-            <height>41</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Contrôles vidéo</string>
-          </property>
-         </widget>
-        </widget>
+        <widget class="ControlsWidget" name="ControleLecture" native="true"/>
        </item>
       </layout>
      </widget>
@@ -167,7 +97,7 @@
      <x>0</x>
      <y>0</y>
      <width>797</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">
@@ -351,6 +281,42 @@
    <class>ResumeDetailsWidget</class>
    <extends>QWidget</extends>
    <header>resumedetailswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AutomationWidget</class>
+   <extends>QWidget</extends>
+   <header>automationwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PreviewWidget</class>
+   <extends>QWidget</extends>
+   <header>previewwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ParametersWidget</class>
+   <extends>QWidget</extends>
+   <header>parameterswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SaturationWidget</class>
+   <extends>QWidget</extends>
+   <header>saturationwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PlaylistsWidget</class>
+   <extends>QWidget</extends>
+   <header>playlistswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ControlsWidget</class>
+   <extends>QWidget</extends>
+   <header>controlswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
