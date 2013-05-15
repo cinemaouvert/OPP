@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
-    <height>403</height>
+    <width>1071</width>
+    <height>280</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>20</y>
-     <width>891</width>
-     <height>361</height>
+     <y>0</y>
+     <width>1071</width>
+     <height>280</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -34,8 +34,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>891</width>
-       <height>341</height>
+       <width>1071</width>
+       <height>250</height>
       </rect>
      </property>
      <property name="alternatingRowColors">
