@@ -289,26 +289,56 @@
    </property>
   </action>
   <action name="actionAutomatisation">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Automatisation</string>
    </property>
   </action>
   <action name="actionSortie">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Sortie</string>
    </property>
   </action>
   <action name="actionR_sum_D_tails">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Résumé/Détails</string>
    </property>
   </action>
   <action name="actionR_pertoire_de_la_programmation">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Répertoire de la programmation</string>
    </property>
   </action>
   <action name="actionBarre_d_tat">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Barre d'état</string>
    </property>
