@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>388</width>
+    <width>490</width>
     <height>244</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
     <rect>
      <x>5</x>
      <y>0</y>
-     <width>378</width>
+     <width>490</width>
      <height>244</height>
     </rect>
    </property>
@@ -30,7 +30,7 @@
      <rect>
       <x>0</x>
       <y>50</y>
-      <width>370</width>
+      <width>480</width>
       <height>121</height>
      </rect>
     </property>
@@ -131,7 +131,7 @@
      <rect>
       <x>0</x>
       <y>170</y>
-      <width>371</width>
+      <width>481</width>
       <height>31</height>
      </rect>
     </property>
@@ -160,7 +160,7 @@
      <rect>
       <x>0</x>
       <y>205</y>
-      <width>371</width>
+      <width>480</width>
       <height>27</height>
      </rect>
     </property>
@@ -168,89 +168,63 @@
      <string>Stopper l'automatisation</string>
     </property>
    </widget>
-   <widget class="QDateEdit" name="dateEdit">
-    <property name="geometry">
-     <rect>
-      <x>78</x>
-      <y>20</y>
-      <width>105</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="displayFormat">
-     <string>dd/MM/yyyy</string>
-    </property>
-   </widget>
-   <widget class="QTimeEdit" name="timeEdit">
-    <property name="geometry">
-     <rect>
-      <x>183</x>
-      <y>20</y>
-      <width>74</width>
-      <height>27</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>20</y>
-      <width>78</width>
-      <height>27</height>
+      <width>481</width>
+      <height>31</height>
      </rect>
     </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>295</x>
-      <y>20</y>
-      <width>38</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_delete.png</normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_delete.png</iconset>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_3">
-    <property name="geometry">
-     <rect>
-      <x>257</x>
-      <y>20</y>
-      <width>38</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_plus.png</normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_plus.png</iconset>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>333</x>
-      <y>20</y>
-      <width>38</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_settings.png</normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_settings.png</iconset>
-    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QComboBox" name="comboBox"/>
+     </item>
+     <item>
+      <widget class="QDateEdit" name="dateEdit">
+       <property name="displayFormat">
+        <string>dd/MM/yyyy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTimeEdit" name="timeEdit"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_plus.png</normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_plus.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_settings.png</normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_settings.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_delete.png</normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_delete.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>
