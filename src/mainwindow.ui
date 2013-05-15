@@ -76,9 +76,9 @@
    <widget class="QFrame" name="verticalFrame">
     <property name="geometry">
      <rect>
-      <x>410</x>
+      <x>400</x>
       <y>0</y>
-      <width>1061</width>
+      <width>1071</width>
       <height>731</height>
      </rect>
     </property>
@@ -91,37 +91,49 @@
     <widget class="QFrame" name="horizontalFrame">
      <property name="geometry">
       <rect>
-       <x>9</x>
-       <y>9</y>
-       <width>1041</width>
-       <height>321</height>
+       <x>0</x>
+       <y>0</y>
+       <width>1071</width>
+       <height>400</height>
       </rect>
      </property>
      <widget class="QFrame" name="verticalFrame_3">
       <property name="geometry">
        <rect>
-        <x>9</x>
-        <y>9</y>
-        <width>771</width>
-        <height>311</height>
+        <x>0</x>
+        <y>0</y>
+        <width>831</width>
+        <height>400</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="PreviewWidget" name="Vignettes" native="true"/>
-       </item>
-       <item>
-        <widget class="ParametersWidget" name="Parametres" native="true"/>
-       </item>
-      </layout>
+      <widget class="PreviewWidget" name="Vignettes" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>831</width>
+         <height>165</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="ParametersWidget" name="Parametres" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>165</y>
+         <width>831</width>
+         <height>235</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
      <widget class="SaturationWidget" name="VisualisationSon" native="true">
       <property name="geometry">
        <rect>
-        <x>790</x>
-        <y>10</y>
-        <width>241</width>
-        <height>301</height>
+        <x>830</x>
+        <y>0</y>
+        <width>240</width>
+        <height>400</height>
        </rect>
       </property>
      </widget>
@@ -129,20 +141,20 @@
     <widget class="PlaylistsWidget" name="Playlists" native="true">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>340</y>
-       <width>1041</width>
-       <height>331</height>
+       <x>0</x>
+       <y>400</y>
+       <width>1071</width>
+       <height>280</height>
       </rect>
      </property>
     </widget>
     <widget class="ControlsWidget" name="ControleLecture" native="true">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>0</x>
        <y>680</y>
-       <width>1041</width>
-       <height>41</height>
+       <width>1071</width>
+       <height>50</height>
       </rect>
      </property>
     </widget>
