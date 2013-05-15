@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>876</width>
-    <height>48</height>
+    <width>1071</width>
+    <height>50</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,59 +18,75 @@
     <rect>
      <x>0</x>
      <y>10</y>
-     <width>98</width>
-     <height>27</height>
+     <width>150</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="text">
-    <string>Play</string>
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_play.png</normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_play.png</iconset>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>150</x>
      <y>10</y>
-     <width>151</width>
-     <height>27</height>
+     <width>150</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="text">
-    <string>Film précédent</string>
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_previous.png</normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_previous.png</iconset>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>257</x>
+     <x>300</x>
      <y>10</y>
-     <width>141</width>
-     <height>27</height>
+     <width>150</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="text">
-    <string>Film suivant</string>
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_next.png</normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_next.png</iconset>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_3">
    <property name="geometry">
     <rect>
-     <x>400</x>
+     <x>450</x>
      <y>10</y>
-     <width>98</width>
-     <height>27</height>
+     <width>150</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="text">
-    <string>Pause</string>
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_pause.png</normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_pause.png</iconset>
    </property>
   </widget>
   <widget class="QSlider" name="horizontalSlider">
    <property name="geometry">
     <rect>
-     <x>520</x>
+     <x>650</x>
      <y>10</y>
-     <width>311</width>
+     <width>371</width>
      <height>29</height>
     </rect>
    </property>
@@ -87,7 +103,7 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>840</x>
+     <x>1030</x>
      <y>10</y>
      <width>31</width>
      <height>31</height>
