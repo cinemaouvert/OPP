@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>594</width>
-    <height>298</height>
+    <width>388</width>
+    <height>244</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,12 +18,12 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>591</width>
-     <height>291</height>
+     <width>388</width>
+     <height>244</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="Resume">
     <attribute name="title">
@@ -34,8 +34,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>591</width>
-       <height>261</height>
+       <width>388</width>
+       <height>211</height>
       </rect>
      </property>
      <property name="text">
@@ -58,8 +58,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>591</width>
-       <height>261</height>
+       <width>388</width>
+       <height>211</height>
       </rect>
      </property>
      <property name="text">
@@ -82,8 +82,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>591</width>
-       <height>261</height>
+       <width>388</width>
+       <height>211</height>
       </rect>
      </property>
      <property name="text">
