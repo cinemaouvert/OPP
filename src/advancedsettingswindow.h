@@ -1,13 +1,13 @@
 #ifndef ADVANCEDSETTINGSWINDOW_H
 #define ADVANCEDSETTINGSWINDOW_H
 
-#include <QMainWindow>
+#include <QDialog>
 
 namespace Ui {
 class AdvancedSettingsWindow;
 }
 
-class AdvancedSettingsWindow : public QMainWindow
+class AdvancedSettingsWindow : public QDialog
 {
     Q_OBJECT
     

@@ -10,8 +10,8 @@ HEADERS += src/vlcwidgetvideo.h \
     src/playlistswidget.h \
     src/controlswidget.h \
     src/settingswindow.h \
-    src/advancedsettingswindow.h \
-    src/advancedpicturesettingswindow.h
+    src/advancedpicturesettingswindow.h \
+    src/advancedsettingswindow.h
 
 SOURCES += src/main.cpp \
     src/vlcwidgetvideo.cpp \
@@ -26,8 +26,8 @@ SOURCES += src/main.cpp \
     src/playlistswidget.cpp \
     src/controlswidget.cpp \
     src/settingswindow.cpp \
-    src/advancedsettingswindow.cpp \
-    src/advancedpicturesettingswindow.cpp
+    src/advancedpicturesettingswindow.cpp \
+    src/advancedsettingswindow.cpp
 
 FORMS += src/playertimelinewidget.ui \
     src/mainwindow.ui \
@@ -40,5 +40,5 @@ FORMS += src/playertimelinewidget.ui \
     src/playlistswidget.ui \
     src/controlswidget.ui \
     src/settingswindow.ui \
-    src/advancedsettingswindow.ui \
-    src/advancedpicturesettingswindow.ui
+    src/advancedpicturesettingswindow.ui \
+    src/advancedsettingswindow.ui
