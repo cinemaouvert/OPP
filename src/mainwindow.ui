@@ -136,115 +136,115 @@
      <height>25</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFichier">
+   <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>Fichier</string>
     </property>
-    <addaction name="actionNouvelle_programmation"/>
-    <addaction name="actionOuvrir_une_programmation"/>
-    <addaction name="actionEnregistrer_sous"/>
-    <addaction name="actionImprimer_conduite"/>
-    <addaction name="actionMise_en_page"/>
-    <addaction name="actionQuitter"/>
+    <addaction name="action_newListing"/>
+    <addaction name="action_openListing"/>
+    <addaction name="action_saveAs"/>
+    <addaction name="action_printConduct"/>
+    <addaction name="action_layout"/>
+    <addaction name="action_quit"/>
    </widget>
-   <widget class="QMenu" name="menu_dition">
+   <widget class="QMenu" name="menuEdit">
     <property name="title">
      <string>Édition</string>
     </property>
-    <addaction name="actionCopier"/>
-    <addaction name="actionColler"/>
-    <addaction name="actionAnnuler"/>
-    <addaction name="actionImporter"/>
+    <addaction name="action_copy"/>
+    <addaction name="action_paste"/>
+    <addaction name="action_cancel"/>
+    <addaction name="action_import"/>
    </widget>
-   <widget class="QMenu" name="menuAffichage">
+   <widget class="QMenu" name="menuDisplay">
     <property name="title">
      <string>Affichage</string>
     </property>
-    <addaction name="actionLire_une_mire"/>
-    <addaction name="actionAutomatisation"/>
-    <addaction name="actionSortie"/>
-    <addaction name="actionR_sum_D_tails"/>
-    <addaction name="actionR_pertoire_de_la_programmation"/>
-    <addaction name="actionBarre_d_tat"/>
+    <addaction name="action_testPattern"/>
+    <addaction name="action_automation"/>
+    <addaction name="action_output"/>
+    <addaction name="action_resumeDetails"/>
+    <addaction name="action_bin"/>
+    <addaction name="action_statusBar"/>
    </widget>
    <widget class="QMenu" name="menuConfiguration">
     <property name="title">
      <string>Configuration</string>
     </property>
-    <addaction name="actionPr_f_rences"/>
-    <addaction name="actionConfigurer_le_verrouillage"/>
+    <addaction name="action_settings"/>
+    <addaction name="action_lockSettings"/>
    </widget>
-   <widget class="QMenu" name="menuAide">
+   <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Aide</string>
     </property>
-    <addaction name="actionAide"/>
-    <addaction name="actionMise_jour"/>
-    <addaction name="action_propos"/>
+    <addaction name="action_help"/>
+    <addaction name="action_update"/>
+    <addaction name="action_about"/>
    </widget>
-   <addaction name="menuFichier"/>
-   <addaction name="menu_dition"/>
-   <addaction name="menuAffichage"/>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuDisplay"/>
    <addaction name="menuConfiguration"/>
-   <addaction name="menuAide"/>
+   <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="BarreStatus"/>
-  <action name="actionNouvelle_programmation">
+  <widget class="QStatusBar" name="StatusBar"/>
+  <action name="action_newListing">
    <property name="text">
     <string>Nouvelle programmation</string>
    </property>
   </action>
-  <action name="actionOuvrir_une_programmation">
+  <action name="action_openListing">
    <property name="text">
     <string>Ouvrir une programmation</string>
    </property>
   </action>
-  <action name="actionEnregistrer_sous">
+  <action name="action_saveAs">
    <property name="text">
     <string>Enregistrer sous</string>
    </property>
   </action>
-  <action name="actionImprimer_conduite">
+  <action name="action_printConduct">
    <property name="text">
     <string>Imprimer conduite</string>
    </property>
   </action>
-  <action name="actionMise_en_page">
+  <action name="action_layout">
    <property name="text">
     <string>Mise en page</string>
    </property>
   </action>
-  <action name="actionQuitter">
+  <action name="action_quit">
    <property name="text">
     <string>Quitter</string>
    </property>
   </action>
-  <action name="actionCopier">
+  <action name="action_copy">
    <property name="text">
     <string>Copier</string>
    </property>
   </action>
-  <action name="actionColler">
+  <action name="action_paste">
    <property name="text">
     <string>Coller</string>
    </property>
   </action>
-  <action name="actionAnnuler">
+  <action name="action_cancel">
    <property name="text">
     <string>Annuler</string>
    </property>
   </action>
-  <action name="actionImporter">
+  <action name="action_import">
    <property name="text">
     <string>Importer</string>
    </property>
   </action>
-  <action name="actionLire_une_mire">
+  <action name="action_testPattern">
    <property name="text">
     <string>Lire une mire</string>
    </property>
   </action>
-  <action name="actionAutomatisation">
+  <action name="action_automation">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -255,7 +255,7 @@
     <string>Automatisation</string>
    </property>
   </action>
-  <action name="actionSortie">
+  <action name="action_output">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -266,7 +266,7 @@
     <string>Sortie</string>
    </property>
   </action>
-  <action name="actionR_sum_D_tails">
+  <action name="action_resumeDetails">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -277,7 +277,7 @@
     <string>Résumé/Détails</string>
    </property>
   </action>
-  <action name="actionR_pertoire_de_la_programmation">
+  <action name="action_bin">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -288,7 +288,7 @@
     <string>Répertoire de la programmation</string>
    </property>
   </action>
-  <action name="actionBarre_d_tat">
+  <action name="action_statusBar">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -299,27 +299,27 @@
     <string>Barre d'état</string>
    </property>
   </action>
-  <action name="actionPr_f_rences">
+  <action name="action_settings">
    <property name="text">
     <string>Préférences</string>
    </property>
   </action>
-  <action name="actionConfigurer_le_verrouillage">
+  <action name="action_lockSettings">
    <property name="text">
     <string>Configurer le verrouillage</string>
    </property>
   </action>
-  <action name="actionAide">
+  <action name="action_help">
    <property name="text">
     <string>Aide</string>
    </property>
   </action>
-  <action name="actionMise_jour">
+  <action name="action_update">
    <property name="text">
     <string>Mise à jour</string>
    </property>
   </action>
-  <action name="action_propos">
+  <action name="action_about">
    <property name="text">
     <string>À propos</string>
    </property>
