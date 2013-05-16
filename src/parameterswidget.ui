@@ -110,7 +110,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="pushButton_advancedSettings">
         <property name="text">
          <string>         Réglages avancés</string>
         </property>
@@ -252,7 +252,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_3">
+       <widget class="QPushButton" name="pushButton_advancedPictureSettings">
         <property name="text">
          <string>      Réglages images avancés</string>
         </property>
@@ -263,7 +263,7 @@
        </widget>
       </item>
      </layout>
-     <zorder>pushButton_3</zorder>
+     <zorder>pushButton_advancedPictureSettings</zorder>
      <zorder>frame</zorder>
      <zorder>groupBox_2</zorder>
     </widget>
@@ -348,7 +348,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_4">
+       <widget class="QPushButton" name="pushButton_lock">
         <property name="text">
          <string>         Verrouillage</string>
         </property>
