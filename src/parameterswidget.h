@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "advancedsettingswindow.h"
 #include "advancedpicturesettingswindow.h"
+#include "locksettingswindow.h"
 
 namespace Ui {
 class ParametersWidget;
@@ -20,11 +21,13 @@ public:
 private slots:
     void on_pushButton_advancedSettings_clicked();
     void on_pushButton_advancedPictureSettings_clicked();
+    void on_pushButton_lock_clicked();
     
 private:
     Ui::ParametersWidget *ui;
     AdvancedSettingsWindow *advancedSettingsWindow;
     AdvancedPictureSettingsWindow *advancedPictureSettingsWindow;
+    LockSettingsWindow *lockSettingsWindow;
 };
 
 #endif // PARAMETERSWIDGET_H

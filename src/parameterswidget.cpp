@@ -2,6 +2,7 @@
 #include "ui_parameterswidget.h"
 #include "advancedsettingswindow.h"
 #include "advancedpicturesettingswindow.h"
+#include "locksettingswindow.h"
 
 ParametersWidget::ParametersWidget(QWidget *parent) :
     QWidget(parent),
@@ -29,4 +30,12 @@ void ParametersWidget::on_pushButton_advancedPictureSettings_clicked()
     advancedPictureSettingsWindow->show();
     advancedPictureSettingsWindow->raise();
     advancedPictureSettingsWindow->activateWindow();
+}
+
+void ParametersWidget::on_pushButton_lock_clicked()
+{
+    lockSettingsWindow = new LockSettingsWindow(this);
+    lockSettingsWindow->show();
+    lockSettingsWindow->raise();
+    lockSettingsWindow->activateWindow();
 }
