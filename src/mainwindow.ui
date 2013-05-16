@@ -15,6 +15,9 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="margin">
+     <number>1</number>
+    </property>
     <item>
      <widget class="QFrame" name="verticalFrame_2">
       <property name="maximumSize">
@@ -24,6 +27,9 @@
        </size>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="margin">
+        <number>1</number>
+       </property>
        <item>
         <widget class="ResumeDetailsWidget" name="ResumeDetail" native="true"/>
        </item>
@@ -59,12 +65,21 @@
        </size>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="margin">
+        <number>1</number>
+       </property>
        <item>
         <widget class="QFrame" name="horizontalFrame">
          <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="margin">
+           <number>1</number>
+          </property>
           <item>
            <widget class="QFrame" name="verticalFrame_3">
             <layout class="QVBoxLayout" name="verticalLayout_2">
+             <property name="margin">
+              <number>1</number>
+             </property>
              <item>
               <widget class="PreviewWidget" name="Vignettes" native="true"/>
              </item>
