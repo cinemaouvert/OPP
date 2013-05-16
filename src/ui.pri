@@ -9,7 +9,8 @@ HEADERS += src/vlcwidgetvideo.h \
     src/saturationwidget.h \
     src/playlistswidget.h \
     src/controlswidget.h \
-    src/settingswindow.h
+    src/settingswindow.h \
+    src/advancedsettingswindow.h
 
 SOURCES += src/main.cpp \
     src/vlcwidgetvideo.cpp \
@@ -23,7 +24,8 @@ SOURCES += src/main.cpp \
     src/saturationwidget.cpp \
     src/playlistswidget.cpp \
     src/controlswidget.cpp \
-    src/settingswindow.cpp
+    src/settingswindow.cpp \
+    src/advancedsettingswindow.cpp
 
 FORMS += src/playertimelinewidget.ui \
     src/mainwindow.ui \
@@ -35,4 +37,5 @@ FORMS += src/playertimelinewidget.ui \
     src/saturationwidget.ui \
     src/playlistswidget.ui \
     src/controlswidget.ui \
-    src/settingswindow.ui
+    src/settingswindow.ui \
+    src/advancedsettingswindow.ui
