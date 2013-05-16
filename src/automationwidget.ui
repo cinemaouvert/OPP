@@ -25,7 +25,7 @@
    <property name="title">
     <string>Automatisation</string>
    </property>
-   <widget class="QTableWidget" name="tableWidget">
+   <widget class="QTableWidget" name="tableWidget_listAutomations">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -137,17 +137,17 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="label_delay1">
        <property name="text">
         <string>Retarder l'automatisation de</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="spinBox"/>
+      <widget class="QSpinBox" name="spinBox_delai"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="label_delay2">
        <property name="text">
         <string>minutes.</string>
        </property>
@@ -155,7 +155,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="pushButton_stop">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -179,7 +179,7 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QComboBox" name="comboBox"/>
+      <widget class="QComboBox" name="comboBox_playlist"/>
      </item>
      <item>
       <widget class="QDateEdit" name="dateEdit">
@@ -192,7 +192,7 @@
       <widget class="QTimeEdit" name="timeEdit"/>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="pushButton_add">
        <property name="text">
         <string/>
        </property>
@@ -203,7 +203,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="pushButton_parameters">
        <property name="text">
         <string/>
        </property>
@@ -214,7 +214,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="pushButton_delete">
        <property name="text">
         <string/>
        </property>
