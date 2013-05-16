@@ -31,22 +31,22 @@
         <item>
          <widget class="QPushButton" name="pushButton_add">
           <property name="text">
-           <string/>
+           <string>          Ajouter un film</string>
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_plus.png</normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_plus.png</iconset>
+            <normaloff>icons/icon_plus.png</normaloff>icons/icon_plus.png</iconset>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_delete">
           <property name="text">
-           <string/>
+           <string>         Supprimer</string>
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_delete.png</normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_delete.png</iconset>
+            <normaloff>icons/icon_delete.png</normaloff>icons/icon_delete.png</iconset>
           </property>
          </widget>
         </item>
