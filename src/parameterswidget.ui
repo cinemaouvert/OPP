@@ -40,6 +40,9 @@
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
           <layout class="QFormLayout" name="formLayout_4">
+           <property name="formAlignment">
+            <set>Qt::AlignHCenter|Qt::AlignTop</set>
+           </property>
            <item row="0" column="0">
             <widget class="QLabel" name="pisteAudioLabel">
              <property name="text">
@@ -48,7 +51,14 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QComboBox" name="pisteAudioComboBox"/>
+            <widget class="QComboBox" name="pisteAudioComboBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
            </item>
            <item row="1" column="0">
             <widget class="QLabel" name="pisteVidOLabel">
@@ -78,7 +88,11 @@
             </widget>
            </item>
            <item row="3" column="1">
-            <widget class="QDoubleSpinBox" name="snchroDoubleSpinBox"/>
+            <widget class="QDoubleSpinBox" name="snchroDoubleSpinBox">
+             <property name="minimum">
+              <double>-99.900000000000006</double>
+             </property>
+            </widget>
            </item>
            <item row="4" column="0">
             <widget class="QLabel" name="ratioImageLabel">
@@ -129,15 +143,15 @@
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
           <layout class="QFormLayout" name="formLayout">
+           <property name="formAlignment">
+            <set>Qt::AlignHCenter|Qt::AlignTop</set>
+           </property>
            <item row="0" column="0">
             <widget class="QLabel" name="gammaLabel">
              <property name="text">
               <string> Gamma : </string>
              </property>
             </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QDoubleSpinBox" name="gammaDoubleSpinBox"/>
            </item>
            <item row="1" column="0">
             <widget class="QLabel" name="contrastLabel">
@@ -146,18 +160,12 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="1">
-            <widget class="QDoubleSpinBox" name="contrastDoubleSpinBox"/>
-           </item>
            <item row="2" column="0">
             <widget class="QLabel" name="luminositLabel">
              <property name="text">
               <string> Luminosité : </string>
              </property>
             </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QDoubleSpinBox" name="luminositDoubleSpinBox"/>
            </item>
            <item row="3" column="0">
             <widget class="QLabel" name="saturationLabel">
@@ -166,9 +174,6 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
-            <widget class="QDoubleSpinBox" name="saturationDoubleSpinBox"/>
-           </item>
            <item row="4" column="0">
             <widget class="QLabel" name="teinteLabel">
              <property name="text">
@@ -176,8 +181,70 @@
              </property>
             </widget>
            </item>
+           <item row="0" column="1">
+            <widget class="QSpinBox" name="gammaSpinBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimum">
+              <number>-99</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="contrastSpinBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimum">
+              <number>-99</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="luminositSpinBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimum">
+              <number>-99</number>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QSpinBox" name="saturationSpinBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimum">
+              <number>-99</number>
+             </property>
+            </widget>
+           </item>
            <item row="4" column="1">
-            <widget class="QDoubleSpinBox" name="teinteDoubleSpinBox"/>
+            <widget class="QSpinBox" name="teinteSpinBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimum">
+              <number>-99</number>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -224,6 +291,9 @@
            <property name="fieldGrowthPolicy">
             <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
            </property>
+           <property name="formAlignment">
+            <set>Qt::AlignHCenter|Qt::AlignTop</set>
+           </property>
            <item row="0" column="0">
             <widget class="QLabel" name="synchroAudioLabel">
              <property name="text">
@@ -231,18 +301,12 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
-            <widget class="QDoubleSpinBox" name="synchroAudioDoubleSpinBox"/>
-           </item>
            <item row="1" column="0">
             <widget class="QLabel" name="gainAudioLabel">
              <property name="text">
               <string> Gain audio : </string>
              </property>
             </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QDoubleSpinBox" name="gainAudioDoubleSpinBox"/>
            </item>
            <item row="2" column="0">
             <widget class="QLabel" name="normalisationLabel">
@@ -263,6 +327,20 @@
            </item>
            <item row="3" column="1">
             <widget class="QComboBox" name="spatialisationComboBox"/>
+           </item>
+           <item row="0" column="1">
+            <widget class="QSpinBox" name="synchroAudioSpinBox">
+             <property name="minimum">
+              <number>-99</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="gainAudioSpinBox">
+             <property name="minimum">
+              <number>-99</number>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
