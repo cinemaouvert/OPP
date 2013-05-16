@@ -75,13 +75,27 @@
            </widget>
           </item>
           <item>
-           <widget class="SaturationWidget" name="VisualisationSon" native="true"/>
+           <widget class="SaturationWidget" name="VisualisationSon" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
        </item>
        <item>
-        <widget class="PlaylistsWidget" name="Playlists" native="true"/>
+        <widget class="PlaylistsWidget" name="Playlists" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="ControlsWidget" name="ControleLecture" native="true">
