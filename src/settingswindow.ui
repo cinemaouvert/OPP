@@ -25,7 +25,7 @@
    <property name="title">
     <string>Chemins des composants externes</string>
    </property>
-   <widget class="QDialogButtonBox" name="buttonBox">
+   <widget class="QDialogButtonBox" name="buttonBox_OkCancel">
     <property name="geometry">
      <rect>
       <x>520</x>
@@ -49,68 +49,68 @@
     </property>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="label_VLCPath">
        <property name="text">
         <string>Chemin vers VLC</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="lineEdit_VLCPath"/>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_3"/>
+      <widget class="QLineEdit" name="lineEdit_intertitlePath"/>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="label_testPatternPath">
        <property name="text">
         <string>Chemin vers la mire</string>
        </property>
       </widget>
      </item>
      <item row="0" column="2">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="pushButton_VLCPath">
        <property name="text">
         <string>Parcourir</string>
        </property>
       </widget>
      </item>
      <item row="1" column="2">
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="pushButton_testPatternPath">
        <property name="text">
         <string>Parcourir</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_2"/>
+      <widget class="QLineEdit" name="lineEdit_testPatternPath"/>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="label_intertitlePath">
        <property name="text">
         <string>Chemin vers le carton par défaut</string>
        </property>
       </widget>
      </item>
      <item row="2" column="2">
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="pushButton_intertitlePath">
        <property name="text">
         <string>Parcourir</string>
        </property>
       </widget>
      </item>
      <item row="3" column="0">
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="label_moviesPath">
        <property name="text">
         <string>Chemin par défaut des films</string>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="lineEdit_4"/>
+      <widget class="QLineEdit" name="lineEdit_moviesPath"/>
      </item>
      <item row="3" column="2">
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QPushButton" name="pushButton_moviesPath">
        <property name="text">
         <string>Parcourir</string>
        </property>
