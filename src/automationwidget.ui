@@ -103,6 +103,9 @@
          <number>3</number>
         </property>
         <attribute name="horizontalHeaderVisible">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="horizontalHeaderCascadingSectionResizes">
          <bool>false</bool>
         </attribute>
         <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
