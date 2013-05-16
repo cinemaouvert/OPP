@@ -39,7 +39,7 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="pushButton_add">
        <property name="text">
         <string/>
        </property>
@@ -50,7 +50,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="pushButton_delete">
        <property name="text">
         <string/>
        </property>
@@ -62,7 +62,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QTableWidget" name="tableWidget">
+   <widget class="QTableWidget" name="tableWidget_listFiles">
     <property name="geometry">
      <rect>
       <x>5</x>
