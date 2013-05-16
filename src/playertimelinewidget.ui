@@ -18,7 +18,7 @@
     <number>25</number>
    </property>
    <item row="0" column="3" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="label_pictureFutureMedia">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -34,7 +34,7 @@
     <widget class="VlcWidgetVideo" name="currentPlaybackVideo" native="true"/>
    </item>
    <item row="1" column="0">
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="label_lengthCurrentMedia">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -49,7 +49,7 @@
    <item row="1" column="2" rowspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item alignment="Qt::AlignTop">
-      <widget class="QLabel" name="label_5">
+      <widget class="QLabel" name="label_mediaNext">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -62,7 +62,7 @@
       </widget>
      </item>
      <item alignment="Qt::AlignRight|Qt::AlignTop">
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="label_lengthMediaNext">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -77,7 +77,7 @@
     </layout>
    </item>
    <item row="2" column="0">
-    <widget class="QProgressBar" name="progressBar">
+    <widget class="QProgressBar" name="progressBar_currentMedia">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -92,7 +92,7 @@
    <item row="1" column="3" rowspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item alignment="Qt::AlignTop">
-      <widget class="QLabel" name="label_7">
+      <widget class="QLabel" name="label_mediaFuture">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -105,7 +105,7 @@
       </widget>
      </item>
      <item alignment="Qt::AlignTop">
-      <widget class="QLabel" name="label_6">
+      <widget class="QLabel" name="label_lengthMediaFuture">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -132,7 +132,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="label_pictureNextMedia">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
           <horstretch>0</horstretch>
