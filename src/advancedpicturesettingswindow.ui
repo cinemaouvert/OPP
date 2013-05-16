@@ -26,14 +26,14 @@
     <item>
      <layout class="QFormLayout" name="formLayout">
       <item row="0" column="0">
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="label_proportion">
         <property name="text">
          <string>Proportion</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="comboBox_proportion">
         <item>
          <property name="text">
           <string>16/9</string>
@@ -47,24 +47,24 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="label_trim">
         <property name="text">
          <string>Rogner</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QComboBox" name="comboBox_2"/>
+       <widget class="QComboBox" name="comboBox_trim"/>
       </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="label_deinterlace">
         <property name="text">
          <string>Désentrelacer</string>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QComboBox" name="comboBox_3">
+       <widget class="QComboBox" name="comboBox_deinterlace">
         <item>
          <property name="text">
           <string>Oui</string>
@@ -78,24 +78,24 @@
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QLabel" name="label_4">
+       <widget class="QLabel" name="label_deinterlaceMode">
         <property name="text">
          <string>Mode de désentrelacement</string>
         </property>
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QComboBox" name="comboBox_4"/>
+       <widget class="QComboBox" name="comboBox_deinterlaceMode"/>
       </item>
       <item row="4" column="0">
-       <widget class="QLabel" name="label_5">
+       <widget class="QLabel" name="label_postProcessing">
         <property name="text">
          <string>Post-traitement</string>
         </property>
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QComboBox" name="comboBox_5">
+       <widget class="QComboBox" name="comboBox_postProcessing">
         <item>
          <property name="text">
           <string>Oui</string>
@@ -109,14 +109,14 @@
        </widget>
       </item>
       <item row="5" column="0">
-       <widget class="QLabel" name="label_6">
+       <widget class="QLabel" name="label_rotation">
         <property name="text">
          <string>Rotation</string>
         </property>
        </widget>
       </item>
       <item row="5" column="1">
-       <widget class="QComboBox" name="comboBox_6">
+       <widget class="QComboBox" name="comboBox_rotation">
         <item>
          <property name="text">
           <string>0°</string>
@@ -148,49 +148,49 @@
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="1" column="0">
-        <widget class="QLabel" name="label_12">
+        <widget class="QLabel" name="label_left">
          <property name="text">
           <string>Gauche</string>
          </property>
         </widget>
        </item>
        <item row="0" column="2">
-        <widget class="QLabel" name="label_10">
+        <widget class="QLabel" name="label_up">
          <property name="text">
           <string>Haut</string>
          </property>
         </widget>
        </item>
        <item row="0" column="3">
-        <widget class="QSpinBox" name="spinBox">
+        <widget class="QSpinBox" name="spinBox_up">
          <property name="suffix">
           <string> px</string>
          </property>
         </widget>
        </item>
        <item row="1" column="5">
-        <widget class="QSpinBox" name="spinBox_3">
+        <widget class="QSpinBox" name="spinBox_right">
          <property name="suffix">
           <string> px</string>
          </property>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QSpinBox" name="spinBox_2">
+        <widget class="QSpinBox" name="spinBox_left">
          <property name="suffix">
           <string> px</string>
          </property>
         </widget>
        </item>
        <item row="1" column="4">
-        <widget class="QLabel" name="label_13">
+        <widget class="QLabel" name="label_right">
          <property name="text">
           <string>Droite</string>
          </property>
         </widget>
        </item>
        <item row="2" column="3">
-        <widget class="QSpinBox" name="spinBox_4">
+        <widget class="QSpinBox" name="spinBox_down">
          <property name="suffix">
           <string> px</string>
          </property>
@@ -200,7 +200,7 @@
         </widget>
        </item>
        <item row="2" column="2">
-        <widget class="QLabel" name="label_14">
+        <widget class="QLabel" name="label_down">
          <property name="text">
           <string>Bas</string>
          </property>
@@ -210,21 +210,21 @@
      </widget>
     </item>
     <item>
-     <widget class="QCheckBox" name="checkBox">
+     <widget class="QCheckBox" name="checkBox_upDownSync">
       <property name="text">
        <string>Synchroniser haut et bas</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QCheckBox" name="checkBox_2">
+     <widget class="QCheckBox" name="checkBox_leftRightSync">
       <property name="text">
        <string>Synchroniser gauche et droite</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QDialogButtonBox" name="buttonBox">
+     <widget class="QDialogButtonBox" name="buttonBox_OKCancel">
       <property name="standardButtons">
        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
       </property>
