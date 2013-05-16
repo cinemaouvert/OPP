@@ -27,7 +27,7 @@
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_play.png</normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_play.png</iconset>
+       <normaloff>icons/icon_play.png</normaloff>icons/icon_play.png</iconset>
      </property>
     </widget>
    </item>
@@ -44,7 +44,7 @@
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_previous.png</normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_previous.png</iconset>
+       <normaloff>icons/icon_previous.png</normaloff>icons/icon_previous.png</iconset>
      </property>
     </widget>
    </item>
@@ -61,7 +61,7 @@
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_next.png</normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_next.png</iconset>
+       <normaloff>icons/icon_next.png</normaloff>icons/icon_next.png</iconset>
      </property>
     </widget>
    </item>
@@ -78,7 +78,7 @@
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_pause.png</normaloff>../../opp-build-desktop-Qt_4_8_3_dans_le_PATH__Syst_me__Release/icons/icon_pause.png</iconset>
+       <normaloff>icons/icon_pause.png</normaloff>icons/icon_pause.png</iconset>
      </property>
     </widget>
    </item>
