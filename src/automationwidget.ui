@@ -193,6 +193,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_delay">
+          <property name="text">
+           <string>Retarder</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
