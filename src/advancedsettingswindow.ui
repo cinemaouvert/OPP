@@ -26,14 +26,14 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="label_title">
         <property name="text">
          <string>Titre du film</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_9">
+       <widget class="QLabel" name="label_picture">
         <property name="text">
          <string>Image</string>
         </property>
@@ -45,14 +45,14 @@
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
         <item row="0" column="0">
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="label_testPattern">
           <property name="text">
            <string>Mire</string>
           </property>
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QComboBox" name="comboBox">
+         <widget class="QComboBox" name="comboBox_testPattern">
           <item>
            <property name="text">
             <string>Activée</string>
@@ -66,56 +66,56 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="label_3">
+         <widget class="QLabel" name="label_inMark">
           <property name="text">
            <string>Point d'entrée</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QTimeEdit" name="timeEdit">
+         <widget class="QTimeEdit" name="timeEdit_inMark">
           <property name="displayFormat">
            <string>HH:mm:ss</string>
           </property>
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QLabel" name="label_4">
+         <widget class="QLabel" name="label_outMark">
           <property name="text">
            <string>Point de sortie</string>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QTimeEdit" name="timeEdit_2">
+         <widget class="QTimeEdit" name="timeEdit_outMark">
           <property name="displayFormat">
            <string>HH:mm:ss</string>
           </property>
          </widget>
         </item>
         <item row="3" column="0">
-         <widget class="QLabel" name="label_5">
+         <widget class="QLabel" name="label_originalLength">
           <property name="text">
            <string>Durée originale</string>
           </property>
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QLabel" name="label_6">
+         <widget class="QLabel" name="label_originalLengthValue">
           <property name="text">
            <string>12:34:56</string>
           </property>
          </widget>
         </item>
         <item row="4" column="0">
-         <widget class="QLabel" name="label_7">
+         <widget class="QLabel" name="label_modifiedLength">
           <property name="text">
            <string>Durée recoupée</string>
           </property>
          </widget>
         </item>
         <item row="4" column="1">
-         <widget class="QLabel" name="label_8">
+         <widget class="QLabel" name="label_modifiedLengthValue">
           <property name="text">
            <string>01:23:45</string>
           </property>
@@ -124,7 +124,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QDialogButtonBox" name="buttonBox">
+       <widget class="QDialogButtonBox" name="buttonBox_OKCancel">
         <property name="standardButtons">
          <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
         </property>
@@ -138,7 +138,7 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QTableWidget" name="tableWidget">
+       <widget class="QTableWidget" name="tableWidget_information">
         <property name="columnCount">
          <number>2</number>
         </property>
@@ -171,7 +171,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="pushButton_attachment">
         <property name="text">
          <string>Récupérer les pièces jointes du film</string>
         </property>
