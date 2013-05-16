@@ -189,17 +189,6 @@
    <addaction name="menuAide"/>
   </widget>
   <widget class="QStatusBar" name="BarreStatus"/>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
   <action name="actionNouvelle_programmation">
    <property name="text">
     <string>Nouvelle programmation</string>
