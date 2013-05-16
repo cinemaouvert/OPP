@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
+ <class>DetailsWidget</class>
  <widget class="QWidget" name="DetailsWidget">
   <property name="geometry">
    <rect>
@@ -39,7 +39,7 @@
       </rect>
      </property>
      <property name="text">
-      <string> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in sem tellus, vitae posuere ante. Curabitur ultrices ultrices luctus. Sed mattis adipiscing iaculis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum libero urna, faucibus a imperdiet nec, posuere sit amet mauris. Lorem ipsum dolor sit. </string>
+      <string>Quand on commence quelque chose, il faut aller jusqu'au bout !</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>

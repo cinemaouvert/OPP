@@ -24,7 +24,7 @@
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
-       <string>Tab 1</string>
+       <string>Séance 1</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="margin">
@@ -34,6 +34,9 @@
         <widget class="QTableWidget" name="tableWidget_playlist">
          <property name="alternatingRowColors">
           <bool>true</bool>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
          </property>
          <attribute name="horizontalHeaderVisible">
           <bool>true</bool>
@@ -50,6 +53,31 @@
          <row>
           <property name="text">
            <string>Film 1</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>Film 2</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>Film 3</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>Film 4</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>Film 5</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>Film 6</string>
           </property>
          </row>
          <column>
@@ -84,17 +112,172 @@
          </column>
          <column>
           <property name="text">
-           <string>Mix</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
            <string>Etat</string>
           </property>
          </column>
          <item row="0" column="0">
           <property name="text">
-           <string/>
+           <string>Film 1</string>
+          </property>
+         </item>
+         <item row="0" column="1">
+          <property name="text">
+           <string>00:25:36</string>
+          </property>
+         </item>
+         <item row="0" column="2">
+          <property name="text">
+           <string>720x576 - 50 fps</string>
+          </property>
+         </item>
+         <item row="0" column="3">
+          <property name="text">
+           <string>Français</string>
+          </property>
+         </item>
+         <item row="0" column="5">
+          <property name="text">
+           <string>Off</string>
+          </property>
+         </item>
+         <item row="1" column="0">
+          <property name="text">
+           <string>Film 2</string>
+          </property>
+         </item>
+         <item row="1" column="1">
+          <property name="text">
+           <string>00:29:17</string>
+          </property>
+         </item>
+         <item row="1" column="2">
+          <property name="text">
+           <string>720x576 - 50 fps</string>
+          </property>
+         </item>
+         <item row="1" column="3">
+          <property name="text">
+           <string>Français</string>
+          </property>
+         </item>
+         <item row="1" column="5">
+          <property name="text">
+           <string>Off</string>
+          </property>
+         </item>
+         <item row="2" column="0">
+          <property name="text">
+           <string>Film 3</string>
+          </property>
+         </item>
+         <item row="2" column="1">
+          <property name="text">
+           <string>00:30:21</string>
+          </property>
+         </item>
+         <item row="2" column="2">
+          <property name="text">
+           <string>720x576 - 50 fps</string>
+          </property>
+         </item>
+         <item row="2" column="3">
+          <property name="text">
+           <string>Français</string>
+          </property>
+         </item>
+         <item row="2" column="4">
+          <property name="text">
+           <string>Français</string>
+          </property>
+         </item>
+         <item row="2" column="5">
+          <property name="text">
+           <string>Off</string>
+          </property>
+         </item>
+         <item row="3" column="0">
+          <property name="text">
+           <string>Film 4</string>
+          </property>
+         </item>
+         <item row="3" column="1">
+          <property name="text">
+           <string>00:39:17</string>
+          </property>
+         </item>
+         <item row="3" column="2">
+          <property name="text">
+           <string>720x576 - 50 fps</string>
+          </property>
+         </item>
+         <item row="3" column="3">
+          <property name="text">
+           <string>Français</string>
+          </property>
+         </item>
+         <item row="3" column="5">
+          <property name="text">
+           <string>Off</string>
+          </property>
+         </item>
+         <item row="4" column="0">
+          <property name="text">
+           <string>Film 5</string>
+          </property>
+         </item>
+         <item row="4" column="1">
+          <property name="text">
+           <string>00:35:21</string>
+          </property>
+         </item>
+         <item row="4" column="2">
+          <property name="text">
+           <string>720x576 - 50 fps</string>
+          </property>
+         </item>
+         <item row="4" column="3">
+          <property name="text">
+           <string>Français</string>
+          </property>
+         </item>
+         <item row="4" column="4">
+          <property name="text">
+           <string>English</string>
+          </property>
+         </item>
+         <item row="4" column="5">
+          <property name="text">
+           <string>Off</string>
+          </property>
+         </item>
+         <item row="5" column="0">
+          <property name="text">
+           <string>Film 6</string>
+          </property>
+         </item>
+         <item row="5" column="1">
+          <property name="text">
+           <string>00:41:28</string>
+          </property>
+         </item>
+         <item row="5" column="2">
+          <property name="text">
+           <string>720x576 - 50 fps</string>
+          </property>
+         </item>
+         <item row="5" column="3">
+          <property name="text">
+           <string>Français</string>
+          </property>
+         </item>
+         <item row="5" column="4">
+          <property name="text">
+           <string>日本語</string>
+          </property>
+         </item>
+         <item row="5" column="5">
+          <property name="text">
+           <string>Off</string>
           </property>
          </item>
         </widget>

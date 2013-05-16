@@ -58,6 +58,11 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <item>
+              <property name="text">
+               <string>Français</string>
+              </property>
+             </item>
             </widget>
            </item>
            <item row="1" column="0">
@@ -68,7 +73,13 @@
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QComboBox" name="pisteVidOComboBox"/>
+            <widget class="QComboBox" name="pisteVidOComboBox">
+             <item>
+              <property name="text">
+               <string>Français</string>
+              </property>
+             </item>
+            </widget>
            </item>
            <item row="2" column="0">
             <widget class="QLabel" name="pisteSousTitresLabel">
@@ -78,7 +89,23 @@
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QComboBox" name="pisteSousTitresComboBox"/>
+            <widget class="QComboBox" name="pisteSousTitresComboBox">
+             <item>
+              <property name="text">
+               <string>Français</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>English</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>日本語</string>
+              </property>
+             </item>
+            </widget>
            </item>
            <item row="3" column="0">
             <widget class="QLabel" name="snchroLabel">
@@ -102,7 +129,13 @@
             </widget>
            </item>
            <item row="4" column="1">
-            <widget class="QComboBox" name="ratioImageComboBox"/>
+            <widget class="QComboBox" name="ratioImageComboBox">
+             <item>
+              <property name="text">
+               <string>4/3</string>
+              </property>
+             </item>
+            </widget>
            </item>
           </layout>
          </item>
@@ -264,7 +297,6 @@
       </item>
      </layout>
      <zorder>pushButton_advancedPictureSettings</zorder>
-     <zorder>frame</zorder>
      <zorder>groupBox_2</zorder>
     </widget>
    </item>
@@ -301,10 +333,24 @@
              </property>
             </widget>
            </item>
+           <item row="0" column="1">
+            <widget class="QSpinBox" name="synchroAudioSpinBox">
+             <property name="minimum">
+              <number>-99</number>
+             </property>
+            </widget>
+           </item>
            <item row="1" column="0">
             <widget class="QLabel" name="gainAudioLabel">
              <property name="text">
               <string> Gain audio : </string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="gainAudioSpinBox">
+             <property name="minimum">
+              <number>-99</number>
              </property>
             </widget>
            </item>
@@ -316,30 +362,17 @@
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QComboBox" name="normalisationComboBox"/>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="spatialisationLabel">
-             <property name="text">
-              <string> Spatialisation : </string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QComboBox" name="spatialisationComboBox"/>
-           </item>
-           <item row="0" column="1">
-            <widget class="QSpinBox" name="synchroAudioSpinBox">
-             <property name="minimum">
-              <number>-99</number>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QSpinBox" name="gainAudioSpinBox">
-             <property name="minimum">
-              <number>-99</number>
-             </property>
+            <widget class="QComboBox" name="normalisationComboBox">
+             <item>
+              <property name="text">
+               <string>On</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Off</string>
+              </property>
+             </item>
             </widget>
            </item>
           </layout>

@@ -72,6 +72,36 @@
         <attribute name="verticalHeaderVisible">
          <bool>false</bool>
         </attribute>
+        <row>
+         <property name="text">
+          <string>Nouvelle ligne</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>Nouvelle ligne</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>Nouvelle ligne</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>Nouvelle ligne</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>Nouvelle ligne</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>Nouvelle ligne</string>
+         </property>
+        </row>
         <column>
          <property name="text">
           <string>Nom</string>
@@ -97,6 +127,156 @@
           <string>Emplacement</string>
          </property>
         </column>
+        <item row="0" column="0">
+         <property name="text">
+          <string>Film 1</string>
+         </property>
+        </item>
+        <item row="0" column="1">
+         <property name="text">
+          <string>00:25:36</string>
+         </property>
+        </item>
+        <item row="0" column="2">
+         <property name="text">
+          <string>Oui</string>
+         </property>
+        </item>
+        <item row="0" column="3">
+         <property name="text">
+          <string>Séance 1</string>
+         </property>
+        </item>
+        <item row="0" column="4">
+         <property name="text">
+          <string>/fichiers/ff</string>
+         </property>
+        </item>
+        <item row="1" column="0">
+         <property name="text">
+          <string>Film 2</string>
+         </property>
+        </item>
+        <item row="1" column="1">
+         <property name="text">
+          <string>00:29:17</string>
+         </property>
+        </item>
+        <item row="1" column="2">
+         <property name="text">
+          <string>Oui</string>
+         </property>
+        </item>
+        <item row="1" column="3">
+         <property name="text">
+          <string>Séance 1</string>
+         </property>
+        </item>
+        <item row="1" column="4">
+         <property name="text">
+          <string>/fichiers/ff</string>
+         </property>
+        </item>
+        <item row="2" column="0">
+         <property name="text">
+          <string>Film 3</string>
+         </property>
+        </item>
+        <item row="2" column="1">
+         <property name="text">
+          <string>00:30:21</string>
+         </property>
+        </item>
+        <item row="2" column="2">
+         <property name="text">
+          <string>Oui</string>
+         </property>
+        </item>
+        <item row="2" column="3">
+         <property name="text">
+          <string>Séance 1</string>
+         </property>
+        </item>
+        <item row="2" column="4">
+         <property name="text">
+          <string>/fichiers/ff</string>
+         </property>
+        </item>
+        <item row="3" column="0">
+         <property name="text">
+          <string>Film 4</string>
+         </property>
+        </item>
+        <item row="3" column="1">
+         <property name="text">
+          <string>00:39:17</string>
+         </property>
+        </item>
+        <item row="3" column="2">
+         <property name="text">
+          <string>Oui</string>
+         </property>
+        </item>
+        <item row="3" column="3">
+         <property name="text">
+          <string>Séance 1</string>
+         </property>
+        </item>
+        <item row="3" column="4">
+         <property name="text">
+          <string>/fichiers/ff</string>
+         </property>
+        </item>
+        <item row="4" column="0">
+         <property name="text">
+          <string>Film 5</string>
+         </property>
+        </item>
+        <item row="4" column="1">
+         <property name="text">
+          <string>00:35:21</string>
+         </property>
+        </item>
+        <item row="4" column="2">
+         <property name="text">
+          <string>Oui</string>
+         </property>
+        </item>
+        <item row="4" column="3">
+         <property name="text">
+          <string>Séance 1</string>
+         </property>
+        </item>
+        <item row="4" column="4">
+         <property name="text">
+          <string>/fichiers/ff</string>
+         </property>
+        </item>
+        <item row="5" column="0">
+         <property name="text">
+          <string>Film 6</string>
+         </property>
+        </item>
+        <item row="5" column="1">
+         <property name="text">
+          <string>00:41:28</string>
+         </property>
+        </item>
+        <item row="5" column="2">
+         <property name="text">
+          <string>Oui</string>
+         </property>
+        </item>
+        <item row="5" column="3">
+         <property name="text">
+          <string>Séance 1</string>
+         </property>
+        </item>
+        <item row="5" column="4">
+         <property name="text">
+          <string>/fichiers/ff</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Verrouillage</string>
   </property>
   <widget class="QLabel" name="label_password">
    <property name="geometry">
@@ -119,6 +119,9 @@
     <property name="text">
      <string>Desactivé</string>
     </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
    </widget>
   </widget>
   <widget class="QWidget" name="widget_autoLock" native="true">
@@ -157,6 +160,9 @@
     </property>
     <property name="text">
      <string>Desactivé</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

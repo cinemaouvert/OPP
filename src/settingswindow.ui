@@ -56,10 +56,24 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit_VLCPath"/>
+      <widget class="QLineEdit" name="lineEdit_VLCPath">
+       <property name="text">
+        <string>chemin/vers/vlc</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_intertitlePath"/>
+      <widget class="QLineEdit" name="lineEdit_intertitlePath">
+       <property name="text">
+        <string>chemin/vers/carton</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_testPatternPath">
@@ -83,7 +97,14 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_testPatternPath"/>
+      <widget class="QLineEdit" name="lineEdit_testPatternPath">
+       <property name="text">
+        <string>chemin/vers/mire</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_intertitlePath">
@@ -107,7 +128,14 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="lineEdit_moviesPath"/>
+      <widget class="QLineEdit" name="lineEdit_moviesPath">
+       <property name="text">
+        <string>chemin/vers/films</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
      </item>
      <item row="3" column="2">
       <widget class="QPushButton" name="pushButton_moviesPath">

@@ -20,23 +20,26 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="Resume">
       <attribute name="title">
        <string>Résumé</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="margin">
+        <number>0</number>
+       </property>
        <item>
-        <widget class="QLabel" name="label_resume">
-         <property name="text">
-          <string> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in sem tellus, vitae posuere ante. Curabitur ultrices ultrices luctus. Sed mattis adipiscing iaculis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum libero urna, faucibus a imperdiet nec, posuere sit amet mauris. Lorem ipsum dolor sit. </string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
+        <widget class="QTextEdit" name="textEdit">
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Quand on commence quelque chose, il faut aller jusqu'au bout !&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Nombre de films : 6&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
@@ -47,16 +50,17 @@
        <string>Détails</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="margin">
+        <number>0</number>
+       </property>
        <item>
-        <widget class="QLabel" name="label_detail">
-         <property name="text">
-          <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis sem eros, vitae congue libero. Cras accumsan nibh in tortor pretium porttitor. Sed mauris nisi, semper id semper sit amet, congue quis lacus. Nunc euismod, ipsum a scelerisque vestibulum, arcu urna malesuada diam, at tristique leo elit non lorem. Nulla. </string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
+        <widget class="QTextEdit" name="textEdit_2">
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis sem eros, vitae congue libero. Cras accumsan nibh in tortor pretium porttitor. Sed mauris nisi, semper id semper sit amet, congue quis lacus. Nunc euismod, ipsum a scelerisque vestibulum, arcu urna malesuada diam, at tristique leo elit non lorem. Nulla. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
@@ -67,16 +71,17 @@
        <string>Log</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="margin">
+        <number>0</number>
+       </property>
        <item>
-        <widget class="QLabel" name="label_log">
-         <property name="text">
-          <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut ipsum et lectus viverra gravida vitae non leo. Aliquam vitae urna posuere risus fermentum tempus. Maecenas id leo sed quam sagittis dignissim. Praesent id odio vel leo ultricies ultrices. Pellentesque condimentum eros vitae orci varius vitae lobortis erat commodo. Pellentesque. </string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
+        <widget class="QTextEdit" name="textEdit_3">
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut ipsum et lectus viverra gravida vitae non leo. Aliquam vitae urna posuere risus fermentum tempus. Maecenas id leo sed quam sagittis dignissim. Praesent id odio vel leo ultricies ultrices. Pellentesque condimentum eros vitae orci varius vitae lobortis erat commodo. Pellentesque. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
