@@ -1,13 +1,13 @@
 #ifndef SETTINGSWINDOW_H
 #define SETTINGSWINDOW_H
 
-#include <QMainWindow>
+#include <QDialog>
 
 namespace Ui {
 class SettingsWindow;
 }
 
-class SettingsWindow : public QMainWindow
+class SettingsWindow : public QDialog
 {
     Q_OBJECT
     
