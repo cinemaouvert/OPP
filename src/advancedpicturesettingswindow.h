@@ -1,13 +1,13 @@
 #ifndef ADVANCEDPICTURESETTINGSWINDOW_H
 #define ADVANCEDPICTURESETTINGSWINDOW_H
 
-#include <QMainWindow>
+#include <QDialog>
 
 namespace Ui {
 class AdvancedPictureSettingsWindow;
 }
 
-class AdvancedPictureSettingsWindow : public QMainWindow
+class AdvancedPictureSettingsWindow : public QDialog
 {
     Q_OBJECT
     

@@ -2,7 +2,7 @@
 #include "ui_advancedpicturesettingswindow.h"
 
 AdvancedPictureSettingsWindow::AdvancedPictureSettingsWindow(QWidget *parent) :
-    QMainWindow(parent),
+    QDialog(parent),
     ui(new Ui::AdvancedPictureSettingsWindow)
 {
     ui->setupUi(this);
