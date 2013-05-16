@@ -13,91 +13,78 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QTabWidget" name="tabWidget">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>490</width>
-     <height>244</height>
-    </rect>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="margin">
+    <number>1</number>
    </property>
-   <property name="currentIndex">
-    <number>2</number>
-   </property>
-   <widget class="QWidget" name="Resume">
-    <attribute name="title">
-     <string>Résumé</string>
-    </attribute>
-    <widget class="QLabel" name="label_resume">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>490</width>
-       <height>211</height>
-      </rect>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>2</number>
      </property>
-     <property name="text">
-      <string> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in sem tellus, vitae posuere ante. Curabitur ultrices ultrices luctus. Sed mattis adipiscing iaculis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum libero urna, faucibus a imperdiet nec, posuere sit amet mauris. Lorem ipsum dolor sit. </string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
+     <widget class="QWidget" name="Resume">
+      <attribute name="title">
+       <string>Résumé</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label_resume">
+         <property name="text">
+          <string> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in sem tellus, vitae posuere ante. Curabitur ultrices ultrices luctus. Sed mattis adipiscing iaculis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum libero urna, faucibus a imperdiet nec, posuere sit amet mauris. Lorem ipsum dolor sit. </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Detail">
+      <attribute name="title">
+       <string>Détails</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_detail">
+         <property name="text">
+          <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis sem eros, vitae congue libero. Cras accumsan nibh in tortor pretium porttitor. Sed mauris nisi, semper id semper sit amet, congue quis lacus. Nunc euismod, ipsum a scelerisque vestibulum, arcu urna malesuada diam, at tristique leo elit non lorem. Nulla. </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Log">
+      <attribute name="title">
+       <string>Log</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_log">
+         <property name="text">
+          <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut ipsum et lectus viverra gravida vitae non leo. Aliquam vitae urna posuere risus fermentum tempus. Maecenas id leo sed quam sagittis dignissim. Praesent id odio vel leo ultricies ultrices. Pellentesque condimentum eros vitae orci varius vitae lobortis erat commodo. Pellentesque. </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
-   </widget>
-   <widget class="QWidget" name="Detail">
-    <attribute name="title">
-     <string>Détails</string>
-    </attribute>
-    <widget class="QLabel" name="label_detail">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>490</width>
-       <height>211</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis sem eros, vitae congue libero. Cras accumsan nibh in tortor pretium porttitor. Sed mauris nisi, semper id semper sit amet, congue quis lacus. Nunc euismod, ipsum a scelerisque vestibulum, arcu urna malesuada diam, at tristique leo elit non lorem. Nulla. </string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="Log">
-    <attribute name="title">
-     <string>Log</string>
-    </attribute>
-    <widget class="QLabel" name="label_log">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>490</width>
-       <height>211</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut ipsum et lectus viverra gravida vitae non leo. Aliquam vitae urna posuere risus fermentum tempus. Maecenas id leo sed quam sagittis dignissim. Praesent id odio vel leo ultricies ultrices. Pellentesque condimentum eros vitae orci varius vitae lobortis erat commodo. Pellentesque. </string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </widget>
-  </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
