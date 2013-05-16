@@ -14,151 +14,89 @@
    <string>OPP</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QFrame" name="verticalFrame_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>490</width>
-      <height>731</height>
-     </rect>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>500</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <widget class="ResumeDetailsWidget" name="ResumeDetail" native="true">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>490</width>
-       <height>244</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="AutomationWidget" name="Automisation" native="true">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>244</y>
-       <width>490</width>
-       <height>244</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>130</x>
-        <y>70</y>
-        <width>111</width>
-        <height>17</height>
-       </rect>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QFrame" name="verticalFrame_2">
+      <property name="maximumSize">
+       <size>
+        <width>500</width>
+        <height>16777215</height>
+       </size>
       </property>
-      <property name="text">
-       <string/>
-      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="ResumeDetailsWidget" name="ResumeDetail" native="true"/>
+       </item>
+       <item>
+        <widget class="AutomationWidget" name="Automisation" native="true">
+         <widget class="QLabel" name="label_2">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>70</y>
+            <width>111</width>
+            <height>17</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="BinWidget" name="Chutier" native="true"/>
+       </item>
+      </layout>
      </widget>
-    </widget>
-    <widget class="BinWidget" name="Chutier" native="true">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>488</y>
-       <width>490</width>
-       <height>243</height>
-      </rect>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QFrame" name="verticalFrame">
-    <property name="geometry">
-     <rect>
-      <x>500</x>
-      <y>0</y>
-      <width>970</width>
-      <height>731</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>388</width>
-      <height>0</height>
-     </size>
-    </property>
-    <widget class="QFrame" name="horizontalFrame">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>970</width>
-       <height>400</height>
-      </rect>
-     </property>
-     <widget class="QFrame" name="verticalFrame_3">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>780</width>
-        <height>400</height>
-       </rect>
+    </item>
+    <item>
+     <widget class="QFrame" name="verticalFrame">
+      <property name="minimumSize">
+       <size>
+        <width>388</width>
+        <height>0</height>
+       </size>
       </property>
-      <widget class="PreviewWidget" name="Vignettes" native="true">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>780</width>
-         <height>165</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="ParametersWidget" name="Parametres" native="true">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>165</y>
-         <width>780</width>
-         <height>235</height>
-        </rect>
-       </property>
-      </widget>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QFrame" name="horizontalFrame">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QFrame" name="verticalFrame_3">
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <widget class="PreviewWidget" name="Vignettes" native="true"/>
+             </item>
+             <item>
+              <widget class="ParametersWidget" name="Parametres" native="true"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="SaturationWidget" name="VisualisationSon" native="true"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="PlaylistsWidget" name="Playlists" native="true"/>
+       </item>
+       <item>
+        <widget class="ControlsWidget" name="ControleLecture" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
-     <widget class="SaturationWidget" name="VisualisationSon" native="true">
-      <property name="geometry">
-       <rect>
-        <x>780</x>
-        <y>0</y>
-        <width>190</width>
-        <height>400</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-    <widget class="PlaylistsWidget" name="Playlists" native="true">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>400</y>
-       <width>970</width>
-       <height>280</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="ControlsWidget" name="ControleLecture" native="true">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>680</y>
-       <width>970</width>
-       <height>50</height>
-      </rect>
-     </property>
-    </widget>
-   </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
