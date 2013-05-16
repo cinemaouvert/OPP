@@ -29,7 +29,7 @@
     <attribute name="title">
      <string>Tab 1</string>
     </attribute>
-    <widget class="QTableWidget" name="tableWidget">
+    <widget class="QTableWidget" name="tableWidget_playlist">
      <property name="geometry">
       <rect>
        <x>0</x>
