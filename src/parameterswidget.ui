@@ -643,6 +643,19 @@ p, li { white-space: pre-wrap; }
     <string>Réglages image avancés</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>540</x>
+     <y>210</y>
+     <width>221</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Verrouillage</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
