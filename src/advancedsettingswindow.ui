@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Réglages avancés</string>
+   <string>Advanced settings</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
@@ -47,7 +50,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="label_testPattern">
           <property name="text">
-           <string>Mire</string>
+           <string>Test pattern</string>
           </property>
          </widget>
         </item>
@@ -55,12 +58,12 @@
          <widget class="QComboBox" name="comboBox_testPattern">
           <item>
            <property name="text">
-            <string>Activée</string>
+            <string>Activated</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Désactivée</string>
+            <string>Inactive</string>
            </property>
           </item>
          </widget>
@@ -68,7 +71,7 @@
         <item row="1" column="0">
          <widget class="QLabel" name="label_inMark">
           <property name="text">
-           <string>Point d'entrée</string>
+           <string>In mark</string>
           </property>
          </widget>
         </item>
@@ -82,7 +85,7 @@
         <item row="2" column="0">
          <widget class="QLabel" name="label_outMark">
           <property name="text">
-           <string>Point de sortie</string>
+           <string>Out mark</string>
           </property>
          </widget>
         </item>
@@ -96,7 +99,7 @@
         <item row="3" column="0">
          <widget class="QLabel" name="label_originalLength">
           <property name="text">
-           <string>Durée originale</string>
+           <string>Original length</string>
           </property>
          </widget>
         </item>
@@ -110,7 +113,7 @@
         <item row="4" column="0">
          <widget class="QLabel" name="label_modifiedLength">
           <property name="text">
-           <string>Durée recoupée</string>
+           <string>Modified length</string>
           </property>
          </widget>
         </item>
@@ -254,7 +257,7 @@
       <item>
        <widget class="QPushButton" name="pushButton_attachment">
         <property name="text">
-         <string>Récupérer les pièces jointes du film</string>
+         <string>Download attachment files</string>
         </property>
        </widget>
       </item>
