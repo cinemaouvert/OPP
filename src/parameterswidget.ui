@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Parameters</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="margin">
@@ -35,7 +38,7 @@
          <bool>false</bool>
         </property>
         <property name="title">
-         <string>Général</string>
+         <string>General</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
@@ -44,14 +47,14 @@
             <set>Qt::AlignHCenter|Qt::AlignTop</set>
            </property>
            <item row="0" column="0">
-            <widget class="QLabel" name="pisteAudioLabel">
+            <widget class="QLabel" name="label_audioTrack">
              <property name="text">
-              <string> Piste audio : </string>
+              <string>Audio track</string>
              </property>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QComboBox" name="pisteAudioComboBox">
+            <widget class="QComboBox" name="comboBox_audioTrack">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -66,14 +69,14 @@
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="pisteVidOLabel">
+            <widget class="QLabel" name="label_videoTrack">
              <property name="text">
-              <string> Piste vidéo : </string>
+              <string>Video track</string>
              </property>
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QComboBox" name="pisteVidOComboBox">
+            <widget class="QComboBox" name="comboBox_videoTrack">
              <item>
               <property name="text">
                <string>Français</string>
@@ -82,14 +85,14 @@
             </widget>
            </item>
            <item row="2" column="0">
-            <widget class="QLabel" name="pisteSousTitresLabel">
+            <widget class="QLabel" name="label_subtitlesTrack">
              <property name="text">
-              <string> Piste sous-titres :</string>
+              <string>Subtitles track</string>
              </property>
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QComboBox" name="pisteSousTitresComboBox">
+            <widget class="QComboBox" name="comboBox_subtitlesTrack">
              <item>
               <property name="text">
                <string>Français</string>
@@ -108,28 +111,28 @@
             </widget>
            </item>
            <item row="3" column="0">
-            <widget class="QLabel" name="snchroLabel">
+            <widget class="QLabel" name="label_subtitlesSync">
              <property name="text">
-              <string> Synchro sous-titres : </string>
+              <string>Subtitles sync</string>
              </property>
             </widget>
            </item>
            <item row="3" column="1">
-            <widget class="QDoubleSpinBox" name="snchroDoubleSpinBox">
+            <widget class="QDoubleSpinBox" name="doubleSpinBox_subtitlesSync">
              <property name="minimum">
               <double>-99.900000000000006</double>
              </property>
             </widget>
            </item>
            <item row="4" column="0">
-            <widget class="QLabel" name="ratioImageLabel">
+            <widget class="QLabel" name="label_ratio">
              <property name="text">
-              <string> Ratio image : </string>
+              <string>Ratio</string>
              </property>
             </widget>
            </item>
            <item row="4" column="1">
-            <widget class="QComboBox" name="ratioImageComboBox">
+            <widget class="QComboBox" name="comboBox_ration">
              <item>
               <property name="text">
                <string>4/3</string>
@@ -145,7 +148,7 @@
       <item>
        <widget class="QPushButton" name="pushButton_advancedSettings">
         <property name="text">
-         <string>         Réglages avancés</string>
+         <string>         Advanced settings</string>
         </property>
         <property name="icon">
          <iconset>
@@ -171,7 +174,7 @@
       <item>
        <widget class="QGroupBox" name="groupBox_2">
         <property name="title">
-         <string>Image</string>
+         <string>Picture</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
@@ -180,42 +183,42 @@
             <set>Qt::AlignHCenter|Qt::AlignTop</set>
            </property>
            <item row="0" column="0">
-            <widget class="QLabel" name="gammaLabel">
+            <widget class="QLabel" name="label_gamma">
              <property name="text">
-              <string> Gamma : </string>
+              <string>Gamma</string>
              </property>
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="contrastLabel">
+            <widget class="QLabel" name="label_contrast">
              <property name="text">
-              <string> Contraste : </string>
+              <string> Contrast</string>
              </property>
             </widget>
            </item>
            <item row="2" column="0">
-            <widget class="QLabel" name="luminositLabel">
+            <widget class="QLabel" name="label_brightness">
              <property name="text">
-              <string> Luminosité : </string>
+              <string>Brightness</string>
              </property>
             </widget>
            </item>
            <item row="3" column="0">
-            <widget class="QLabel" name="saturationLabel">
+            <widget class="QLabel" name="label_saturation">
              <property name="text">
-              <string> Saturation : </string>
+              <string>Saturation</string>
              </property>
             </widget>
            </item>
            <item row="4" column="0">
-            <widget class="QLabel" name="teinteLabel">
+            <widget class="QLabel" name="label_hue">
              <property name="text">
-              <string> Teinte : </string>
+              <string>Hue</string>
              </property>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QSpinBox" name="gammaSpinBox">
+            <widget class="QSpinBox" name="spinBox_gamma">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -228,7 +231,7 @@
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QSpinBox" name="contrastSpinBox">
+            <widget class="QSpinBox" name="spinBox_contrast">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -241,7 +244,7 @@
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QSpinBox" name="luminositSpinBox">
+            <widget class="QSpinBox" name="spinBox_brightness">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -254,7 +257,7 @@
             </widget>
            </item>
            <item row="3" column="1">
-            <widget class="QSpinBox" name="saturationSpinBox">
+            <widget class="QSpinBox" name="spinBox_saturation">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -267,7 +270,7 @@
             </widget>
            </item>
            <item row="4" column="1">
-            <widget class="QSpinBox" name="teinteSpinBox">
+            <widget class="QSpinBox" name="spinBox_hue">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -287,7 +290,7 @@
       <item>
        <widget class="QPushButton" name="pushButton_advancedPictureSettings">
         <property name="text">
-         <string>      Réglages images avancés</string>
+         <string>      Advanced picture settings</string>
         </property>
         <property name="icon">
          <iconset>
@@ -315,7 +318,7 @@
       <item>
        <widget class="QGroupBox" name="groupBox_3">
         <property name="title">
-         <string>Son</string>
+         <string>Sound</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
@@ -327,42 +330,42 @@
             <set>Qt::AlignHCenter|Qt::AlignTop</set>
            </property>
            <item row="0" column="0">
-            <widget class="QLabel" name="synchroAudioLabel">
+            <widget class="QLabel" name="label_audioSync">
              <property name="text">
-              <string> Synchro audio : </string>
+              <string>Audio sync</string>
              </property>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QSpinBox" name="synchroAudioSpinBox">
+            <widget class="QSpinBox" name="spinBox_audioSync">
              <property name="minimum">
               <number>-99</number>
              </property>
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="gainAudioLabel">
+            <widget class="QLabel" name="label_audioGain">
              <property name="text">
-              <string> Gain audio : </string>
+              <string>Audio gain</string>
              </property>
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QSpinBox" name="gainAudioSpinBox">
+            <widget class="QSpinBox" name="spinBox_audioGain">
              <property name="minimum">
               <number>-99</number>
              </property>
             </widget>
            </item>
            <item row="2" column="0">
-            <widget class="QLabel" name="normalisationLabel">
+            <widget class="QLabel" name="label_normalization">
              <property name="text">
-              <string> Normalisation : </string>
+              <string>Normalization</string>
              </property>
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QComboBox" name="normalisationComboBox">
+            <widget class="QComboBox" name="comboBox_normalization">
              <item>
               <property name="text">
                <string>On</string>
@@ -383,7 +386,7 @@
       <item>
        <widget class="QPushButton" name="pushButton_lock">
         <property name="text">
-         <string>         Verrouillage</string>
+         <string>         Lock</string>
         </property>
         <property name="icon">
          <iconset>
