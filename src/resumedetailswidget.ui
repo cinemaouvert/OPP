@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Details</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="margin">
@@ -20,11 +23,11 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
-     <widget class="QWidget" name="Resume">
+     <widget class="QWidget" name="Summary">
       <attribute name="title">
-       <string>Résumé</string>
+       <string>Summary</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <property name="margin">
@@ -47,7 +50,7 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QWidget" name="Detail">
       <attribute name="title">
-       <string>Détails</string>
+       <string>Details</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="margin">
