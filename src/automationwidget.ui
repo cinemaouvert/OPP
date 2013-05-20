@@ -11,13 +11,16 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Automation</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Automatisation</string>
+      <string>Automation</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
@@ -124,17 +127,17 @@
         </row>
         <column>
          <property name="text">
-          <string>Séance</string>
+          <string>Playlist</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Début</string>
+          <string>Begin</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Fin</string>
+          <string>End</string>
          </property>
         </column>
         <item row="0" column="0">
@@ -159,12 +162,12 @@
         <item>
          <widget class="QLabel" name="label_delay1">
           <property name="text">
-           <string>Retarder l'automatisation de</string>
+           <string>Delay the automation of</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox_delai"/>
+         <widget class="QSpinBox" name="spinBox_delay"/>
         </item>
         <item>
          <widget class="QLabel" name="label_delay2">
@@ -176,7 +179,7 @@
         <item>
          <widget class="QPushButton" name="pushButton_delay">
           <property name="text">
-           <string>Retarder</string>
+           <string>Delay</string>
           </property>
          </widget>
         </item>
@@ -185,7 +188,7 @@
       <item>
        <widget class="QPushButton" name="pushButton_stop">
         <property name="text">
-         <string>Stopper l'automatisation</string>
+         <string>Stop the automation</string>
         </property>
        </widget>
       </item>
