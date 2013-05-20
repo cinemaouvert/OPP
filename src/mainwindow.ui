@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>OPP</string>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <property name="margin">
@@ -34,24 +37,10 @@
         <widget class="ResumeDetailsWidget" name="ResumeDetail" native="true"/>
        </item>
        <item>
-        <widget class="AutomationWidget" name="Automisation" native="true">
-         <widget class="QLabel" name="label_2">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>70</y>
-            <width>111</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </widget>
+        <widget class="AutomationWidget" name="Automation" native="true"/>
        </item>
        <item>
-        <widget class="BinWidget" name="Chutier" native="true"/>
+        <widget class="BinWidget" name="Bin" native="true"/>
        </item>
       </layout>
      </widget>
@@ -81,16 +70,16 @@
               <number>1</number>
              </property>
              <item>
-              <widget class="PreviewWidget" name="Vignettes" native="true"/>
+              <widget class="PreviewWidget" name="Timeline" native="true"/>
              </item>
              <item>
-              <widget class="ParametersWidget" name="Parametres" native="true"/>
+              <widget class="ParametersWidget" name="Parameters" native="true"/>
              </item>
             </layout>
            </widget>
           </item>
           <item>
-           <widget class="SaturationWidget" name="VisualisationSon" native="true">
+           <widget class="SaturationWidget" name="SoundVisualization" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -113,7 +102,7 @@
         </widget>
        </item>
        <item>
-        <widget class="ControlsWidget" name="ControleLecture" native="true">
+        <widget class="ControlsWidget" name="Controls" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -138,7 +127,7 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>Fichier</string>
+     <string>File</string>
     </property>
     <addaction name="action_newListing"/>
     <addaction name="action_openListing"/>
@@ -149,7 +138,7 @@
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
-     <string>Édition</string>
+     <string>Edit</string>
     </property>
     <addaction name="action_copy"/>
     <addaction name="action_paste"/>
@@ -158,9 +147,10 @@
    </widget>
    <widget class="QMenu" name="menuDisplay">
     <property name="title">
-     <string>Affichage</string>
+     <string>Display</string>
     </property>
     <addaction name="action_testPattern"/>
+    <addaction name="separator"/>
     <addaction name="action_automation"/>
     <addaction name="action_output"/>
     <addaction name="action_resumeDetails"/>
@@ -176,7 +166,7 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Aide</string>
+     <string>Help</string>
     </property>
     <addaction name="action_help"/>
     <addaction name="action_update"/>
@@ -191,32 +181,32 @@
   <widget class="QStatusBar" name="StatusBar"/>
   <action name="action_newListing">
    <property name="text">
-    <string>Nouvelle programmation</string>
+    <string>New listing</string>
    </property>
   </action>
   <action name="action_openListing">
    <property name="text">
-    <string>Ouvrir une programmation</string>
+    <string>Open a listing</string>
    </property>
   </action>
   <action name="action_saveAs">
    <property name="text">
-    <string>Enregistrer sous</string>
+    <string>Save as</string>
    </property>
   </action>
   <action name="action_printConduct">
    <property name="text">
-    <string>Imprimer conduite</string>
+    <string>Print conduct</string>
    </property>
   </action>
   <action name="action_layout">
    <property name="text">
-    <string>Mise en page</string>
+    <string>Layout</string>
    </property>
   </action>
   <action name="action_quit">
    <property name="text">
-    <string>Quitter</string>
+    <string>Quit</string>
    </property>
   </action>
   <action name="action_copy">
@@ -231,17 +221,17 @@
   </action>
   <action name="action_cancel">
    <property name="text">
-    <string>Annuler</string>
+    <string>Cancel</string>
    </property>
   </action>
   <action name="action_import">
    <property name="text">
-    <string>Importer</string>
+    <string>Import</string>
    </property>
   </action>
   <action name="action_testPattern">
    <property name="text">
-    <string>Lire une mire</string>
+    <string>Play a test pattern</string>
    </property>
   </action>
   <action name="action_automation">
@@ -252,7 +242,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Automatisation</string>
+    <string>Automation</string>
    </property>
   </action>
   <action name="action_output">
@@ -263,7 +253,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Sortie</string>
+    <string>Output</string>
    </property>
   </action>
   <action name="action_resumeDetails">
@@ -274,7 +264,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Résumé/Détails</string>
+    <string>Summary/Details</string>
    </property>
   </action>
   <action name="action_bin">
@@ -285,7 +275,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Répertoire de la programmation</string>
+    <string>Bin</string>
    </property>
   </action>
   <action name="action_statusBar">
@@ -296,32 +286,32 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Barre d'état</string>
+    <string>Status bar</string>
    </property>
   </action>
   <action name="action_settings">
    <property name="text">
-    <string>Préférences</string>
+    <string>Settings</string>
    </property>
   </action>
   <action name="action_lockSettings">
    <property name="text">
-    <string>Configurer le verrouillage</string>
+    <string>Lock settings</string>
    </property>
   </action>
   <action name="action_help">
    <property name="text">
-    <string>Aide</string>
+    <string>Help</string>
    </property>
   </action>
   <action name="action_update">
    <property name="text">
-    <string>Mise à jour</string>
+    <string>Update</string>
    </property>
   </action>
   <action name="action_about">
    <property name="text">
-    <string>À propos</string>
+    <string>About</string>
    </property>
   </action>
  </widget>
