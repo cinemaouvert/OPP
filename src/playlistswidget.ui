@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Playlists</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="margin">
@@ -82,17 +85,17 @@
          </row>
          <column>
           <property name="text">
-           <string>Titre</string>
+           <string>Title</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Durée</string>
+           <string>Length</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Vidéo</string>
+           <string>Video</string>
           </property>
          </column>
          <column>
@@ -102,17 +105,17 @@
          </column>
          <column>
           <property name="text">
-           <string>Sous titre</string>
+           <string>Subtitles</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Mire</string>
+           <string>Test pattern</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Etat</string>
+           <string>Status</string>
           </property>
          </column>
          <item row="0" column="0">
