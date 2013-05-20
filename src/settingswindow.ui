@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Paramètres</string>
+   <string>Parameters</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
@@ -23,7 +26,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>Chemins des composants externes</string>
+    <string>Paths to external components</string>
    </property>
    <widget class="QDialogButtonBox" name="buttonBox_OkCancel">
     <property name="geometry">
@@ -51,7 +54,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="label_VLCPath">
        <property name="text">
-        <string>Chemin vers VLC</string>
+        <string>Path to VLC</string>
        </property>
       </widget>
      </item>
@@ -78,21 +81,21 @@
      <item row="1" column="0">
       <widget class="QLabel" name="label_testPatternPath">
        <property name="text">
-        <string>Chemin vers la mire</string>
+        <string>Path to the test pattern</string>
        </property>
       </widget>
      </item>
      <item row="0" column="2">
       <widget class="QPushButton" name="pushButton_VLCPath">
        <property name="text">
-        <string>Parcourir</string>
+        <string>Browse</string>
        </property>
       </widget>
      </item>
      <item row="1" column="2">
       <widget class="QPushButton" name="pushButton_testPatternPath">
        <property name="text">
-        <string>Parcourir</string>
+        <string>Browse</string>
        </property>
       </widget>
      </item>
@@ -109,21 +112,21 @@
      <item row="2" column="0">
       <widget class="QLabel" name="label_intertitlePath">
        <property name="text">
-        <string>Chemin vers le carton par défaut</string>
+        <string>Path to the default intertitle</string>
        </property>
       </widget>
      </item>
      <item row="2" column="2">
       <widget class="QPushButton" name="pushButton_intertitlePath">
        <property name="text">
-        <string>Parcourir</string>
+        <string>Browse</string>
        </property>
       </widget>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="label_moviesPath">
        <property name="text">
-        <string>Chemin par défaut des films</string>
+        <string>Default path to movies</string>
        </property>
       </widget>
      </item>
@@ -140,7 +143,7 @@
      <item row="3" column="2">
       <widget class="QPushButton" name="pushButton_moviesPath">
        <property name="text">
-        <string>Parcourir</string>
+        <string>Browse</string>
        </property>
       </widget>
      </item>
