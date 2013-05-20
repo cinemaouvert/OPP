@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Réglages image avancés</string>
+   <string>Advanced picture settings</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
@@ -49,7 +52,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_trim">
         <property name="text">
-         <string>Rogner</string>
+         <string>Trim</string>
         </property>
        </widget>
       </item>
@@ -59,7 +62,7 @@
       <item row="2" column="0">
        <widget class="QLabel" name="label_deinterlace">
         <property name="text">
-         <string>Désentrelacer</string>
+         <string>Deinterlace</string>
         </property>
        </widget>
       </item>
@@ -80,7 +83,7 @@
       <item row="3" column="0">
        <widget class="QLabel" name="label_deinterlaceMode">
         <property name="text">
-         <string>Mode de désentrelacement</string>
+         <string>Deinterlace mode</string>
         </property>
        </widget>
       </item>
@@ -90,7 +93,7 @@
       <item row="4" column="0">
        <widget class="QLabel" name="label_postProcessing">
         <property name="text">
-         <string>Post-traitement</string>
+         <string>Post-processing</string>
         </property>
        </widget>
       </item>
@@ -143,21 +146,24 @@
     </item>
     <item>
      <widget class="QGroupBox" name="gridGroupBox">
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="title">
-       <string>Rognage avancé</string>
+       <string>Advanced trim</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="1" column="0">
         <widget class="QLabel" name="label_left">
          <property name="text">
-          <string>Gauche</string>
+          <string>Left</string>
          </property>
         </widget>
        </item>
        <item row="0" column="2">
         <widget class="QLabel" name="label_up">
          <property name="text">
-          <string>Haut</string>
+          <string>Up</string>
          </property>
         </widget>
        </item>
@@ -185,7 +191,7 @@
        <item row="1" column="4">
         <widget class="QLabel" name="label_right">
          <property name="text">
-          <string>Droite</string>
+          <string>Right</string>
          </property>
         </widget>
        </item>
@@ -202,7 +208,7 @@
        <item row="2" column="2">
         <widget class="QLabel" name="label_down">
          <property name="text">
-          <string>Bas</string>
+          <string>Down</string>
          </property>
         </widget>
        </item>
@@ -212,14 +218,14 @@
     <item>
      <widget class="QCheckBox" name="checkBox_upDownSync">
       <property name="text">
-       <string>Synchroniser haut et bas</string>
+       <string>Synchronize up and down</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QCheckBox" name="checkBox_leftRightSync">
       <property name="text">
-       <string>Synchroniser gauche et droite</string>
+       <string>Synchronize left and right</string>
       </property>
      </widget>
     </item>
