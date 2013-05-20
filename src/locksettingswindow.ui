@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Verrouillage</string>
+   <string>Lock</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QLabel" name="label_password">
    <property name="geometry">
@@ -23,7 +26,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Mot de passe :</string>
+    <string>Password</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_autoLock">
@@ -36,7 +39,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Verrouillage automatique :</string>
+    <string>Automatic lock</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_lockdelay">
@@ -49,10 +52,10 @@
     </rect>
    </property>
    <property name="text">
-    <string>Délai de verrouillage :</string>
+    <string>Lock delay</string>
    </property>
   </widget>
-  <widget class="QSpinBox" name="spinBox">
+  <widget class="QSpinBox" name="spinBox_delay">
    <property name="geometry">
     <rect>
      <x>320</x>
@@ -75,7 +78,7 @@
     <string>minutes</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="lineEdit_password">
    <property name="geometry">
     <rect>
      <x>290</x>
@@ -99,12 +102,12 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>82</width>
+      <width>111</width>
       <height>17</height>
      </rect>
     </property>
     <property name="text">
-     <string>Activé</string>
+     <string>Activated</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="radioButton_passwordOff">
@@ -117,7 +120,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Desactivé</string>
+     <string>Inactive</string>
     </property>
     <property name="checked">
      <bool>true</bool>
@@ -138,7 +141,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>82</width>
+      <width>111</width>
       <height>17</height>
      </rect>
     </property>
@@ -146,7 +149,7 @@
      <enum>Qt::DefaultContextMenu</enum>
     </property>
     <property name="text">
-     <string>Activé</string>
+     <string>Activated</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="radioButton_autoLockOff">
@@ -159,7 +162,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Desactivé</string>
+     <string>Inactive</string>
     </property>
     <property name="checked">
      <bool>true</bool>
