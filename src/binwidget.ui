@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Bin</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -20,7 +23,7 @@
       <string notr="true">border-color: rgb(0, 0, 0);</string>
      </property>
      <property name="title">
-      <string>Répertoire de programmation</string>
+      <string>Bin</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="margin">
@@ -31,7 +34,7 @@
         <item>
          <widget class="QPushButton" name="pushButton_add">
           <property name="text">
-           <string>          Ajouter un film</string>
+           <string>          Add a movie</string>
           </property>
           <property name="icon">
            <iconset>
@@ -42,7 +45,7 @@
         <item>
          <widget class="QPushButton" name="pushButton_delete">
           <property name="text">
-           <string>         Supprimer</string>
+           <string>         Delete</string>
           </property>
           <property name="icon">
            <iconset>
@@ -104,17 +107,17 @@
         </row>
         <column>
          <property name="text">
-          <string>Nom</string>
+          <string>Name</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Durée</string>
+          <string>Length</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Utilisé</string>
+          <string>Used</string>
          </property>
         </column>
         <column>
@@ -124,7 +127,7 @@
         </column>
         <column>
          <property name="text">
-          <string>Emplacement</string>
+          <string>Location</string>
          </property>
         </column>
         <item row="0" column="0">
