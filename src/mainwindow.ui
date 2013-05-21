@@ -211,12 +211,12 @@
   </action>
   <action name="action_copy">
    <property name="text">
-    <string>Copier</string>
+    <string>Copy</string>
    </property>
   </action>
   <action name="action_paste">
    <property name="text">
-    <string>Coller</string>
+    <string>Paste</string>
    </property>
   </action>
   <action name="action_cancel">
