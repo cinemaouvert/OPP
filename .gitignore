@@ -62,6 +62,7 @@ plugin_commonU.def
 *.pro.user
 =======
 *.pro.user*
+*.qrc.autosave
 *~
 
 # Failed patch
