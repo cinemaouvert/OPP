@@ -26,7 +26,16 @@
       <string>Bin</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
-      <property name="margin">
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
        <number>1</number>
       </property>
       <item>
@@ -37,8 +46,8 @@
            <string>          Add a movie</string>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>icons/icon_plus.png</normaloff>icons/icon_plus.png</iconset>
+           <iconset resource="../images.qrc">
+            <normaloff>:/icons/resources/icons/icon_plus.png</normaloff>:/icons/resources/icons/icon_plus.png</iconset>
           </property>
          </widget>
         </item>
@@ -48,8 +57,8 @@
            <string>         Delete</string>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>icons/icon_delete.png</normaloff>icons/icon_delete.png</iconset>
+           <iconset resource="../images.qrc">
+            <normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</iconset>
           </property>
          </widget>
         </item>
@@ -287,6 +296,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../images.qrc"/>
+ </resources>
  <connections/>
 </ui>
