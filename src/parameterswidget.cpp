@@ -1,5 +1,8 @@
 #include "parameterswidget.h"
 #include "ui_parameterswidget.h"
+#include "advancedsettingswindow.h"
+#include "advancedpicturesettingswindow.h"
+#include "locksettingswindow.h"
 
 ParametersWidget::ParametersWidget(QWidget *parent) :
     QWidget(parent),
@@ -11,4 +14,28 @@ ParametersWidget::ParametersWidget(QWidget *parent) :
 ParametersWidget::~ParametersWidget()
 {
     delete ui;
+}
+
+void ParametersWidget::on_pushButton_advancedSettings_clicked()
+{
+    advancedSettingsWindow = new AdvancedSettingsWindow(this);
+    advancedSettingsWindow->show();
+    advancedSettingsWindow->raise();
+    advancedSettingsWindow->activateWindow();
+}
+
+void ParametersWidget::on_pushButton_advancedPictureSettings_clicked()
+{
+    advancedPictureSettingsWindow = new AdvancedPictureSettingsWindow(this);
+    advancedPictureSettingsWindow->show();
+    advancedPictureSettingsWindow->raise();
+    advancedPictureSettingsWindow->activateWindow();
+}
+
+void ParametersWidget::on_pushButton_lock_clicked()
+{
+    lockSettingsWindow = new LockSettingsWindow(this);
+    lockSettingsWindow->show();
+    lockSettingsWindow->raise();
+    lockSettingsWindow->activateWindow();
 }

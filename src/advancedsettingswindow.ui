@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AdvancedSettingsWindow</class>
+ <widget class="QDialog" name="AdvancedSettingsWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>804</width>
+    <height>513</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Advanced settings</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
+  <widget class="QWidget" name="horizontalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>781</width>
+     <height>491</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="label_title">
+        <property name="text">
+         <string>Film 6.mkv</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_picture">
+        <property name="text">
+         <string>Image</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QFormLayout" name="formLayout">
+        <property name="formAlignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_testPattern">
+          <property name="text">
+           <string>Test pattern</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="comboBox_testPattern">
+          <item>
+           <property name="text">
+            <string>Activated</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Inactive</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_inMark">
+          <property name="text">
+           <string>In mark</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QTimeEdit" name="timeEdit_inMark">
+          <property name="displayFormat">
+           <string>HH:mm:ss</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_outMark">
+          <property name="text">
+           <string>Out mark</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QTimeEdit" name="timeEdit_outMark">
+          <property name="displayFormat">
+           <string>HH:mm:ss</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_originalLength">
+          <property name="text">
+           <string>Original length</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLabel" name="label_originalLengthValue">
+          <property name="text">
+           <string>00:25:36</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_modifiedLength">
+          <property name="text">
+           <string>Modified length</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLabel" name="label_modifiedLengthValue">
+          <property name="text">
+           <string>00:25:36</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QDialogButtonBox" name="buttonBox_OKCancel">
+        <property name="standardButtons">
+         <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+        </property>
+        <property name="centerButtons">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QTableWidget" name="tableWidget_information">
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
+        <property name="columnCount">
+         <number>2</number>
+        </property>
+        <attribute name="horizontalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <row>
+         <property name="text">
+          <string>Nouvelle ligne</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>Nouvelle ligne</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>Nouvelle ligne</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>Nouvelle ligne</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>Nouvelle ligne</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>Nouvelle ligne</string>
+         </property>
+        </row>
+        <column/>
+        <column/>
+        <item row="0" column="0">
+         <property name="text">
+          <string>Titre</string>
+         </property>
+        </item>
+        <item row="0" column="1">
+         <property name="text">
+          <string>Cette fois c'est la fin ! Antoine face à son destin.</string>
+         </property>
+        </item>
+        <item row="1" column="0">
+         <property name="text">
+          <string>Flux 1</string>
+         </property>
+        </item>
+        <item row="1" column="1">
+         <property name="text">
+          <string>Vidéo / Codec : MPEG-1/2 Video (mpgv) / Résolution : 720x576 / Débit d'images : 50 / Format décodé: Planar 4:2:0 YUV</string>
+         </property>
+        </item>
+        <item row="2" column="0">
+         <property name="text">
+          <string>Flux 2</string>
+         </property>
+        </item>
+        <item row="2" column="1">
+         <property name="text">
+          <string>Audio / Codec : A52 Audio (aka AC3) (a52 ) / Canaux : Stéréo / Fréquence d'échantillonnage: 48000 Hz / Débit : 192 kb/s</string>
+         </property>
+        </item>
+        <item row="3" column="0">
+         <property name="text">
+          <string>Flux 3</string>
+         </property>
+        </item>
+        <item row="3" column="1">
+         <property name="text">
+          <string>Sous-titres / Codec : DVD Subtitles (spu ) / Langue : Français</string>
+         </property>
+        </item>
+        <item row="4" column="0">
+         <property name="text">
+          <string>Flux 4</string>
+         </property>
+        </item>
+        <item row="4" column="1">
+         <property name="text">
+          <string>Sous-titres / Codec : DVD Subtitles (spu ) / Langue : English</string>
+         </property>
+        </item>
+        <item row="5" column="0">
+         <property name="text">
+          <string>Flux 5</string>
+         </property>
+        </item>
+        <item row="5" column="1">
+         <property name="text">
+          <string>Sous-titres / Codec : DVD Subtitles (spu ) / Langue : 日本語</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_attachment">
+        <property name="text">
+         <string>Download attachment files</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

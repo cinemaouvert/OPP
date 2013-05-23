@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
+ <class>DetailsWidget</class>
  <widget class="QWidget" name="DetailsWidget">
   <property name="geometry">
    <rect>
@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Details</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
@@ -23,11 +26,11 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="Resume">
     <attribute name="title">
-     <string>Résumé</string>
+     <string>Summary</string>
     </attribute>
     <widget class="QLabel" name="label">
      <property name="geometry">
@@ -51,7 +54,7 @@
    </widget>
    <widget class="QWidget" name="Detail">
     <attribute name="title">
-     <string>Détails</string>
+     <string>Details</string>
     </attribute>
     <widget class="QLabel" name="label_2">
      <property name="geometry">

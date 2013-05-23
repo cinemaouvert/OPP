@@ -11,128 +11,110 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>OPP</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QFrame" name="verticalFrame_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>388</width>
-      <height>631</height>
-     </rect>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="margin">
+     <number>1</number>
     </property>
-    <property name="maximumSize">
-     <size>
-      <width>388</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <widget class="ResumeDetailsWidget" name="ResumeDetail" native="true"/>
-     </item>
-     <item>
-      <widget class="AutomationWidget" name="Automisation" native="true">
-       <widget class="QLabel" name="label_2">
-        <property name="geometry">
-         <rect>
-          <x>130</x>
-          <y>70</y>
-          <width>111</width>
-          <height>17</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </widget>
-     </item>
-     <item>
-      <widget class="BinWidget" name="Chutier" native="true"/>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QFrame" name="verticalFrame">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>0</y>
-      <width>1061</width>
-      <height>731</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>388</width>
-      <height>0</height>
-     </size>
-    </property>
-    <widget class="QFrame" name="horizontalFrame">
-     <property name="geometry">
-      <rect>
-       <x>9</x>
-       <y>9</y>
-       <width>1041</width>
-       <height>321</height>
-      </rect>
-     </property>
-     <widget class="QFrame" name="verticalFrame_3">
-      <property name="geometry">
-       <rect>
-        <x>9</x>
-        <y>9</y>
-        <width>771</width>
-        <height>311</height>
-       </rect>
+    <item>
+     <widget class="QFrame" name="verticalFrame_2">
+      <property name="maximumSize">
+       <size>
+        <width>500</width>
+        <height>16777215</height>
+       </size>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="margin">
+        <number>1</number>
+       </property>
        <item>
-        <widget class="PreviewWidget" name="Vignettes" native="true"/>
+        <widget class="ResumeDetailsWidget" name="ResumeDetail" native="true"/>
        </item>
        <item>
-        <widget class="ParametersWidget" name="Parametres" native="true"/>
+        <widget class="AutomationWidget" name="Automation" native="true"/>
+       </item>
+       <item>
+        <widget class="BinWidget" name="Bin" native="true"/>
        </item>
       </layout>
      </widget>
-     <widget class="SaturationWidget" name="VisualisationSon" native="true">
-      <property name="geometry">
-       <rect>
-        <x>790</x>
-        <y>10</y>
-        <width>241</width>
-        <height>301</height>
-       </rect>
+    </item>
+    <item>
+     <widget class="QFrame" name="verticalFrame">
+      <property name="minimumSize">
+       <size>
+        <width>388</width>
+        <height>0</height>
+       </size>
       </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="margin">
+        <number>1</number>
+       </property>
+       <item>
+        <widget class="QFrame" name="horizontalFrame">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="margin">
+           <number>1</number>
+          </property>
+          <item>
+           <widget class="QFrame" name="verticalFrame_3">
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <property name="margin">
+              <number>1</number>
+             </property>
+             <item>
+              <widget class="PreviewWidget" name="Timeline" native="true"/>
+             </item>
+             <item>
+              <widget class="ParametersWidget" name="Parameters" native="true"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="SaturationWidget" name="SoundVisualization" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="PlaylistsWidget" name="Playlists" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="ControlsWidget" name="Controls" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
-    </widget>
-    <widget class="PlaylistsWidget" name="Playlists" native="true">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>340</y>
-       <width>1041</width>
-       <height>331</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="ControlsWidget" name="ControleLecture" native="true">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>680</y>
-       <width>1041</width>
-       <height>41</height>
-      </rect>
-     </property>
-    </widget>
-    <zorder>horizontalFrame</zorder>
-    <zorder>Playlists</zorder>
-    <zorder>ControleLecture</zorder>
-    <zorder>VisualisationSon</zorder>
-   </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -143,173 +125,193 @@
      <height>25</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFichier">
+   <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>Fichier</string>
+     <string>File</string>
     </property>
-    <addaction name="actionNouvelle_programmation"/>
-    <addaction name="actionOuvrir_une_programmation"/>
-    <addaction name="actionEnregistrer_sous"/>
-    <addaction name="actionImprimer_conduite"/>
-    <addaction name="actionMise_en_page"/>
-    <addaction name="actionQuitter"/>
+    <addaction name="action_newListing"/>
+    <addaction name="action_openListing"/>
+    <addaction name="action_saveAs"/>
+    <addaction name="action_printConduct"/>
+    <addaction name="action_layout"/>
+    <addaction name="action_quit"/>
    </widget>
-   <widget class="QMenu" name="menu_dition">
+   <widget class="QMenu" name="menuEdit">
     <property name="title">
-     <string>Édition</string>
+     <string>Edit</string>
     </property>
-    <addaction name="actionCopier"/>
-    <addaction name="actionColler"/>
-    <addaction name="actionAnnuler"/>
-    <addaction name="actionImporter"/>
+    <addaction name="action_copy"/>
+    <addaction name="action_paste"/>
+    <addaction name="action_cancel"/>
+    <addaction name="action_import"/>
    </widget>
-   <widget class="QMenu" name="menuAffichage">
+   <widget class="QMenu" name="menuDisplay">
     <property name="title">
-     <string>Affichage</string>
+     <string>Display</string>
     </property>
-    <addaction name="actionLire_une_mire"/>
-    <addaction name="actionAutomatisation"/>
-    <addaction name="actionSortie"/>
-    <addaction name="actionR_sum_D_tails"/>
-    <addaction name="actionR_pertoire_de_la_programmation"/>
-    <addaction name="actionBarre_d_tat"/>
+    <addaction name="action_testPattern"/>
+    <addaction name="separator"/>
+    <addaction name="action_automation"/>
+    <addaction name="action_output"/>
+    <addaction name="action_resumeDetails"/>
+    <addaction name="action_bin"/>
+    <addaction name="action_statusBar"/>
    </widget>
    <widget class="QMenu" name="menuConfiguration">
     <property name="title">
      <string>Configuration</string>
     </property>
-    <addaction name="actionPr_f_rences"/>
-    <addaction name="actionConfigurer_le_verrouillage"/>
+    <addaction name="action_settings"/>
+    <addaction name="action_lockSettings"/>
    </widget>
-   <widget class="QMenu" name="menuAide">
+   <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Aide</string>
+     <string>Help</string>
     </property>
-    <addaction name="actionAide"/>
-    <addaction name="actionMise_jour"/>
-    <addaction name="action_propos"/>
+    <addaction name="action_help"/>
+    <addaction name="action_update"/>
+    <addaction name="action_about"/>
    </widget>
-   <addaction name="menuFichier"/>
-   <addaction name="menu_dition"/>
-   <addaction name="menuAffichage"/>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuDisplay"/>
    <addaction name="menuConfiguration"/>
-   <addaction name="menuAide"/>
+   <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="BarreStatus"/>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
-  <action name="actionNouvelle_programmation">
+  <widget class="QStatusBar" name="StatusBar"/>
+  <action name="action_newListing">
    <property name="text">
-    <string>Nouvelle programmation</string>
+    <string>New listing</string>
    </property>
   </action>
-  <action name="actionOuvrir_une_programmation">
+  <action name="action_openListing">
    <property name="text">
-    <string>Ouvrir une programmation</string>
+    <string>Open a listing</string>
    </property>
   </action>
-  <action name="actionEnregistrer_sous">
+  <action name="action_saveAs">
    <property name="text">
-    <string>Enregistrer sous</string>
+    <string>Save as</string>
    </property>
   </action>
-  <action name="actionImprimer_conduite">
+  <action name="action_printConduct">
    <property name="text">
-    <string>Imprimer conduite</string>
+    <string>Print conduct</string>
    </property>
   </action>
-  <action name="actionMise_en_page">
+  <action name="action_layout">
    <property name="text">
-    <string>Mise en page</string>
+    <string>Layout</string>
    </property>
   </action>
-  <action name="actionQuitter">
+  <action name="action_quit">
    <property name="text">
-    <string>Quitter</string>
+    <string>Quit</string>
    </property>
   </action>
-  <action name="actionCopier">
+  <action name="action_copy">
    <property name="text">
-    <string>Copier</string>
+    <string>Copy</string>
    </property>
   </action>
-  <action name="actionColler">
+  <action name="action_paste">
    <property name="text">
-    <string>Coller</string>
+    <string>Paste</string>
    </property>
   </action>
-  <action name="actionAnnuler">
+  <action name="action_cancel">
    <property name="text">
-    <string>Annuler</string>
+    <string>Cancel</string>
    </property>
   </action>
-  <action name="actionImporter">
+  <action name="action_import">
    <property name="text">
-    <string>Importer</string>
+    <string>Import</string>
    </property>
   </action>
-  <action name="actionLire_une_mire">
+  <action name="action_testPattern">
    <property name="text">
-    <string>Lire une mire</string>
+    <string>Play a test pattern</string>
    </property>
   </action>
-  <action name="actionAutomatisation">
+  <action name="action_automation">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Automatisation</string>
+    <string>Automation</string>
    </property>
   </action>
-  <action name="actionSortie">
+  <action name="action_output">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Sortie</string>
+    <string>Output</string>
    </property>
   </action>
-  <action name="actionR_sum_D_tails">
+  <action name="action_resumeDetails">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Résumé/Détails</string>
+    <string>Summary/Details</string>
    </property>
   </action>
-  <action name="actionR_pertoire_de_la_programmation">
+  <action name="action_bin">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Répertoire de la programmation</string>
+    <string>Bin</string>
    </property>
   </action>
-  <action name="actionBarre_d_tat">
+  <action name="action_statusBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Barre d'état</string>
+    <string>Status bar</string>
    </property>
   </action>
-  <action name="actionPr_f_rences">
+  <action name="action_settings">
    <property name="text">
-    <string>Préférences</string>
+    <string>Settings</string>
    </property>
   </action>
-  <action name="actionConfigurer_le_verrouillage">
+  <action name="action_lockSettings">
    <property name="text">
-    <string>Configurer le verrouillage</string>
+    <string>Lock settings</string>
    </property>
   </action>
-  <action name="actionAide">
+  <action name="action_help">
    <property name="text">
-    <string>Aide</string>
+    <string>Help</string>
    </property>
   </action>
-  <action name="actionMise_jour">
+  <action name="action_update">
    <property name="text">
-    <string>Mise à jour</string>
+    <string>Update</string>
    </property>
   </action>
-  <action name="action_propos">
+  <action name="action_about">
    <property name="text">
-    <string>À propos</string>
+    <string>About</string>
    </property>
   </action>
  </widget>

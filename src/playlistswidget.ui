@@ -6,111 +6,295 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
-    <height>403</height>
+    <width>970</width>
+    <height>280</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Playlists</string>
   </property>
-  <widget class="QTabWidget" name="tabWidget">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>20</y>
-     <width>891</width>
-     <height>361</height>
-    </rect>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="margin">
+    <number>1</number>
    </property>
-   <property name="currentIndex">
-    <number>0</number>
-   </property>
-   <widget class="QWidget" name="tab">
-    <attribute name="title">
-     <string>Tab 1</string>
-    </attribute>
-    <widget class="QTableWidget" name="tableWidget">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>891</width>
-       <height>341</height>
-      </rect>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
      </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-     <attribute name="horizontalHeaderVisible">
-      <bool>true</bool>
-     </attribute>
-     <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="horizontalHeaderStretchLastSection">
-      <bool>true</bool>
-     </attribute>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <row>
-      <property name="text">
-       <string>Film 1</string>
-      </property>
-     </row>
-     <column>
-      <property name="text">
-       <string>Titre</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Durée</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Vidéo</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Audio</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Sous titre</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Mire</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Mix</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Etat</string>
-      </property>
-     </column>
-     <item row="0" column="0">
-      <property name="text">
-       <string/>
-      </property>
-     </item>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Séance 1</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QTableWidget" name="tableWidget_playlist">
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <attribute name="horizontalHeaderVisible">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <row>
+          <property name="text">
+           <string>Film 1</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>Film 2</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>Film 3</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>Film 4</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>Film 5</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>Film 6</string>
+          </property>
+         </row>
+         <column>
+          <property name="text">
+           <string>Title</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Length</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Video</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Audio</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Subtitles</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Test pattern</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Status</string>
+          </property>
+         </column>
+         <item row="0" column="0">
+          <property name="text">
+           <string>Film 1</string>
+          </property>
+         </item>
+         <item row="0" column="1">
+          <property name="text">
+           <string>00:25:36</string>
+          </property>
+         </item>
+         <item row="0" column="2">
+          <property name="text">
+           <string>720x576 - 50 fps</string>
+          </property>
+         </item>
+         <item row="0" column="3">
+          <property name="text">
+           <string>Français</string>
+          </property>
+         </item>
+         <item row="0" column="5">
+          <property name="text">
+           <string>Off</string>
+          </property>
+         </item>
+         <item row="1" column="0">
+          <property name="text">
+           <string>Film 2</string>
+          </property>
+         </item>
+         <item row="1" column="1">
+          <property name="text">
+           <string>00:29:17</string>
+          </property>
+         </item>
+         <item row="1" column="2">
+          <property name="text">
+           <string>720x576 - 50 fps</string>
+          </property>
+         </item>
+         <item row="1" column="3">
+          <property name="text">
+           <string>Français</string>
+          </property>
+         </item>
+         <item row="1" column="5">
+          <property name="text">
+           <string>Off</string>
+          </property>
+         </item>
+         <item row="2" column="0">
+          <property name="text">
+           <string>Film 3</string>
+          </property>
+         </item>
+         <item row="2" column="1">
+          <property name="text">
+           <string>00:30:21</string>
+          </property>
+         </item>
+         <item row="2" column="2">
+          <property name="text">
+           <string>720x576 - 50 fps</string>
+          </property>
+         </item>
+         <item row="2" column="3">
+          <property name="text">
+           <string>Français</string>
+          </property>
+         </item>
+         <item row="2" column="4">
+          <property name="text">
+           <string>Français</string>
+          </property>
+         </item>
+         <item row="2" column="5">
+          <property name="text">
+           <string>Off</string>
+          </property>
+         </item>
+         <item row="3" column="0">
+          <property name="text">
+           <string>Film 4</string>
+          </property>
+         </item>
+         <item row="3" column="1">
+          <property name="text">
+           <string>00:39:17</string>
+          </property>
+         </item>
+         <item row="3" column="2">
+          <property name="text">
+           <string>720x576 - 50 fps</string>
+          </property>
+         </item>
+         <item row="3" column="3">
+          <property name="text">
+           <string>Français</string>
+          </property>
+         </item>
+         <item row="3" column="5">
+          <property name="text">
+           <string>Off</string>
+          </property>
+         </item>
+         <item row="4" column="0">
+          <property name="text">
+           <string>Film 5</string>
+          </property>
+         </item>
+         <item row="4" column="1">
+          <property name="text">
+           <string>00:35:21</string>
+          </property>
+         </item>
+         <item row="4" column="2">
+          <property name="text">
+           <string>720x576 - 50 fps</string>
+          </property>
+         </item>
+         <item row="4" column="3">
+          <property name="text">
+           <string>Français</string>
+          </property>
+         </item>
+         <item row="4" column="4">
+          <property name="text">
+           <string>English</string>
+          </property>
+         </item>
+         <item row="4" column="5">
+          <property name="text">
+           <string>Off</string>
+          </property>
+         </item>
+         <item row="5" column="0">
+          <property name="text">
+           <string>Film 6</string>
+          </property>
+         </item>
+         <item row="5" column="1">
+          <property name="text">
+           <string>00:41:28</string>
+          </property>
+         </item>
+         <item row="5" column="2">
+          <property name="text">
+           <string>720x576 - 50 fps</string>
+          </property>
+         </item>
+         <item row="5" column="3">
+          <property name="text">
+           <string>Français</string>
+          </property>
+         </item>
+         <item row="5" column="4">
+          <property name="text">
+           <string>日本語</string>
+          </property>
+         </item>
+         <item row="5" column="5">
+          <property name="text">
+           <string>Off</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>+</string>
+      </attribute>
+     </widget>
     </widget>
-   </widget>
-   <widget class="QWidget" name="tab_2">
-    <attribute name="title">
-     <string>+</string>
-    </attribute>
-   </widget>
-  </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
