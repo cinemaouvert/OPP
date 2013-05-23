@@ -17,3 +17,5 @@ SOURCES += test/main.cpp \
 HEADERS += test/autotest.h \
     test/test1.h \
     test/test2.h
+
+include(src/core.pri)
