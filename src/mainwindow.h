@@ -7,6 +7,7 @@
 namespace Ui {
 class MainWindow;
 }
+class Project;
 
 class MainWindow : public QMainWindow
 {
@@ -22,6 +23,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     SettingsWindow *settingsWindow;
+    Project *_currentProject;
 };
 
 #endif // MAINWINDOW_H

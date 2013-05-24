@@ -1,6 +1,23 @@
-HEADERS += src/media.h
+HEADERS += src/media.h \
+    src/playlist.h \
+    src/playback.h \
+    src/mediasettings.h \
+    src/automator.h \
+    src/schedule.h \
+    src/project.h \
+    src/playlistplayer.h \
+    src/mediaplayer.h \
+    src/videoview.h
 
-SOURCES += src/media.cpp
+SOURCES += src/media.cpp \
+    src/playlist.cpp \
+    src/playback.cpp \
+    src/mediasettings.cpp \
+    src/automator.cpp \
+    src/schedule.cpp \
+    src/project.cpp \
+    src/playlistplayer.cpp \
+    src/mediaplayer.cpp
 
 mac:LIBVLC_LIB_DIR = "/Applications/VLC.app/Contents/MacOS/lib"
 mac:LIBVLC_INCLUDE_DIR = "/Applications/VLC.app/Contents/MacOS/include"

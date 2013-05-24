@@ -18,7 +18,16 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
-    <property name="margin">
+    <property name="leftMargin">
+     <number>1</number>
+    </property>
+    <property name="topMargin">
+     <number>1</number>
+    </property>
+    <property name="rightMargin">
+     <number>1</number>
+    </property>
+    <property name="bottomMargin">
      <number>1</number>
     </property>
     <item>
@@ -30,17 +39,26 @@
        </size>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>1</number>
+       </property>
+       <property name="topMargin">
+        <number>1</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="bottomMargin">
         <number>1</number>
        </property>
        <item>
-        <widget class="ResumeDetailsWidget" name="ResumeDetail" native="true"/>
+        <widget class="ResumeDetailsWidget" name="resumeDetailWidget" native="true"/>
        </item>
        <item>
-        <widget class="AutomationWidget" name="Automation" native="true"/>
+        <widget class="AutomationWidget" name="automationWidget" native="true"/>
        </item>
        <item>
-        <widget class="BinWidget" name="Bin" native="true"/>
+        <widget class="BinWidget" name="binWidget" native="true"/>
        </item>
       </layout>
      </widget>
@@ -54,32 +72,59 @@
        </size>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>1</number>
+       </property>
+       <property name="topMargin">
+        <number>1</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="bottomMargin">
         <number>1</number>
        </property>
        <item>
         <widget class="QFrame" name="horizontalFrame">
          <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <property name="margin">
+          <property name="leftMargin">
+           <number>1</number>
+          </property>
+          <property name="topMargin">
+           <number>1</number>
+          </property>
+          <property name="rightMargin">
+           <number>1</number>
+          </property>
+          <property name="bottomMargin">
            <number>1</number>
           </property>
           <item>
            <widget class="QFrame" name="verticalFrame_3">
             <layout class="QVBoxLayout" name="verticalLayout_2">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>1</number>
+             </property>
+             <property name="topMargin">
+              <number>1</number>
+             </property>
+             <property name="rightMargin">
+              <number>1</number>
+             </property>
+             <property name="bottomMargin">
               <number>1</number>
              </property>
              <item>
-              <widget class="PreviewWidget" name="Timeline" native="true"/>
+              <widget class="PreviewWidget" name="timelineWidget" native="true"/>
              </item>
              <item>
-              <widget class="ParametersWidget" name="Parameters" native="true"/>
+              <widget class="ParametersWidget" name="mediaSettingsWidget" native="true"/>
              </item>
             </layout>
            </widget>
           </item>
           <item>
-           <widget class="SaturationWidget" name="SoundVisualization" native="true">
+           <widget class="SaturationWidget" name="saturationWidget" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -92,7 +137,7 @@
         </widget>
        </item>
        <item>
-        <widget class="PlaylistsWidget" name="Playlists" native="true">
+        <widget class="PlaylistsWidget" name="playlistsWidget" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -102,7 +147,7 @@
         </widget>
        </item>
        <item>
-        <widget class="ControlsWidget" name="Controls" native="true">
+        <widget class="ControlsWidget" name="controlsWidget" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -122,7 +167,7 @@
      <x>0</x>
      <y>0</y>
      <width>1483</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

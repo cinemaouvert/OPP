@@ -6,6 +6,7 @@
 namespace Ui {
 class BinWidget;
 }
+class Media;
 
 class BinWidget : public QWidget
 {
@@ -14,7 +15,11 @@ class BinWidget : public QWidget
 public:
     explicit BinWidget(QWidget *parent = 0);
     ~BinWidget();
-    
+
+signals:
+
+    void mediaAdded(Media *);
+
 private:
     Ui::BinWidget *ui;
 };
