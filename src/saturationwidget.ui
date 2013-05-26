@@ -28,20 +28,27 @@ QProgressBar::chunk{background-color:qlineargradient(spread:pad, x1:1, y1:1, x2:
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="1">
-        <widget class="QProgressBar" name="progressBar_right">
-         <property name="value">
-          <number>24</number>
+       <item row="2" column="1">
+        <widget class="QLabel" name="label_right">
+         <property name="text">
+          <string>R</string>
          </property>
-         <property name="textVisible">
-          <bool>false</bool>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_left">
+         <property name="text">
+          <string>L</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
         <widget class="QProgressBar" name="progressBar_left">
          <property name="enabled">
           <bool>true</bool>
@@ -57,23 +64,36 @@ QProgressBar::chunk{background-color:qlineargradient(spread:pad, x1:1, y1:1, x2:
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_left">
-         <property name="text">
-          <string>L</string>
+       <item row="1" column="1">
+        <widget class="QProgressBar" name="progressBar_right">
+         <property name="value">
+          <number>24</number>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
+         <property name="textVisible">
+          <bool>false</bool>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_right">
-         <property name="text">
-          <string>R</string>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_saturationLeft">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_saturationRight">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="text">
+          <string/>
          </property>
         </widget>
        </item>
