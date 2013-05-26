@@ -31,14 +31,14 @@
       <item>
        <widget class="QLabel" name="label_title">
         <property name="text">
-         <string>Film 6.mkv</string>
+         <string/>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_picture">
         <property name="text">
-         <string>Image</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -106,7 +106,7 @@
         <item row="3" column="1">
          <widget class="QLabel" name="label_originalLengthValue">
           <property name="text">
-           <string>00:25:36</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -120,7 +120,7 @@
         <item row="4" column="1">
          <widget class="QLabel" name="label_modifiedLengthValue">
           <property name="text">
-           <string>00:25:36</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -160,98 +160,8 @@
         <attribute name="verticalHeaderVisible">
          <bool>false</bool>
         </attribute>
-        <row>
-         <property name="text">
-          <string>Nouvelle ligne</string>
-         </property>
-        </row>
-        <row>
-         <property name="text">
-          <string>Nouvelle ligne</string>
-         </property>
-        </row>
-        <row>
-         <property name="text">
-          <string>Nouvelle ligne</string>
-         </property>
-        </row>
-        <row>
-         <property name="text">
-          <string>Nouvelle ligne</string>
-         </property>
-        </row>
-        <row>
-         <property name="text">
-          <string>Nouvelle ligne</string>
-         </property>
-        </row>
-        <row>
-         <property name="text">
-          <string>Nouvelle ligne</string>
-         </property>
-        </row>
         <column/>
         <column/>
-        <item row="0" column="0">
-         <property name="text">
-          <string>Titre</string>
-         </property>
-        </item>
-        <item row="0" column="1">
-         <property name="text">
-          <string>Cette fois c'est la fin ! Antoine face à son destin.</string>
-         </property>
-        </item>
-        <item row="1" column="0">
-         <property name="text">
-          <string>Flux 1</string>
-         </property>
-        </item>
-        <item row="1" column="1">
-         <property name="text">
-          <string>Vidéo / Codec : MPEG-1/2 Video (mpgv) / Résolution : 720x576 / Débit d'images : 50 / Format décodé: Planar 4:2:0 YUV</string>
-         </property>
-        </item>
-        <item row="2" column="0">
-         <property name="text">
-          <string>Flux 2</string>
-         </property>
-        </item>
-        <item row="2" column="1">
-         <property name="text">
-          <string>Audio / Codec : A52 Audio (aka AC3) (a52 ) / Canaux : Stéréo / Fréquence d'échantillonnage: 48000 Hz / Débit : 192 kb/s</string>
-         </property>
-        </item>
-        <item row="3" column="0">
-         <property name="text">
-          <string>Flux 3</string>
-         </property>
-        </item>
-        <item row="3" column="1">
-         <property name="text">
-          <string>Sous-titres / Codec : DVD Subtitles (spu ) / Langue : Français</string>
-         </property>
-        </item>
-        <item row="4" column="0">
-         <property name="text">
-          <string>Flux 4</string>
-         </property>
-        </item>
-        <item row="4" column="1">
-         <property name="text">
-          <string>Sous-titres / Codec : DVD Subtitles (spu ) / Langue : English</string>
-         </property>
-        </item>
-        <item row="5" column="0">
-         <property name="text">
-          <string>Flux 5</string>
-         </property>
-        </item>
-        <item row="5" column="1">
-         <property name="text">
-          <string>Sous-titres / Codec : DVD Subtitles (spu ) / Langue : 日本語</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item>

@@ -14,112 +14,102 @@
         <translation>Proportion</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="42"/>
         <source>16/9</source>
-        <translation>16/9</translation>
+        <translation type="obsolete">16/9</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="47"/>
         <source>4/3</source>
-        <translation>4/3</translation>
+        <translation type="obsolete">4/3</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="55"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="44"/>
         <source>Trim</source>
         <translation>Rogner</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="65"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="54"/>
         <source>Deinterlace</source>
         <translation>Désentrelacer</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="73"/>
-        <location filename="src/advancedpicturesettingswindow.ui" line="104"/>
         <source>Oui</source>
-        <translation>Oui</translation>
+        <translation type="obsolete">Oui</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="78"/>
-        <location filename="src/advancedpicturesettingswindow.ui" line="109"/>
         <source>Non</source>
-        <translation>Non</translation>
+        <translation type="obsolete">Non</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="86"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="64"/>
         <source>Deinterlace mode</source>
         <translation>Mode de désentrelacement</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="96"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="74"/>
         <source>Post-processing</source>
         <translation>Post-traitement</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="117"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="84"/>
         <source>Rotation</source>
         <translation>Rotation</translation>
     </message>
     <message utf8="true">
-        <location filename="src/advancedpicturesettingswindow.ui" line="125"/>
         <source>0°</source>
-        <translation>0°</translation>
+        <translation type="obsolete">0°</translation>
     </message>
     <message utf8="true">
-        <location filename="src/advancedpicturesettingswindow.ui" line="130"/>
         <source>90°</source>
-        <translation>90°</translation>
+        <translation type="obsolete">90°</translation>
     </message>
     <message utf8="true">
-        <location filename="src/advancedpicturesettingswindow.ui" line="135"/>
         <source>180°</source>
-        <translation>180°</translation>
+        <translation type="obsolete">180°</translation>
     </message>
     <message utf8="true">
-        <location filename="src/advancedpicturesettingswindow.ui" line="140"/>
         <source>270°</source>
-        <translation>270°</translation>
+        <translation type="obsolete">270°</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="153"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="99"/>
         <source>Advanced trim</source>
         <translation>Rognage avancé</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="159"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="105"/>
         <source>Left</source>
         <translation>Gauche</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="166"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="112"/>
         <source>Up</source>
         <translation>Haut</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="173"/>
-        <location filename="src/advancedpicturesettingswindow.ui" line="180"/>
-        <location filename="src/advancedpicturesettingswindow.ui" line="187"/>
-        <location filename="src/advancedpicturesettingswindow.ui" line="201"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="119"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="126"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="133"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="147"/>
         <source> px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="194"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="140"/>
         <source>Right</source>
         <translation>Droite</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="211"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="157"/>
         <source>Down</source>
         <translation>Bas</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="221"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="167"/>
         <source>Synchronize up and down</source>
         <translation>Synchroniser haut et bas</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="228"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="174"/>
         <source>Synchronize left and right</source>
         <translation>Synchroniser gauche et droite</translation>
     </message>
@@ -132,14 +122,12 @@
         <translation>Réglages avancés</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.ui" line="34"/>
         <source>Film 6.mkv</source>
-        <translation>Film 6.mkv</translation>
+        <translation type="obsolete">Film 6.mkv</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.ui" line="41"/>
         <source>Image</source>
-        <translation>Image</translation>
+        <translation type="obsolete">Image</translation>
     </message>
     <message>
         <location filename="src/advancedsettingswindow.ui" line="53"/>
@@ -178,10 +166,8 @@
         <translation>Durée originale</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.ui" line="109"/>
-        <location filename="src/advancedsettingswindow.ui" line="123"/>
         <source>00:25:36</source>
-        <translation>00:25:36</translation>
+        <translation type="obsolete">00:25:36</translation>
     </message>
     <message>
         <location filename="src/advancedsettingswindow.ui" line="116"/>
@@ -189,77 +175,11 @@
         <translation>Durée recoupée</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.ui" line="165"/>
-        <location filename="src/advancedsettingswindow.ui" line="170"/>
-        <location filename="src/advancedsettingswindow.ui" line="175"/>
-        <location filename="src/advancedsettingswindow.ui" line="180"/>
-        <location filename="src/advancedsettingswindow.ui" line="185"/>
-        <location filename="src/advancedsettingswindow.ui" line="190"/>
         <source>Nouvelle ligne</source>
-        <translation>Nouvelle ligne</translation>
+        <translation type="obsolete">Nouvelle ligne</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.ui" line="197"/>
-        <source>Titre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <location filename="src/advancedsettingswindow.ui" line="202"/>
-        <source>Cette fois c&apos;est la fin ! Antoine face à son destin.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/advancedsettingswindow.ui" line="207"/>
-        <source>Flux 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <location filename="src/advancedsettingswindow.ui" line="212"/>
-        <source>Vidéo / Codec : MPEG-1/2 Video (mpgv) / Résolution : 720x576 / Débit d&apos;images : 50 / Format décodé: Planar 4:2:0 YUV</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/advancedsettingswindow.ui" line="217"/>
-        <source>Flux 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <location filename="src/advancedsettingswindow.ui" line="222"/>
-        <source>Audio / Codec : A52 Audio (aka AC3) (a52 ) / Canaux : Stéréo / Fréquence d&apos;échantillonnage: 48000 Hz / Débit : 192 kb/s</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/advancedsettingswindow.ui" line="227"/>
-        <source>Flux 3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <location filename="src/advancedsettingswindow.ui" line="232"/>
-        <source>Sous-titres / Codec : DVD Subtitles (spu ) / Langue : Français</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/advancedsettingswindow.ui" line="237"/>
-        <source>Flux 4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/advancedsettingswindow.ui" line="242"/>
-        <source>Sous-titres / Codec : DVD Subtitles (spu ) / Langue : English</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/advancedsettingswindow.ui" line="247"/>
-        <source>Flux 5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <location filename="src/advancedsettingswindow.ui" line="252"/>
-        <source>Sous-titres / Codec : DVD Subtitles (spu ) / Langue : 日本語</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/advancedsettingswindow.ui" line="260"/>
+        <location filename="src/advancedsettingswindow.ui" line="170"/>
         <source>Download attachment files</source>
         <translation>Télécharger les fichiers joints</translation>
     </message>
@@ -278,57 +198,53 @@
         <translation>dd/MM/yyyy</translation>
     </message>
     <message>
-        <location filename="src/automationwidget.ui" line="125"/>
         <source>Nouvelle automatisation</source>
-        <translation>Nouvelle automisation</translation>
+        <translation type="obsolete">Nouvelle automisation</translation>
     </message>
     <message>
-        <location filename="src/automationwidget.ui" line="130"/>
+        <location filename="src/automationwidget.ui" line="125"/>
         <source>Playlist</source>
         <translation>Séance</translation>
     </message>
     <message>
-        <location filename="src/automationwidget.ui" line="135"/>
+        <location filename="src/automationwidget.ui" line="130"/>
         <source>Begin</source>
         <translation>Début</translation>
     </message>
     <message>
-        <location filename="src/automationwidget.ui" line="140"/>
+        <location filename="src/automationwidget.ui" line="135"/>
         <source>End</source>
         <translation>Fin</translation>
     </message>
     <message utf8="true">
-        <location filename="src/automationwidget.ui" line="145"/>
         <source>Séance 1</source>
-        <translation>Séance 1</translation>
+        <translation type="obsolete">Séance 1</translation>
     </message>
     <message>
-        <location filename="src/automationwidget.ui" line="150"/>
         <source>16/05/2013 21:00:00</source>
-        <translation>16/05/2013 21:00:00</translation>
+        <translation type="obsolete">16/05/2013 21:00:00</translation>
     </message>
     <message>
-        <location filename="src/automationwidget.ui" line="155"/>
         <source>17/05/2013 00:21:20</source>
-        <translation>17/05/2013 00:21:20</translation>
+        <translation type="obsolete">17/05/2013 00:21:20</translation>
     </message>
     <message>
-        <location filename="src/automationwidget.ui" line="165"/>
+        <location filename="src/automationwidget.ui" line="145"/>
         <source>Delay the automation of</source>
         <translation>Retarder l&apos;automatisation de</translation>
     </message>
     <message>
-        <location filename="src/automationwidget.ui" line="175"/>
+        <location filename="src/automationwidget.ui" line="155"/>
         <source>minutes.</source>
         <translation>minutes.</translation>
     </message>
     <message>
-        <location filename="src/automationwidget.ui" line="182"/>
+        <location filename="src/automationwidget.ui" line="162"/>
         <source>Delay</source>
         <translation>Retarder</translation>
     </message>
     <message>
-        <location filename="src/automationwidget.ui" line="191"/>
+        <location filename="src/automationwidget.ui" line="171"/>
         <source>Stop the automation</source>
         <translation>Stopper l&apos;automatisation</translation>
     </message>
@@ -352,129 +268,33 @@
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="src/binwidget.ui" line="80"/>
-        <location filename="src/binwidget.ui" line="85"/>
-        <location filename="src/binwidget.ui" line="90"/>
-        <location filename="src/binwidget.ui" line="95"/>
-        <location filename="src/binwidget.ui" line="100"/>
-        <location filename="src/binwidget.ui" line="105"/>
         <source>Nouvelle ligne</source>
-        <translation>Nouvelle ligne</translation>
+        <translation type="obsolete">Nouvelle ligne</translation>
     </message>
     <message>
-        <location filename="src/binwidget.ui" line="110"/>
+        <location filename="src/binwidget.ui" line="80"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="src/binwidget.ui" line="115"/>
+        <location filename="src/binwidget.ui" line="85"/>
         <source>Length</source>
         <translation>Durée</translation>
     </message>
     <message>
-        <location filename="src/binwidget.ui" line="120"/>
+        <location filename="src/binwidget.ui" line="90"/>
         <source>Used</source>
         <translation>Utilisé</translation>
     </message>
     <message>
-        <location filename="src/binwidget.ui" line="125"/>
+        <location filename="src/binwidget.ui" line="95"/>
         <source>Playlist</source>
         <translation>Séance</translation>
     </message>
     <message>
-        <location filename="src/binwidget.ui" line="130"/>
+        <location filename="src/binwidget.ui" line="100"/>
         <source>Location</source>
         <translation>Localisation</translation>
-    </message>
-    <message>
-        <location filename="src/binwidget.ui" line="135"/>
-        <source>Film 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/binwidget.ui" line="140"/>
-        <source>00:25:36</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/binwidget.ui" line="145"/>
-        <location filename="src/binwidget.ui" line="170"/>
-        <location filename="src/binwidget.ui" line="195"/>
-        <location filename="src/binwidget.ui" line="220"/>
-        <location filename="src/binwidget.ui" line="245"/>
-        <location filename="src/binwidget.ui" line="270"/>
-        <source>Oui</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <location filename="src/binwidget.ui" line="150"/>
-        <location filename="src/binwidget.ui" line="175"/>
-        <location filename="src/binwidget.ui" line="200"/>
-        <location filename="src/binwidget.ui" line="225"/>
-        <location filename="src/binwidget.ui" line="250"/>
-        <location filename="src/binwidget.ui" line="275"/>
-        <source>Séance 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/binwidget.ui" line="155"/>
-        <location filename="src/binwidget.ui" line="180"/>
-        <location filename="src/binwidget.ui" line="205"/>
-        <location filename="src/binwidget.ui" line="230"/>
-        <location filename="src/binwidget.ui" line="255"/>
-        <location filename="src/binwidget.ui" line="280"/>
-        <source>/fichiers/ff</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/binwidget.ui" line="160"/>
-        <source>Film 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/binwidget.ui" line="165"/>
-        <source>00:29:17</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/binwidget.ui" line="185"/>
-        <source>Film 3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/binwidget.ui" line="190"/>
-        <source>00:30:21</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/binwidget.ui" line="210"/>
-        <source>Film 4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/binwidget.ui" line="215"/>
-        <source>00:39:17</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/binwidget.ui" line="235"/>
-        <source>Film 5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/binwidget.ui" line="240"/>
-        <source>00:35:21</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/binwidget.ui" line="260"/>
-        <source>Film 6</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/binwidget.ui" line="265"/>
-        <source>00:41:28</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -681,120 +501,98 @@
         <source>Audio track</source>
         <translation>Piste audio</translation>
     </message>
-    <message utf8="true">
-        <location filename="src/parameterswidget.ui" line="66"/>
-        <location filename="src/parameterswidget.ui" line="82"/>
-        <location filename="src/parameterswidget.ui" line="98"/>
-        <source>Français</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="74"/>
+        <location filename="src/parameterswidget.ui" line="69"/>
         <source>Video track</source>
         <translation>Piste vidéo</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="90"/>
+        <location filename="src/parameterswidget.ui" line="79"/>
         <source>Subtitles track</source>
-        <translation type="unfinished"></translation>
+        <translation>Piste sous titres</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="103"/>
-        <source>English</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <location filename="src/parameterswidget.ui" line="108"/>
-        <source>日本語</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/parameterswidget.ui" line="116"/>
+        <location filename="src/parameterswidget.ui" line="89"/>
         <source>Subtitles sync</source>
         <translation>Synchro sous titres</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="130"/>
+        <location filename="src/parameterswidget.ui" line="103"/>
         <source>Ratio</source>
         <translation>Ratio</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="138"/>
-        <source>4/3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/parameterswidget.ui" line="151"/>
+        <location filename="src/parameterswidget.ui" line="118"/>
         <source>         Advanced settings</source>
         <translation>         Paramètres avancés</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="177"/>
+        <location filename="src/parameterswidget.ui" line="144"/>
         <source>Picture</source>
         <translation>Image</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="188"/>
+        <location filename="src/parameterswidget.ui" line="155"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="195"/>
+        <location filename="src/parameterswidget.ui" line="162"/>
         <source> Contrast</source>
         <translation>Contraste</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="202"/>
+        <location filename="src/parameterswidget.ui" line="169"/>
         <source>Brightness</source>
         <translation>Luminosité</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="209"/>
+        <location filename="src/parameterswidget.ui" line="176"/>
         <source>Saturation</source>
         <translation>Saturation</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="216"/>
+        <location filename="src/parameterswidget.ui" line="183"/>
         <source>Hue</source>
         <translation>Teinte</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="293"/>
+        <location filename="src/parameterswidget.ui" line="260"/>
         <source>      Advanced picture settings</source>
         <translation>Paramètres image avancés</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="321"/>
+        <location filename="src/parameterswidget.ui" line="288"/>
         <source>Sound</source>
         <translation>Son</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="335"/>
+        <location filename="src/parameterswidget.ui" line="302"/>
         <source>Audio sync</source>
         <translation>Synchro audio</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="349"/>
+        <location filename="src/parameterswidget.ui" line="316"/>
         <source>Audio gain</source>
         <translation>Gain audio</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="363"/>
+        <location filename="src/parameterswidget.ui" line="330"/>
         <source>Normalization</source>
         <translation>Normlisation</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="371"/>
+        <location filename="src/parameterswidget.ui" line="338"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>On</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="376"/>
+        <location filename="src/parameterswidget.ui" line="343"/>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Off</translation>
     </message>
     <message>
-        <location filename="src/parameterswidget.ui" line="389"/>
+        <location filename="src/parameterswidget.ui" line="356"/>
         <source>         Lock</source>
         <translation>       Verrouillage</translation>
     </message>
@@ -824,7 +622,7 @@
     <message>
         <location filename="src/playertimelinewidget.ui" line="76"/>
         <source>00:29:17</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">00:29:17</translation>
     </message>
     <message>
         <location filename="src/playertimelinewidget.ui" line="106"/>
@@ -834,7 +632,7 @@
     <message>
         <location filename="src/playertimelinewidget.ui" line="119"/>
         <source>00:30:21</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">00:30:21</translation>
     </message>
     <message>
         <location filename="src/playertimelinewidget.ui" line="146"/>
@@ -852,154 +650,48 @@
     <message utf8="true">
         <location filename="src/playlistswidget.ui" line="30"/>
         <source>Séance 1</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Séance 1</translatorcomment>
+        <translation>Séance 1</translation>
     </message>
     <message>
         <location filename="src/playlistswidget.ui" line="58"/>
-        <location filename="src/playlistswidget.ui" line="123"/>
-        <source>Film 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/playlistswidget.ui" line="63"/>
-        <location filename="src/playlistswidget.ui" line="148"/>
-        <source>Film 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/playlistswidget.ui" line="68"/>
-        <location filename="src/playlistswidget.ui" line="173"/>
-        <source>Film 3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/playlistswidget.ui" line="73"/>
-        <location filename="src/playlistswidget.ui" line="203"/>
-        <source>Film 4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/playlistswidget.ui" line="78"/>
-        <location filename="src/playlistswidget.ui" line="228"/>
-        <source>Film 5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/playlistswidget.ui" line="83"/>
-        <location filename="src/playlistswidget.ui" line="258"/>
-        <source>Film 6</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/playlistswidget.ui" line="88"/>
         <source>Title</source>
         <translation>Titre</translation>
     </message>
     <message>
-        <location filename="src/playlistswidget.ui" line="93"/>
+        <location filename="src/playlistswidget.ui" line="63"/>
         <source>Length</source>
         <translation>Durée</translation>
     </message>
     <message>
-        <location filename="src/playlistswidget.ui" line="98"/>
+        <location filename="src/playlistswidget.ui" line="68"/>
         <source>Video</source>
         <translation>Vidéo</translation>
     </message>
     <message>
-        <location filename="src/playlistswidget.ui" line="103"/>
+        <location filename="src/playlistswidget.ui" line="73"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location filename="src/playlistswidget.ui" line="108"/>
+        <location filename="src/playlistswidget.ui" line="78"/>
         <source>Subtitles</source>
         <translation>Sous titres</translation>
     </message>
     <message>
-        <location filename="src/playlistswidget.ui" line="113"/>
+        <location filename="src/playlistswidget.ui" line="83"/>
         <source>Test pattern</source>
         <translation>Mire</translation>
     </message>
     <message>
-        <location filename="src/playlistswidget.ui" line="118"/>
+        <location filename="src/playlistswidget.ui" line="88"/>
         <source>Status</source>
         <translation>État</translation>
     </message>
     <message>
-        <location filename="src/playlistswidget.ui" line="128"/>
-        <source>00:25:36</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/playlistswidget.ui" line="133"/>
-        <location filename="src/playlistswidget.ui" line="158"/>
-        <location filename="src/playlistswidget.ui" line="183"/>
-        <location filename="src/playlistswidget.ui" line="213"/>
-        <location filename="src/playlistswidget.ui" line="238"/>
-        <location filename="src/playlistswidget.ui" line="268"/>
-        <source>720x576 - 50 fps</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <location filename="src/playlistswidget.ui" line="138"/>
-        <location filename="src/playlistswidget.ui" line="163"/>
-        <location filename="src/playlistswidget.ui" line="188"/>
-        <location filename="src/playlistswidget.ui" line="193"/>
-        <location filename="src/playlistswidget.ui" line="218"/>
-        <location filename="src/playlistswidget.ui" line="243"/>
-        <location filename="src/playlistswidget.ui" line="273"/>
-        <source>Français</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/playlistswidget.ui" line="143"/>
-        <location filename="src/playlistswidget.ui" line="168"/>
-        <location filename="src/playlistswidget.ui" line="198"/>
-        <location filename="src/playlistswidget.ui" line="223"/>
-        <location filename="src/playlistswidget.ui" line="253"/>
-        <location filename="src/playlistswidget.ui" line="283"/>
-        <source>Off</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/playlistswidget.ui" line="153"/>
-        <source>00:29:17</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/playlistswidget.ui" line="178"/>
-        <source>00:30:21</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/playlistswidget.ui" line="208"/>
-        <source>00:39:17</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/playlistswidget.ui" line="233"/>
-        <source>00:35:21</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/playlistswidget.ui" line="248"/>
-        <source>English</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/playlistswidget.ui" line="263"/>
-        <source>00:41:28</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <location filename="src/playlistswidget.ui" line="278"/>
-        <source>日本語</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/playlistswidget.ui" line="292"/>
+        <location filename="src/playlistswidget.ui" line="97"/>
         <source>+</source>
-        <translation type="unfinished"></translation>
+        <translation>+</translation>
     </message>
 </context>
 <context>
@@ -1007,45 +699,19 @@
     <message>
         <location filename="src/previewwidget.ui" line="14"/>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Prévisualisation</translation>
     </message>
     <message>
         <location filename="src/previewwidget.ui" line="35"/>
         <source>00:01:06 / 00:25:36</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/previewwidget.ui" line="50"/>
-        <source>Film 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/previewwidget.ui" line="63"/>
-        <source>00:29:17</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/previewwidget.ui" line="96"/>
-        <source>Film 3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/previewwidget.ui" line="109"/>
-        <source>00:30:21</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/previewwidget.ui" line="142"/>
-        <location filename="src/previewwidget.ui" line="173"/>
-        <source>Image media</source>
-        <translation type="unfinished"></translation>
+        <translation>00:01:06 / 00:25:36</translation>
     </message>
 </context>
 <context>
     <name>ResumeDetailsWidget</name>
     <message>
         <location filename="src/resumedetailswidget.ui" line="14"/>
-        <location filename="src/resumedetailswidget.ui" line="53"/>
+        <location filename="src/resumedetailswidget.ui" line="51"/>
         <source>Details</source>
         <translation>Détails</translation>
     </message>
@@ -1056,37 +722,26 @@
     </message>
     <message>
         <location filename="src/resumedetailswidget.ui" line="39"/>
+        <location filename="src/resumedetailswidget.ui" line="60"/>
+        <location filename="src/resumedetailswidget.ui" line="81"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <oldsource>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Quand on commence quelque chose, il faut aller jusqu&apos;au bout !&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Nombre de films : 6&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Nombre de films : 6&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/resumedetailswidget.ui" line="62"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis sem eros, vitae congue libero. Cras accumsan nibh in tortor pretium porttitor. Sed mauris nisi, semper id semper sit amet, congue quis lacus. Nunc euismod, ipsum a scelerisque vestibulum, arcu urna malesuada diam, at tristique leo elit non lorem. Nulla. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/resumedetailswidget.ui" line="74"/>
+        <location filename="src/resumedetailswidget.ui" line="72"/>
         <source>Log</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/resumedetailswidget.ui" line="83"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut ipsum et lectus viverra gravida vitae non leo. Aliquam vitae urna posuere risus fermentum tempus. Maecenas id leo sed quam sagittis dignissim. Praesent id odio vel leo ultricies ultrices. Pellentesque condimentum eros vitae orci varius vitae lobortis erat commodo. Pellentesque. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Log</translation>
     </message>
 </context>
 <context>
@@ -1094,7 +749,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="src/saturationwidget.ui" line="14"/>
         <source>Saturation</source>
-        <translation type="unfinished"></translation>
+        <translation>Saturation</translation>
     </message>
     <message>
         <location filename="src/saturationwidget.ui" line="34"/>
@@ -1125,16 +780,6 @@ p, li { white-space: pre-wrap; }
         <translation>Chemin vers VLC</translation>
     </message>
     <message>
-        <location filename="src/settingswindow.ui" line="64"/>
-        <source>chemin/vers/vlc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/settingswindow.ui" line="74"/>
-        <source>chemin/vers/carton</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="src/settingswindow.ui" line="84"/>
         <source>Path to the test pattern</source>
         <translation>Chemin vers la mire</translation>
@@ -1148,11 +793,6 @@ p, li { white-space: pre-wrap; }
         <translation>Parcourir</translation>
     </message>
     <message>
-        <location filename="src/settingswindow.ui" line="105"/>
-        <source>chemin/vers/mire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="src/settingswindow.ui" line="115"/>
         <source>Path to the default intertitle</source>
         <translation>Chemin vers le carton par défaut</translation>
@@ -1161,11 +801,6 @@ p, li { white-space: pre-wrap; }
         <location filename="src/settingswindow.ui" line="129"/>
         <source>Default path to movies</source>
         <translation>Chemin par défaut des films</translation>
-    </message>
-    <message>
-        <location filename="src/settingswindow.ui" line="136"/>
-        <source>chemin/vers/films</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

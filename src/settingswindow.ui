@@ -61,7 +61,7 @@
      <item row="0" column="1">
       <widget class="QLineEdit" name="lineEdit_VLCPath">
        <property name="text">
-        <string>chemin/vers/vlc</string>
+        <string/>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -71,7 +71,7 @@
      <item row="2" column="1">
       <widget class="QLineEdit" name="lineEdit_intertitlePath">
        <property name="text">
-        <string>chemin/vers/carton</string>
+        <string/>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -102,7 +102,7 @@
      <item row="1" column="1">
       <widget class="QLineEdit" name="lineEdit_testPatternPath">
        <property name="text">
-        <string>chemin/vers/mire</string>
+        <string/>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -133,7 +133,7 @@
      <item row="3" column="1">
       <widget class="QLineEdit" name="lineEdit_moviesPath">
        <property name="text">
-        <string>chemin/vers/films</string>
+        <string/>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
