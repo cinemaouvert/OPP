@@ -29,8 +29,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset>
-       <normaloff>icons/icon_play.png</normaloff>icons/icon_play.png</iconset>
+      <iconset resource="../images.qrc">
+       <normaloff>:/icons/resources/glyphicons/glyphicons_173_play.png</normaloff>:/icons/resources/glyphicons/glyphicons_173_play.png</iconset>
      </property>
     </widget>
    </item>
@@ -46,8 +46,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset>
-       <normaloff>icons/icon_previous.png</normaloff>icons/icon_previous.png</iconset>
+      <iconset resource="../images.qrc">
+       <normaloff>:/icons/resources/glyphicons/glyphicons_170_step_backward.png</normaloff>:/icons/resources/glyphicons/glyphicons_170_step_backward.png</iconset>
      </property>
     </widget>
    </item>
@@ -63,8 +63,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset>
-       <normaloff>icons/icon_next.png</normaloff>icons/icon_next.png</iconset>
+      <iconset resource="../images.qrc">
+       <normaloff>:/icons/resources/glyphicons/glyphicons_178_step_forward.png</normaloff>:/icons/resources/glyphicons/glyphicons_178_step_forward.png</iconset>
      </property>
     </widget>
    </item>
@@ -80,8 +80,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset>
-       <normaloff>icons/icon_pause.png</normaloff>icons/icon_pause.png</iconset>
+      <iconset resource="../images.qrc">
+       <normaloff>:/icons/resources/glyphicons/glyphicons_175_stop.png</normaloff>:/icons/resources/glyphicons/glyphicons_175_stop.png</iconset>
      </property>
     </widget>
    </item>
@@ -131,7 +131,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../images.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>horizontalSlider_sound</sender>

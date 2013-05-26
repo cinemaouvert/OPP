@@ -50,8 +50,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>icons/icon_plus.png</normaloff>icons/icon_plus.png</iconset>
+           <iconset resource="../images.qrc">
+            <normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</iconset>
           </property>
          </widget>
         </item>
@@ -61,8 +61,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>icons/icon_settings.png</normaloff>icons/icon_settings.png</iconset>
+           <iconset resource="../images.qrc">
+            <normaloff>:/icons/resources/glyphicons/glyphicons_280_settings.png</normaloff>:/icons/resources/glyphicons/glyphicons_280_settings.png</iconset>
           </property>
          </widget>
         </item>
@@ -72,8 +72,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>icons/icon_delete.png</normaloff>icons/icon_delete.png</iconset>
+           <iconset resource="../images.qrc">
+            <normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</iconset>
           </property>
          </widget>
         </item>
@@ -197,6 +197,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../images.qrc"/>
+ </resources>
  <connections/>
 </ui>

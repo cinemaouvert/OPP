@@ -151,8 +151,8 @@
          <string>         Advanced settings</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>icons/icon_param_play.png</normaloff>icons/icon_param_play.png</iconset>
+         <iconset resource="../images.qrc">
+          <normaloff>:/icons/resources/glyphicons/glyphicons_137_cogwheels.png</normaloff>:/icons/resources/glyphicons/glyphicons_137_cogwheels.png</iconset>
         </property>
        </widget>
       </item>
@@ -293,8 +293,8 @@
          <string>      Advanced picture settings</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>icons/icon_picture.png</normaloff>icons/icon_picture.png</iconset>
+         <iconset resource="../images.qrc">
+          <normaloff>:/icons/resources/glyphicons/glyphicons_138_picture.png</normaloff>:/icons/resources/glyphicons/glyphicons_138_picture.png</iconset>
         </property>
        </widget>
       </item>
@@ -389,8 +389,8 @@
          <string>         Lock</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>icons/icon_key.png</normaloff>icons/icon_key.png</iconset>
+         <iconset resource="../images.qrc">
+          <normaloff>:/icons/resources/glyphicons/glyphicons_044_keys.png</normaloff>:/icons/resources/glyphicons/glyphicons_044_keys.png</iconset>
         </property>
        </widget>
       </item>
@@ -399,6 +399,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../images.qrc"/>
+ </resources>
  <connections/>
 </ui>

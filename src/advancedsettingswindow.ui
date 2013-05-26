@@ -259,6 +259,10 @@
         <property name="text">
          <string>Download attachment files</string>
         </property>
+        <property name="icon">
+         <iconset resource="../images.qrc">
+          <normaloff>:/icons/resources/glyphicons/glyphicons_181_download_alt.png</normaloff>:/icons/resources/glyphicons/glyphicons_181_download_alt.png</iconset>
+        </property>
        </widget>
       </item>
      </layout>
@@ -266,6 +270,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../images.qrc"/>
+ </resources>
  <connections/>
 </ui>

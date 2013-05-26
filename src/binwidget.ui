@@ -26,16 +26,7 @@
       <string>Bin</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
-      <property name="leftMargin">
-       <number>1</number>
-      </property>
-      <property name="topMargin">
-       <number>1</number>
-      </property>
-      <property name="rightMargin">
-       <number>1</number>
-      </property>
-      <property name="bottomMargin">
+      <property name="margin">
        <number>1</number>
       </property>
       <item>
@@ -47,7 +38,7 @@
           </property>
           <property name="icon">
            <iconset resource="../images.qrc">
-            <normaloff>:/icons/resources/icons/icon_plus.png</normaloff>:/icons/resources/icons/icon_plus.png</iconset>
+            <normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</iconset>
           </property>
          </widget>
         </item>
