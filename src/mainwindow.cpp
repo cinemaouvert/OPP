@@ -28,3 +28,43 @@ void MainWindow::on_action_settings_triggered()
     settingsWindow->activateWindow();
 }
 
+void MainWindow::on_action_lockSettings_triggered()
+{
+    lockSettingsWindow = new LockSettingsWindow(this);
+    lockSettingsWindow->show();
+    lockSettingsWindow->raise();
+    lockSettingsWindow->activateWindow();
+}
+
+void MainWindow::on_action_resumeDetails_triggered()
+{
+    if(ui->action_resumeDetails->isChecked())
+        ui->resumeDetailWidget->show();
+    else
+        ui->resumeDetailWidget->hide();
+}
+
+void MainWindow::on_action_automation_triggered()
+{
+    if(ui->action_automation->isChecked())
+        ui->automationWidget->show();
+    else
+        ui->automationWidget->hide();
+}
+
+void MainWindow::on_action_bin_triggered()
+{
+    if(ui->action_bin->isChecked())
+        ui->binWidget->show();
+    else
+        ui->binWidget->hide();
+}
+
+void MainWindow::on_action_statusBar_triggered()
+{
+    if(ui->action_statusBar->isChecked())
+        ui->StatusBar->show();
+    else
+        ui->StatusBar->hide();
+}
+
