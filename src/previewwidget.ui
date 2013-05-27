@@ -47,7 +47,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Film 2</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -60,7 +60,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>00:29:17</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -93,7 +93,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Film 3</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -106,7 +106,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>00:30:21</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -139,7 +139,7 @@
          </size>
         </property>
         <property name="text">
-         <string>Image media</string>
+         <string/>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -170,7 +170,7 @@
          </size>
         </property>
         <property name="text">
-         <string>Image media</string>
+         <string/>
         </property>
         <property name="scaledContents">
          <bool>true</bool>

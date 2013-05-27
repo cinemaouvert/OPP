@@ -7,6 +7,7 @@ namespace Ui {
 class MainWindow;
 }
 class SettingsWindow;
+class LockSettingsWindow;
 class Application;
 
 class MainWindow : public QMainWindow
@@ -17,15 +18,19 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-//    void updateApplicationContext();
-
 private slots:
     void on_action_settings_triggered();
+    void on_action_lockSettings_triggered();
+    void on_action_resumeDetails_triggered();
+    void on_action_automation_triggered();
+    void on_action_bin_triggered();
+    void on_action_statusBar_triggered();
     
 private:
     Ui::MainWindow *ui;
     SettingsWindow *_settingsWindow;
     Application *_app;
+    LockSettingsWindow *lockSettingsWindow;
 };
 
 #endif // MAINWINDOW_H

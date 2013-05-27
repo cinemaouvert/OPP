@@ -36,18 +36,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="comboBox_proportion">
-        <item>
-         <property name="text">
-          <string>16/9</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>4/3</string>
-         </property>
-        </item>
-       </widget>
+       <widget class="QComboBox" name="comboBox_proportion"/>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_trim">
@@ -67,18 +56,7 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QComboBox" name="comboBox_deinterlace">
-        <item>
-         <property name="text">
-          <string>Oui</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Non</string>
-         </property>
-        </item>
-       </widget>
+       <widget class="QComboBox" name="comboBox_deinterlace"/>
       </item>
       <item row="3" column="0">
        <widget class="QLabel" name="label_deinterlaceMode">
@@ -98,18 +76,7 @@
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QComboBox" name="comboBox_postProcessing">
-        <item>
-         <property name="text">
-          <string>Oui</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Non</string>
-         </property>
-        </item>
-       </widget>
+       <widget class="QComboBox" name="comboBox_postProcessing"/>
       </item>
       <item row="5" column="0">
        <widget class="QLabel" name="label_rotation">
@@ -119,28 +86,7 @@
        </widget>
       </item>
       <item row="5" column="1">
-       <widget class="QComboBox" name="comboBox_rotation">
-        <item>
-         <property name="text">
-          <string>0°</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>90°</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>180°</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>270°</string>
-         </property>
-        </item>
-       </widget>
+       <widget class="QComboBox" name="comboBox_rotation"/>
       </item>
      </layout>
     </item>

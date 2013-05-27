@@ -47,3 +47,5 @@ FORMS += src/playertimelinewidget.ui \
     src/advancedsettingswindow.ui \
     src/settingswindow.ui \
     src/locksettingswindow.ui
+
+TRANSLATIONS = opp_fr.ts
