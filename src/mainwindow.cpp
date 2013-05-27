@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 
 #include "settingswindow.h"
+#include "locksettingswindow.h"
+
 #include "application.h"
 
 MainWindow::MainWindow(QWidget *parent) :

@@ -2,9 +2,11 @@
 #include "ui_binwidget.h"
 
 #include "application.h"
+#include "project.h"
+#include "media.h"
 
 BinWidget::BinWidget(QWidget *parent) :
-    AbstractOppWidget(parent),
+    QWidget(parent),
     ui(new Ui::BinWidget)
 {
     ui->setupUi(this);
@@ -14,10 +16,10 @@ BinWidget::BinWidget(QWidget *parent) :
     //    ui->mediaListTableWidget->removeRow(0);
 
     // core connections
-    connect( _app->currentProject(), mediaAdded(Media*), this, addMedia(Media*) );
+//    connect( _app->currentProject(), mediaAdded(Media*), this, addMedia() );
 
     // ui connections
-    connect( ui->addButton, clicked(), this, addMediaFromFileSystem());
+//    connect( ui->addButton, clicked(), this, addMediaFromFileSystem());
 }
 
 BinWidget::~BinWidget()
@@ -27,7 +29,7 @@ BinWidget::~BinWidget()
 
 void BinWidget::addMediaFromFileSystem()
 {
-    Media *media = new Media();
+    Media *media = new Media("/path/to/file.mkv");
     if (_app->currentProject()->addMedia(media) == false) {
         delete media;
     } else {

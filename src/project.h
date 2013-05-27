@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-class Media;
+#include "media.h"
 
 class Project : public QObject
 {
@@ -20,8 +20,8 @@ public:
     static Project* makeFromFile(const QString & location);
 
 signals:
-    mediaAdded(Media *media);
-    mediaRemoved(Media *media);
+    void mediaAdded(Media *media);
+    void mediaRemoved(Media *media);
 
 private:
     QList<Media*> _mediaList;
