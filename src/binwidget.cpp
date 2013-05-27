@@ -3,6 +3,7 @@
 
 #include <QFileDialog>
 #include <QDebug>
+#include <QMessageBox>
 
 #include "application.h"
 #include "project.h"
@@ -57,7 +58,12 @@ void BinWidget::on_addMediaButton_clicked()
         if (media.exists() == false) {
             // error: media file not exists
         }
-        _mediaListModel->addMedia(media);
+        if (_mediaListModel->addMedia(media) == false) {
+            QMessageBox msgBox;
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setText(QString("The file %1 was already imported.").arg(media.location()));
+            msgBox.exec();
+        }
     }
 }
 
