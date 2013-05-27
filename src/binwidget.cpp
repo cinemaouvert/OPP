@@ -1,9 +1,14 @@
 #include "binwidget.h"
 #include "ui_binwidget.h"
 
+#include <QFileDialog>
+#include <QDebug>
+
 #include "application.h"
 #include "project.h"
 #include "media.h"
+
+#include "medialistmodel.h"
 
 BinWidget::BinWidget(QWidget *parent) :
     QWidget(parent),
@@ -11,15 +16,20 @@ BinWidget::BinWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     _app = Application::instance();
+    _mediaListModel = new MediaListModel(_app->currentProject()->mediaList());
 
-    //    _model = new MediaListModel(project->mediaList());
-    //    ui->mediaListTableWidget->removeRow(0);
+    ui->mediaTableView->setModel(_mediaListModel);
+
+//    model->addMedia(new Media("/path/to/movie.mkv"));
+
+//    ui->mediaListTableWidget->removeRow(0);
 
     // core connections
 //    connect( _app->currentProject(), mediaAdded(Media*), this, addMedia() );
 
     // ui connections
 //    connect( ui->addButton, clicked(), this, addMediaFromFileSystem());
+//    connect(ui->addButton, clicked(bool), this, on_addMediaButton_clicked());
 }
 
 BinWidget::~BinWidget()
@@ -27,13 +37,29 @@ BinWidget::~BinWidget()
     delete ui;
 }
 
-void BinWidget::addMediaFromFileSystem()
-{
-    Media *media = new Media("/path/to/file.mkv");
-    if (_app->currentProject()->addMedia(media) == false) {
-        delete media;
-    } else {
-//        QTableWidget *table = ui->mediaListTableWidget;
+//void BinWidget::addMediaFromFileSystem()
+//{
+//    Media *media = new Media("/path/to/file.mkv");
+//    if (_app->currentProject()->addMedia(media) == false) {
+//        delete media;
+//    } else {
+////        QTableWidget *table = ui->mediaListTableWidget;
 
+//    }
+//}
+
+void BinWidget::on_addMediaButton_clicked()
+{
+    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("New media"), "/Users/floomoon", tr("Media (*.avi *.mkv *.jpg *.png)"));
+    qDebug() << fileNames;
+
+    foreach (QString fileName, fileNames) {
+        Media *media = new Media(fileName);
+        if (media->isExists() == false) {
+            // error: media file not exists
+        }
+        _mediaListModel->addMedia(media);
     }
+
+    qDebug() << _app->currentProject()->mediaList().count();
 }

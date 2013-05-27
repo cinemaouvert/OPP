@@ -8,6 +8,7 @@ class BinWidget;
 }
 class Media;
 class Application;
+class MediaListModel;
 
 class BinWidget : public QWidget
 {
@@ -17,15 +18,16 @@ public:
     explicit BinWidget(QWidget *parent = 0);
     ~BinWidget();
 
-public slots:
-    void addMediaFromFileSystem();
-
 signals:
     void mediaAdded(Media *const media);
+
+private slots:
+    void on_addMediaButton_clicked();
 
 private:
     Ui::BinWidget *ui;
     Application *_app;
+    MediaListModel *_mediaListModel;
 };
 
 #endif // BINWIDGET_H

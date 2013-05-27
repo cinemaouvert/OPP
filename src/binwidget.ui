@@ -26,13 +26,22 @@
       <string>Bin</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
-      <property name="margin">
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
        <number>1</number>
       </property>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QPushButton" name="addButton">
+         <widget class="QPushButton" name="addMediaButton">
           <property name="text">
            <string>          Add a movie</string>
           </property>
@@ -43,7 +52,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="deleteButton">
+         <widget class="QPushButton" name="deleteMediaButton">
           <property name="text">
            <string>         Delete</string>
           </property>
@@ -56,53 +65,19 @@
        </layout>
       </item>
       <item>
-       <widget class="QTableWidget" name="mediaListTableWidget">
-        <property name="contextMenuPolicy">
-         <enum>Qt::DefaultContextMenu</enum>
+       <widget class="QTableView" name="mediaTableView">
+        <property name="editTriggers">
+         <set>QAbstractItemView::SelectedClicked</set>
         </property>
         <property name="selectionBehavior">
          <enum>QAbstractItemView::SelectRows</enum>
         </property>
-        <property name="columnCount">
-         <number>5</number>
-        </property>
-        <attribute name="horizontalHeaderVisible">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="horizontalHeaderCascadingSectionResizes">
-         <bool>false</bool>
-        </attribute>
         <attribute name="horizontalHeaderStretchLastSection">
          <bool>true</bool>
         </attribute>
         <attribute name="verticalHeaderVisible">
          <bool>false</bool>
         </attribute>
-        <column>
-         <property name="text">
-          <string>Name</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Length</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Used</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Playlist</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Location</string>
-         </property>
-        </column>
        </widget>
       </item>
      </layout>
