@@ -10,23 +10,20 @@ class Project : public QObject
     Q_OBJECT
 public:
     explicit Project(QObject *parent = 0);
-    
+
+    inline QList<Media*>& mediaList() { return _mediaList; }
+
     void saveToFile(const QString & location) const;
 
-    void addMedia(Media *);
-
-    void removeMedia(Media *);
-
-    inline QList<Media*>& mediaList() const;
+    bool addMedia(Media *media);
 
     static Project* makeFromFile(const QString & location);
+
 signals:
-    
-public slots:
-    
+    mediaAdded(Media *media);
+    mediaRemoved(Media *media);
 
 private:
-
     QList<Media*> _mediaList;
 };
 

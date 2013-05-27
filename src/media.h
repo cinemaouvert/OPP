@@ -7,12 +7,11 @@ class Media : public QObject
 {
     Q_OBJECT
 public:
-    explicit Media(QObject *parent = 0);
+    explicit Media(const QString &location, QObject *parent = 0);
     
-signals:
-    
-public slots:
-    
+    inline const QString & location() const { return _location; }
+private:
+    QString _location;
 };
 
 #endif // MEDIA_H

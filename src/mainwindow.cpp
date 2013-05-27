@@ -1,30 +1,27 @@
 #include "mainwindow.h"
-
 #include "ui_mainwindow.h"
+
 #include "settingswindow.h"
-#include "project.h"
+#include "application.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    // TODO: load the last project opened (in application settings)
-    _currentProject = new Project();
+    _app = Application::instance();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete _currentProject;
 }
 
 void MainWindow::on_action_settings_triggered()
 {
-    settingsWindow = new SettingsWindow(this);
-    settingsWindow->show();
-    settingsWindow->raise();
-    settingsWindow->activateWindow();
+    _settingsWindow = new SettingsWindow(this);
+    _settingsWindow->show();
+    _settingsWindow->raise();
+    _settingsWindow->activateWindow();
 }
 

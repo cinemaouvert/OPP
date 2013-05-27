@@ -7,6 +7,7 @@ namespace Ui {
 class BinWidget;
 }
 class Media;
+class Application;
 
 class BinWidget : public QWidget
 {
@@ -16,12 +17,15 @@ public:
     explicit BinWidget(QWidget *parent = 0);
     ~BinWidget();
 
-signals:
+public slots:
+    void addMediaFromFileSystem();
 
-    void mediaAdded(Media *);
+signals:
+    void mediaAdded(Media *const media);
 
 private:
     Ui::BinWidget *ui;
+    Application *_app;
 };
 
 #endif // BINWIDGET_H

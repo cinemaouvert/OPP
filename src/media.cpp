@@ -1,6 +1,7 @@
 #include "media.h"
 
-Media::Media(QObject *parent) :
-    QObject(parent)
+Media::Media(const QString &location, QObject *parent) :
+    QObject(parent),
+    _location(location)
 {
 }
