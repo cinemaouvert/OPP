@@ -65,6 +65,9 @@ plugin_commonU.def
 *.qrc.autosave
 *~
 
+#Qt I18n files
+*.qm
+
 # Failed patch
 *.orig
 *.rej
