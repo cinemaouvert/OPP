@@ -9,9 +9,9 @@ class MediaListModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    enum Columns { Name = 0, Length = 1, Used = 2, Location = 3 };
+    enum Columns { Name = 0, Duration = 1, Used = 2, Location = 3 };
 
-    MediaListModel(QList<Media*> &mediaList, QObject *parent = 0);
+    MediaListModel(QList<Media> &mediaList, QObject *parent = 0);
 
     int columnCount(const QModelIndex &parent) const;
 
@@ -23,10 +23,12 @@ public:
 
     QVariant data(const QModelIndex &index, int role) const;
 
-    void addMedia(Media *media);
+    bool removeRows(int position, int rows, const QModelIndex &index = QModelIndex());
+
+    bool addMedia(const Media &media);
 
 private:
-    QList<Media*> &_mediaList;
+    QList<Media> &_mediaList;
 };
 
 #endif // MEDIALISTMODEL_H

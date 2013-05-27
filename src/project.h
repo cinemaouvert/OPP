@@ -11,11 +11,9 @@ class Project : public QObject
 public:
     explicit Project(QObject *parent = 0);
 
-    inline QList<Media*>& mediaList() { return _mediaList; }
+    inline QList<Media>& mediaList() { return _mediaList; }
 
     void saveToFile(const QString & location) const;
-
-    bool addMedia(Media *media);
 
     static Project* makeFromFile(const QString & location);
 
@@ -24,7 +22,7 @@ signals:
     void mediaRemoved(Media *media);
 
 private:
-    QList<Media*> _mediaList;
+    QList<Media> _mediaList;
 };
 
 #endif // PROJECT_H

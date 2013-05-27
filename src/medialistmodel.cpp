@@ -4,7 +4,7 @@
 #include <QIcon>
 #include "media.h"
 
-MediaListModel::MediaListModel(QList<Media*> &mediaList, QObject *parent) :
+MediaListModel::MediaListModel(QList<Media> &mediaList, QObject *parent) :
     QAbstractTableModel(parent),
     _mediaList(mediaList)
 {
@@ -23,16 +23,6 @@ int MediaListModel::rowCount(const QModelIndex &parent) const
 Qt::ItemFlags MediaListModel::flags(const QModelIndex &index) const
 {
     return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
-//    if (index.column() == Name)
-//    {
-//        return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
-//    }
-//    else if (index.column() == Value)
-//    {
-//        return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
-//    }
-
-//    return QAbstractTableModel::flags(index);
 }
 
 QVariant MediaListModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -44,8 +34,8 @@ QVariant MediaListModel::headerData(int section, Qt::Orientation orientation, in
         case Name:
             return trUtf8("Name");
             break;
-        case Length:
-            return trUtf8("Length");
+        case Duration:
+            return trUtf8("Duration");
             break;
         case Used:
             return trUtf8("Used");
@@ -70,10 +60,10 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
     case Qt::ToolTipRole:
         switch (index.column()) {
         case Name:
-            return _mediaList[index.row()]->name();
+            return _mediaList[index.row()].name();
             break;
         case Location:
-            return _mediaList[index.row()]->location();
+            return _mediaList[index.row()].location();
             break;
         }
         break;
@@ -87,30 +77,16 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
         break;
     case Qt::DisplayRole:
         if (index.column() == Location) {
-            return _mediaList[index.row()]->location();
+            return _mediaList[index.row()].location();
         }
         if (index.column() == Name) {
-            return _mediaList[index.row()]->name();
+            return _mediaList[index.row()].name();
         }
         break;
     }
 
     return QVariant();
 }
-
-//QVariant MedialListModel::data(const QModelIndex &index, int role) const
-//{
-//    if (!index.isValid())
-//        return QVariant();
-
-//    if (index.row() >= _mediaList.size())
-//        return QVariant();
-
-////    if (role == Qt::DisplayRole)
-////        return _mediaList.at(index.row());
-////    else
-//        return QVariant();
-//}
 
 //QVariant MedialListModel::headerData(int section, Qt::Orientation orientation, int role) const
 // {
@@ -123,10 +99,28 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
 //         return QString("%1").arg(section);
 // }
 
-void MediaListModel::addMedia(Media *media)
+bool MediaListModel::removeRows(int position, int rows, const QModelIndex &index)
+{
+    Q_UNUSED(index);
+    beginRemoveRows(QModelIndex(), position, position+rows-1);
+
+    for (int row=0; row < rows; ++row) {
+        _mediaList.removeAt(position);
+    }
+
+    endRemoveRows();
+    return true;
+}
+
+bool MediaListModel::addMedia(const Media &media)
 {
     const int count = _mediaList.count();
-    beginInsertRows(QModelIndex(), count, count);
-    _mediaList << media;
-    endInsertRows();
+    if (!_mediaList.contains(media)) {
+        beginInsertRows(QModelIndex(), count, count);
+        _mediaList.append(media);
+        endInsertRows();
+        return true;
+    } else {
+        return false;
+    }
 }

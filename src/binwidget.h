@@ -23,6 +23,7 @@ signals:
 
 private slots:
     void on_addMediaButton_clicked();
+    void on_deleteMediaButton_clicked();
 
 private:
     Ui::BinWidget *ui;

@@ -8,14 +8,18 @@ class Media : public QObject
 {
     Q_OBJECT
 public:
-    explicit Media(const QString &location, QObject *parent = 0);
-    
+    Media(const QString &location, QObject *parent = 0);
+    Media(const Media &media);
+
+    Media & operator=(const Media &media);
+
     inline const QString & location() const { return _location; }
 
     QString name() const;
 
-    bool isExists() const;
+    bool exists() const;
 
+    bool operator==(const Media &media) const;
 private:
     QString _location;
     QFileInfo _fileInfo;

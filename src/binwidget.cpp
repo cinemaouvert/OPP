@@ -51,15 +51,22 @@ BinWidget::~BinWidget()
 void BinWidget::on_addMediaButton_clicked()
 {
     QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("New media"), "/Users/floomoon", tr("Media (*.avi *.mkv *.jpg *.png)"));
-    qDebug() << fileNames;
 
     foreach (QString fileName, fileNames) {
-        Media *media = new Media(fileName);
-        if (media->isExists() == false) {
+        Media media(fileName);
+        if (media.exists() == false) {
             // error: media file not exists
         }
         _mediaListModel->addMedia(media);
     }
+}
 
-    qDebug() << _app->currentProject()->mediaList().count();
+void BinWidget::on_deleteMediaButton_clicked()
+{
+    QItemSelectionModel *selectionModel = ui->mediaTableView->selectionModel();
+    QModelIndexList indexes = selectionModel->selectedRows();
+
+    foreach (QModelIndex index, indexes) {
+        _mediaListModel->removeRows(index.row(), 1);
+    }
 }
