@@ -10,5 +10,5 @@ void Project::saveToFile(const QString & location) const {
 }
 
 Project* Project::makeFromFile(const QString & location) {
-
+    return 0;
 }
