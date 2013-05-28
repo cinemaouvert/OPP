@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    _app = Application::instance();
+    _app = new Application();
 }
 
 MainWindow::~MainWindow()

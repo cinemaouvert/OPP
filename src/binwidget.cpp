@@ -16,21 +16,11 @@ BinWidget::BinWidget(QWidget *parent) :
     ui(new Ui::BinWidget)
 {
     ui->setupUi(this);
-    _app = Application::instance();
-    _mediaListModel = new MediaListModel(_app->currentProject()->mediaList());
 
-    ui->mediaTableView->setModel(_mediaListModel);
+    //Application *app = Application::instance();
+    //_mediaListModel = new MediaListModel(app->currentProject()->mediaList());
 
-//    model->addMedia(new Media("/path/to/movie.mkv"));
-
-//    ui->mediaListTableWidget->removeRow(0);
-
-    // core connections
-//    connect( _app->currentProject(), mediaAdded(Media*), this, addMedia() );
-
-    // ui connections
-//    connect( ui->addButton, clicked(), this, addMediaFromFileSystem());
-//    connect(ui->addButton, clicked(bool), this, on_addMediaButton_clicked());
+    //ui->mediaTableView->setModel(_mediaListModel);
 }
 
 BinWidget::~BinWidget()
@@ -53,18 +43,18 @@ void BinWidget::on_addMediaButton_clicked()
 {
     QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("New media"), "/Users/floomoon", tr("Media (*.avi *.mkv *.jpg *.png)"));
 
-    foreach (QString fileName, fileNames) {
-        Media media(fileName);
-        if (media.exists() == false) {
-            // error: media file not exists
-        }
-        if (_mediaListModel->addMedia(media) == false) {
-            QMessageBox msgBox;
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.setText(QString("The file %1 was already imported.").arg(media.location()));
-            msgBox.exec();
-        }
-    }
+//    foreach (QString fileName, fileNames) {
+//        Media media(fileName, app.vlcInstance());
+//        if (media.exists() == false) {
+//            // error: media file not exists
+//        }
+//        if (_mediaListModel->addMedia(media) == false) {
+//            QMessageBox msgBox;
+//            msgBox.setIcon(QMessageBox::Warning);
+//            msgBox.setText(QString("The file %1 was already imported.").arg(media.location()));
+//            msgBox.exec();
+//        }
+//    }
 }
 
 void BinWidget::on_deleteMediaButton_clicked()
