@@ -1,5 +1,4 @@
-HEADERS += src/vlcwidgetvideo.h \
-    src/playertimelinewidget.h \
+HEADERS += src/playertimelinewidget.h \
     src/mainwindow.h \
     src/binwidget.h \
     src/resumedetailswidget.h \
@@ -16,7 +15,6 @@ HEADERS += src/vlcwidgetvideo.h \
     src/medialistmodel.h
 
 SOURCES += src/main.cpp \
-    src/vlcwidgetvideo.cpp \
     src/playertimelinewidget.cpp \
     src/mainwindow.cpp \
     src/binwidget.cpp \

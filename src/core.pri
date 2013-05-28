@@ -29,3 +29,6 @@ mac:INCLUDEPATH += $$LIBVLC_INCLUDE_DIR
 mac:QMAKE_CXXFLAGS+=-x objective-c++
 
 unix:LIBS += -lvlc -lvlccore
+
+windows:LIBS += -L"C:\Program Files (x86)\VideoLAN\VLC\sdk\lib" -llibvlc -llibvlccore
+windows:INCLUDEPATH += "C:\Program Files (x86)\VideoLAN\VLC\sdk\include"

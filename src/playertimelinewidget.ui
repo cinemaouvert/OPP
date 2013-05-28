@@ -33,9 +33,6 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="VlcWidgetVideo" name="currentPlaybackVideo" native="true"/>
-   </item>
    <item row="1" column="0">
     <widget class="QLabel" name="label_lengthCurrentMedia">
      <property name="sizePolicy">
@@ -150,16 +147,11 @@
      </layout>
     </widget>
    </item>
+   <item row="0" column="0">
+    <widget class="QWidget" name="currentPlaybackVideo" native="true"/>
+   </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>VlcWidgetVideo</class>
-   <extends>QWidget</extends>
-   <header>vlcwidgetvideo.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
