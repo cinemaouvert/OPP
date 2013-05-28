@@ -3,32 +3,20 @@
 
 #include <QObject>
 
-class Project;
+struct libvlc_instance_t;
 
-class Application : public QObject
+class Application
 {
-    Q_OBJECT
-    
 public:
-    /**
-     * @brief Singleton instance getter
-     * @return The singleton instance
-     */
-    static Application *const instance();
-
+    Application();
     ~Application();
 
-    inline Project *const currentProject() const { return _currentProject; }
+    void initVlcInstanceFromArgs(const QStringList &args);
+
+    inline libvlc_instance_t* vlcInstance() const { return _vlcInstance; }
 
 private:
-    explicit Application(QObject *parent = 0);
-
-    /**
-     * @brief Singleton instance
-     */
-    static Application *s_instance;
-
-    Project *_currentProject;
+    libvlc_instance_t *_vlcInstance;
 };
 
 #endif // APPLICATION_H

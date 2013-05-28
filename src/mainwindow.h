@@ -28,8 +28,8 @@ private slots:
     
 private:
     Ui::MainWindow *ui;
-    SettingsWindow *_settingsWindow;
     Application *_app;
+    SettingsWindow *_settingsWindow;
     LockSettingsWindow *lockSettingsWindow;
 };
 

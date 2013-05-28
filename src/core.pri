@@ -8,7 +8,8 @@ HEADERS += src/media.h \
     src/playlistplayer.h \
     src/mediaplayer.h \
     src/videoview.h \
-    src/application.h
+    src/application.h \
+    src/global.h
 
 SOURCES += src/media.cpp \
     src/playlist.cpp \

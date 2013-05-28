@@ -27,7 +27,6 @@ private slots:
 
 private:
     Ui::BinWidget *ui;
-    Application *_app;
     MediaListModel *_mediaListModel;
 };
 
