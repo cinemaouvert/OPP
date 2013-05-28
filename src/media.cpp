@@ -13,7 +13,8 @@ Media::Media(const Media &media)
     _fileInfo = QFileInfo(_location);
 }
 
-Media & Media::operator=(const Media &media) {
+Media & Media::operator=(const Media &media)
+{
     if (this != &media) {
         _location = media.location();
         _fileInfo = QFileInfo(_location);
@@ -26,7 +27,8 @@ QString Media::name() const
     return _fileInfo.fileName();
 }
 
-bool Media::exists() const {
+bool Media::exists() const
+{
     return _fileInfo.exists();
 }
 
