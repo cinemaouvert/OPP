@@ -5,27 +5,25 @@
 #include "media.h"
 #include "videoview.h"
 
-MediaPlayer::MediaPlayer(QObject *parent) :
+MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     QObject(parent),
-    _currentMedia(NULL),
-    _videoView(NULL)
+    _videoView(NULL),
+    _isPaused(false)
 {
-    qDebug() << "create media player";
-//    qDebug() << Application::instance()->vlcInstance();
-//    _vlcMediaPlayer = libvlc_media_player_new(Application::instance()->vlcInstance());
+    _vlcMediaPlayer = libvlc_media_player_new(vlcInstance);
     VLC_LAST_ERROR();
 //    _vlcEvents = libvlc_media_player_event_manager(_vlcMediaPlayer);
 
 //    /* Disable mouse and keyboard events */
-//    libvlc_video_set_key_input(_vlcMediaPlayer, false);
-//    libvlc_video_set_mouse_input(_vlcMediaPlayer, false);
+    libvlc_video_set_key_input(_vlcMediaPlayer, false);
+    libvlc_video_set_mouse_input(_vlcMediaPlayer, false);
 
 //    createCoreConnections();
 }
 
 MediaPlayer::~MediaPlayer()
 {
-//    libvlc_media_player_release(_vlcMediaPlayer);
+    libvlc_media_player_release(_vlcMediaPlayer);
 }
 
 int MediaPlayer::length() const
@@ -39,16 +37,15 @@ void MediaPlayer::setVideoView(VideoView *videoView)
     _videoView = videoView;
 }
 
-void MediaPlayer::open(Media *media)
+void MediaPlayer::open(const Media &media)
 {
-    _currentMedia = media;
-    VLCERR( libvlc_media_player_set_media(_vlcMediaPlayer, media->core()) );
+    VLCERR( libvlc_media_player_set_media(_vlcMediaPlayer, media.core()) );
 }
 
 void MediaPlayer::play()
 {
-//    if (!_vlcMediaPlayer)
-//        return;
+    if (!_vlcMediaPlayer)
+        return;
 
     if (_videoView) {
         _currentWId = _videoView->request();
@@ -67,4 +64,35 @@ void MediaPlayer::play()
     }
 
     VLCERR( libvlc_media_player_play(_vlcMediaPlayer) );
+    _isPaused = false;
+}
+
+void MediaPlayer::pause()
+{
+    libvlc_media_player_set_pause(_vlcMediaPlayer, true);
+    _isPaused = true;
+}
+
+void MediaPlayer::resume()
+{
+    libvlc_media_player_set_pause(_vlcMediaPlayer, false);
+    _isPaused = false;
+}
+
+void MediaPlayer::stop()
+{
+    if (!_vlcMediaPlayer)
+        return;
+
+    if (_videoView)
+        _videoView->release();
+    _currentWId = 0;
+
+    libvlc_media_player_stop(_vlcMediaPlayer);
+    _isPaused = false;
+}
+
+bool MediaPlayer::isPlaying() const
+{
+    return libvlc_media_player_is_playing(_vlcMediaPlayer);
 }

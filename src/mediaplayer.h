@@ -7,6 +7,7 @@
 class Media;
 class VideoView;
 
+struct libvlc_instance_t;
 struct libvlc_media_player_t;
 struct libvlc_event_manager_t;
 
@@ -14,27 +15,35 @@ class MediaPlayer : public QObject
 {
     Q_OBJECT
 public:
-    explicit MediaPlayer(QObject *parent = 0);
+    explicit MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent = 0);
     virtual ~MediaPlayer();
 
-    inline Media* currentMedia() const { return _currentMedia; }
+    inline bool isPaused() const { return _isPaused; }
 
     int length() const;
 
     void setVideoView(VideoView *videoView);
 
-    void open(Media *media);
+    void open(const Media &media);
 
     void play();
 
-private:
-    Media *_currentMedia;
+    void pause();
 
+    void resume();
+
+    void stop();
+
+    bool isPlaying() const;
+
+private:
     libvlc_media_player_t *_vlcMediaPlayer;
     libvlc_event_manager_t *_vlcEvents;
 
     VideoView *_videoView;
     WId _currentWId;
+
+    bool _isPaused;
 };
 
 #endif // MEDIAPLAYER_H

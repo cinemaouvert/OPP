@@ -12,6 +12,7 @@ class LockSettingsWindow;
 class MediaListModel;
 
 class Application;
+class MediaPlayer;
 
 class MainWindow : public QMainWindow
 {
@@ -30,6 +31,10 @@ private slots:
     void on_settingsAction_triggered();
     void on_lockSettingsAction_triggered();
 
+    /* player controls */
+    void on_playerPlayButton_clicked();
+    void on_playerStopButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -37,6 +42,7 @@ private:
     LockSettingsWindow *lockSettingsWindow;
 
     Application *_app;
+    MediaPlayer *_mediaPlayer;
 
     MediaListModel *_mediaListModel;
 };

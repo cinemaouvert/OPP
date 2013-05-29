@@ -5,8 +5,6 @@
 
 #include "media.h"
 
-class MediaPlayer;
-
 class Project : public QObject
 {
     Q_OBJECT
@@ -15,7 +13,6 @@ public:
     virtual ~Project();
 
     inline QList<Media>& mediaList() { return _mediaList; }
-    inline MediaPlayer* mediaPlayer() const;
 
     void saveToFile(const QString & location) const;
 
@@ -27,7 +24,6 @@ signals:
 
 private:
     QList<Media> _mediaList;
-    MediaPlayer *_mediaPlayer;
 };
 
 #endif // PROJECT_H

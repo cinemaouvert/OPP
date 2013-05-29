@@ -4,8 +4,7 @@
 #include "application.h"
 
 Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *parent) :
-    QObject(parent),
-    _location(location)
+    QObject(parent)
 {
     initMedia(location, vlcInstance);
 }
@@ -24,10 +23,9 @@ Media::~Media()
 
 void Media::initMedia(const QString &location, libvlc_instance_t *vlcInstance)
 {
-    QString l = location;
-    l.replace("/", "\\");
+    _location = location;
     _fileInfo = QFileInfo(location);
-    _vlcMedia = libvlc_media_new_path(vlcInstance, l.toLocal8Bit().data());
+    _vlcMedia = libvlc_media_new_path(vlcInstance, location.toLocal8Bit().data());
 }
 
 Media & Media::operator=(const Media &media)

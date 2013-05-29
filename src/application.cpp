@@ -19,7 +19,7 @@ Application::Application()
                        <<"--no-video-title-show"
     #if defined(Q_OS_MAC)
                       << "--vout=macosx"
-//                      << "--data-path=/Applications/VLC.app/Contents/MacOS/plugins"
+                      << "--data-path=/Applications/VLC.app/Contents/MacOS/plugins"
     #endif
                        <<"--drop-late-frames";
     initVlcInstanceFromArgs(vlcargs);

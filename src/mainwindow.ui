@@ -952,7 +952,14 @@ p, li { white-space: pre-wrap; }
              </property>
              <property name="icon">
               <iconset resource="../images.qrc">
-               <normaloff>:/icons/resources/glyphicons/glyphicons_173_play.png</normaloff>:/icons/resources/glyphicons/glyphicons_173_play.png</iconset>
+               <normaloff>:/icons/resources/glyphicons/glyphicons_173_play.png</normaloff>
+               <normalon>:/icons/resources/glyphicons/glyphicons_174_pause.png</normalon>:/icons/resources/glyphicons/glyphicons_173_play.png</iconset>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
              </property>
             </widget>
            </item>

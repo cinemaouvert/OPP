@@ -16,6 +16,8 @@ public:
 
     MediaListModel(QObject *parent = 0);
 
+    inline QList<Media>& mediaList() { return _mediaList; }
+
     int columnCount(const QModelIndex &parent) const;
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;

@@ -11,6 +11,7 @@
 
 #include "application.h"
 #include "media.h"
+#include "mediaplayer.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -18,6 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     _app = new Application();
+    _mediaPlayer = new MediaPlayer(_app->vlcInstance());
+
     _mediaListModel = new MediaListModel();
     ui->binTableView->setModel(_mediaListModel);
 
@@ -33,22 +36,20 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete _mediaListModel;
+    delete _mediaPlayer;
+    delete _app;
 }
 
 void MainWindow::on_binAddMediaButton_clicked()
 {
-    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("New media"), "/Users/floomoon", tr("Media (*.avi *.mkv *.jpg *.png)"));
+    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("New media"), QDir::homePath(), tr("Media (*.avi *.mkv *.jpg *.png)"));
 
     foreach (QString fileName, fileNames) {
         Media media(fileName, _app->vlcInstance());
         if (media.exists() == false) {
-            // error: media file not exists
-        }
-        if (_mediaListModel->addMedia(media) == false) {
-            QMessageBox msgBox;
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.setText(QString("The file %1 was already imported.").arg(media.location()));
-            msgBox.exec();
+            QMessageBox::warning(this, "Import media", QString("The file %1 does not exist. Maybe it was deleted.").arg(media.location()));
+        } else if (_mediaListModel->addMedia(media) == false) {
+            QMessageBox::warning(this, "Import media", QString("The file %1 was already imported.").arg(media.location()));
         }
     }
 
@@ -76,4 +77,34 @@ void MainWindow::on_lockSettingsAction_triggered()
     lockSettingsWindow->show();
     lockSettingsWindow->raise();
     lockSettingsWindow->activateWindow();
+}
+
+void MainWindow::on_playerPlayButton_clicked()
+{
+    if (_mediaPlayer->isPlaying()) {
+        _mediaPlayer->pause();
+    } else {
+        if (_mediaPlayer->isPaused()) {
+            _mediaPlayer->resume();
+        } else {
+            // temporaly get selected media from the bin
+            // TODO : get media of the selected playback from _playlistModel ...
+            QModelIndexList indexes = ui->binTableView->selectionModel()->selectedRows();
+
+            if (indexes.count() == 0) {
+                ui->playerPlayButton->toggle(); // display play icon
+            } else {
+                _mediaPlayer->open(_mediaListModel->mediaList().at(indexes.first().row()));
+                _mediaPlayer->play();
+            }
+        }
+    }
+}
+
+void MainWindow::on_playerStopButton_clicked()
+{
+    if (_mediaPlayer->isPlaying() || _mediaPlayer->isPaused()) {
+        _mediaPlayer->stop();
+        ui->playerPlayButton->toggle();
+    }
 }
