@@ -2,8 +2,11 @@
 #define PLAYLISTMODEL_H
 
 #include <QAbstractTableModel>
+#include <QList>
 
-class Media;
+#include "media.h"
+
+
 
 class PlaylistModel : public QAbstractTableModel
 {
@@ -11,7 +14,7 @@ class PlaylistModel : public QAbstractTableModel
 public:
     enum Columns { Title = 0, Duration = 1, Video = 2, Audio = 3, Subtitles = 4, TestPattern = 5, Gain = 6, Status = 7 };
 
-    PlaylistModel(QList<Media> &mediaList, QObject *parent = 0);
+    PlaylistModel(QObject *parent = 0);
 
     int columnCount(const QModelIndex &parent) const;
 
@@ -23,8 +26,10 @@ public:
 
     QVariant data(const QModelIndex &index, int role) const;
 
+    bool addMedia(const Media &media);
+
 private:
-    QList<Media> &_mediaList;
+    QList<Media> _mediaList;
 };
 
 

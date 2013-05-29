@@ -10,6 +10,7 @@
 #include "advancedpicturesettingswindow.h"
 #include "locksettingswindow.h"
 #include "medialistmodel.h"
+#include "playlistmodel.h"
 
 #include "application.h"
 #include "media.h"
@@ -21,7 +22,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     _app = new Application();
     _mediaListModel = new MediaListModel();
+    _playlistModel = new PlaylistModel();
     ui->binTableView->setModel(_mediaListModel);
+    ui->playlistTableView->setModel(_playlistModel);
 
     // show/hide pannel actions
     connect(ui->quitAction, SIGNAL(triggered()), this, SLOT(close()));
@@ -35,6 +38,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete _mediaListModel;
+    delete _playlistModel;
 }
 
 void MainWindow::on_binAddMediaButton_clicked()
@@ -47,6 +51,12 @@ void MainWindow::on_binAddMediaButton_clicked()
             // error: media file not exists
         }
         if (_mediaListModel->addMedia(media) == false) {
+            QMessageBox msgBox;
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setText(QString("The file %1 was already imported.").arg(media.location()));
+            msgBox.exec();
+        }
+        if (_playlistModel->addMedia(media) == false) {
             QMessageBox msgBox;
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.setText(QString("The file %1 was already imported.").arg(media.location()));

@@ -12,6 +12,7 @@ class AdvancedSettingsWindow;
 class AdvancedPictureSettingsWindow;
 
 class MediaListModel;
+class PlaylistModel;
 
 class Application;
 
@@ -48,6 +49,7 @@ private:
     Application *_app;
 
     MediaListModel *_mediaListModel;
+    PlaylistModel *_playlistModel;
 };
 
 #endif // MAINWINDOW_H
