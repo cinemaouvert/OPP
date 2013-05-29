@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1483</width>
-    <height>796</height>
+    <width>1287</width>
+    <height>652</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,101 +17,1051 @@
    <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <property name="margin">
-     <number>1</number>
-    </property>
+   <layout class="QVBoxLayout" name="verticalLayout_16">
     <item>
-     <widget class="QFrame" name="verticalFrame_2">
-      <property name="maximumSize">
-       <size>
-        <width>500</width>
-        <height>16777215</height>
-       </size>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <property name="margin">
-        <number>1</number>
+      <widget class="QFrame" name="verticalFrame_2">
+       <property name="maximumSize">
+        <size>
+         <width>500</width>
+         <height>16777215</height>
+        </size>
        </property>
-       <item>
-        <widget class="ResumeDetailsWidget" name="resumeDetailWidget" native="true"/>
-       </item>
-       <item>
-        <widget class="AutomationWidget" name="automationWidget" native="true"/>
-       </item>
-       <item>
-        <widget class="BinWidget" name="binWidget" native="true"/>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
-     <widget class="QFrame" name="verticalFrame">
-      <property name="minimumSize">
-       <size>
-        <width>388</width>
-        <height>0</height>
-       </size>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <property name="margin">
-        <number>1</number>
-       </property>
-       <item>
-        <widget class="QFrame" name="horizontalFrame">
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <property name="margin">
-           <number>1</number>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="leftMargin">
+         <number>1</number>
+        </property>
+        <property name="topMargin">
+         <number>1</number>
+        </property>
+        <property name="rightMargin">
+         <number>1</number>
+        </property>
+        <property name="bottomMargin">
+         <number>1</number>
+        </property>
+        <item>
+         <widget class="QTabWidget" name="projectTabWidget">
+          <property name="currentIndex">
+           <number>2</number>
           </property>
-          <item>
-           <widget class="QFrame" name="verticalFrame_3">
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <property name="margin">
-              <number>1</number>
-             </property>
+          <widget class="QWidget" name="summaryTab">
+           <attribute name="title">
+            <string>Summary</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QTextEdit" name="summaryTextEdit">
+              <property name="html">
+               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Lucida Grande'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="detailsTab">
+           <attribute name="title">
+            <string>Details</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QTextEdit" name="detailsTextEdit">
+              <property name="html">
+               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Lucida Grande'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="logTab">
+           <attribute name="title">
+            <string>Log</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_8">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QTextEdit" name="logTextEdit">
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="html">
+               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Lucida Grande'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="scheduleGroupBox">
+          <property name="title">
+           <string>Automation</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <property name="spacing">
+            <number>1</number>
+           </property>
+           <property name="leftMargin">
+            <number>1</number>
+           </property>
+           <property name="topMargin">
+            <number>1</number>
+           </property>
+           <property name="rightMargin">
+            <number>1</number>
+           </property>
+           <property name="bottomMargin">
+            <number>1</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item>
-              <widget class="PreviewWidget" name="timelineWidget" native="true"/>
+              <widget class="QComboBox" name="schedulePlaylistListComboBox"/>
              </item>
              <item>
-              <widget class="ParametersWidget" name="mediaSettingsWidget" native="true"/>
+              <widget class="QDateEdit" name="scheduleLaunchAtDateEdit">
+               <property name="displayFormat">
+                <string>dd/MM/yyyy</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTimeEdit" name="scheduleLaunchAtTimeEdit"/>
+             </item>
+             <item>
+              <widget class="QPushButton" name="scheduleAddButton">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../images.qrc">
+                 <normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="scheduleSettingsButton">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../images.qrc">
+                 <normaloff>:/icons/resources/glyphicons/glyphicons_280_settings.png</normaloff>:/icons/resources/glyphicons/glyphicons_280_settings.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="scheduleDeleteButton">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../images.qrc">
+                 <normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</iconset>
+               </property>
+              </widget>
              </item>
             </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="SaturationWidget" name="saturationWidget" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="scheduleTableWidget">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <property name="selectionBehavior">
+              <enum>QAbstractItemView::SelectRows</enum>
+             </property>
+             <property name="showGrid">
+              <bool>true</bool>
+             </property>
+             <property name="sortingEnabled">
+              <bool>false</bool>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="cornerButtonEnabled">
+              <bool>true</bool>
+             </property>
+             <property name="columnCount">
+              <number>3</number>
+             </property>
+             <attribute name="horizontalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="horizontalHeaderCascadingSectionResizes">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="horizontalHeaderStretchLastSection">
+              <bool>true</bool>
+             </attribute>
+             <attribute name="verticalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <column>
+              <property name="text">
+               <string>Playlist</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Begin</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>End</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <widget class="QLabel" name="label_delay1">
+               <property name="text">
+                <string>Delay the automation of</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="scheduleDelaySpinBox"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_delay2">
+               <property name="text">
+                <string>minutes.</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="scheduleDelayButton">
+               <property name="text">
+                <string>Delay</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QPushButton" name="scheduleToggleEnabledButton">
+             <property name="text">
+              <string>Stop automation</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="binGroupBox">
+          <property name="styleSheet">
+           <string notr="true">border-color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="title">
+           <string>Bin</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <property name="leftMargin">
+            <number>1</number>
+           </property>
+           <property name="topMargin">
+            <number>1</number>
+           </property>
+           <property name="rightMargin">
+            <number>1</number>
+           </property>
+           <property name="bottomMargin">
+            <number>1</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QPushButton" name="binAddMediaButton">
+               <property name="text">
+                <string>          Add a movie</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../images.qrc">
+                 <normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="binDeleteMediaButton">
+               <property name="text">
+                <string>         Delete</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../images.qrc">
+                 <normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QTableView" name="binTableView">
+             <property name="editTriggers">
+              <set>QAbstractItemView::SelectedClicked</set>
+             </property>
+             <property name="selectionBehavior">
+              <enum>QAbstractItemView::SelectRows</enum>
+             </property>
+             <attribute name="horizontalHeaderStretchLastSection">
+              <bool>true</bool>
+             </attribute>
+             <attribute name="verticalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QFrame" name="verticalFrame">
+       <property name="minimumSize">
+        <size>
+         <width>388</width>
+         <height>0</height>
+        </size>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="leftMargin">
+         <number>1</number>
+        </property>
+        <property name="topMargin">
+         <number>1</number>
+        </property>
+        <property name="rightMargin">
+         <number>1</number>
+        </property>
+        <property name="bottomMargin">
+         <number>1</number>
+        </property>
+        <item>
+         <widget class="QFrame" name="horizontalFrame">
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <property name="leftMargin">
+            <number>1</number>
+           </property>
+           <property name="topMargin">
+            <number>1</number>
+           </property>
+           <property name="rightMargin">
+            <number>1</number>
+           </property>
+           <property name="bottomMargin">
+            <number>1</number>
+           </property>
+           <item>
+            <widget class="QFrame" name="verticalFrame_3">
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <property name="leftMargin">
+               <number>1</number>
+              </property>
+              <property name="topMargin">
+               <number>1</number>
+              </property>
+              <property name="rightMargin">
+               <number>1</number>
+              </property>
+              <property name="bottomMargin">
+               <number>1</number>
+              </property>
+              <item>
+               <widget class="PlayerTimelineWidget" name="timelineWidget" native="true">
+                <layout class="QGridLayout" name="gridLayout"/>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="mediaSettingsWidget" native="true">
+                <layout class="QHBoxLayout" name="horizontalLayout_7">
+                 <item>
+                  <widget class="QFrame" name="frame">
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_10">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QGroupBox" name="groupBox_3">
+                      <property name="autoFillBackground">
+                       <bool>false</bool>
+                      </property>
+                      <property name="title">
+                       <string>General</string>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_11">
+                       <item>
+                        <layout class="QFormLayout" name="formLayout_4">
+                         <property name="formAlignment">
+                          <set>Qt::AlignHCenter|Qt::AlignTop</set>
+                         </property>
+                         <item row="0" column="0">
+                          <widget class="QLabel" name="audioTrackLabel">
+                           <property name="text">
+                            <string>Audio track</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="0" column="1">
+                          <widget class="QComboBox" name="audioTrackComboBox">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="1" column="0">
+                          <widget class="QLabel" name="videoTrackLabel">
+                           <property name="text">
+                            <string>Video track</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="1" column="1">
+                          <widget class="QComboBox" name="videoTrackComboBox"/>
+                         </item>
+                         <item row="2" column="0">
+                          <widget class="QLabel" name="subtitlesTrackLabel">
+                           <property name="text">
+                            <string>Subtitles track</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="2" column="1">
+                          <widget class="QComboBox" name="subtitlesTrackComboBox"/>
+                         </item>
+                         <item row="3" column="0">
+                          <widget class="QLabel" name="subtitlesSyncLabel">
+                           <property name="text">
+                            <string>Subtitles sync</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="3" column="1">
+                          <widget class="QDoubleSpinBox" name="subtitlesSyncSpinBox">
+                           <property name="minimum">
+                            <double>-99.900000000000006</double>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="4" column="0">
+                          <widget class="QLabel" name="ratioLabel">
+                           <property name="text">
+                            <string>Ratio</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="4" column="1">
+                          <widget class="QComboBox" name="ratioComboBox"/>
+                         </item>
+                        </layout>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="advancedSettingsButton">
+                      <property name="text">
+                       <string>         Advanced settings</string>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="../images.qrc">
+                        <normaloff>:/icons/resources/glyphicons/glyphicons_137_cogwheels.png</normaloff>:/icons/resources/glyphicons/glyphicons_137_cogwheels.png</iconset>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_2">
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_12">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QGroupBox" name="groupBox_4">
+                      <property name="title">
+                       <string>Picture</string>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_13">
+                       <item>
+                        <layout class="QFormLayout" name="formLayout">
+                         <property name="formAlignment">
+                          <set>Qt::AlignHCenter|Qt::AlignTop</set>
+                         </property>
+                         <item row="0" column="0">
+                          <widget class="QLabel" name="gammaLabel">
+                           <property name="text">
+                            <string>Gamma</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="1" column="0">
+                          <widget class="QLabel" name="contrastLabel">
+                           <property name="text">
+                            <string> Contrast</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="2" column="0">
+                          <widget class="QLabel" name="brightnessLabel">
+                           <property name="text">
+                            <string>Brightness</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="3" column="0">
+                          <widget class="QLabel" name="saturationLabel">
+                           <property name="text">
+                            <string>Saturation</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="4" column="0">
+                          <widget class="QLabel" name="hueLabel">
+                           <property name="text">
+                            <string>Hue</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="0" column="1">
+                          <widget class="QSpinBox" name="gammaSpinBox">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="minimum">
+                            <number>-99</number>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="1" column="1">
+                          <widget class="QSpinBox" name="contrastSpinBox">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="minimum">
+                            <number>-99</number>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="2" column="1">
+                          <widget class="QSpinBox" name="brightnessSpinBox">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="minimum">
+                            <number>-99</number>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="3" column="1">
+                          <widget class="QSpinBox" name="saturationSpinBox">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="minimum">
+                            <number>-99</number>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="4" column="1">
+                          <widget class="QSpinBox" name="hueSpinBox">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="minimum">
+                            <number>-99</number>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="advancedPictureSettingsButton">
+                      <property name="text">
+                       <string>      Advanced picture settings</string>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="../images.qrc">
+                        <normaloff>:/icons/resources/glyphicons/glyphicons_138_picture.png</normaloff>:/icons/resources/glyphicons/glyphicons_138_picture.png</iconset>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_3">
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_14">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QGroupBox" name="groupBox_5">
+                      <property name="title">
+                       <string>Sound</string>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_15">
+                       <item>
+                        <layout class="QFormLayout" name="formLayout_2">
+                         <property name="fieldGrowthPolicy">
+                          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+                         </property>
+                         <property name="formAlignment">
+                          <set>Qt::AlignHCenter|Qt::AlignTop</set>
+                         </property>
+                         <item row="0" column="0">
+                          <widget class="QLabel" name="audioSyncLabel">
+                           <property name="text">
+                            <string>Audio sync</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="0" column="1">
+                          <widget class="QSpinBox" name="audioSyncSpinBox">
+                           <property name="minimum">
+                            <number>-99</number>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="1" column="0">
+                          <widget class="QLabel" name="audioGainLabel">
+                           <property name="text">
+                            <string>Audio gain</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="1" column="1">
+                          <widget class="QSpinBox" name="audioGainSpinBox">
+                           <property name="minimum">
+                            <number>-99</number>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="2" column="0">
+                          <widget class="QLabel" name="normalizationLabel">
+                           <property name="text">
+                            <string>Normalization</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="2" column="1">
+                          <widget class="QComboBox" name="normalizationComboBox">
+                           <item>
+                            <property name="text">
+                             <string>On</string>
+                            </property>
+                           </item>
+                           <item>
+                            <property name="text">
+                             <string>Off</string>
+                            </property>
+                           </item>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="lockButton">
+                      <property name="text">
+                       <string>         Lock</string>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="../images.qrc">
+                        <normaloff>:/icons/resources/glyphicons/glyphicons_044_keys.png</normaloff>:/icons/resources/glyphicons/glyphicons_044_keys.png</iconset>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="SaturationWidget" name="saturationWidget" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTabWidget" name="playlistsTabWidget">
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <widget class="QWidget" name="tab">
+           <attribute name="title">
+            <string>Séance 1</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_9">
+            <property name="leftMargin">
+             <number>0</number>
             </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="PlaylistsWidget" name="playlistsWidget" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="ControlsWidget" name="controlsWidget" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-      </layout>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QTableWidget" name="tableWidget_playlist">
+              <property name="alternatingRowColors">
+               <bool>true</bool>
+              </property>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+              <attribute name="horizontalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <column>
+               <property name="text">
+                <string>Title</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Length</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Video</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Audio</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Subtitles</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Test pattern</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Status</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_2">
+           <attribute name="title">
+            <string>+</string>
+           </attribute>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="playerControlsWidget" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item alignment="Qt::AlignBottom">
+            <widget class="QPushButton" name="playerPlayButton">
+             <property name="minimumSize">
+              <size>
+               <width>50</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../images.qrc">
+               <normaloff>:/icons/resources/glyphicons/glyphicons_173_play.png</normaloff>:/icons/resources/glyphicons/glyphicons_173_play.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignBottom">
+            <widget class="QPushButton" name="playerPreviousButton">
+             <property name="minimumSize">
+              <size>
+               <width>50</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../images.qrc">
+               <normaloff>:/icons/resources/glyphicons/glyphicons_170_step_backward.png</normaloff>:/icons/resources/glyphicons/glyphicons_170_step_backward.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignBottom">
+            <widget class="QPushButton" name="playerNextButton">
+             <property name="minimumSize">
+              <size>
+               <width>50</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../images.qrc">
+               <normaloff>:/icons/resources/glyphicons/glyphicons_178_step_forward.png</normaloff>:/icons/resources/glyphicons/glyphicons_178_step_forward.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignBottom">
+            <widget class="QPushButton" name="playerStopButton">
+             <property name="minimumSize">
+              <size>
+               <width>50</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../images.qrc">
+               <normaloff>:/icons/resources/glyphicons/glyphicons_175_stop.png</normaloff>:/icons/resources/glyphicons/glyphicons_175_stop.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignBottom">
+            <widget class="QSlider" name="playerVolumeSlider">
+             <property name="maximumSize">
+              <size>
+               <width>500</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="value">
+              <number>50</number>
+             </property>
+             <property name="tracking">
+              <bool>true</bool>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignBottom">
+            <widget class="QLabel" name="playerVolumeLabel">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>24</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>24</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>50</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -121,56 +1071,56 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1483</width>
-     <height>25</height>
+     <width>1287</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="action_newListing"/>
-    <addaction name="action_openListing"/>
-    <addaction name="action_saveAs"/>
-    <addaction name="action_printConduct"/>
-    <addaction name="action_layout"/>
-    <addaction name="action_quit"/>
+    <addaction name="newListingAction"/>
+    <addaction name="openListingAction"/>
+    <addaction name="saveAsAction"/>
+    <addaction name="printConduct"/>
+    <addaction name="layoutAction"/>
+    <addaction name="quitAction"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="action_copy"/>
-    <addaction name="action_paste"/>
-    <addaction name="action_cancel"/>
-    <addaction name="action_import"/>
+    <addaction name="copyAction"/>
+    <addaction name="pasteAction"/>
+    <addaction name="cancelAction"/>
+    <addaction name="importAction"/>
    </widget>
    <widget class="QMenu" name="menuDisplay">
     <property name="title">
      <string>Display</string>
     </property>
-    <addaction name="action_testPattern"/>
+    <addaction name="testPatternAction"/>
     <addaction name="separator"/>
-    <addaction name="action_automation"/>
-    <addaction name="action_output"/>
-    <addaction name="action_resumeDetails"/>
-    <addaction name="action_bin"/>
-    <addaction name="action_statusBar"/>
+    <addaction name="automationAction"/>
+    <addaction name="outputAction"/>
+    <addaction name="resumeDetailsAction"/>
+    <addaction name="binAction"/>
+    <addaction name="statusBarAction"/>
    </widget>
    <widget class="QMenu" name="menuConfiguration">
     <property name="title">
      <string>Configuration</string>
     </property>
-    <addaction name="action_settings"/>
-    <addaction name="action_lockSettings"/>
+    <addaction name="settingsAction"/>
+    <addaction name="lockSettingsAction"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="action_help"/>
-    <addaction name="action_update"/>
-    <addaction name="action_about"/>
+    <addaction name="helpAction"/>
+    <addaction name="updateAction"/>
+    <addaction name="aboutAction"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -178,63 +1128,63 @@
    <addaction name="menuConfiguration"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="StatusBar"/>
-  <action name="action_newListing">
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="newListingAction">
    <property name="text">
     <string>New listing</string>
    </property>
   </action>
-  <action name="action_openListing">
+  <action name="openListingAction">
    <property name="text">
     <string>Open a listing</string>
    </property>
   </action>
-  <action name="action_saveAs">
+  <action name="saveAsAction">
    <property name="text">
     <string>Save as</string>
    </property>
   </action>
-  <action name="action_printConduct">
+  <action name="printConduct">
    <property name="text">
     <string>Print conduct</string>
    </property>
   </action>
-  <action name="action_layout">
+  <action name="layoutAction">
    <property name="text">
     <string>Layout</string>
    </property>
   </action>
-  <action name="action_quit">
+  <action name="quitAction">
    <property name="text">
     <string>Quit</string>
    </property>
   </action>
-  <action name="action_copy">
+  <action name="copyAction">
    <property name="text">
     <string>Copy</string>
    </property>
   </action>
-  <action name="action_paste">
+  <action name="pasteAction">
    <property name="text">
     <string>Paste</string>
    </property>
   </action>
-  <action name="action_cancel">
+  <action name="cancelAction">
    <property name="text">
     <string>Cancel</string>
    </property>
   </action>
-  <action name="action_import">
+  <action name="importAction">
    <property name="text">
     <string>Import</string>
    </property>
   </action>
-  <action name="action_testPattern">
+  <action name="testPatternAction">
    <property name="text">
     <string>Play a test pattern</string>
    </property>
   </action>
-  <action name="action_automation">
+  <action name="automationAction">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -245,7 +1195,7 @@
     <string>Automation</string>
    </property>
   </action>
-  <action name="action_output">
+  <action name="outputAction">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -256,7 +1206,7 @@
     <string>Output</string>
    </property>
   </action>
-  <action name="action_resumeDetails">
+  <action name="resumeDetailsAction">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -267,7 +1217,7 @@
     <string>Summary/Details</string>
    </property>
   </action>
-  <action name="action_bin">
+  <action name="binAction">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -278,7 +1228,7 @@
     <string>Bin</string>
    </property>
   </action>
-  <action name="action_statusBar">
+  <action name="statusBarAction">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -289,27 +1239,27 @@
     <string>Status bar</string>
    </property>
   </action>
-  <action name="action_settings">
+  <action name="settingsAction">
    <property name="text">
     <string>Settings</string>
    </property>
   </action>
-  <action name="action_lockSettings">
+  <action name="lockSettingsAction">
    <property name="text">
     <string>Lock settings</string>
    </property>
   </action>
-  <action name="action_help">
+  <action name="helpAction">
    <property name="text">
     <string>Help</string>
    </property>
   </action>
-  <action name="action_update">
+  <action name="updateAction">
    <property name="text">
     <string>Update</string>
    </property>
   </action>
-  <action name="action_about">
+  <action name="aboutAction">
    <property name="text">
     <string>About</string>
    </property>
@@ -317,54 +1267,20 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>BinWidget</class>
-   <extends>QWidget</extends>
-   <header>binwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ResumeDetailsWidget</class>
-   <extends>QWidget</extends>
-   <header>resumedetailswidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>AutomationWidget</class>
-   <extends>QWidget</extends>
-   <header>automationwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>PreviewWidget</class>
-   <extends>QWidget</extends>
-   <header>previewwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ParametersWidget</class>
-   <extends>QWidget</extends>
-   <header>parameterswidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>SaturationWidget</class>
    <extends>QWidget</extends>
    <header>saturationwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>PlaylistsWidget</class>
+   <class>PlayerTimelineWidget</class>
    <extends>QWidget</extends>
-   <header>playlistswidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ControlsWidget</class>
-   <extends>QWidget</extends>
-   <header>controlswidget.h</header>
+   <header>playertimelinewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../images.qrc"/>
+ </resources>
  <connections/>
 </ui>

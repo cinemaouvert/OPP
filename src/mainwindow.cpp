@@ -1,10 +1,16 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QFileDialog>
+#include <QDebug>
+#include <QMessageBox>
+
 #include "settingswindow.h"
 #include "locksettingswindow.h"
+#include "medialistmodel.h"
 
 #include "application.h"
+#include "media.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -12,14 +18,51 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     _app = new Application();
+    _mediaListModel = new MediaListModel();
+    ui->binTableView->setModel(_mediaListModel);
+
+    // show/hide pannel actions
+    connect(ui->quitAction, SIGNAL(triggered()), this, SLOT(close()));
+    connect(ui->resumeDetailsAction, SIGNAL(toggled(bool)), ui->projectTabWidget, SLOT(setVisible(bool)));
+    connect(ui->binAction, SIGNAL(toggled(bool)), ui->binGroupBox, SLOT(setVisible(bool)));
+    connect(ui->automationAction, SIGNAL(toggled(bool)), ui->scheduleGroupBox, SLOT(setVisible(bool)));
+    connect(ui->statusBarAction, SIGNAL(toggled(bool)), ui->statusBar, SLOT(setVisible(bool)));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete _mediaListModel;
 }
 
-void MainWindow::on_action_settings_triggered()
+void MainWindow::on_binAddMediaButton_clicked()
+{
+    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("New media"), "/Users/floomoon", tr("Media (*.avi *.mkv *.jpg *.png)"));
+
+    foreach (QString fileName, fileNames) {
+        Media media(fileName, _app->vlcInstance());
+        if (media.exists() == false) {
+            // error: media file not exists
+        }
+        if (_mediaListModel->addMedia(media) == false) {
+            QMessageBox msgBox;
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setText(QString("The file %1 was already imported.").arg(media.location()));
+            msgBox.exec();
+        }
+    }
+
+}
+
+void MainWindow::on_binDeleteMediaButton_clicked()
+{
+    QModelIndexList indexes = ui->binTableView->selectionModel()->selectedRows();
+    foreach (QModelIndex index, indexes) {
+        _mediaListModel->removeRows(index.row(), 1);
+    }
+}
+
+void MainWindow::on_settingsAction_triggered()
 {
     _settingsWindow = new SettingsWindow(this);
     _settingsWindow->show();
@@ -27,43 +70,10 @@ void MainWindow::on_action_settings_triggered()
     _settingsWindow->activateWindow();
 }
 
-void MainWindow::on_action_lockSettings_triggered()
+void MainWindow::on_lockSettingsAction_triggered()
 {
     lockSettingsWindow = new LockSettingsWindow(this);
     lockSettingsWindow->show();
     lockSettingsWindow->raise();
     lockSettingsWindow->activateWindow();
 }
-
-void MainWindow::on_action_resumeDetails_triggered()
-{
-    if(ui->action_resumeDetails->isChecked())
-        ui->resumeDetailWidget->show();
-    else
-        ui->resumeDetailWidget->hide();
-}
-
-void MainWindow::on_action_automation_triggered()
-{
-    if(ui->action_automation->isChecked())
-        ui->automationWidget->show();
-    else
-        ui->automationWidget->hide();
-}
-
-void MainWindow::on_action_bin_triggered()
-{
-    if(ui->action_bin->isChecked())
-        ui->binWidget->show();
-    else
-        ui->binWidget->hide();
-}
-
-void MainWindow::on_action_statusBar_triggered()
-{
-    if(ui->action_statusBar->isChecked())
-        ui->StatusBar->show();
-    else
-        ui->StatusBar->hide();
-}
-
