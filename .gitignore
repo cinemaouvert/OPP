@@ -71,3 +71,9 @@ plugin_commonU.def
 # Failed patch
 *.orig
 *.rej
+
+# mergetool
+*.BACKUP.*
+*.BASE.*
+*.REMOTE.*
+*.LOCAL.*
