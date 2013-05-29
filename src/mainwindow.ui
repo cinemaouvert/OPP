@@ -1130,5 +1130,22 @@ p, li { white-space: pre-wrap; }
  <resources>
   <include location="../images.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>playerVolumeSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>playerVolumeLabel</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1216</x>
+     <y>601</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1266</x>
+     <y>606</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
