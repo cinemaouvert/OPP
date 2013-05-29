@@ -6,7 +6,9 @@ HEADERS += src/playertimelinewidget.h \
     src/settingswindow.h \
     src/locksettingswindow.h \
     src/medialistmodel.h \
-    src/playlistmodel.h
+    src/playlistmodel.h \
+    src/videowidget.h \
+    src/videowindow.h
 
 SOURCES += src/main.cpp \
     src/playertimelinewidget.cpp \
@@ -17,7 +19,9 @@ SOURCES += src/main.cpp \
     src/settingswindow.cpp \
     src/locksettingswindow.cpp \
     src/medialistmodel.cpp \
-    src/playlistmodel.cpp
+    src/playlistmodel.cpp \
+    src/videowidget.cpp \
+    src/videowindow.cpp
 
 FORMS += src/mainwindow.ui \
     src/playertimelinewidget.ui \

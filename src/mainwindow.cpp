@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QMessageBox>
 
+#include "videowindow.h"
 #include "settingswindow.h"
 #include "advancedsettingswindow.h"
 #include "advancedpicturesettingswindow.h"
@@ -21,11 +22,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    _videoWindow = new VideoWindow(this);
+
     _app = new Application();
     _mediaPlayer = new MediaPlayer(_app->vlcInstance());
+    _mediaPlayer->setVideoView( (VideoView*) _videoWindow->videoWidget() );
 
     _mediaListModel = new MediaListModel();
     _playlistModel = new PlaylistModel();
+
     ui->binTableView->setModel(_mediaListModel);
     ui->playlistTableView->setModel(_playlistModel);
 
@@ -35,6 +40,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->binAction, SIGNAL(toggled(bool)), ui->binGroupBox, SLOT(setVisible(bool)));
     connect(ui->automationAction, SIGNAL(toggled(bool)), ui->scheduleGroupBox, SLOT(setVisible(bool)));
     connect(ui->statusBarAction, SIGNAL(toggled(bool)), ui->statusBar, SLOT(setVisible(bool)));
+
+    //DEBUG : this code add a media into the bin on launch
+//    Media media("/Users/floomoon/Movies/3ours-OCPM.mkv", _app->vlcInstance());
+//    _mediaListModel->addMedia(media);
+//    qDebug()<<_videoWindow->videoWidget()->request();
+
+    _videoWindow->show();
 }
 
 MainWindow::~MainWindow()
@@ -44,6 +56,7 @@ MainWindow::~MainWindow()
     delete _mediaPlayer;
     delete _app;
     delete _playlistModel;
+    delete _videoWindow;
 }
 
 void MainWindow::on_binAddMediaButton_clicked()
@@ -58,7 +71,6 @@ void MainWindow::on_binAddMediaButton_clicked()
             QMessageBox::warning(this, "Import media", QString("The file %1 was already imported.").arg(media.location()));
         }
     }
-
 }
 
 void MainWindow::on_binDeleteMediaButton_clicked()

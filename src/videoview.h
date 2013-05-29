@@ -4,8 +4,8 @@
 #include <QtCore/QObject>
 #include <QtGui/qwindowdefs.h>
 
-class VideoView {
-
+class VideoView
+{
 public:
 
     VideoView() {}

@@ -6,6 +6,8 @@
 namespace Ui {
 class MainWindow;
 }
+
+class VideoWindow;
 class SettingsWindow;
 class LockSettingsWindow;
 class AdvancedSettingsWindow;
@@ -45,6 +47,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    VideoWindow *_videoWindow;
 
     SettingsWindow *_settingsWindow;
     LockSettingsWindow *lockSettingsWindow;
