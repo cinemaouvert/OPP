@@ -2,11 +2,9 @@
 
 #include <QDebug>
 #include <QIcon>
-#include "media.h"
 
-MediaListModel::MediaListModel(QList<Media> &mediaList, QObject *parent) :
-    QAbstractTableModel(parent),
-    _mediaList(mediaList)
+MediaListModel::MediaListModel(QObject *parent) :
+    QAbstractTableModel(parent)
 {
 }
 

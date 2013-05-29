@@ -8,6 +8,9 @@ class MainWindow;
 }
 class SettingsWindow;
 class LockSettingsWindow;
+
+class MediaListModel;
+
 class Application;
 
 class MainWindow : public QMainWindow
@@ -19,18 +22,23 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_action_settings_triggered();
-    void on_action_lockSettings_triggered();
-    void on_action_resumeDetails_triggered();
-    void on_action_automation_triggered();
-    void on_action_bin_triggered();
-    void on_action_statusBar_triggered();
-    
+    /* bin events */
+    void on_binAddMediaButton_clicked();
+    void on_binDeleteMediaButton_clicked();
+
+    /* action bar events */
+    void on_settingsAction_triggered();
+    void on_lockSettingsAction_triggered();
+
 private:
     Ui::MainWindow *ui;
-    Application *_app;
+
     SettingsWindow *_settingsWindow;
     LockSettingsWindow *lockSettingsWindow;
+
+    Application *_app;
+
+    MediaListModel *_mediaListModel;
 };
 
 #endif // MAINWINDOW_H

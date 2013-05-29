@@ -2,8 +2,11 @@
 #define MEDIALISTMODEL_H
 
 #include <QAbstractTableModel>
+#include <QList>
 
-class Media;
+#include "media.h"
+
+//class Media;
 
 class MediaListModel : public QAbstractTableModel
 {
@@ -11,7 +14,7 @@ class MediaListModel : public QAbstractTableModel
 public:
     enum Columns { Name = 0, Duration = 1, Used = 2, Location = 3 };
 
-    MediaListModel(QList<Media> &mediaList, QObject *parent = 0);
+    MediaListModel(QObject *parent = 0);
 
     int columnCount(const QModelIndex &parent) const;
 
@@ -28,7 +31,7 @@ public:
     bool addMedia(const Media &media);
 
 private:
-    QList<Media> &_mediaList;
+    QList<Media> _mediaList;
 };
 
 #endif // MEDIALISTMODEL_H
