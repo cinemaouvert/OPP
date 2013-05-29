@@ -6,6 +6,8 @@
 #include <QMessageBox>
 
 #include "settingswindow.h"
+#include "advancedsettingswindow.h"
+#include "advancedpicturesettingswindow.h"
 #include "locksettingswindow.h"
 #include "medialistmodel.h"
 
@@ -71,6 +73,29 @@ void MainWindow::on_settingsAction_triggered()
 }
 
 void MainWindow::on_lockSettingsAction_triggered()
+{
+    lockSettingsWindow = new LockSettingsWindow(this);
+    lockSettingsWindow->show();
+    lockSettingsWindow->raise();
+    lockSettingsWindow->activateWindow();
+}
+void MainWindow::on_advancedSettingsButton_clicked()
+{
+    _advancedSettingsWindow = new AdvancedSettingsWindow(this);
+    _advancedSettingsWindow->show();
+    _advancedSettingsWindow->raise();
+    _advancedSettingsWindow->activateWindow();
+}
+
+void MainWindow::on_advancedPictureSettingsButton_clicked()
+{
+    _advancedPictureSettingsWindow = new AdvancedPictureSettingsWindow(this);
+    _advancedPictureSettingsWindow->show();
+    _advancedPictureSettingsWindow->raise();
+    _advancedPictureSettingsWindow->activateWindow();
+}
+
+void MainWindow::on_lockButton_clicked()
 {
     lockSettingsWindow = new LockSettingsWindow(this);
     lockSettingsWindow->show();

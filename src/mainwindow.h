@@ -8,6 +8,8 @@ class MainWindow;
 }
 class SettingsWindow;
 class LockSettingsWindow;
+class AdvancedSettingsWindow;
+class AdvancedPictureSettingsWindow;
 
 class MediaListModel;
 
@@ -30,11 +32,18 @@ private slots:
     void on_settingsAction_triggered();
     void on_lockSettingsAction_triggered();
 
+    /*parameters events*/
+    void on_advancedSettingsButton_clicked();
+    void on_advancedPictureSettingsButton_clicked();
+    void on_lockButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
     SettingsWindow *_settingsWindow;
     LockSettingsWindow *lockSettingsWindow;
+    AdvancedSettingsWindow *_advancedSettingsWindow;
+    AdvancedPictureSettingsWindow *_advancedPictureSettingsWindow;
 
     Application *_app;
 
