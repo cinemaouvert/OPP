@@ -6,8 +6,11 @@
 #include <QMessageBox>
 
 #include "settingswindow.h"
+#include "advancedsettingswindow.h"
+#include "advancedpicturesettingswindow.h"
 #include "locksettingswindow.h"
 #include "medialistmodel.h"
+#include "playlistmodel.h"
 
 #include "application.h"
 #include "media.h"
@@ -22,7 +25,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _mediaPlayer = new MediaPlayer(_app->vlcInstance());
 
     _mediaListModel = new MediaListModel();
+    _playlistModel = new PlaylistModel();
     ui->binTableView->setModel(_mediaListModel);
+    ui->playlistTableView->setModel(_playlistModel);
 
     // show/hide pannel actions
     connect(ui->quitAction, SIGNAL(triggered()), this, SLOT(close()));
@@ -38,6 +43,7 @@ MainWindow::~MainWindow()
     delete _mediaListModel;
     delete _mediaPlayer;
     delete _app;
+    delete _playlistModel;
 }
 
 void MainWindow::on_binAddMediaButton_clicked()
@@ -107,4 +113,27 @@ void MainWindow::on_playerStopButton_clicked()
         _mediaPlayer->stop();
         ui->playerPlayButton->toggle();
     }
+}
+void MainWindow::on_advancedSettingsButton_clicked()
+{
+    _advancedSettingsWindow = new AdvancedSettingsWindow(this);
+    _advancedSettingsWindow->show();
+    _advancedSettingsWindow->raise();
+    _advancedSettingsWindow->activateWindow();
+}
+
+void MainWindow::on_advancedPictureSettingsButton_clicked()
+{
+    _advancedPictureSettingsWindow = new AdvancedPictureSettingsWindow(this);
+    _advancedPictureSettingsWindow->show();
+    _advancedPictureSettingsWindow->raise();
+    _advancedPictureSettingsWindow->activateWindow();
+}
+
+void MainWindow::on_lockButton_clicked()
+{
+    lockSettingsWindow = new LockSettingsWindow(this);
+    lockSettingsWindow->show();
+    lockSettingsWindow->raise();
+    lockSettingsWindow->activateWindow();
 }

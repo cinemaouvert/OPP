@@ -2,17 +2,16 @@
 
 #include <QDebug>
 #include <QIcon>
-#include "media.h"
 
-PlaylistModel::PlaylistModel(QList<Media> &mediaList, QObject *parent) :
-    QAbstractTableModel(parent),
-    _mediaList(mediaList)
+PlaylistModel::PlaylistModel(QObject *parent) :
+    QAbstractTableModel(parent)
 {
 }
 
 int PlaylistModel::columnCount(const QModelIndex &parent) const
 {
-    return sizeof(Columns);
+    //return sizeof(Columns);
+    return 8;
 }
 
 int PlaylistModel::rowCount(const QModelIndex &parent) const
@@ -84,4 +83,17 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
 
     return QVariant();
+}
+
+bool PlaylistModel::addMedia(const Media &media)
+{
+    const int count = _mediaList.count();
+    if (!_mediaList.contains(media)) {
+        beginInsertRows(QModelIndex(), count, count);
+        _mediaList.append(media);
+        endInsertRows();
+        return true;
+    } else {
+        return false;
+    }
 }
