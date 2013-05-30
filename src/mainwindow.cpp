@@ -41,10 +41,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->automationAction, SIGNAL(toggled(bool)), ui->scheduleGroupBox, SLOT(setVisible(bool)));
     connect(ui->statusBarAction, SIGNAL(toggled(bool)), ui->statusBar, SLOT(setVisible(bool)));
 
+    connect(ui->playerVolumeSlider, SIGNAL(valueChanged(int)), _mediaPlayer, SLOT(setVolume(int)));
     //DEBUG : this code add a media into the bin on launch
 //    Media media("/Users/floomoon/Movies/3ours-OCPM.mkv", _app->vlcInstance());
 //    _mediaListModel->addMedia(media);
 //    qDebug()<<_videoWindow->videoWidget()->request();
+
+    // initialize from ui
+    _mediaPlayer->setVolume(ui->playerVolumeSlider->value());
 
     _videoWindow->show();
 }
@@ -123,7 +127,7 @@ void MainWindow::on_playerStopButton_clicked()
 {
     if (_mediaPlayer->isPlaying() || _mediaPlayer->isPaused()) {
         _mediaPlayer->stop();
-        ui->playerPlayButton->toggle();
+        ui->playerPlayButton->setChecked(false);
     }
 }
 void MainWindow::on_advancedSettingsButton_clicked()

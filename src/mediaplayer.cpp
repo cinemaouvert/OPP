@@ -92,6 +92,11 @@ void MediaPlayer::stop()
     _isPaused = false;
 }
 
+void MediaPlayer::setVolume(int volume)
+{
+    libvlc_audio_set_volume(_vlcMediaPlayer, volume);
+}
+
 bool MediaPlayer::isPlaying() const
 {
     return libvlc_media_player_is_playing(_vlcMediaPlayer);

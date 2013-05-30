@@ -26,6 +26,9 @@ public:
 
     void open(const Media &media);
 
+    bool isPlaying() const;
+
+public slots:
     void play();
 
     void pause();
@@ -34,7 +37,7 @@ public:
 
     void stop();
 
-    bool isPlaying() const;
+    void setVolume(int volume);
 
 private:
     libvlc_media_player_t *_vlcMediaPlayer;
