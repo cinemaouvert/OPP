@@ -50,7 +50,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // initialize from ui
     _mediaPlayer->setVolume(ui->playerVolumeSlider->value());
 
-    _videoWindow->show();
+    _videoWindow->showFullScreen();
+//    _videoWindow->show();
 }
 
 MainWindow::~MainWindow()
@@ -153,3 +154,4 @@ void MainWindow::on_lockButton_clicked()
     lockSettingsWindow->raise();
     lockSettingsWindow->activateWindow();
 }
+

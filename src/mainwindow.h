@@ -45,6 +45,7 @@ private slots:
     void on_playerPlayButton_clicked();
     void on_playerStopButton_clicked();
 
+
 private:
     Ui::MainWindow *ui;
     VideoWindow *_videoWindow;

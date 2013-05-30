@@ -1,6 +1,11 @@
 #include "playlist.h"
 
-playlist::playlist(QObject *parent) :
+Playlist::Playlist(QObject *parent) :
     QObject(parent)
 {
+}
+
+Playlist::~Playlist()
+{
+
 }

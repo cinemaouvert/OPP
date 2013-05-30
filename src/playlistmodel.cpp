@@ -16,7 +16,7 @@ int PlaylistModel::columnCount(const QModelIndex &parent) const
 
 int PlaylistModel::rowCount(const QModelIndex &parent) const
 {
-    return _mediaList.size();
+    return _playlist.playbackList().count();
 }
 
 Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const
@@ -62,7 +62,7 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= _mediaList.count()) {
+    if (!index.isValid() || index.row() < 0 || index.row() >= _playlist.playbackList().count()) {
         return QVariant();
     }
 
@@ -71,13 +71,13 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     case Qt::ToolTipRole:
         switch (index.column()) {
         case Title:
-            return _mediaList[index.row()].name();
+            return _playlist.playbackList().at(index.row()).media()->name();
             break;
         }
         break;
     case Qt::DisplayRole:
         if (index.column() == Title) {
-            return _mediaList[index.row()].name();
+            return _playlist.playbackList().at(index.row()).media()->name();
         }
         break;
     }
@@ -85,15 +85,11 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool PlaylistModel::addMedia(const Media &media)
+bool PlaylistModel::addPlayback(const Playback &playback)
 {
-    const int count = _mediaList.count();
-    if (!_mediaList.contains(media)) {
+    const int count = _playlist.playbackList().count();
         beginInsertRows(QModelIndex(), count, count);
-        _mediaList.append(media);
+        _playlist.playbackList() << playback;
         endInsertRows();
         return true;
-    } else {
-        return false;
-    }
 }
