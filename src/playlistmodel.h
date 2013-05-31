@@ -28,6 +28,7 @@ public:
 
     bool addPlayback(const Playback &playback);
 
+
 private:
     Playlist _playlist;
 };

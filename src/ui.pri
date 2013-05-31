@@ -8,7 +8,9 @@ HEADERS += src/playertimelinewidget.h \
     src/medialistmodel.h \
     src/playlistmodel.h \
     src/videowidget.h \
-    src/videowindow.h
+    src/videowindow.h \
+    src/mediatableview.h \
+    src/playlisttableview.h
 
 SOURCES += src/main.cpp \
     src/playertimelinewidget.cpp \
@@ -21,7 +23,9 @@ SOURCES += src/main.cpp \
     src/medialistmodel.cpp \
     src/playlistmodel.cpp \
     src/videowidget.cpp \
-    src/videowindow.cpp
+    src/videowindow.cpp \
+    src/mediatableview.cpp \
+    src/playlisttableview.cpp
 
 FORMS += src/mainwindow.ui \
     src/playertimelinewidget.ui \

@@ -11,6 +11,7 @@
 #include "advancedpicturesettingswindow.h"
 #include "locksettingswindow.h"
 #include "medialistmodel.h"
+#include "mediatableview.h"
 #include "playlistmodel.h"
 
 #include "application.h"
@@ -154,4 +155,3 @@ void MainWindow::on_lockButton_clicked()
     lockSettingsWindow->raise();
     lockSettingsWindow->activateWindow();
 }
-
