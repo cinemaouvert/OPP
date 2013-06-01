@@ -20,6 +20,9 @@
    <property name="horizontalSpacing">
     <number>25</number>
    </property>
+   <item row="0" column="1">
+    <widget class="QWidget" name="currentVideoWidget" native="true"/>
+   </item>
    <item row="0" column="3" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
     <widget class="QLabel" name="label_pictureFutureMedia">
      <property name="sizePolicy">
@@ -32,92 +35,6 @@
       <string>Image futur media</string>
      </property>
     </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_lengthCurrentMedia">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>00:01:06 / 00:25:36</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2" rowspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item alignment="Qt::AlignTop">
-      <widget class="QLabel" name="label_mediaNext">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>Film 2</string>
-       </property>
-      </widget>
-     </item>
-     <item alignment="Qt::AlignRight|Qt::AlignTop">
-      <widget class="QLabel" name="label_lengthMediaNext">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>00:29:17</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="2" column="0">
-    <widget class="QProgressBar" name="progressBar_currentMedia">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="value">
-      <number>4</number>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="3" rowspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item alignment="Qt::AlignTop">
-      <widget class="QLabel" name="label_mediaFuture">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>Film 3</string>
-       </property>
-      </widget>
-     </item>
-     <item alignment="Qt::AlignTop">
-      <widget class="QLabel" name="label_lengthMediaFuture">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>00:30:21</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </item>
    <item row="0" column="2">
     <widget class="QFrame" name="frame">
@@ -156,11 +73,86 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QWidget" name="currentPlaybackVideo" native="true"/>
+   <item row="1" column="2">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_mediaNext">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Film 2</string>
+       </property>
+      </widget>
+     </item>
+     <item alignment="Qt::AlignRight">
+      <widget class="QLabel" name="label_lengthMediaNext">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>00:29:17</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="1">
+    <widget class="SeekWidget" name="seekWidget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_mediaFuture">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Film 3</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_lengthMediaFuture">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>00:30:21</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SeekWidget</class>
+   <extends>QWidget</extends>
+   <header>seekwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

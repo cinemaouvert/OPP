@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QMessageBox>
 
+#include "global.h"
 #include "videowindow.h"
 #include "settingswindow.h"
 #include "advancedsettingswindow.h"
@@ -34,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->binTableView->setModel(_mediaListModel);
     ui->playlistTableView->setModel(_playlistModel);
 
+    ui->timelineWidget->setMediaPlayer(_mediaPlayer);
+
     // show/hide pannel actions
     connect(ui->quitAction, SIGNAL(triggered()), this, SLOT(close()));
     connect(ui->resumeDetailsAction, SIGNAL(toggled(bool)), ui->projectTabWidget, SLOT(setVisible(bool)));
@@ -41,7 +44,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->automationAction, SIGNAL(toggled(bool)), ui->scheduleGroupBox, SLOT(setVisible(bool)));
     connect(ui->statusBarAction, SIGNAL(toggled(bool)), ui->statusBar, SLOT(setVisible(bool)));
 
+    // core connections
     connect(ui->playerVolumeSlider, SIGNAL(valueChanged(int)), _mediaPlayer, SLOT(setVolume(int)));
+
     //DEBUG : this code add a media into the bin on launch
 //    Media media("/Users/floomoon/Movies/3ours-OCPM.mkv", _app->vlcInstance());
 //    _mediaListModel->addMedia(media);
@@ -116,7 +121,7 @@ void MainWindow::on_playerPlayButton_clicked()
             if (indexes.count() == 0) {
                 ui->playerPlayButton->toggle(); // display play icon
             } else {
-                _mediaPlayer->open(_mediaListModel->mediaList().at(indexes.first().row()));
+                _mediaPlayer->open( const_cast<Media*>( &_mediaListModel->mediaList().at(indexes.first().row()) ) );
                 _mediaPlayer->play();
             }
         }
