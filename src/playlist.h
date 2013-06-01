@@ -2,16 +2,21 @@
 #define PLAYLIST_H
 
 #include <QObject>
+#include "media.h"
+#include "playback.h"
 
-class playlist : public QObject
+class Playlist : public QObject
 {
     Q_OBJECT
 public:
-    explicit playlist(QObject *parent = 0);
+    Playlist(QObject *parent = 0);
+    virtual ~Playlist();
+
+    inline QList<Playback>& playbackList() {return _playbackList;}
+    inline const QList<Playback>& playbackList() const {return _playbackList;}
     
-signals:
-    
-public slots:
+private:
+    QList<Playback> _playbackList;
     
 };
 

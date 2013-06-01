@@ -9,6 +9,9 @@ HEADERS += src/playertimelinewidget.h \
     src/playlistmodel.h \
     src/videowidget.h \
     src/videowindow.h \
+    src/mediatableview.h \
+    src/playlisttableview.h
+    src/videowindow.h \
     src/seekwidget.h
 
 SOURCES += src/main.cpp \
@@ -22,6 +25,9 @@ SOURCES += src/main.cpp \
     src/medialistmodel.cpp \
     src/playlistmodel.cpp \
     src/videowidget.cpp \
+    src/videowindow.cpp \
+    src/mediatableview.cpp \
+    src/playlisttableview.cpp
     src/videowindow.cpp \
     src/seekwidget.cpp
 

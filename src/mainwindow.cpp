@@ -12,6 +12,7 @@
 #include "advancedpicturesettingswindow.h"
 #include "locksettingswindow.h"
 #include "medialistmodel.h"
+#include "mediatableview.h"
 #include "playlistmodel.h"
 
 #include "application.h"
@@ -55,7 +56,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // initialize from ui
     _mediaPlayer->setVolume(ui->playerVolumeSlider->value());
 
-    _videoWindow->show();
+    _videoWindow->showFullScreen();
+//    _videoWindow->show();
 }
 
 MainWindow::~MainWindow()

@@ -310,9 +310,21 @@ p, li { white-space: pre-wrap; }
             </layout>
            </item>
            <item>
-            <widget class="QTableView" name="binTableView">
+            <widget class="MediaTableView" name="binTableView">
              <property name="editTriggers">
               <set>QAbstractItemView::SelectedClicked</set>
+             </property>
+             <property name="dragEnabled">
+              <bool>true</bool>
+             </property>
+             <property name="dragDropMode">
+              <enum>QAbstractItemView::DragDrop</enum>
+             </property>
+             <property name="defaultDropAction">
+              <enum>Qt::CopyAction</enum>
+             </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::MultiSelection</enum>
              </property>
              <property name="selectionBehavior">
               <enum>QAbstractItemView::SelectRows</enum>
@@ -736,7 +748,13 @@ p, li { white-space: pre-wrap; }
              <number>0</number>
             </property>
             <item>
-             <widget class="QTableView" name="playlistTableView">
+             <widget class="PlaylistTableView" name="playlistTableView">
+              <property name="dragDropMode">
+               <enum>QAbstractItemView::DragDrop</enum>
+              </property>
+              <property name="defaultDropAction">
+               <enum>Qt::CopyAction</enum>
+              </property>
               <property name="alternatingRowColors">
                <bool>true</bool>
               </property>
@@ -1132,6 +1150,16 @@ p, li { white-space: pre-wrap; }
    <extends>QWidget</extends>
    <header>playertimelinewidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MediaTableView</class>
+   <extends>QTableView</extends>
+   <header>mediatableview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>PlaylistTableView</class>
+   <extends>QTableView</extends>
+   <header>playlisttableview.h</header>
   </customwidget>
  </customwidgets>
  <resources>

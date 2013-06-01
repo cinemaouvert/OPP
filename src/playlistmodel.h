@@ -4,9 +4,9 @@
 #include <QAbstractTableModel>
 #include <QList>
 
-#include "media.h"
+#include "playlist.h"
 
-
+class Playback;
 
 class PlaylistModel : public QAbstractTableModel
 {
@@ -26,10 +26,11 @@ public:
 
     QVariant data(const QModelIndex &index, int role) const;
 
-    bool addMedia(const Media &media);
+    bool addPlayback(const Playback &playback);
+
 
 private:
-    QList<Media> _mediaList;
+    Playlist _playlist;
 };
 
 
