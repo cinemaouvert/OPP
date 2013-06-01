@@ -1,13 +1,9 @@
 #ifndef VIDEOWIDGET_H_
 #define VIDEOWIDGET_H_
 
-#include <QtCore/QTimer>
-
-#if QT_VERSION >= 0x050000
-    #include <QtWidgets/QFrame>
-#else
-    #include <QtGui/QFrame>
-#endif
+#include <QTimer>
+#include <QWidget>
+#include <QLayout>
 
 #if defined(Q_OS_MAC)
     #include <QMacCocoaViewContainer>

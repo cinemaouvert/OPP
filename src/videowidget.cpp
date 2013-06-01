@@ -2,18 +2,11 @@
 
 #include <QtGlobal>
 #include <QDebug>
-
-#if QT_VERSION >= 0x050000
-    #include <QtWidgets/QApplication>
-    #include <QtWidgets/QDesktopWidget>
-    #include <QtWidgets/QHBoxLayout>
-    #include <QtWidgets/QToolBar>
-#else
-    #include <QtGui/QApplication>
-    #include <QtGui/QDesktopWidget>
-    #include <QtGui/QHBoxLayout>
-    #include <QtGui/QToolBar>
-#endif
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QHBoxLayout>
+#include <QToolBar>
+#include <QPainter>
 
 #if defined(Q_OS_MAC)
     #import <Cocoa/Cocoa.h>
@@ -86,11 +79,6 @@ WId VideoWidget::request()
     _video->setPalette(plt);
     _video->setAutoFillBackground(true);
     _video->setMouseTracking(true);
-    /* Indicates that the widget wants to draw directly onto the screen.
-       Widgets with this attribute set do not participate in composition
-       management */
-    /* This is currently disabled on X11 as it does not seem to improve
-     * performance, but causes the video widget to be transparent... */
 # ifndef Q_WS_X11
     _video->setAttribute( Qt::WA_PaintOnScreen, true );
 # endif
