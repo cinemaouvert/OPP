@@ -3,6 +3,7 @@
 
 #include <QtCore/QObject>
 #include <QFileInfo>
+#include <QTime>
 
 struct libvlc_media_t;
 struct libvlc_instance_t;
@@ -23,6 +24,7 @@ public:
     inline const QString & location() const { return _location; }
     inline libvlc_media_t* core() const { return _vlcMedia; }
 
+    QTime duration() const;
     QString name() const;
 
     bool exists() const;
