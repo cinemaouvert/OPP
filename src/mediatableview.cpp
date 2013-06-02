@@ -29,7 +29,7 @@ void MediaTableView::mouseMoveEvent(QMouseEvent *event)
     QTableView::mouseMoveEvent(event);
 }
 
-void MediaTableView::startDrag()
+void MediaTableView::startDrag(Qt::DropActions supportedActions)
 {
     QModelIndexList indexes = this->selectionModel()->selectedRows(MediaListModel::Location);
 
