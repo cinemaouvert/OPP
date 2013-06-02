@@ -36,10 +36,10 @@ void SeekWidget::initSeekWidget()
     _seek->setMaximumHeight(15);
 
     _labelElapsed = new QLabel(this);
-    _labelElapsed->setText("00:00");
+    _labelElapsed->setText("00:00:00");
 
     _labelFull = new QLabel(this);
-    _labelFull->setText("00:00");
+    _labelFull->setText("00:00:00");
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->addWidget(_labelElapsed);
@@ -145,10 +145,7 @@ void SeekWidget::updateCurrentTime(const int &time)
 
     QTime currentTime = QTime(0,0,0,0).addMSecs(time);
 
-    QString display = "mm:ss";
-    if (currentTime.hour() > 0)
-        display = "hh:mm:ss";
-
+    QString display = "hh:mm:ss";
     _labelElapsed->setText(currentTime.toString(display));
     _seek->setValue(time);
 }
@@ -161,9 +158,7 @@ void SeekWidget::updateFullTime(const int &time)
 
     QTime fullTime = QTime(0,0,0,0).addMSecs(time);
 
-    QString display = "mm:ss";
-    if (fullTime.hour() > 0)
-        display = "hh:mm:ss";
+    QString display = "hh:mm:ss";
 
     _labelFull->setText(fullTime.toString(display));
 
