@@ -32,6 +32,8 @@ public:
 
     bool addMedia(const Media &media);
 
+    Media* findByPath(const QString &path) const;
+
 private:
     QList<Media> _mediaList;
 };

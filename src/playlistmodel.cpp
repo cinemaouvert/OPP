@@ -2,9 +2,13 @@
 
 #include <QDebug>
 #include <QIcon>
+#include <QMimeData>
 
-PlaylistModel::PlaylistModel(QObject *parent) :
-    QAbstractTableModel(parent)
+#include "medialistmodel.h"
+
+PlaylistModel::PlaylistModel(MediaListModel *mediaListModel, QObject *parent) :
+    QAbstractTableModel(parent),
+    _mediaListModel(mediaListModel)
 {
 }
 
@@ -91,4 +95,15 @@ bool PlaylistModel::addPlayback(const Playback &playback)
         _playlist.append(playback);
         endInsertRows();
         return true;
+}
+
+bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent )
+{
+    qDebug() << "drop mime data";
+    Media *media = _mediaListModel->findByPath(data->text());
+
+    if (!media)
+        return false;
+
+    addPlayback(Playback(media));
 }

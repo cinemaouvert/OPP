@@ -7,6 +7,7 @@
 #include "playlist.h"
 
 class Playback;
+class MediaListModel;
 
 class PlaylistModel : public QAbstractTableModel
 {
@@ -14,7 +15,7 @@ class PlaylistModel : public QAbstractTableModel
 public:
     enum Columns { Title = 0, Duration = 1, Video = 2, Audio = 3, Subtitles = 4, TestPattern = 5, Gain = 6, Status = 7 };
 
-    PlaylistModel(QObject *parent = 0);
+    PlaylistModel(MediaListModel *mediaListModel, QObject *parent = 0);
 
     int columnCount(const QModelIndex &parent) const;
 
@@ -28,9 +29,10 @@ public:
 
     bool addPlayback(const Playback &playback);
 
-
+    bool dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent );
 private:
     Playlist _playlist;
+    MediaListModel *_mediaListModel;
 };
 
 

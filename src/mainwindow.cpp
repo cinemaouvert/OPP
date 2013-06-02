@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _mediaPlayer->setVideoView( (VideoView*) _videoWindow->videoWidget() );
 
     _mediaListModel = new MediaListModel();
-    _playlistModel = new PlaylistModel();
+    _playlistModel = new PlaylistModel(_mediaListModel);
 
     ui->binTableView->setModel(_mediaListModel);
     ui->playlistTableView->setModel(_playlistModel);

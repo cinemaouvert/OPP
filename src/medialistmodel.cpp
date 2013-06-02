@@ -122,3 +122,13 @@ bool MediaListModel::addMedia(const Media &media)
         return false;
     }
 }
+
+Media* MediaListModel::findByPath(const QString &path) const
+{
+    foreach(const Media &m, _mediaList) {
+        if (m.location() == path) {
+            return const_cast<Media*>(&m);
+        }
+    }
+    return NULL;
+}
