@@ -28,12 +28,12 @@ void PlaylistTableView::mouseMoveEvent(QMouseEvent *event)
     {
         int distance=(event->pos()-startPos).manhattanLength();
         if(distance>=QApplication::startDragDistance())
-            startDrag();
+            startDrag(Qt::MoveAction);
     }
-    QTableView::mouseMoveEvent(event);
+    QTableView::mouseMoveEvent(event); // ??
 }
 
-void PlaylistTableView::startDrag()
+void PlaylistTableView::startDrag(Qt::DropActions supportedActions)
 {
     QModelIndexList indexes = this->selectionModel()->selectedRows();
     if(indexes.count()==0)

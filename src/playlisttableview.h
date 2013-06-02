@@ -15,9 +15,9 @@ protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dragMoveEvent(QDragMoveEvent *event);
     void dropEvent(QDropEvent *event);
+    void startDrag(Qt::DropActions supportedActions);
 
 private:
-    void startDrag();
     QPoint startPos;
 
 };
