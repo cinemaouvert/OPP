@@ -53,11 +53,12 @@ MainWindow::MainWindow(QWidget *parent) :
 //    _mediaListModel->addMedia(media);
 //    qDebug()<<_videoWindow->videoWidget()->request();
 
+    // set video mode actions data
+    ui->actionProjection->setData(QVariant(VideoWindow::PROJECTION));
+    ui->actionWindow->setData(QVariant(VideoWindow::WINDOW));
+
     // initialize from ui
     _mediaPlayer->setVolume(ui->playerVolumeSlider->value());
-
-    _videoWindow->showFullScreen();
-//    _videoWindow->show();
 }
 
 MainWindow::~MainWindow()
@@ -159,4 +160,18 @@ void MainWindow::on_lockButton_clicked()
     lockSettingsWindow->show();
     lockSettingsWindow->raise();
     lockSettingsWindow->activateWindow();
+}
+
+void MainWindow::on_menuVideoMode_triggered(QAction *action)
+{
+    foreach(QAction *otherAction, ui->menuVideoMode->actions()) {
+        if (otherAction != action) {
+            otherAction->setEnabled(true);
+            otherAction->setChecked(false);
+        } else {
+            action->setEnabled(false);
+            action->setChecked(true);
+            _videoWindow->setDisplayMode( (VideoWindow::DisplayMode) action->data().toInt() );
+        }
+    }
 }

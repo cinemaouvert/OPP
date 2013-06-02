@@ -35,6 +35,7 @@ private slots:
     /* action bar events */
     void on_settingsAction_triggered();
     void on_lockSettingsAction_triggered();
+    void on_menuVideoMode_triggered(QAction *action);
 
     /*parameters events*/
     void on_advancedSettingsButton_clicked();
