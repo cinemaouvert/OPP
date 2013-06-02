@@ -13,8 +13,13 @@ public:
     virtual ~Playlist();
 
     inline QList<Playback>& playbackList() {return _playbackList;}
-    inline const QList<Playback>& playbackList() const {return _playbackList;}
-    
+
+    const Playback & at(const int &index) const;
+
+    void append(const Playback &playback);
+
+    int count() const;
+
 private:
     QList<Playback> _playbackList;
     
