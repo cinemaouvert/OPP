@@ -74,13 +74,13 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     case Qt::ToolTipRole:
         switch (index.column()) {
         case Title:
-            return _playlist.at(index.row()).media()->name();
+            return _playlist.at(index.row())->media()->name();
             break;
         }
         break;
     case Qt::DisplayRole:
         if (index.column() == Title) {
-            return _playlist.at(index.row()).media()->name();
+            return _playlist.at(index.row())->media()->name();
         }
         break;
     }

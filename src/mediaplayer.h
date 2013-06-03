@@ -4,8 +4,11 @@
 #include <QObject>
 #include <QtGui/qwindowdefs.h>
 
-class Media;
+#include "mediasettings.h"
+
+class Playback;
 class VideoView;
+class MediaSettings;
 
 struct libvlc_instance_t;
 struct libvlc_media_player_t;
@@ -20,7 +23,7 @@ public:
     explicit MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent = 0);
     virtual ~MediaPlayer();
 
-    inline Media *currentMedia() const { return _currentMedia; }
+    inline Playback *currentPlayback() const { return _currentPlayback; }
 
     inline bool isPaused() const { return _isPaused; }
 
@@ -34,7 +37,7 @@ public:
 
     void setVideoView(VideoView *videoView);
 
-    void open(Media *media);
+    void open(Playback *playback);
 
 public slots:
     void play();
@@ -60,6 +63,8 @@ public slots:
      * @param position Value between 0 and 99.
      */
     void setPosition(const int &position);
+
+    void setCurrentRatio(Ratio ratio);
 
 signals:
     void backward();
@@ -92,7 +97,7 @@ private:
     libvlc_media_player_t *_vlcMediaPlayer;
     libvlc_event_manager_t *_vlcEvents;
 
-    Media *_currentMedia;
+    Playback *_currentPlayback;
     VideoView *_videoView;
     WId _currentWId;
 

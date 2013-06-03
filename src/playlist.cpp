@@ -9,9 +9,9 @@ Playlist::~Playlist()
 {
 }
 
-const Playback &Playlist::at(const int &index) const
+Playback* Playlist::at(const int &index) const
 {
-    return _playbackList.at(index);
+    return const_cast<Playback*>(&_playbackList.at(index));
 }
 
 void Playlist::append(const Playback &playback)

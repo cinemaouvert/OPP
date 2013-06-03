@@ -19,6 +19,7 @@
 #include "application.h"
 #include "media.h"
 #include "mediaplayer.h"
+#include "playback.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -57,6 +58,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // initialize from ui
     _mediaPlayer->setVolume(ui->playerVolumeSlider->value());
+
+    ui->ratioComboBox->addItems(MediaSettings::ratioValues());
+    ui->ratioComboBox->removeItem(0);
+    // TODO : select default
 
     initSettingsViews();
     createPlaylistTab();
@@ -130,8 +135,8 @@ void MainWindow::on_playerPlayButton_clicked()
             if (indexes.count() == 0) {
                 ui->playerPlayButton->toggle(); // display play icon
             } else {
-                Media *media = currentPlaylistModel->playlist().at(indexes.first().row()).media();
-                _mediaPlayer->open(media);
+                Playback *playback = currentPlaylistModel->playlist().at(indexes.first().row());
+                _mediaPlayer->open(playback);
                 _mediaPlayer->play();
             }
         }
@@ -204,4 +209,9 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
     } else {
 
     }
+}
+
+void MainWindow::on_ratioComboBox_currentIndexChanged(int index)
+{
+    _mediaPlayer->setCurrentRatio((Ratio) index);
 }

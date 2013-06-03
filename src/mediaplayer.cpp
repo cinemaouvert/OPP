@@ -6,11 +6,13 @@
 #include "application.h"
 #include "media.h"
 #include "videoview.h"
+#include "mediasettings.h"
+#include "playback.h"
 
 MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     QObject(parent),
     _videoView(NULL),
-    _currentMedia(NULL),
+    _currentPlayback(NULL),
     _isPaused(false)
 {
     _vlcMediaPlayer = libvlc_media_player_new(vlcInstance);
@@ -50,10 +52,11 @@ void MediaPlayer::setVideoView(VideoView *videoView)
     _videoView = videoView;
 }
 
-void MediaPlayer::open(Media *media)
+void MediaPlayer::open(Playback *playback)
 {
-    _currentMedia = media;
-    VLCERR( libvlc_media_player_set_media(_vlcMediaPlayer, media->core()) );
+    _currentPlayback = playback;
+    VLCERR( libvlc_media_player_set_media(_vlcMediaPlayer, playback->media()->core()) );
+    // TODO : set playback settings
 }
 
 void MediaPlayer::play()
@@ -130,6 +133,11 @@ void MediaPlayer::setPosition(const float &position)
 void MediaPlayer::setPosition(const int &position)
 {
     setPosition( ((float) position) / 100.f);
+}
+
+void MediaPlayer::setCurrentRatio(Ratio ratio)
+{
+    libvlc_video_set_aspect_ratio(_vlcMediaPlayer, MediaSettings::ratioValues()[ratio].toUtf8().data());
 }
 
 void MediaPlayer::createCoreConnections()

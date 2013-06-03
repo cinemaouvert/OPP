@@ -14,7 +14,7 @@ public:
 
     inline QList<Playback>& playbackList() {return _playbackList;}
 
-    const Playback & at(const int &index) const;
+    Playback* at(const int &index) const;
 
     void append(const Playback &playback);
 

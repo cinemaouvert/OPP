@@ -30,6 +30,7 @@ public:
 
 private slots:
     void initSettingsViews();
+    void on_ratioComboBox_currentIndexChanged(int index);
 
     /* bin events */
     void on_binAddMediaButton_clicked();
