@@ -35,8 +35,6 @@ void VideoWindow::setDisplayMode(const DisplayMode &mode)
         moveToDisplay(0);
         showNormal();
         break;
-    default:
-        void;
     }
 }
 
