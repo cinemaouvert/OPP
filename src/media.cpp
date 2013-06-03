@@ -26,6 +26,7 @@ void Media::initMedia(const QString &location, libvlc_instance_t *vlcInstance)
     _location = location;
     _fileInfo = QFileInfo(location);
     _vlcMedia = libvlc_media_new_path(vlcInstance, location.toLocal8Bit().data());
+    libvlc_media_parse(_vlcMedia);
 }
 
 Media & Media::operator=(const Media &media)

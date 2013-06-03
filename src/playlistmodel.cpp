@@ -100,10 +100,16 @@ bool PlaylistModel::addPlayback(const Playback &playback)
 bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent )
 {
     qDebug() << "drop mime data";
-    Media *media = _mediaListModel->findByPath(data->text());
+    QString paths = data->text();
+    QString path;
+    int paths_number=paths.count("#***#");
+    for(int i=0;i<paths_number;i++)
+    {
+        path=paths.section("#***#",i,i);
+        Media *media = _mediaListModel->findByPath(path);
+        if (!media)
+            return false;
 
-    if (!media)
-        return false;
-
-    addPlayback(Playback(media));
+        addPlayback(Playback(media));
+    }
 }
