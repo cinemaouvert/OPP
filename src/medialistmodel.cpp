@@ -63,6 +63,9 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
         case Location:
             return _mediaList[index.row()].location();
             break;
+        case Duration:
+            return _mediaList[index.row()].duration();
+            break;
         }
         break;
     case Qt::DecorationRole:
@@ -79,6 +82,9 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
         }
         if (index.column() == Name) {
             return _mediaList[index.row()].name();
+        }
+        if (index.column() == Duration) {
+            return _mediaList[index.row()].duration().toString("hh:mm:ss");
         }
         break;
     }

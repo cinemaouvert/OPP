@@ -6,13 +6,20 @@
 Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *parent) :
     QObject(parent)
 {
-    initMedia(location, vlcInstance);
+    initMedia(location);
+    _vlcMedia = libvlc_media_new_path(vlcInstance, location.toLocal8Bit().data());
+
+    // PATCH : We need to play the media to get the duration
+    libvlc_media_player_t *fakeplayer = libvlc_media_player_new(vlcInstance);
+    libvlc_media_player_set_media(fakeplayer, _vlcMedia);
+    libvlc_media_player_play(fakeplayer);
+    libvlc_media_player_stop(fakeplayer);
+    libvlc_media_player_release(fakeplayer);
 }
 
 Media::Media(const Media &media)
 {
-    _location = media.location();
-    _fileInfo = QFileInfo(_location);
+    initMedia(media.location());
     _vlcMedia = libvlc_media_duplicate(media.core());
 }
 
@@ -21,11 +28,10 @@ Media::~Media()
     libvlc_media_release(_vlcMedia);
 }
 
-void Media::initMedia(const QString &location, libvlc_instance_t *vlcInstance)
+void Media::initMedia(const QString &location)
 {
     _location = location;
     _fileInfo = QFileInfo(location);
-    _vlcMedia = libvlc_media_new_path(vlcInstance, location.toLocal8Bit().data());
 }
 
 Media & Media::operator=(const Media &media)

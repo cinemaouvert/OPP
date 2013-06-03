@@ -16,7 +16,7 @@ public:
     Media(const Media &media);
     virtual ~Media();
 
-    void initMedia(const QString &location, libvlc_instance_t *vlcInstance);
+    void initMedia(const QString &location);
 
     Media & operator=(const Media &media);
     bool operator==(const Media &media) const;
