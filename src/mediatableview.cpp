@@ -39,10 +39,14 @@ void MediaTableView::startDrag(Qt::DropActions supportedActions)
     if (indexes.count()==0)
         return;
 
-    QModelIndex index=indexes.first();
+    QString paths;
+    foreach (QModelIndex index, indexes) {
+        paths+=index.data().toString();
+        paths+="#***#";
+    }
 
     QMimeData *mimedata = new QMimeData;
-    mimedata->setText(index.data().toString());
+    mimedata->setText(paths);
 
     QDrag *drag = new QDrag(this);
     drag->setMimeData(mimedata);

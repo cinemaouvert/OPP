@@ -45,6 +45,9 @@ void PlaylistTableView::startDrag(Qt::DropActions supportedActions)
     QModelIndex index = indexes.first();
 
     QMimeData *mimedata = new QMimeData;
+
+
+
     mimedata->setText(index.data().toString());
 
     QDrag *drag = new QDrag(this);
