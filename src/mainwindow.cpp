@@ -13,6 +13,7 @@
 #include "locksettingswindow.h"
 #include "medialistmodel.h"
 #include "mediatableview.h"
+#include "playlisttableview.h"
 #include "playlistmodel.h"
 
 #include "application.h"
@@ -31,11 +32,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _mediaPlayer->setVideoView( (VideoView*) _videoWindow->videoWidget() );
 
     _mediaListModel = new MediaListModel();
-    _playlistModel = new PlaylistModel(_mediaListModel);
 
     ui->binTableView->setModel(_mediaListModel);
-    ui->playlistTableView->setModel(_playlistModel);
-
     ui->timelineWidget->setMediaPlayer(_mediaPlayer);
 
     // show/hide pannel actions
@@ -59,16 +57,24 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // initialize from ui
     _mediaPlayer->setVolume(ui->playerVolumeSlider->value());
+
+    initSettingsViews();
+    createPlaylistTab();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
     delete _mediaListModel;
+    delete _videoWindow;
     delete _mediaPlayer;
     delete _app;
-    delete _playlistModel;
-    delete _videoWindow;
+
+}
+
+void MainWindow::initSettingsViews()
+{
+
 }
 
 void MainWindow::on_binAddMediaButton_clicked()
@@ -117,14 +123,15 @@ void MainWindow::on_playerPlayButton_clicked()
         if (_mediaPlayer->isPaused()) {
             _mediaPlayer->resume();
         } else {
-            // temporaly get selected media from the bin
-            // TODO : get media of the selected playback from _playlistModel ...
-            QModelIndexList indexes = ui->binTableView->selectionModel()->selectedRows();
+            PlaylistTableView *currentPlaylistView = (PlaylistTableView*) ui->playlistsTabWidget->currentWidget();
+            PlaylistModel *currentPlaylistModel = (PlaylistModel*) currentPlaylistView->model();
+            QModelIndexList indexes = currentPlaylistView->selectionModel()->selectedRows();
 
             if (indexes.count() == 0) {
                 ui->playerPlayButton->toggle(); // display play icon
             } else {
-                _mediaPlayer->open( const_cast<Media*>( &_mediaListModel->mediaList().at(indexes.first().row()) ) );
+                Media *media = currentPlaylistModel->playlist().at(indexes.first().row()).media();
+                _mediaPlayer->open(media);
                 _mediaPlayer->play();
             }
         }
@@ -173,5 +180,28 @@ void MainWindow::on_menuVideoMode_triggered(QAction *action)
             action->setChecked(true);
             _videoWindow->setDisplayMode( (VideoWindow::DisplayMode) action->data().toInt() );
         }
+    }
+}
+
+PlaylistTableView* MainWindow::createPlaylistTab()
+{
+    PlaylistTableView *newTab = new PlaylistTableView;
+    newTab->setModel(new PlaylistModel(_mediaListModel));
+    newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+    int pos = ui->playlistsTabWidget->count() - 1;
+    ui->playlistsTabWidget->insertTab(pos, newTab, "New playlist");
+
+    ui->playlistsTabWidget->setCurrentWidget(newTab);
+
+    return newTab;
+}
+
+void MainWindow::on_playlistsTabWidget_currentChanged(int index)
+{
+    if (index == ui->playlistsTabWidget->count()-1) {
+        createPlaylistTab();
+    } else {
+
     }
 }

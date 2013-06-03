@@ -17,6 +17,8 @@ public:
 
     PlaylistModel(MediaListModel *mediaListModel, QObject *parent = 0);
 
+    inline const Playlist & playlist() const { return _playlist; }
+
     int columnCount(const QModelIndex &parent) const;
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;

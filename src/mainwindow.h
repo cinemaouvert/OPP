@@ -12,6 +12,7 @@ class SettingsWindow;
 class LockSettingsWindow;
 class AdvancedSettingsWindow;
 class AdvancedPictureSettingsWindow;
+class PlaylistTableView;
 
 class MediaListModel;
 class PlaylistModel;
@@ -28,6 +29,8 @@ public:
     ~MainWindow();
 
 private slots:
+    void initSettingsViews();
+
     /* bin events */
     void on_binAddMediaButton_clicked();
     void on_binDeleteMediaButton_clicked();
@@ -46,6 +49,11 @@ private slots:
     void on_playerPlayButton_clicked();
     void on_playerStopButton_clicked();
 
+    void on_playlistsTabWidget_currentChanged(int index);
+
+protected:
+    PlaylistTableView* createPlaylistTab();
+
 private:
     Ui::MainWindow *ui;
     VideoWindow *_videoWindow;
@@ -59,7 +67,6 @@ private:
     MediaPlayer *_mediaPlayer;
 
     MediaListModel *_mediaListModel;
-    PlaylistModel *_playlistModel;
 };
 
 #endif // MAINWINDOW_H
