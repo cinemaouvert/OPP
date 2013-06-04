@@ -16,6 +16,12 @@ void MediaSettings::initDefault()
     _ratio = Original;
     _scale = NoScale;
     _deinterlacing = Disabled;
+    _subtitlesSync = 0;
+    _gamma = 50;
+    _contrast = 50;
+    _brightness = 50;
+    _saturation = 50;
+    _hue = 0;
 }
 
 MediaSettings& MediaSettings::operator =(const MediaSettings &mediasettings)

@@ -57,6 +57,12 @@ public:
     inline Ratio ratio() const { return _ratio; }
     inline Scale scale() const { return _scale; }
     inline Deinterlacing deinterlacing() const { return _deinterlacing; }
+    inline double subtitlesSync() const { return _subtitlesSync; }
+    inline int gamma() const { return _gamma; }
+    inline int contrast() const { return _contrast; }
+    inline int brightness() const { return _brightness; }
+    inline int saturation() const { return _saturation; }
+    inline int hue() const { return _hue; }
 
     static QStringList ratioValues();
     static QStringList deinterlacingValues();
@@ -66,6 +72,12 @@ private:
     Ratio _ratio;
     Scale _scale;
     Deinterlacing _deinterlacing;
+    double _subtitlesSync;
+    int _gamma;
+    int _contrast;
+    int _brightness;
+    int _saturation;
+    int _hue;
 };
 
 #endif // MEDIASETTINGS_H

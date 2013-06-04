@@ -82,6 +82,9 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         if (index.column() == Title) {
             return _playlist.at(index.row())->media()->name();
         }
+        if (index.column() == Duration) {
+            return _playlist.at(index.row())->media()->duration().toString("hh:mm:ss");
+        }
         break;
     }
 

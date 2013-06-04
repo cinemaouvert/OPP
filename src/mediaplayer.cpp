@@ -145,6 +145,41 @@ void MediaPlayer::setCurrentDeinterlacing(Deinterlacing deinterlacing)
     libvlc_video_set_deinterlace(_vlcMediaPlayer, MediaSettings::deinterlacingValues()[deinterlacing].toUtf8().data());
 }
 
+void MediaPlayer::setCurrentSubtitlesSync(double sync)
+{
+    libvlc_video_set_spu_delay(_vlcMediaPlayer,(int64_t)(1000*sync));
+}
+
+void MediaPlayer::setCurrentGamma(int gamma)
+{
+    libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
+    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Gamma, (float)gamma/50);
+}
+
+void MediaPlayer::setCurrentContrast(int contrast)
+{
+    libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
+    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Contrast, (float)contrast/50);
+}
+
+void MediaPlayer::setCurrentBrightness(int brightness)
+{
+    libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
+    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Brightness, (float)brightness/50);
+}
+
+void MediaPlayer::setCurrentSaturation(int saturation)
+{
+    libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
+    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Saturation, (float)saturation/50);
+}
+
+void MediaPlayer::setCurrentHue(int hue)
+{
+    libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
+    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Hue, (float)hue/100);
+}
+
 void MediaPlayer::createCoreConnections()
 {
     QList<libvlc_event_e> list;

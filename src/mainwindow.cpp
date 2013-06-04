@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <QMessageBox>
+#include <QHeaderView>
 
 #include "global.h"
 #include "videowindow.h"
@@ -193,6 +194,7 @@ PlaylistTableView* MainWindow::createPlaylistTab()
     PlaylistTableView *newTab = new PlaylistTableView;
     newTab->setModel(new PlaylistModel(_mediaListModel));
     newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
+    newTab->horizontalHeader()->setStretchLastSection(true);
 
     int pos = ui->playlistsTabWidget->count() - 1;
     ui->playlistsTabWidget->insertTab(pos, newTab, "New playlist");
@@ -214,4 +216,34 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
 void MainWindow::on_ratioComboBox_currentIndexChanged(int index)
 {
     _mediaPlayer->setCurrentRatio((Ratio) index);
+}
+
+void MainWindow::on_subtitlesSyncSpinBox_valueChanged(double arg1)
+{
+   _mediaPlayer->setCurrentSubtitlesSync(arg1);
+}
+
+void MainWindow::on_gammaSpinBox_valueChanged(int arg1)
+{
+     _mediaPlayer->setCurrentGamma(arg1);
+}
+
+void MainWindow::on_contrastSpinBox_valueChanged(int arg1)
+{
+     _mediaPlayer->setCurrentContrast(arg1);
+}
+
+void MainWindow::on_brightnessSpinBox_valueChanged(int arg1)
+{
+    _mediaPlayer->setCurrentBrightness(arg1);
+}
+
+void MainWindow::on_saturationSpinBox_valueChanged(int arg1)
+{
+     _mediaPlayer->setCurrentSaturation(arg1);
+}
+
+void MainWindow::on_hueSpinBox_valueChanged(int arg1)
+{
+     _mediaPlayer->setCurrentHue(arg1);
 }

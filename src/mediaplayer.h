@@ -68,6 +68,14 @@ public slots:
 
     void setCurrentDeinterlacing(Deinterlacing deinterlacing);
 
+    void setCurrentSubtitlesSync(double sync);
+
+    void setCurrentGamma(int gamma);
+    void setCurrentContrast(int contrast);
+    void setCurrentBrightness(int brightness);
+    void setCurrentSaturation(int saturation);
+    void setCurrentHue(int hue);
+
 
 signals:
     void backward();
