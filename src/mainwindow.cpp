@@ -247,3 +247,57 @@ void MainWindow::on_hueSpinBox_valueChanged(int arg1)
 {
      _mediaPlayer->setCurrentHue(arg1);
 }
+
+void MainWindow::on_saveAsAction_triggered()
+{
+    /* Bin save */
+
+    //on sauvegarde le fichier où on veut
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Project"), "", tr("OPP (*.opp);;All Files (*)"));
+    if (fileName.isEmpty())
+         return;
+     else {
+         QFile file(fileName);
+         if (!file.open(QIODevice::WriteOnly)) {
+             QMessageBox::information(this, tr("Unable to open file"),file.errorString());
+         }
+         //save data into the file
+         QDataStream out(&file);
+         out << _mediaListModel->mediaList();
+    }
+}
+
+void MainWindow::on_openListingAction_triggered()
+{
+    /* Bin Loading */
+
+    // Go seek the file to load
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Open Project"), "",tr("OPP (*.opp);;All Files (*)"));
+    if (fileName.isEmpty())
+        return;
+    else{
+        QFile file(fileName);
+        if (!file.open(QIODevice::ReadOnly)){
+            QMessageBox::information(this, tr("Unable to open file"),
+                file.errorString());
+            return;
+        }
+
+        //reset the list once the file is selected
+        while(_mediaListModel->rowCount() > 0) {
+            _mediaListModel->removeRows(0, 1);
+        }
+
+        //load data from the file, and add media in _mediaListModel
+        QDataStream in(&file);
+        int i=0;
+        while(!in.atEnd()){
+            QString loc;
+            in >> loc;
+            qDebug() << "str : " << loc;
+            Media media(loc, _app->vlcInstance());
+            _mediaListModel->addMedia(media);
+            i++;
+        }
+    }//end else
+}

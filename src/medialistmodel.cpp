@@ -138,3 +138,18 @@ Media* MediaListModel::findByPath(const QString &path) const
     }
     return NULL;
 }
+
+QDataStream & operator << (QDataStream & out, const QList<Media> &list)
+{
+    for(int i=0; i<list.size(); ++i){
+        QString loc(list[i].location());
+        out << loc;
+    }
+    return out;
+}
+
+QDataStream & operator >> (QDataStream & in, QList<Media> &list)
+{
+    in >> list;
+    return in;
+}

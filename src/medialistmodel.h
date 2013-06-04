@@ -36,6 +36,15 @@ public:
 
 private:
     QList<Media> _mediaList;
+
+    friend QDataStream & operator << (QDataStream &, const QList<Media> &);
+    friend QDataStream & operator >> (QDataStream &, QList<Media> &);
+
 };
 
+//Metatype
+Q_DECLARE_METATYPE(MediaListModel*)
+Q_DECLARE_METATYPE( QList<Media> )
+QDataStream & operator << (QDataStream & out, const QList<Media> &list);
+QDataStream & operator >> (QDataStream & in, QList<Media> &list);
 #endif // MEDIALISTMODEL_H

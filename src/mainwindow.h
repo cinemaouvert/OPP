@@ -52,6 +52,7 @@ private slots:
 
     void on_playlistsTabWidget_currentChanged(int index);
 
+<<<<<<< HEAD
     void on_subtitlesSyncSpinBox_valueChanged(double arg1);
 
 
@@ -60,6 +61,11 @@ private slots:
     void on_brightnessSpinBox_valueChanged(int arg1);
     void on_saturationSpinBox_valueChanged(int arg1);
     void on_hueSpinBox_valueChanged(int arg1);
+=======
+    void on_saveAsAction_triggered();
+
+    void on_openListingAction_triggered();
+>>>>>>> fae2b4e098f8dc61df31e984e0ca7d3a0b668998
 
 protected:
     PlaylistTableView* createPlaylistTab();
