@@ -15,6 +15,9 @@ public:
     explicit AdvancedPictureSettingsWindow(QWidget *parent = 0);
     ~AdvancedPictureSettingsWindow();
     
+private slots:
+    void on_comboBox_deinterlace_currentIndexChanged(int index);
+
 private:
     Ui::AdvancedPictureSettingsWindow *ui;
 };

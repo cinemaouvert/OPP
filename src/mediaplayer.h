@@ -66,6 +66,9 @@ public slots:
 
     void setCurrentRatio(Ratio ratio);
 
+    void setCurrentDeinterlacing(Deinterlacing deinterlacing);
+
+
 signals:
     void backward();
     void buffering(const float &);

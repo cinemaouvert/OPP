@@ -140,6 +140,11 @@ void MediaPlayer::setCurrentRatio(Ratio ratio)
     libvlc_video_set_aspect_ratio(_vlcMediaPlayer, MediaSettings::ratioValues()[ratio].toUtf8().data());
 }
 
+void MediaPlayer::setCurrentDeinterlacing(Deinterlacing deinterlacing)
+{
+    libvlc_video_set_deinterlace(_vlcMediaPlayer, MediaSettings::deinterlacingValues()[deinterlacing].toUtf8().data());
+}
+
 void MediaPlayer::createCoreConnections()
 {
     QList<libvlc_event_e> list;
