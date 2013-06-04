@@ -52,6 +52,10 @@ private slots:
 
     void on_playlistsTabWidget_currentChanged(int index);
 
+    void on_saveAsAction_triggered();
+
+    void on_openListingAction_triggered();
+
 protected:
     PlaylistTableView* createPlaylistTab();
 

@@ -33,6 +33,9 @@ private:
     QString _location;
     QFileInfo _fileInfo;
     libvlc_media_t *_vlcMedia;
+
+    friend QDataStream & operator << (QDataStream &, const QList<Media> &);
+    friend QDataStream & operator >> (QDataStream &, QList<Media> &);
 };
 
 #endif // MEDIA_H
