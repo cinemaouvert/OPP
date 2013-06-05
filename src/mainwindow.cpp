@@ -192,9 +192,13 @@ void MainWindow::on_menuVideoMode_triggered(QAction *action)
 PlaylistTableView* MainWindow::createPlaylistTab()
 {
     PlaylistTableView *newTab = new PlaylistTableView;
-    newTab->setModel(new PlaylistModel(_mediaListModel));
+    PlaylistModel *newModel = new PlaylistModel(_mediaListModel);
+
+    newTab->setModel(newModel);
     newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
     newTab->horizontalHeader()->setStretchLastSection(true);
+
+    connect(newTab, SIGNAL(clicked(QModelIndex)), this, SLOT(initMediaSettings(QModelIndex)));
 
     int pos = ui->playlistsTabWidget->count() - 1;
     ui->playlistsTabWidget->insertTab(pos, newTab, "New playlist");
