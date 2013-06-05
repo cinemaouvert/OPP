@@ -48,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // core connections
     connect(ui->playerVolumeSlider, SIGNAL(valueChanged(int)), _mediaPlayer, SLOT(setVolume(int)));
+    connect(_mediaPlayer, SIGNAL(end()), ui->playerPlayButton, SLOT(toggle()));
 
     //DEBUG : this code add a media into the bin on launch
 //    Media media("/Users/floomoon/Movies/3ours-OCPM.mkv", _app->vlcInstance());
@@ -134,7 +135,7 @@ void MainWindow::on_playerPlayButton_clicked()
             QModelIndexList indexes = currentPlaylistView->selectionModel()->selectedRows();
 
             if (indexes.count() == 0) {
-                ui->playerPlayButton->toggle(); // display play icon
+                ui->playerPlayButton->setChecked(false);
             } else {
                 Playback *playback = currentPlaylistModel->playlist().at(indexes.first().row());
                 _mediaPlayer->open(playback);
