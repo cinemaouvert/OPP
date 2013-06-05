@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QHeaderView>
+#include <QContextMenuEvent>
 
 #include "global.h"
 #include "videowindow.h"
@@ -60,12 +61,11 @@ MainWindow::MainWindow(QWidget *parent) :
     // initialize from ui
     _mediaPlayer->setVolume(ui->playerVolumeSlider->value());
 
-    ui->ratioComboBox->addItems(MediaSettings::ratioValues());
-    ui->ratioComboBox->removeItem(0);
-    // TODO : select default
-
-    initSettingsViews();
     createPlaylistTab();
+
+    ui->ratioComboBox->addItems(MediaSettings::ratioValues());
+
+    // TODO : select default
 }
 
 MainWindow::~MainWindow()
@@ -219,7 +219,10 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
 
 void MainWindow::on_ratioComboBox_currentIndexChanged(int index)
 {
-    _mediaPlayer->setCurrentRatio((Ratio) index);
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setRatio((Ratio) index);
+    }
 }
 
 void MainWindow::on_subtitlesSyncSpinBox_valueChanged(double arg1)
@@ -304,4 +307,14 @@ void MainWindow::on_openListingAction_triggered()
             i++;
         }
     }//end else
+}
+
+Playback* MainWindow::selectedPlayback() const {
+    PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->currentWidget();
+    QModelIndexList indexes = view->selectionModel()->selectedRows();
+
+    if (indexes.count() == 0)
+        return NULL;
+
+    return ((PlaylistModel*) view->model())->playlist().at(indexes.first().row());
 }

@@ -17,11 +17,11 @@ public:
     virtual ~Playback();
 
     inline Media* media() const {return _media;}
-    inline const MediaSettings& mediaSettings() const {return _mediaSettings;}
+    inline MediaSettings* mediaSettings() const {return _mediaSettings;}
     
 private:
     Media *_media;
-    MediaSettings _mediaSettings;
+    MediaSettings *_mediaSettings;
     
 };
 

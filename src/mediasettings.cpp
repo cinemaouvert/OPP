@@ -11,6 +11,11 @@ MediaSettings::MediaSettings(MediaSettings &mediasettings)
 
 }
 
+void MediaSettings::setRatio(Ratio ratio) {
+    _ratio = ratio;
+    emit ratioChanged(_ratio);
+}
+
 void MediaSettings::initDefault()
 {
     _ratio = Original;
@@ -35,7 +40,7 @@ MediaSettings& MediaSettings::operator =(const MediaSettings &mediasettings)
 QStringList MediaSettings::ratioValues()
 {
     QStringList values;
-    values << ""
+    values << "default"
         << "16:9"
         << "16:10"
         << "185:100"
@@ -53,7 +58,7 @@ QStringList MediaSettings::ratioValues()
 QStringList MediaSettings::deinterlacingValues()
 {
     QStringList list;
-    list << ""
+    list << "default"
         << "discard"
         << "blend"
         << "man"

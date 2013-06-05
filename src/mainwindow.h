@@ -19,6 +19,7 @@ class PlaylistModel;
 
 class Application;
 class MediaPlayer;
+class Playback;
 
 class MainWindow : public QMainWindow
 {
@@ -64,6 +65,7 @@ private slots:
 
 protected:
     PlaylistTableView* createPlaylistTab();
+    Playback* selectedPlayback() const;
 
 private:
     Ui::MainWindow *ui;

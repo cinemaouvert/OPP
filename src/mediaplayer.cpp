@@ -54,9 +54,14 @@ void MediaPlayer::setVideoView(VideoView *videoView)
 
 void MediaPlayer::open(Playback *playback)
 {
+    if (_currentPlayback) {
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
+    }
+
     _currentPlayback = playback;
     VLCERR( libvlc_media_player_set_media(_vlcMediaPlayer, playback->media()->core()) );
-    // TODO : set playback settings
+
+    connect(_currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
 }
 
 void MediaPlayer::play()

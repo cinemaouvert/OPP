@@ -64,9 +64,14 @@ public:
     inline int saturation() const { return _saturation; }
     inline int hue() const { return _hue; }
 
+    void setRatio(Ratio ratio);
+
     static QStringList ratioValues();
     static QStringList deinterlacingValues();
     static QList<float> scaleValues();
+
+signals:
+    void ratioChanged(Ratio);
 
 private:
     Ratio _ratio;
