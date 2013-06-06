@@ -18,6 +18,7 @@
 #include "playlisttableview.h"
 #include "playlistmodel.h"
 #include "schedulelistmodel.h"
+#include "locker.h"
 
 #include "application.h"
 #include "media.h"
@@ -29,6 +30,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QList<QWidget*> lockedWidget;
+    lockedWidget << ui->playlistsTabWidget;
+    _locker = new Locker(lockedWidget, this);
+
+    _lockSettingsWindow = new LockSettingsWindow(_locker, this);
+
     _videoWindow = new VideoWindow(this);
 
     _app = new Application();
@@ -40,6 +48,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->binTableView->setModel(_mediaListModel);
     ui->timelineWidget->setMediaPlayer(_mediaPlayer);
+
+    connect(ui->lockButton, SIGNAL(toggled(bool)), _locker, SLOT(toggle(bool)));
 
     // show/hide pannel actions
     connect(ui->quitAction, SIGNAL(triggered()), this, SLOT(close()));
@@ -74,6 +84,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete _lockSettingsWindow;
 //    delete _testPatternPlayback;
     delete _mediaListModel;
     delete _videoWindow;
@@ -118,10 +129,9 @@ void MainWindow::on_settingsAction_triggered()
 
 void MainWindow::on_lockSettingsAction_triggered()
 {
-    lockSettingsWindow = new LockSettingsWindow(this);
-    lockSettingsWindow->show();
-    lockSettingsWindow->raise();
-    lockSettingsWindow->activateWindow();
+    _lockSettingsWindow->show();
+    _lockSettingsWindow->raise();
+    _lockSettingsWindow->activateWindow();
 }
 
 void MainWindow::on_playerPlayButton_clicked()
@@ -172,10 +182,6 @@ void MainWindow::on_advancedPictureSettingsButton_clicked()
 
 void MainWindow::on_lockButton_clicked()
 {
-    lockSettingsWindow = new LockSettingsWindow(this);
-    lockSettingsWindow->show();
-    lockSettingsWindow->raise();
-    lockSettingsWindow->activateWindow();
 }
 
 void MainWindow::on_menuVideoMode_triggered(QAction *action)

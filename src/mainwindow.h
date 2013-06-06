@@ -20,6 +20,7 @@ class ScheduleListModel;
 class Application;
 class MediaPlayer;
 class Playback;
+class Locker;
 
 class MainWindow : public QMainWindow
 {
@@ -74,7 +75,7 @@ private:
     VideoWindow *_videoWindow;
 
     SettingsWindow *_settingsWindow;
-    LockSettingsWindow *lockSettingsWindow;
+    LockSettingsWindow *_lockSettingsWindow;
     AdvancedSettingsWindow *_advancedSettingsWindow;
     AdvancedPictureSettingsWindow *_advancedPictureSettingsWindow;
 
@@ -83,6 +84,8 @@ private:
 
     MediaListModel *_mediaListModel;
     ScheduleListModel *_scheduleListModel;
+
+    Locker *_locker;
 };
 
 #endif // MAINWINDOW_H

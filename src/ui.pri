@@ -13,7 +13,8 @@ HEADERS += src/playertimelinewidget.h \
     src/playlisttableview.h \
     src/seekwidget.h \
     src/schedulelistmodel.h \
-    src/utils.h
+    src/utils.h \
+    src/locker.h
 
 SOURCES += src/main.cpp \
     src/playertimelinewidget.cpp \
@@ -31,7 +32,8 @@ SOURCES += src/main.cpp \
     src/playlisttableview.cpp \
     src/seekwidget.cpp \
     src/schedulelistmodel.cpp \
-    src/utils.cpp
+    src/utils.cpp \
+    src/locker.cpp
 
 FORMS += src/mainwindow.ui \
     src/playertimelinewidget.ui \

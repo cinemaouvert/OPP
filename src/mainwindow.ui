@@ -845,6 +845,9 @@ p, li { white-space: pre-wrap; }
                        <iconset resource="../images.qrc">
                         <normaloff>:/icons/resources/glyphicons/glyphicons_044_keys.png</normaloff>:/icons/resources/glyphicons/glyphicons_044_keys.png</iconset>
                       </property>
+                      <property name="checkable">
+                       <bool>true</bool>
+                      </property>
                      </widget>
                     </item>
                    </layout>

@@ -8,7 +8,12 @@ class Locker : public QObject
 {
     Q_OBJECT
 public:
-    explicit Locker(QObject *parent = 0);
+    /**
+     * @brief Locker
+     * @param widgets The widgets to lock and unlock
+     * @param parent
+     */
+    explicit Locker(QList<QWidget*> widgets, QObject *parent = 0);
 
     bool getAutoLock();
     void setAutoLock(bool);
@@ -16,7 +21,7 @@ public:
     void setPasswordEnable(bool);
     QString getPassword();
     void setPassword(QString);
-    void setTimer(int);
+    void setAutoLockDelay(int);
 
     /*
      * auto_lock enable,
@@ -33,9 +38,29 @@ private:
     bool _password;
     QString _thePass;
     QTimer _timer;
-/*signals:
-    
-public slots:*/
+    QList<QWidget*> _widgets;
+
+    /**
+     * @brief delay in ms
+     */
+    int delay;
+
+public slots:
+    void lock();
+    void unlock();
+
+    /**
+     * Toggle lock state.
+     * If the locker is locked, then it is unlocked and if it is unlocked, it is locked.
+     * @brief toggle
+     */
+    void toggle(bool checked = false);
+
+signals:
+    void autoLocked();
+    void locked();
+    void unlocked();
+    void toggled();
     
 };
 

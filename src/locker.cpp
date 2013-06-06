@@ -1,7 +1,11 @@
 #include "locker.h"
 
-Locker::Locker(QObject *parent) :
-    QObject(parent)
+#include <QWidget>
+#include <QDebug>
+
+Locker::Locker(QList<QWidget*> widgets, QObject *parent) :
+    QObject(parent),
+    _widgets(widgets)
 {
 }
 
@@ -34,8 +38,32 @@ void Locker::setPassword(QString newPass){
     }
 }
 
-void Locker::setTimer(int time){
+void Locker::setAutoLockDelay(int time){
     if(getAutoLock()==true){
-        _timer.start(1000*time);
+        // attention, ça va lancer le timer indéfiniment.
+        // Tout les "time" millisecondes, le timer emet un signal timeout
+        // pour emettre un seul timeout, il faut utiliser singleShot()
+        _timer.start(time);
     }
+}
+
+void Locker::lock()
+{
+    qDebug() << "locked";
+    // pour chaque widgets enregistré dans _widgets
+    //      faire un setEnabled(false)
+}
+
+void Locker::unlock()
+{
+    qDebug() << "unlocked";
+    // pour chaque widgets enregistré dans _widgets
+    //      faire un setEnabled(true)
+}
+
+void Locker::toggle(bool checked)
+{
+    checked ? lock() : unlock();
+
+    // ca permet de connecté la methode toggle à un signal toggled emis par un clique bouton
 }
