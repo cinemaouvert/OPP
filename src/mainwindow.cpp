@@ -17,6 +17,8 @@
 #include "mediatableview.h"
 #include "playlisttableview.h"
 #include "playlistmodel.h"
+#include "schedulelistmodel.h"
+#include "locker.h"
 
 #include "application.h"
 #include "media.h"
@@ -28,6 +30,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QList<QWidget*> lockedWidget;
+    lockedWidget << ui->playlistsTabWidget;
+    _locker = new Locker(lockedWidget, this);
+
+    _lockSettingsWindow = new LockSettingsWindow(_locker, this);
+
     _videoWindow = new VideoWindow(this);
 
     _app = new Application();
@@ -35,9 +44,12 @@ MainWindow::MainWindow(QWidget *parent) :
     _mediaPlayer->setVideoView( (VideoView*) _videoWindow->videoWidget() );
 
     _mediaListModel = new MediaListModel();
+    _scheduleListModel = new ScheduleListModel();
 
     ui->binTableView->setModel(_mediaListModel);
     ui->timelineWidget->setMediaPlayer(_mediaPlayer);
+
+    connect(ui->lockButton, SIGNAL(toggled(bool)), _locker, SLOT(toggle(bool)));
 
     // show/hide pannel actions
     connect(ui->quitAction, SIGNAL(triggered()), this, SLOT(close()));
@@ -48,6 +60,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // core connections
     connect(ui->playerVolumeSlider, SIGNAL(valueChanged(int)), _mediaPlayer, SLOT(setVolume(int)));
+    connect(_mediaPlayer, SIGNAL(end()), ui->playerPlayButton, SLOT(toggle()));
 
     //DEBUG : this code add a media into the bin on launch
 //    Media media("/Users/floomoon/Movies/3ours-OCPM.mkv", _app->vlcInstance());
@@ -71,11 +84,12 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete _lockSettingsWindow;
+//    delete _testPatternPlayback;
     delete _mediaListModel;
     delete _videoWindow;
     delete _mediaPlayer;
     delete _app;
-
 }
 
 void MainWindow::initSettingsViews()
@@ -115,10 +129,9 @@ void MainWindow::on_settingsAction_triggered()
 
 void MainWindow::on_lockSettingsAction_triggered()
 {
-    lockSettingsWindow = new LockSettingsWindow(this);
-    lockSettingsWindow->show();
-    lockSettingsWindow->raise();
-    lockSettingsWindow->activateWindow();
+    _lockSettingsWindow->show();
+    _lockSettingsWindow->raise();
+    _lockSettingsWindow->activateWindow();
 }
 
 void MainWindow::on_playerPlayButton_clicked()
@@ -134,7 +147,7 @@ void MainWindow::on_playerPlayButton_clicked()
             QModelIndexList indexes = currentPlaylistView->selectionModel()->selectedRows();
 
             if (indexes.count() == 0) {
-                ui->playerPlayButton->toggle(); // display play icon
+                ui->playerPlayButton->setChecked(false);
             } else {
                 Playback *playback = currentPlaylistModel->playlist().at(indexes.first().row());
                 _mediaPlayer->open(playback);
@@ -169,10 +182,6 @@ void MainWindow::on_advancedPictureSettingsButton_clicked()
 
 void MainWindow::on_lockButton_clicked()
 {
-    lockSettingsWindow = new LockSettingsWindow(this);
-    lockSettingsWindow->show();
-    lockSettingsWindow->raise();
-    lockSettingsWindow->activateWindow();
 }
 
 void MainWindow::on_menuVideoMode_triggered(QAction *action)
@@ -277,6 +286,11 @@ void MainWindow::on_hueSpinBox_valueChanged(int arg1)
         playback->mediaSettings()->setHue(arg1);
     }
     // _mediaPlayer->setCurrentHue(arg1);
+}
+
+void MainWindow::on_testPatternAction_triggered()
+{
+//    _mediaPlayer->play(Media(QFileDialog::getOpenFileName(this, tr("Open test pattern"), QDir::homePath(), tr("Media (*.avi *.mkv *.jpg *.png)")), _app->vlcInstance()));
 }
 
 void MainWindow::on_saveAsAction_triggered()

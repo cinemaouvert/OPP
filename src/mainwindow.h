@@ -15,11 +15,12 @@ class AdvancedPictureSettingsWindow;
 class PlaylistTableView;
 
 class MediaListModel;
-class PlaylistModel;
+class ScheduleListModel;
 
 class Application;
 class MediaPlayer;
 class Playback;
+class Locker;
 
 class MainWindow : public QMainWindow
 {
@@ -60,6 +61,8 @@ private slots:
     void on_saturationSpinBox_valueChanged(int arg1);
     void on_hueSpinBox_valueChanged(int arg1);
 
+    void on_testPatternAction_triggered();
+
     void on_saveAsAction_triggered();
     void on_openListingAction_triggered();
 
@@ -72,7 +75,7 @@ private:
     VideoWindow *_videoWindow;
 
     SettingsWindow *_settingsWindow;
-    LockSettingsWindow *lockSettingsWindow;
+    LockSettingsWindow *_lockSettingsWindow;
     AdvancedSettingsWindow *_advancedSettingsWindow;
     AdvancedPictureSettingsWindow *_advancedPictureSettingsWindow;
 
@@ -80,6 +83,9 @@ private:
     MediaPlayer *_mediaPlayer;
 
     MediaListModel *_mediaListModel;
+    ScheduleListModel *_scheduleListModel;
+
+    Locker *_locker;
 };
 
 #endif // MAINWINDOW_H

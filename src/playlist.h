@@ -20,6 +20,8 @@ public:
 
     int count() const;
 
+    uint totalDuration() const;
+
 private:
     QList<Playback> _playbackList;
     

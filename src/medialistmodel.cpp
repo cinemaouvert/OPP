@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QIcon>
 
+#include "utils.h"
+
 MediaListModel::MediaListModel(QObject *parent) :
     QAbstractTableModel(parent)
 {
@@ -10,7 +12,7 @@ MediaListModel::MediaListModel(QObject *parent) :
 
 int MediaListModel::columnCount(const QModelIndex &parent) const
 {
-    return sizeof(Columns);
+    return 4;
 }
 
 int MediaListModel::rowCount(const QModelIndex &parent) const
@@ -64,7 +66,7 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
             return _mediaList[index.row()].location();
             break;
         case Duration:
-            return _mediaList[index.row()].duration();
+            return msecToQTime(_mediaList[index.row()].duration()).toString("hh:mm:ss");
             break;
         }
         break;
@@ -84,24 +86,13 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
             return _mediaList[index.row()].name();
         }
         if (index.column() == Duration) {
-            return _mediaList[index.row()].duration().toString("hh:mm:ss");
+            return msecToQTime(_mediaList[index.row()].duration()).toString("hh:mm:ss");
         }
         break;
     }
 
     return QVariant();
 }
-
-//QVariant MedialListModel::headerData(int section, Qt::Orientation orientation, int role) const
-// {
-//     if (role != Qt::DisplayRole)
-//         return QVariant();
-
-//     if (orientation == Qt::Horizontal)
-//         return QString("%1").arg(section);
-//     else
-//         return QString("%1").arg(section);
-// }
 
 bool MediaListModel::removeRows(int position, int rows, const QModelIndex &index)
 {

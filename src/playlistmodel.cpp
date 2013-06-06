@@ -4,6 +4,7 @@
 #include <QIcon>
 #include <QMimeData>
 
+#include "utils.h"
 #include "medialistmodel.h"
 
 PlaylistModel::PlaylistModel(MediaListModel *mediaListModel, QObject *parent) :
@@ -83,7 +84,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             return _playlist.at(index.row())->media()->name();
         }
         if (index.column() == Duration) {
-            return _playlist.at(index.row())->media()->duration().toString("hh:mm:ss");
+            return msecToQTime(_playlist.at(index.row())->media()->duration()).toString("hh:mm:ss");
         }
         break;
     }
