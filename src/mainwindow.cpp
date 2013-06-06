@@ -227,32 +227,56 @@ void MainWindow::on_ratioComboBox_currentIndexChanged(int index)
 
 void MainWindow::on_subtitlesSyncSpinBox_valueChanged(double arg1)
 {
-   _mediaPlayer->setCurrentSubtitlesSync(arg1);
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setSubtitlesSync(arg1);
+    }
+   //_mediaPlayer->setCurrentSubtitlesSync(arg1);
 }
 
 void MainWindow::on_gammaSpinBox_valueChanged(int arg1)
 {
-     _mediaPlayer->setCurrentGamma(arg1);
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setGamma(arg1);
+    }
+    // _mediaPlayer->setCurrentGamma(arg1);
 }
 
 void MainWindow::on_contrastSpinBox_valueChanged(int arg1)
 {
-     _mediaPlayer->setCurrentContrast(arg1);
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setContrast(arg1);
+    }
+    // _mediaPlayer->setCurrentContrast(arg1);
 }
 
 void MainWindow::on_brightnessSpinBox_valueChanged(int arg1)
 {
-    _mediaPlayer->setCurrentBrightness(arg1);
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setBrightness(arg1);
+    }
+   // _mediaPlayer->setCurrentBrightness(arg1);
 }
 
 void MainWindow::on_saturationSpinBox_valueChanged(int arg1)
 {
-     _mediaPlayer->setCurrentSaturation(arg1);
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setSaturation(arg1);
+    }
+    // _mediaPlayer->setCurrentSaturation(arg1);
 }
 
 void MainWindow::on_hueSpinBox_valueChanged(int arg1)
 {
-     _mediaPlayer->setCurrentHue(arg1);
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setHue(arg1);
+    }
+    // _mediaPlayer->setCurrentHue(arg1);
 }
 
 void MainWindow::on_saveAsAction_triggered()

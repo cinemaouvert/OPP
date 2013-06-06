@@ -65,6 +65,14 @@ public:
     inline int hue() const { return _hue; }
 
     void setRatio(Ratio ratio);
+    void setScale(Scale scale);
+    void setDeinterlacing(Deinterlacing deinterlacing);
+    void setSubtitlesSync(double sync);
+    void setGamma(int gamma);
+    void setContrast(int contrast);
+    void setBrightness(int brightness);
+    void setSaturation(int saturation);
+    void setHue(int hue);
 
     static QStringList ratioValues();
     static QStringList deinterlacingValues();
@@ -72,6 +80,14 @@ public:
 
 signals:
     void ratioChanged(Ratio);
+    void scaleChanged(Scale);
+    void deinterlacingChanged(Deinterlacing);
+    void subtitlesSyncChanged(double);
+    void gammaChanged(int);
+    void contrastChanged(int);
+    void brightnessChanged(int);
+    void saturationChanged(int);
+    void hueChanged(int);
 
 private:
     Ratio _ratio;

@@ -1,4 +1,5 @@
 #include "mediasettings.h"
+#include "QDebug"
 
 MediaSettings::MediaSettings(QObject *parent) :
     QObject(parent)
@@ -14,6 +15,46 @@ MediaSettings::MediaSettings(MediaSettings &mediasettings)
 void MediaSettings::setRatio(Ratio ratio) {
     _ratio = ratio;
     emit ratioChanged(_ratio);
+}
+
+void MediaSettings::setScale(Scale scale) {
+    _scale = scale;
+    emit scaleChanged(_scale);
+}
+
+void MediaSettings::setDeinterlacing(Deinterlacing deinterlacing){
+    _deinterlacing = deinterlacing;
+    emit deinterlacingChanged(_deinterlacing);
+}
+
+void MediaSettings::setSubtitlesSync(double sync){
+    _subtitlesSync = sync;
+    emit subtitlesSyncChanged(_subtitlesSync);
+}
+
+void MediaSettings::setGamma(int gamma) {
+    _gamma = gamma;
+    emit gammaChanged(_gamma);
+}
+
+void MediaSettings::setContrast(int contrast) {
+    _contrast = contrast;
+    emit contrastChanged(_contrast);
+}
+
+void MediaSettings::setBrightness(int brightness) {
+    _brightness = brightness;
+    emit brightnessChanged(_brightness);
+}
+
+void MediaSettings::setSaturation(int saturation) {
+    _saturation = saturation;
+    emit saturationChanged(_saturation);
+}
+
+void MediaSettings::setHue(int hue) {
+    _saturation = hue;
+    emit saturationChanged(_saturation);
 }
 
 void MediaSettings::initDefault()

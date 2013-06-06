@@ -2,6 +2,8 @@
 
 #include "global.h"
 #include "application.h"
+#include <unistd.h>
+#include <QThread>
 
 Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *parent) :
     QObject(parent)
@@ -11,8 +13,37 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
 
     // PATCH : We need to play the media to get the duration
     libvlc_media_player_t *fakeplayer = libvlc_media_player_new(vlcInstance);
+    VLC_LAST_ERROR();
     libvlc_media_player_set_media(fakeplayer, _vlcMedia);
     libvlc_media_player_play(fakeplayer);
+    usleep(100000);
+
+    libvlc_track_description_t* trackAudio = libvlc_audio_get_track_description (fakeplayer);
+    qDebug()<<"Audio tracks";
+    while(trackAudio)
+    {
+        _audioTracks.append(trackAudio->psz_name);
+        qDebug()<<trackAudio->psz_name;
+        trackAudio=trackAudio->p_next;
+    }
+    qDebug()<<"Video tracks";
+    libvlc_track_description_t* trackVideo = libvlc_video_get_track_description (fakeplayer);
+    while(trackVideo)
+    {
+        _videoTracks.append(trackVideo->psz_name);
+        qDebug()<<trackVideo->psz_name;
+        trackVideo=trackVideo->p_next;
+    }
+    qDebug()<<"Subtitles tracks";
+    libvlc_track_description_t* trackSubtitles = libvlc_video_get_spu_description (fakeplayer);
+    while(trackSubtitles)
+    {
+        _subtitlesTracks.append(trackSubtitles->psz_name);
+        qDebug()<<trackSubtitles->psz_name;
+        trackSubtitles=trackSubtitles->p_next;
+    }
+
+
     libvlc_media_player_stop(fakeplayer);
     libvlc_media_player_release(fakeplayer);
 }
@@ -68,4 +99,19 @@ QString Media::name() const
 bool Media::exists() const
 {
     return _fileInfo.exists();
+}
+
+QList<const char*> Media::audioTracks() const
+{
+    return _audioTracks;
+}
+
+QList<const char*> Media::videoTracks() const
+{
+    return _videoTracks;
+}
+
+QList<const char*> Media::subtitlesTracks() const
+{
+    return _subtitlesTracks;
 }
