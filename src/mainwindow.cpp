@@ -74,11 +74,19 @@ MainWindow::MainWindow(QWidget *parent) :
     // initialize from ui
     _mediaPlayer->setVolume(ui->playerVolumeSlider->value());
 
+    // media settings input mapping
+    _mediaSettingsMapper = new QDataWidgetMapper(this);
+//    _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
+
+    // initialize media settings input
+    ui->ratioComboBox->addItems(MediaSettings::ratioValues());
+    ui->ratioComboBox->setAutoCompletion(true);
+
+    connect(ui->ratioComboBox, SIGNAL(currentIndexChanged(int)), _mediaSettingsMapper, SLOT(submit()));
+
     createPlaylistTab();
 
-    ui->ratioComboBox->addItems(MediaSettings::ratioValues());
 
-    // TODO : select default
 }
 
 MainWindow::~MainWindow()
@@ -87,6 +95,7 @@ MainWindow::~MainWindow()
     delete _lockSettingsWindow;
 //    delete _testPatternPlayback;
     delete _mediaListModel;
+    delete _mediaSettingsMapper;
     delete _videoWindow;
     delete _mediaPlayer;
     delete _app;
@@ -208,6 +217,7 @@ PlaylistTableView* MainWindow::createPlaylistTab()
     newTab->horizontalHeader()->setStretchLastSection(true);
 
     connect(newTab, SIGNAL(clicked(QModelIndex)), this, SLOT(initMediaSettings(QModelIndex)));
+    connect(newTab->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
 
     int pos = ui->playlistsTabWidget->count() - 1;
     ui->playlistsTabWidget->insertTab(pos, newTab, "New playlist");
@@ -221,17 +231,35 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
 {
     if (index == ui->playlistsTabWidget->count()-1) {
         createPlaylistTab();
+        return;
     } else {
+        qDebug()<<"init playlist view , old is " << index;
 
+        PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->currentWidget();
+        PlaylistModel *model = (PlaylistModel*) view->model();
+
+        _mediaSettingsMapper->setModel( model );
+
+        _mediaSettingsMapper->clearMapping();
+        _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
+
+//        _mediaSettingsMapper->clearMapping();
+//        _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
+//        connect(ui->ratioComboBox, SIGNAL(currentIndexChanged(int)), _mediaSettingsMapper, SLOT(submit()));
+
+//        PlaylistTableView *view = (PlaylistTableView *) ui->playlistsTabWidget->widget(index);
+//        PlaylistModel *model = (PlaylistModel*) view->model();
+//        _mediaSettingsMapper->setModel( model );
+//        connect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
     }
 }
 
 void MainWindow::on_ratioComboBox_currentIndexChanged(int index)
 {
-    Playback *playback = selectedPlayback();
-    if (playback) {
-        playback->mediaSettings()->setRatio((Ratio) index);
-    }
+//    Playback *playback = selectedPlayback();
+//    if (playback) {
+//        playback->mediaSettings()->setRatio((Ratio) index);
+//    }
 }
 
 void MainWindow::on_subtitlesSyncSpinBox_valueChanged(double arg1)
@@ -348,11 +376,20 @@ void MainWindow::on_openListingAction_triggered()
 }
 
 Playback* MainWindow::selectedPlayback() const {
-    PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->currentWidget();
-    QModelIndexList indexes = view->selectionModel()->selectedRows();
+    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
 
     if (indexes.count() == 0)
         return NULL;
 
-    return ((PlaylistModel*) view->model())->playlist().at(indexes.first().row());
+    return currentPlaylistModel()->playlist().at(indexes.first().row());
+}
+
+PlaylistTableView* MainWindow::currentPlaylistTableView() const
+{
+    return (PlaylistTableView*) ui->playlistsTabWidget->currentWidget();
+}
+
+PlaylistModel* MainWindow::currentPlaylistModel() const
+{
+    return (PlaylistModel*) currentPlaylistTableView()->model();
 }

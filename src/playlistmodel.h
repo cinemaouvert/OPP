@@ -29,6 +29,8 @@ public:
 
     QVariant data(const QModelIndex &index, int role) const;
 
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::DisplayRole);
+
     bool addPlayback(const Playback &playback);
 
     bool dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent );

@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include <QDataWidgetMapper>
+
 namespace Ui {
 class MainWindow;
 }
@@ -14,6 +16,7 @@ class AdvancedSettingsWindow;
 class AdvancedPictureSettingsWindow;
 class PlaylistTableView;
 
+class PlaylistModel;
 class MediaListModel;
 class ScheduleListModel;
 
@@ -69,6 +72,8 @@ private slots:
 protected:
     PlaylistTableView* createPlaylistTab();
     Playback* selectedPlayback() const;
+    PlaylistTableView* currentPlaylistTableView() const;
+    PlaylistModel* currentPlaylistModel() const;
 
 private:
     Ui::MainWindow *ui;
@@ -78,6 +83,7 @@ private:
     LockSettingsWindow *_lockSettingsWindow;
     AdvancedSettingsWindow *_advancedSettingsWindow;
     AdvancedPictureSettingsWindow *_advancedPictureSettingsWindow;
+    QDataWidgetMapper *_mediaSettingsMapper;
 
     Application *_app;
     MediaPlayer *_mediaPlayer;

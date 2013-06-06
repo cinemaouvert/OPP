@@ -6,6 +6,7 @@
 
 #include "utils.h"
 #include "medialistmodel.h"
+#include "mediasettings.h"
 
 PlaylistModel::PlaylistModel(MediaListModel *mediaListModel, QObject *parent) :
     QAbstractTableModel(parent),
@@ -79,17 +80,49 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             break;
         }
         break;
+    case Qt::EditRole:
     case Qt::DisplayRole:
         if (index.column() == Title) {
             return _playlist.at(index.row())->media()->name();
         }
-        if (index.column() == Duration) {
+        else if (index.column() == Duration) {
             return msecToQTime(_playlist.at(index.row())->media()->duration()).toString("hh:mm:ss");
+        }
+        else if (index.column() == Video) {
+            return MediaSettings::ratioValues()[_playlist.at(index.row())->mediaSettings()->ratio()];
         }
         break;
     }
 
     return QVariant();
+}
+
+bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    qDebug() << value;
+    if (!index.isValid() || index.row() < 0 || index.row() >= _playlist.count()) {
+        return false;
+    }
+
+    switch (role)
+    {
+    case Qt::DisplayRole:
+    case Qt::EditRole:
+        if (index.column() == Video) {
+            qDebug() << value;
+            qDebug() << (Ratio) MediaSettings::ratioValues().indexOf(QRegExp(value.toString()));
+            _playlist.at(index.row())->mediaSettings()->setRatio((Ratio) MediaSettings::ratioValues().indexOf(QRegExp(value.toString())));
+        }
+//        else if (index.column() == Value)
+//        {
+//            mElements[index.row()].second = value.toInt();
+//        }
+        emit dataChanged(index, index);
+        return true;
+        break;
+    }
+
+    return false;
 }
 
 bool PlaylistModel::addPlayback(const Playback &playback)
