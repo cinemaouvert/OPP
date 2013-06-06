@@ -17,6 +17,7 @@
 #include "mediatableview.h"
 #include "playlisttableview.h"
 #include "playlistmodel.h"
+#include "schedulelistmodel.h"
 
 #include "application.h"
 #include "media.h"
@@ -35,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _mediaPlayer->setVideoView( (VideoView*) _videoWindow->videoWidget() );
 
     _mediaListModel = new MediaListModel();
+    _scheduleListModel = new ScheduleListModel();
 
     ui->binTableView->setModel(_mediaListModel);
     ui->timelineWidget->setMediaPlayer(_mediaPlayer);
@@ -72,11 +74,11 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+//    delete _testPatternPlayback;
     delete _mediaListModel;
     delete _videoWindow;
     delete _mediaPlayer;
     delete _app;
-
 }
 
 void MainWindow::initSettingsViews()
@@ -254,6 +256,11 @@ void MainWindow::on_saturationSpinBox_valueChanged(int arg1)
 void MainWindow::on_hueSpinBox_valueChanged(int arg1)
 {
      _mediaPlayer->setCurrentHue(arg1);
+}
+
+void MainWindow::on_testPatternAction_triggered()
+{
+//    _mediaPlayer->play(Media(QFileDialog::getOpenFileName(this, tr("Open test pattern"), QDir::homePath(), tr("Media (*.avi *.mkv *.jpg *.png)")), _app->vlcInstance()));
 }
 
 void MainWindow::on_saveAsAction_triggered()

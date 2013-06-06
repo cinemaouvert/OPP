@@ -23,3 +23,14 @@ int Playlist::count() const
 {
     return _playbackList.count();
 }
+
+uint Playlist::totalDuration() const
+{
+    uint duration = 0;
+
+    foreach(const Playback &playback, _playbackList) {
+        duration += playback.media()->duration();
+    }
+
+    return duration;
+}

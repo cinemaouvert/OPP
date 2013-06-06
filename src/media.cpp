@@ -49,15 +49,9 @@ bool Media::operator==(const Media &media) const
     return _location == media.location();
 }
 
-QTime Media::duration() const
+uint Media::duration() const
 {
-    libvlc_time_t msecs = libvlc_media_get_duration(_vlcMedia);
-
-    const int hours = msecs/(1000*60*60);
-    const int minutes = (msecs-(hours*1000*60*60))/(1000*60);
-    const int seconds = (msecs-(minutes*1000*60)-(hours*1000*60*60))/1000;
-
-    return QTime(hours,minutes,seconds);
+    return libvlc_media_get_duration(_vlcMedia);
 }
 
 QString Media::name() const

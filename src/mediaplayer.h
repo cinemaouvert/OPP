@@ -9,6 +9,7 @@
 class Playback;
 class VideoView;
 class MediaSettings;
+class Media;
 
 struct libvlc_instance_t;
 struct libvlc_media_player_t;

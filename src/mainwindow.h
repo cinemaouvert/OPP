@@ -15,7 +15,7 @@ class AdvancedPictureSettingsWindow;
 class PlaylistTableView;
 
 class MediaListModel;
-class PlaylistModel;
+class ScheduleListModel;
 
 class Application;
 class MediaPlayer;
@@ -60,6 +60,8 @@ private slots:
     void on_saturationSpinBox_valueChanged(int arg1);
     void on_hueSpinBox_valueChanged(int arg1);
 
+    void on_testPatternAction_triggered();
+
     void on_saveAsAction_triggered();
     void on_openListingAction_triggered();
 
@@ -80,6 +82,7 @@ private:
     MediaPlayer *_mediaPlayer;
 
     MediaListModel *_mediaListModel;
+    ScheduleListModel *_scheduleListModel;
 };
 
 #endif // MAINWINDOW_H
