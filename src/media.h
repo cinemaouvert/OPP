@@ -4,6 +4,7 @@
 #include <QtCore/QObject>
 #include <QFileInfo>
 #include <QTime>
+#include <QPair>
 
 struct libvlc_media_t;
 struct libvlc_instance_t;
@@ -29,17 +30,17 @@ public:
 
     bool exists() const;
 
-    QList<const char*> audioTracks() const;
-    QList<const char*> videoTracks() const;
-    QList<const char*> subtitlesTracks() const;
+    QList< QPair<int, QString> > audioTracks() const;
+    QList< QPair<int, QString> > videoTracks() const;
+    QList< QPair<int, QString> > subtitlesTracks() const;
 
 private:
     QString _location;
     QFileInfo _fileInfo;
     libvlc_media_t *_vlcMedia;
-    QList<const char*> _audioTracks;
-    QList<const char*> _videoTracks;
-    QList<const char*> _subtitlesTracks;
+    QList< QPair<int, QString> > _audioTracks;
+    QList< QPair<int, QString> > _videoTracks;
+    QList< QPair<int, QString> > _subtitlesTracks;
 
     friend QDataStream & operator << (QDataStream &, const QList<Media> &);
     friend QDataStream & operator >> (QDataStream &, QList<Media> &);

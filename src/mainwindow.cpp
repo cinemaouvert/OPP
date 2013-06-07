@@ -393,3 +393,42 @@ PlaylistModel* MainWindow::currentPlaylistModel() const
 {
     return (PlaylistModel*) currentPlaylistTableView()->model();
 }
+
+void MainWindow::updateSettings()
+{
+    Playback* playback = selectedPlayback();
+    if(!playback){
+        ui->mediaSettingsWidget->setEnabled(false);
+        return;
+    }
+    ui->mediaSettingsWidget->setEnabled(true);
+
+    ui->audioTrackComboBox->clear();
+    int listCount=playback->media()->audioTracks().count();
+    for(int i=0;i<listCount;i++)
+        ui->audioTrackComboBox->addItem(playback->media()->audioTracks().at(i).second,playback->media()->audioTracks().at(i).first);
+
+
+    ui->videoTrackComboBox->clear();
+    listCount=playback->media()->videoTracks().count();
+    for(int i=0;i<listCount;i++)
+        ui->videoTrackComboBox->addItem(playback->media()->videoTracks().at(i).second,playback->media()->videoTracks().at(i).first);
+
+    ui->subtitlesTrackComboBox->clear();
+    listCount=playback->media()->subtitlesTracks().count();
+    for(int i=0;i<listCount;i++)
+        ui->subtitlesTrackComboBox->addItem(playback->media()->subtitlesTracks().at(i).second,playback->media()->subtitlesTracks().at(i).first);
+
+    ui->subtitlesSyncSpinBox->setValue(playback->mediaSettings()->subtitlesSync());
+
+    qDebug()<<playback->mediaSettings()->gamma();
+    ui->gammaSpinBox->setValue(playback->mediaSettings()->gamma());
+    qDebug()<<playback->mediaSettings()->contrast();
+    ui->contrastSpinBox->setValue(playback->mediaSettings()->contrast());
+    qDebug()<<playback->mediaSettings()->brightness();
+    ui->brightnessSpinBox->setValue(playback->mediaSettings()->brightness());
+    qDebug()<<playback->mediaSettings()->saturation();
+    ui->saturationSpinBox->setValue(playback->mediaSettings()->saturation());
+    qDebug()<<playback->mediaSettings()->hue();
+    ui->hueSpinBox->setValue(playback->mediaSettings()->hue());
+}

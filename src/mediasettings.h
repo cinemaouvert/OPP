@@ -78,6 +78,10 @@ public:
     static QStringList deinterlacingValues();
     static QList<float> scaleValues();
 
+    inline int audioTrack() {return _audioTrack;}
+    inline int videoTrack() {return _videoTrack;}
+    inline int subtitlesTrack() {return _subtitlesTrack;}
+
 signals:
     void ratioChanged(Ratio);
     void scaleChanged(Scale);
@@ -99,6 +103,10 @@ private:
     int _brightness;
     int _saturation;
     int _hue;
+
+    int _audioTrack;
+    int _videoTrack;
+    int _subtitlesTrack;
 };
 
 #endif // MEDIASETTINGS_H
