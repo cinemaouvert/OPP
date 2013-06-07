@@ -823,6 +823,9 @@ p, li { white-space: pre-wrap; }
           <property name="currentIndex">
            <number>-1</number>
           </property>
+          <property name="tabsClosable">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item>
@@ -1008,6 +1011,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="cancelAction"/>
     <addaction name="importAction"/>
+    <addaction name="renameSelectedPlaylistAction"/>
    </widget>
    <widget class="QMenu" name="menuDisplay">
     <property name="title">
@@ -1224,6 +1228,11 @@ p, li { white-space: pre-wrap; }
   <action name="newPlaylistAction">
    <property name="text">
     <string>Add new playlist</string>
+   </property>
+  </action>
+  <action name="renameSelectedPlaylistAction">
+   <property name="text">
+    <string>Rename selected playlist</string>
    </property>
   </action>
  </widget>

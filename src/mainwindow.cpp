@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QHeaderView>
 #include <QContextMenuEvent>
+#include <QInputDialog>
 
 #include "global.h"
 #include "videowindow.h"
@@ -235,6 +236,14 @@ void MainWindow::createPlaylistTab()
     ui->playlistsTabWidget->setCurrentWidget(newTab);
 }
 
+void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
+{
+    if (ui->playlistsTabWidget->count() == 1) {
+        createPlaylistTab();
+    }
+    ui->playlistsTabWidget->removeTab(index);
+}
+
 void MainWindow::on_playlistsTabWidget_currentChanged(int index)
 {
     PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->widget(index);
@@ -369,6 +378,23 @@ void MainWindow::on_openListingAction_triggered()
             i++;
         }
     }//end else
+}
+
+void MainWindow::on_renameSelectedPlaylistAction_triggered()
+{
+    int tabIndex = ui->playlistsTabWidget->currentIndex();
+    bool ok;
+
+    QString text = QInputDialog::getText(this,
+        tr("Rename playlist"),
+        tr("Playlist title :"),
+        QLineEdit::Normal,
+        ui->playlistsTabWidget->tabText(tabIndex),
+        &ok
+    );
+
+    if (ok && !text.isEmpty())
+        ui->playlistsTabWidget->setTabText(tabIndex, text);
 }
 
 Playback* MainWindow::selectedPlayback() const {

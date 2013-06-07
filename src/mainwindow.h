@@ -70,7 +70,8 @@ private slots:
     void on_openListingAction_triggered();
 
     void createPlaylistTab();
-
+    void on_playlistsTabWidget_tabCloseRequested(int index);
+    void on_renameSelectedPlaylistAction_triggered();
 protected:
     Playback* selectedPlayback() const;
     PlaylistTableView* currentPlaylistTableView() const;
