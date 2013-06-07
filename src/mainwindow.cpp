@@ -47,6 +47,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _scheduleListModel = new ScheduleListModel();
 
     ui->binTableView->setModel(_mediaListModel);
+    ui->scheduleTableView->setModel(_scheduleListModel);
+
     ui->timelineWidget->setMediaPlayer(_mediaPlayer);
 
     connect(ui->lockButton, SIGNAL(toggled(bool)), _locker, SLOT(toggle(bool)));
