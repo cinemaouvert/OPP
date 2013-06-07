@@ -69,8 +69,9 @@ private slots:
     void on_saveAsAction_triggered();
     void on_openListingAction_triggered();
 
+    void createPlaylistTab();
+
 protected:
-    PlaylistTableView* createPlaylistTab();
     Playback* selectedPlayback() const;
     PlaylistTableView* currentPlaylistTableView() const;
     PlaylistModel* currentPlaylistModel() const;

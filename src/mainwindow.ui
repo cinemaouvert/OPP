@@ -821,13 +821,8 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QTabWidget" name="playlistsTabWidget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>-1</number>
           </property>
-          <widget class="QWidget" name="addPlaylistTab">
-           <attribute name="title">
-            <string>+</string>
-           </attribute>
-          </widget>
          </widget>
         </item>
         <item>
@@ -1009,8 +1004,8 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="copyAction"/>
-    <addaction name="pasteAction"/>
+    <addaction name="newPlaylistAction"/>
+    <addaction name="separator"/>
     <addaction name="cancelAction"/>
     <addaction name="importAction"/>
    </widget>
@@ -1224,6 +1219,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Window</string>
+   </property>
+  </action>
+  <action name="newPlaylistAction">
+   <property name="text">
+    <string>Add new playlist</string>
    </property>
   </action>
  </widget>

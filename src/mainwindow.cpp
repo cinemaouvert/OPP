@@ -60,6 +60,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->automationAction, SIGNAL(toggled(bool)), ui->scheduleGroupBox, SLOT(setVisible(bool)));
     connect(ui->statusBarAction, SIGNAL(toggled(bool)), ui->statusBar, SLOT(setVisible(bool)));
 
+    connect(ui->newPlaylistAction, SIGNAL(triggered()), this, SLOT(createPlaylistTab()));
+
     // core connections
     connect(ui->playerVolumeSlider, SIGNAL(valueChanged(int)), _mediaPlayer, SLOT(setVolume(int)));
     connect(_mediaPlayer, SIGNAL(end()), ui->playerPlayButton, SLOT(toggle()));
@@ -86,8 +88,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->ratioComboBox, SIGNAL(currentIndexChanged(int)), _mediaSettingsMapper, SLOT(submit()));
 
     createPlaylistTab();
-
-
 }
 
 MainWindow::~MainWindow()
@@ -132,7 +132,7 @@ void MainWindow::on_binDeleteMediaButton_clicked()
         if (media->isUsed()) {
             if (1 == QMessageBox::warning(this, "remove media", "This media is used. All references of this media into playlists will be deleted too.\n Are you sure to remove this media ?" ,"No", "Yes"))
             {
-                int countPlaylists = ui->playlistsTabWidget->count() - 1;
+                int countPlaylists = ui->playlistsTabWidget->count();
                 for (int i = 0; i < countPlaylists; i++) {
                     PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(i))->model();
                     model->removePlaybackWithDeps(media);
@@ -166,14 +166,12 @@ void MainWindow::on_playerPlayButton_clicked()
         if (_mediaPlayer->isPaused()) {
             _mediaPlayer->resume();
         } else {
-            PlaylistTableView *currentPlaylistView = (PlaylistTableView*) ui->playlistsTabWidget->currentWidget();
-            PlaylistModel *currentPlaylistModel = (PlaylistModel*) currentPlaylistView->model();
-            QModelIndexList indexes = currentPlaylistView->selectionModel()->selectedRows();
+            QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
 
             if (indexes.count() == 0) {
                 ui->playerPlayButton->setChecked(false);
             } else {
-                Playback *playback = currentPlaylistModel->playlist().at(indexes.first().row());
+                Playback *playback = currentPlaylistModel()->playlist().at(indexes.first().row());
                 _mediaPlayer->open(playback);
                 _mediaPlayer->play();
             }
@@ -222,7 +220,7 @@ void MainWindow::on_menuVideoMode_triggered(QAction *action)
     }
 }
 
-PlaylistTableView* MainWindow::createPlaylistTab()
+void MainWindow::createPlaylistTab()
 {
     PlaylistTableView *newTab = new PlaylistTableView;
     PlaylistModel *newModel = new PlaylistModel(_mediaListModel);
@@ -231,32 +229,27 @@ PlaylistTableView* MainWindow::createPlaylistTab()
     newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
     newTab->horizontalHeader()->setStretchLastSection(true);
 
-    connect(newTab, SIGNAL(clicked(QModelIndex)), this, SLOT(initMediaSettings(QModelIndex)));
-    connect(newTab->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
-
-    int pos = ui->playlistsTabWidget->count() - 1;
-    ui->playlistsTabWidget->insertTab(pos, newTab, "New playlist");
+    int pos = ui->playlistsTabWidget->count();
+    ui->playlistsTabWidget->addTab(newTab, "New playlist");
 
     ui->playlistsTabWidget->setCurrentWidget(newTab);
-
-    return newTab;
 }
 
 void MainWindow::on_playlistsTabWidget_currentChanged(int index)
 {
-    if (index == ui->playlistsTabWidget->count()-1) {
-        createPlaylistTab();
-        return;
-    } else {
+    PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->widget(index);
+    PlaylistModel *model = (PlaylistModel*) view->model();
 
-        PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->currentWidget();
-        PlaylistModel *model = (PlaylistModel*) view->model();
+    disconnect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(initMediaSettings(QModelIndex)));
+    disconnect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
 
-        _mediaSettingsMapper->setModel( model );
+    connect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(initMediaSettings(QModelIndex)));
+    connect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
 
-        _mediaSettingsMapper->clearMapping();
-        _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
-    }
+    _mediaSettingsMapper->setModel( model );
+
+    _mediaSettingsMapper->clearMapping();
+    _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
 }
 
 void MainWindow::on_ratioComboBox_currentIndexChanged(int index)
