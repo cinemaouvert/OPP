@@ -31,7 +31,11 @@ public:
 
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::DisplayRole);
 
-    bool addPlayback(const Playback &playback);
+    bool addPlayback(Playback *playback);
+
+    void removePlaybackWithDeps(Media *media);
+
+    void removePlayback(int index);
 
     bool dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent );
 private:

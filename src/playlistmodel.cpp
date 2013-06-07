@@ -117,28 +117,52 @@ bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int
     return false;
 }
 
-bool PlaylistModel::addPlayback(const Playback &playback)
+bool PlaylistModel::addPlayback(Playback *playback)
 {
     const int count = _playlist.count();
-        beginInsertRows(QModelIndex(), count, count);
-        _playlist.append(playback);
-        endInsertRows();
-        return true;
+
+    beginInsertRows(QModelIndex(), count, count);
+    _playlist.append(playback);
+    endInsertRows();
+
+    return true;
 }
 
 bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent )
 {
-    QString paths = data->text();
-    QString path;
-    int paths_number=paths.count("#***#");
-    for(int i=0;i<paths_number;i++)
-    {
-        path=paths.section("#***#",i,i);
-        Media *media = _mediaListModel->findByPath(path);
-        if (!media) {
+    QString indexes = data->html();
+    int countIndexes = indexes.count(":");
+
+    for (int i = 0; i < countIndexes; i++) {
+        Media *media = _mediaListModel->mediaList().at(indexes.section(":", i, i).toInt());
+
+        if (!media)
             return false;
-        }
-        addPlayback(Playback(media));
+
+        media->usageCountAdd();
+        addPlayback(new Playback(media));
     }
     return true;
+}
+
+void PlaylistModel::removePlaybackWithDeps(Media *media)
+{
+    QList<Playback*> playbacks = _playlist.playbackList();
+
+    for (int i = 0; i < playbacks.count(); i++) {
+        if (playbacks[i]->media() == media) {
+            removePlayback(_playlist.playbackList().indexOf(playbacks[i]));
+        }
+    }
+}
+
+void PlaylistModel::removePlayback(int index)
+{
+    Q_UNUSED(index);
+    beginRemoveRows(QModelIndex(), index, index);
+
+    _playlist.playbackList().removeAt(index);
+
+    endRemoveRows();
+    //return true;
 }

@@ -11,10 +11,10 @@ Playlist::~Playlist()
 
 Playback* Playlist::at(const int &index) const
 {
-    return const_cast<Playback*>(&_playbackList.at(index));
+    return _playbackList.at(index);
 }
 
-void Playlist::append(const Playback &playback)
+void Playlist::append(Playback *playback)
 {
     _playbackList.append(playback);
 }
@@ -28,8 +28,8 @@ uint Playlist::totalDuration() const
 {
     uint duration = 0;
 
-    foreach(const Playback &playback, _playbackList) {
-        duration += playback.media()->duration();
+    foreach(Playback *playback, _playbackList) {
+        duration += playback->media()->duration();
     }
 
     return duration;

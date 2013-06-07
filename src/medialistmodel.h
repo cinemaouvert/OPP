@@ -16,7 +16,7 @@ public:
 
     MediaListModel(QObject *parent = 0);
 
-    inline QList<Media>& mediaList() { return _mediaList; }
+    inline QList<Media*>& mediaList() { return _mediaList; }
 
     int columnCount(const QModelIndex &parent) const;
 
@@ -28,14 +28,12 @@ public:
 
     QVariant data(const QModelIndex &index, int role) const;
 
-    bool removeRows(int position, int rows, const QModelIndex &index = QModelIndex());
+    bool removeMedia(int index);
 
-    bool addMedia(const Media &media);
-
-    Media* findByPath(const QString &path) const;
+    bool addMedia(Media *media);
 
 private:
-    QList<Media> _mediaList;
+    QList<Media*> _mediaList;
 
     friend QDataStream & operator << (QDataStream &, const QList<Media> &);
     friend QDataStream & operator >> (QDataStream &, QList<Media> &);

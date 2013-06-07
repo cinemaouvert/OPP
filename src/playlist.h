@@ -12,18 +12,18 @@ public:
     Playlist(QObject *parent = 0);
     virtual ~Playlist();
 
-    inline QList<Playback>& playbackList() {return _playbackList;}
+    inline QList<Playback*>& playbackList() {return _playbackList;}
 
     Playback* at(const int &index) const;
 
-    void append(const Playback &playback);
+    void append(Playback *playback);
 
     int count() const;
 
     uint totalDuration() const;
 
 private:
-    QList<Playback> _playbackList;
+    QList<Playback*> _playbackList;
     
 };
 

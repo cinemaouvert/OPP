@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QHeaderView>
 #include <QContextMenuEvent>
+#include <QInputDialog>
 
 #include "global.h"
 #include "videowindow.h"
@@ -47,6 +48,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _scheduleListModel = new ScheduleListModel();
 
     ui->binTableView->setModel(_mediaListModel);
+    ui->scheduleTableView->setModel(_scheduleListModel);
+
     ui->timelineWidget->setMediaPlayer(_mediaPlayer);
 
     connect(ui->lockButton, SIGNAL(toggled(bool)), _locker, SLOT(toggle(bool)));
@@ -58,6 +61,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->automationAction, SIGNAL(toggled(bool)), ui->scheduleGroupBox, SLOT(setVisible(bool)));
     connect(ui->statusBarAction, SIGNAL(toggled(bool)), ui->statusBar, SLOT(setVisible(bool)));
 
+    connect(ui->newPlaylistAction, SIGNAL(triggered()), this, SLOT(createPlaylistTab()));
+
     // core connections
     connect(ui->playerVolumeSlider, SIGNAL(valueChanged(int)), _mediaPlayer, SLOT(setVolume(int)));
     connect(_mediaPlayer, SIGNAL(end()), ui->playerPlayButton, SLOT(toggle()));
@@ -65,7 +70,6 @@ MainWindow::MainWindow(QWidget *parent) :
     //DEBUG : this code add a media into the bin on launch
 //    Media media("/Users/floomoon/Movies/3ours-OCPM.mkv", _app->vlcInstance());
 //    _mediaListModel->addMedia(media);
-//    qDebug()<<_videoWindow->videoWidget()->request();
 
     // set video mode actions data
     ui->actionProjection->setData(QVariant(VideoWindow::PROJECTION));
@@ -85,8 +89,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->ratioComboBox, SIGNAL(currentIndexChanged(int)), _mediaSettingsMapper, SLOT(submit()));
 
     createPlaylistTab();
-
-
 }
 
 MainWindow::~MainWindow()
@@ -111,11 +113,13 @@ void MainWindow::on_binAddMediaButton_clicked()
     QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("New media"), QDir::homePath(), tr("Media (*.avi *.mkv *.jpg *.png)"));
 
     foreach (QString fileName, fileNames) {
-        Media media(fileName, _app->vlcInstance());
-        if (media.exists() == false) {
-            QMessageBox::warning(this, "Import media", QString("The file %1 does not exist. Maybe it was deleted.").arg(media.location()));
+        Media *media = new Media(fileName, _app->vlcInstance());
+        if (media->exists() == false) {
+            QMessageBox::warning(this, "Import media", QString("The file %1 does not exist. Maybe it was deleted.").arg(media->location()));
+            delete media;
         } else if (_mediaListModel->addMedia(media) == false) {
-            QMessageBox::warning(this, "Import media", QString("The file %1 was already imported.").arg(media.location()));
+            QMessageBox::warning(this, "Import media", QString("The file %1 was already imported.").arg(media->location()));
+            delete media;
         }
     }
 }
@@ -123,8 +127,20 @@ void MainWindow::on_binAddMediaButton_clicked()
 void MainWindow::on_binDeleteMediaButton_clicked()
 {
     QModelIndexList indexes = ui->binTableView->selectionModel()->selectedRows();
+
     foreach (QModelIndex index, indexes) {
-        _mediaListModel->removeRows(index.row(), 1);
+        Media *media = _mediaListModel->mediaList().at(index.row());
+        if (media->isUsed()) {
+            if (1 == QMessageBox::warning(this, "remove media", "This media is used. All references of this media into playlists will be deleted too.\n Are you sure to remove this media ?" ,"No", "Yes"))
+            {
+                int countPlaylists = ui->playlistsTabWidget->count();
+                for (int i = 0; i < countPlaylists; i++) {
+                    PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(i))->model();
+                    model->removePlaybackWithDeps(media);
+                }
+            }
+        }
+        _mediaListModel->removeMedia(index.row());
     }
 }
 
@@ -151,14 +167,12 @@ void MainWindow::on_playerPlayButton_clicked()
         if (_mediaPlayer->isPaused()) {
             _mediaPlayer->resume();
         } else {
-            PlaylistTableView *currentPlaylistView = (PlaylistTableView*) ui->playlistsTabWidget->currentWidget();
-            PlaylistModel *currentPlaylistModel = (PlaylistModel*) currentPlaylistView->model();
-            QModelIndexList indexes = currentPlaylistView->selectionModel()->selectedRows();
+            QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
 
             if (indexes.count() == 0) {
                 ui->playerPlayButton->setChecked(false);
             } else {
-                Playback *playback = currentPlaylistModel->playlist().at(indexes.first().row());
+                Playback *playback = currentPlaylistModel()->playlist().at(indexes.first().row());
                 _mediaPlayer->open(playback);
                 _mediaPlayer->play();
             }
@@ -207,7 +221,7 @@ void MainWindow::on_menuVideoMode_triggered(QAction *action)
     }
 }
 
-PlaylistTableView* MainWindow::createPlaylistTab()
+void MainWindow::createPlaylistTab()
 {
     PlaylistTableView *newTab = new PlaylistTableView;
     PlaylistModel *newModel = new PlaylistModel(_mediaListModel);
@@ -216,42 +230,35 @@ PlaylistTableView* MainWindow::createPlaylistTab()
     newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
     newTab->horizontalHeader()->setStretchLastSection(true);
 
-    connect(newTab, SIGNAL(clicked(QModelIndex)), this, SLOT(initMediaSettings(QModelIndex)));
-    connect(newTab->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
-
-    int pos = ui->playlistsTabWidget->count() - 1;
-    ui->playlistsTabWidget->insertTab(pos, newTab, "New playlist");
+    int pos = ui->playlistsTabWidget->count();
+    ui->playlistsTabWidget->addTab(newTab, "New playlist");
 
     ui->playlistsTabWidget->setCurrentWidget(newTab);
+}
 
-    return newTab;
+void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
+{
+    if (ui->playlistsTabWidget->count() == 1) {
+        createPlaylistTab();
+    }
+    ui->playlistsTabWidget->removeTab(index);
 }
 
 void MainWindow::on_playlistsTabWidget_currentChanged(int index)
 {
-    if (index == ui->playlistsTabWidget->count()-1) {
-        createPlaylistTab();
-        return;
-    } else {
-        qDebug()<<"init playlist view , old is " << index;
+    PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->widget(index);
+    PlaylistModel *model = (PlaylistModel*) view->model();
 
-        PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->currentWidget();
-        PlaylistModel *model = (PlaylistModel*) view->model();
+    disconnect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(initMediaSettings(QModelIndex)));
+    disconnect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
 
-        _mediaSettingsMapper->setModel( model );
+    connect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(initMediaSettings(QModelIndex)));
+    connect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
 
-        _mediaSettingsMapper->clearMapping();
-        _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
+    _mediaSettingsMapper->setModel( model );
 
-//        _mediaSettingsMapper->clearMapping();
-//        _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
-//        connect(ui->ratioComboBox, SIGNAL(currentIndexChanged(int)), _mediaSettingsMapper, SLOT(submit()));
-
-//        PlaylistTableView *view = (PlaylistTableView *) ui->playlistsTabWidget->widget(index);
-//        PlaylistModel *model = (PlaylistModel*) view->model();
-//        _mediaSettingsMapper->setModel( model );
-//        connect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
-    }
+    _mediaSettingsMapper->clearMapping();
+    _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
 }
 
 void MainWindow::on_ratioComboBox_currentIndexChanged(int index)
@@ -367,12 +374,27 @@ void MainWindow::on_openListingAction_triggered()
         while(!in.atEnd()){
             QString loc;
             in >> loc;
-            qDebug() << "str : " << loc;
-            Media media(loc, _app->vlcInstance());
-            _mediaListModel->addMedia(media);
+            _mediaListModel->addMedia(new Media(loc, _app->vlcInstance()));
             i++;
         }
     }//end else
+}
+
+void MainWindow::on_renameSelectedPlaylistAction_triggered()
+{
+    int tabIndex = ui->playlistsTabWidget->currentIndex();
+    bool ok;
+
+    QString text = QInputDialog::getText(this,
+        tr("Rename playlist"),
+        tr("Playlist title :"),
+        QLineEdit::Normal,
+        ui->playlistsTabWidget->tabText(tabIndex),
+        &ok
+    );
+
+    if (ok && !text.isEmpty())
+        ui->playlistsTabWidget->setTabText(tabIndex, text);
 }
 
 Playback* MainWindow::selectedPlayback() const {

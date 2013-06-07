@@ -34,13 +34,22 @@ public:
     QList< QPair<int, QString> > videoTracks() const;
     QList< QPair<int, QString> > subtitlesTracks() const;
 
+    void usageCountAdd(int count = 1);
+    bool isUsed() const;
+
+signals:
+    void usageCountChanged();
+
 private:
     QString _location;
     QFileInfo _fileInfo;
     libvlc_media_t *_vlcMedia;
+
     QList< QPair<int, QString> > _audioTracks;
     QList< QPair<int, QString> > _videoTracks;
     QList< QPair<int, QString> > _subtitlesTracks;
+
+    int _usageCount;
 
     friend QDataStream & operator << (QDataStream &, const QList<Media> &);
     friend QDataStream & operator >> (QDataStream &, QList<Media> &);
