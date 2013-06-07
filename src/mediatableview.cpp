@@ -13,7 +13,6 @@ MediaTableView::MediaTableView(QWidget *parent) :
 
 void MediaTableView::mousePressEvent(QMouseEvent *event)
 {
-    qDebug() << "media mouse press";
     if (event->button() == Qt::LeftButton) {
         startPos = event->pos();
     }
@@ -22,7 +21,6 @@ void MediaTableView::mousePressEvent(QMouseEvent *event)
 
 void MediaTableView::mouseMoveEvent(QMouseEvent *event)
 {
-    qDebug() << "media mouse move";
     if (event->buttons() && Qt::LeftButton) {
         int distance = (event->pos() - startPos).manhattanLength();
         if (distance >= QApplication::startDragDistance())
@@ -33,14 +31,14 @@ void MediaTableView::mouseMoveEvent(QMouseEvent *event)
 
 void MediaTableView::startDrag(Qt::DropActions supportedActions)
 {
-    qDebug()<<"media start drag";
     QModelIndexList indexes = selectionModel()->selectedRows();
 
     if (indexes.count() == 0)
         return;
 
     QString paths;
-QModelIndex index;
+    QModelIndex index;
+
     foreach (index, indexes) {
         paths += QString::number(index.row());
         paths += ":";
@@ -54,14 +52,13 @@ QModelIndex index;
     drag->setMimeData(mimedata);
 
     if (drag->start(Qt::CopyAction | Qt::MoveAction) == Qt::MoveAction) {
-        qDebug()<<"<<< END DRAG >>>>";
+        // TODO : It does not work...
         selectionModel()->clear();
     }
 }
 
 void MediaTableView::dragEnterEvent(QDragEnterEvent *event)
 {
-    qDebug() << "media drag enter";
     MediaTableView *source = (MediaTableView *)(event->source());
 
     if (source) {
@@ -72,7 +69,6 @@ void MediaTableView::dragEnterEvent(QDragEnterEvent *event)
 
 void MediaTableView::dragMoveEvent(QDragMoveEvent *event)
 {
-    qDebug() << "media drag move";
     MediaTableView *source = (MediaTableView *)(event->source());
 
     if (source) {
@@ -83,5 +79,4 @@ void MediaTableView::dragMoveEvent(QDragMoveEvent *event)
 
 void MediaTableView::dropEvent(QDropEvent *event)
 {
-    qDebug() << "media drop";
 }

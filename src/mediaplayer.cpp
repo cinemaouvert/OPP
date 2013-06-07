@@ -105,7 +105,6 @@ void MediaPlayer::play()
 
 void MediaPlayer::pause()
 {
-    qDebug()<<libvlc_audio_get_channel(_vlcMediaPlayer);
     libvlc_media_player_set_pause(_vlcMediaPlayer, true);
     _isPaused = true;
 }

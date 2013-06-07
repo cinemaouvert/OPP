@@ -67,7 +67,6 @@ MainWindow::MainWindow(QWidget *parent) :
     //DEBUG : this code add a media into the bin on launch
 //    Media media("/Users/floomoon/Movies/3ours-OCPM.mkv", _app->vlcInstance());
 //    _mediaListModel->addMedia(media);
-//    qDebug()<<_videoWindow->videoWidget()->request();
 
     // set video mode actions data
     ui->actionProjection->setData(QVariant(VideoWindow::PROJECTION));
@@ -235,7 +234,6 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
         createPlaylistTab();
         return;
     } else {
-        qDebug()<<"init playlist view , old is " << index;
 
         PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->currentWidget();
         PlaylistModel *model = (PlaylistModel*) view->model();
@@ -244,15 +242,6 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
 
         _mediaSettingsMapper->clearMapping();
         _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
-
-//        _mediaSettingsMapper->clearMapping();
-//        _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
-//        connect(ui->ratioComboBox, SIGNAL(currentIndexChanged(int)), _mediaSettingsMapper, SLOT(submit()));
-
-//        PlaylistTableView *view = (PlaylistTableView *) ui->playlistsTabWidget->widget(index);
-//        PlaylistModel *model = (PlaylistModel*) view->model();
-//        _mediaSettingsMapper->setModel( model );
-//        connect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
     }
 }
 
@@ -369,7 +358,6 @@ void MainWindow::on_openListingAction_triggered()
         while(!in.atEnd()){
             QString loc;
             in >> loc;
-            qDebug() << "str : " << loc;
             Media media(loc, _app->vlcInstance());
             _mediaListModel->addMedia(media);
             i++;

@@ -106,7 +106,6 @@ void Media::usageCountAdd(int count)
 
 bool Media::isUsed() const
 {
-    qDebug()<<_usageCount;
     return _usageCount > 0;
 }
 

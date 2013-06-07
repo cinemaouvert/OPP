@@ -13,7 +13,6 @@ PlaylistTableView::PlaylistTableView(QWidget *parent) :
 
 void PlaylistTableView::mousePressEvent(QMouseEvent *event)
 {
-    qDebug() << "playlist mouse press";
     if (event->button() == Qt::LeftButton) {
         startPos = event->pos();
     }
@@ -22,7 +21,6 @@ void PlaylistTableView::mousePressEvent(QMouseEvent *event)
 
 void PlaylistTableView::mouseMoveEvent(QMouseEvent *event)
 {
-    qDebug() << "playlist mouse move";
     if (event->buttons() && Qt::LeftButton)
     {
         int distance = (event->pos() - startPos).manhattanLength();
@@ -34,7 +32,6 @@ void PlaylistTableView::mouseMoveEvent(QMouseEvent *event)
 
 void PlaylistTableView::startDrag(Qt::DropActions supportedActions)
 {
-    qDebug() << "playlist start drag";
     QModelIndexList indexes = selectionModel()->selectedRows();
 
     if (indexes.count() == 0)
@@ -56,7 +53,6 @@ void PlaylistTableView::startDrag(Qt::DropActions supportedActions)
 
 void PlaylistTableView::dragEnterEvent(QDragEnterEvent *event)
 {
-    qDebug() << "playlist drag enter";
     PlaylistTableView *source = (PlaylistTableView *)(event->source());
     if (source && source != this)
     {
@@ -67,7 +63,6 @@ void PlaylistTableView::dragEnterEvent(QDragEnterEvent *event)
 
 void PlaylistTableView::dragMoveEvent(QDragMoveEvent *event)
 {
-    qDebug() << "playlist drag move";
     PlaylistTableView *source = (PlaylistTableView *)(event->source());
     if (source && source != this) {
         event->setDropAction(Qt::MoveAction);
