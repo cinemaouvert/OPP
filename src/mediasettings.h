@@ -6,42 +6,42 @@
 #include <QList>
 
 enum Ratio {
-    Original,
-    R_16_9,
-    R_16_10,
-    R_185_100,
-    R_221_100,
-    R_235_100,
-    R_239_100,
-    R_4_3,
-    R_5_4,
-    R_5_3,
-    R_1_1
+    Original = 0,
+    R_16_9 = 1,
+    R_16_10 = 2,
+    R_185_100 = 3,
+    R_221_100 = 4,
+    R_235_100 = 5,
+    R_239_100 = 6,
+    R_4_3 = 7,
+    R_5_4 = 8,
+    R_5_3 = 9,
+    R_1_1 = 10
 };
 
 enum Scale {
-    NoScale,
-    S_1_05,
-    S_1_1,
-    S_1_2,
-    S_1_3,
-    S_1_4,
-    S_1_5,
-    S_1_6,
-    S_1_7,
-    S_1_8,
-    S_1_9,
-    S_2_0
+    NoScale = 0,
+    S_1_05 = 1,
+    S_1_1 = 2,
+    S_1_2 = 3,
+    S_1_3 = 4,
+    S_1_4 = 5,
+    S_1_5 = 6,
+    S_1_6 = 7,
+    S_1_7 = 8,
+    S_1_8 = 9,
+    S_1_9 = 10,
+    S_2_0 = 11
 };
 
 enum Deinterlacing {
-    Disabled,
-    Discard,
-    Blend,
-    Mean,
-    Bob,
-    Linear,
-    X
+    Disabled = 0,
+    Discard = 1,
+    Blend = 2,
+    Mean = 3,
+    Bob = 4,
+    Linear = 5,
+    X = 6
 };
 
 class MediaSettings : public QObject

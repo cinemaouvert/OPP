@@ -9,7 +9,15 @@ MediaSettings::MediaSettings(QObject *parent) :
 
 MediaSettings::MediaSettings(MediaSettings &mediasettings)
 {
+    _ratio = mediasettings.ratio();
+}
 
+MediaSettings& MediaSettings::operator =(const MediaSettings &mediasettings)
+{
+    if (this != &mediasettings) {
+        _ratio = mediasettings.ratio();
+    }
+    return *this;
 }
 
 void MediaSettings::setRatio(Ratio ratio) {
@@ -68,14 +76,6 @@ void MediaSettings::initDefault()
     _brightness = 50;
     _saturation = 50;
     _hue = 0;
-}
-
-MediaSettings& MediaSettings::operator =(const MediaSettings &mediasettings)
-{
-    if (this != &mediasettings) {
-
-    }
-    return *this;
 }
 
 QStringList MediaSettings::ratioValues()

@@ -80,7 +80,6 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             break;
         }
         break;
-    case Qt::EditRole:
     case Qt::DisplayRole:
         if (index.column() == Title) {
             return _playlist.at(index.row())->media()->name();
@@ -89,7 +88,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             return msecToQTime(_playlist.at(index.row())->media()->duration()).toString("hh:mm:ss");
         }
         else if (index.column() == Video) {
-            return MediaSettings::ratioValues()[_playlist.at(index.row())->mediaSettings()->ratio()];
+            return MediaSettings::ratioValues().at(_playlist.at(index.row())->mediaSettings()->ratio());
         }
         break;
     }
@@ -99,29 +98,22 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 
 bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    qDebug() << value;
-    if (!index.isValid() || index.row() < 0 || index.row() >= _playlist.count()) {
+    if (!index.isValid() || index.row() < 0 || index.row() >= _playlist.count() || value.toString().count() == 0) {
         return false;
     }
 
     switch (role)
     {
-    case Qt::DisplayRole:
     case Qt::EditRole:
         if (index.column() == Video) {
-            qDebug() << value;
-            qDebug() << (Ratio) MediaSettings::ratioValues().indexOf(QRegExp(value.toString()));
-            _playlist.at(index.row())->mediaSettings()->setRatio((Ratio) MediaSettings::ratioValues().indexOf(QRegExp(value.toString())));
+            _playlist.at(index.row())->mediaSettings()->setRatio(
+                (Ratio) MediaSettings::ratioValues().indexOf(QRegExp(value.toString()))
+            );
         }
-//        else if (index.column() == Value)
-//        {
-//            mElements[index.row()].second = value.toInt();
-//        }
         emit dataChanged(index, index);
         return true;
         break;
     }
-
     return false;
 }
 
@@ -136,7 +128,6 @@ bool PlaylistModel::addPlayback(const Playback &playback)
 
 bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent )
 {
-    qDebug() << "drop mime data";
     QString paths = data->text();
     QString path;
     int paths_number=paths.count("#***#");
@@ -144,9 +135,10 @@ bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action
     {
         path=paths.section("#***#",i,i);
         Media *media = _mediaListModel->findByPath(path);
-        if (!media)
+        if (!media) {
             return false;
-
+        }
         addPlayback(Playback(media));
     }
+    return true;
 }
