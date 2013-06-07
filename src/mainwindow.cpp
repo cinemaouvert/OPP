@@ -112,11 +112,13 @@ void MainWindow::on_binAddMediaButton_clicked()
     QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("New media"), QDir::homePath(), tr("Media (*.avi *.mkv *.jpg *.png)"));
 
     foreach (QString fileName, fileNames) {
-        Media media(fileName, _app->vlcInstance());
-        if (media.exists() == false) {
-            QMessageBox::warning(this, "Import media", QString("The file %1 does not exist. Maybe it was deleted.").arg(media.location()));
+        Media *media = new Media(fileName, _app->vlcInstance());
+        if (media->exists() == false) {
+            QMessageBox::warning(this, "Import media", QString("The file %1 does not exist. Maybe it was deleted.").arg(media->location()));
+            delete media;
         } else if (_mediaListModel->addMedia(media) == false) {
-            QMessageBox::warning(this, "Import media", QString("The file %1 was already imported.").arg(media.location()));
+            QMessageBox::warning(this, "Import media", QString("The file %1 was already imported.").arg(media->location()));
+            delete media;
         }
     }
 }
@@ -124,8 +126,20 @@ void MainWindow::on_binAddMediaButton_clicked()
 void MainWindow::on_binDeleteMediaButton_clicked()
 {
     QModelIndexList indexes = ui->binTableView->selectionModel()->selectedRows();
+
     foreach (QModelIndex index, indexes) {
-        _mediaListModel->removeRows(index.row(), 1);
+        Media *media = _mediaListModel->mediaList().at(index.row());
+        if (media->isUsed()) {
+            if (1 == QMessageBox::warning(this, "remove media", "This media is used. All references of this media into playlists will be deleted too.\n Are you sure to remove this media ?" ,"No", "Yes"))
+            {
+                int countPlaylists = ui->playlistsTabWidget->count() - 1;
+                for (int i = 0; i < countPlaylists; i++) {
+                    PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(i))->model();
+                    model->removePlaybackWithDeps(media);
+                }
+            }
+        }
+        _mediaListModel->removeMedia(index.row());
     }
 }
 
@@ -358,8 +372,7 @@ void MainWindow::on_openListingAction_triggered()
         while(!in.atEnd()){
             QString loc;
             in >> loc;
-            Media media(loc, _app->vlcInstance());
-            _mediaListModel->addMedia(media);
+            _mediaListModel->addMedia(new Media(loc, _app->vlcInstance()));
             i++;
         }
     }//end else

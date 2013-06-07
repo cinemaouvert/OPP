@@ -117,7 +117,7 @@ bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int
     return false;
 }
 
-bool PlaylistModel::addPlayback(const Playback &playback)
+bool PlaylistModel::addPlayback(Playback *playback)
 {
     const int count = _playlist.count();
 
@@ -134,13 +134,35 @@ bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action
     int countIndexes = indexes.count(":");
 
     for (int i = 0; i < countIndexes; i++) {
-        Media *media = const_cast<Media*>( &_mediaListModel->mediaList().at(indexes.section(":", i, i).toInt()) );
+        Media *media = _mediaListModel->mediaList().at(indexes.section(":", i, i).toInt());
 
         if (!media)
             return false;
 
         media->usageCountAdd();
-        addPlayback(Playback(media));
+        addPlayback(new Playback(media));
     }
+    return true;
+}
+
+void PlaylistModel::removePlaybackWithDeps(Media *media)
+{
+    QList<Playback*> playbacks = _playlist.playbackList();
+
+    for (int i = 0; i < playbacks.count(); i++) {
+        if (playbacks[i]->media() == media) {
+            removePlayback(_playlist.playbackList().indexOf(playbacks[i]));
+        }
+    }
+}
+
+void PlaylistModel::removePlayback(int index)
+{
+    Q_UNUSED(index);
+    beginRemoveRows(QModelIndex(), index, index);
+
+    _playlist.playbackList().removeAt(index);
+
+    endRemoveRows();
     return true;
 }
