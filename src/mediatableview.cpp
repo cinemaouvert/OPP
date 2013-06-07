@@ -33,24 +33,30 @@ void MediaTableView::mouseMoveEvent(QMouseEvent *event)
 
 void MediaTableView::startDrag(Qt::DropActions supportedActions)
 {
-    qDebug() << "media start drag";
-    QModelIndexList indexes = this->selectionModel()->selectedRows(MediaListModel::Location);
+    qDebug()<<"media start drag";
+    QModelIndexList indexes = selectionModel()->selectedRows();
 
-    if (indexes.count()==0)
+    if (indexes.count() == 0)
         return;
 
     QString paths;
-    foreach (QModelIndex index, indexes) {
-        paths+=index.data().toString();
-        paths+="#***#";
+QModelIndex index;
+    foreach (index, indexes) {
+        paths += QString::number(index.row());
+        paths += ":";
     }
 
     QMimeData *mimedata = new QMimeData;
-    mimedata->setText(paths);
+    mimedata->setText("drop your media to the playlist");
+    mimedata->setHtml(paths.toUtf8());
 
     QDrag *drag = new QDrag(this);
     drag->setMimeData(mimedata);
-    drag->start(Qt::MoveAction);
+
+    if (drag->start(Qt::CopyAction | Qt::MoveAction) == Qt::MoveAction) {
+        qDebug()<<"<<< END DRAG >>>>";
+        selectionModel()->clear();
+    }
 }
 
 void MediaTableView::dragEnterEvent(QDragEnterEvent *event)

@@ -5,8 +5,6 @@
 #include <QItemSelectionModel>
 #include <QDebug>
 
-#include "mainwindow.h"
-
 PlaylistTableView::PlaylistTableView(QWidget *parent) :
     QTableView(parent)
 {
@@ -46,15 +44,13 @@ void PlaylistTableView::startDrag(Qt::DropActions supportedActions)
 
     QMimeData *mimedata = new QMimeData;
 
-
-
     mimedata->setText(index.data().toString());
 
     QDrag *drag = new QDrag(this);
     drag->setMimeData(mimedata);
 
-    if (drag->start(Qt::MoveAction) == Qt::MoveAction) {
-
+    if (drag->start(Qt::CopyAction | Qt::MoveAction) == Qt::MoveAction) {
+        clearSelection();
     }
 }
 
@@ -80,7 +76,9 @@ void PlaylistTableView::dragMoveEvent(QDragMoveEvent *event)
 }
 
 void PlaylistTableView::dropEvent(QDropEvent *event)
-{    
-    qDebug() << "playlist drop";
+{
     model()->dropMimeData(event->mimeData(), event->dropAction(), 0, 0, indexAt(event->pos()));
+    event->acceptProposedAction();
+
+    QTableView::dropEvent(event);
 }

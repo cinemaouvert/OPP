@@ -29,9 +29,15 @@ public:
 
     bool exists() const;
 
+    void usageCountAdd(int count = 1);
+    bool isUsed() const;
+
     QList<const char*> audioTracks() const;
     QList<const char*> videoTracks() const;
     QList<const char*> subtitlesTracks() const;
+
+signals:
+    void usageCountChanged();
 
 private:
     QString _location;
@@ -40,6 +46,7 @@ private:
     QList<const char*> _audioTracks;
     QList<const char*> _videoTracks;
     QList<const char*> _subtitlesTracks;
+    int _usageCount;
 
     friend QDataStream & operator << (QDataStream &, const QList<Media> &);
     friend QDataStream & operator >> (QDataStream &, QList<Media> &);

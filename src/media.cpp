@@ -6,7 +6,8 @@
 #include <QThread>
 
 Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    _usageCount(0)
 {
     initMedia(location);
     _vlcMedia = libvlc_media_new_path(vlcInstance, location.toLocal8Bit().data());
@@ -50,8 +51,9 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
 
 Media::Media(const Media &media)
 {
-    initMedia(media.location());
-    _vlcMedia = libvlc_media_duplicate(media.core());
+    initMedia(media._location);
+    _usageCount = media._usageCount;
+    _vlcMedia = libvlc_media_duplicate(media._vlcMedia);
 }
 
 Media::~Media()
@@ -68,9 +70,10 @@ void Media::initMedia(const QString &location)
 Media & Media::operator=(const Media &media)
 {
     if (this != &media) {
-        _location = media.location();
+        _location = media._location;
         _fileInfo = QFileInfo(_location);
-        _vlcMedia = libvlc_media_duplicate(media.core());
+        _vlcMedia = libvlc_media_duplicate(media._vlcMedia);
+//        _usageCount = media._usageCount;
     }
     return *this;
 }
@@ -93,6 +96,18 @@ QString Media::name() const
 bool Media::exists() const
 {
     return _fileInfo.exists();
+}
+
+void Media::usageCountAdd(int count)
+{
+    _usageCount += count;
+    emit usageCountChanged();
+}
+
+bool Media::isUsed() const
+{
+    qDebug()<<_usageCount;
+    return _usageCount > 0;
 }
 
 QList<const char*> Media::audioTracks() const

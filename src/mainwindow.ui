@@ -324,7 +324,7 @@ p, li { white-space: pre-wrap; }
               <enum>Qt::CopyAction</enum>
              </property>
              <property name="selectionMode">
-              <enum>QAbstractItemView::MultiSelection</enum>
+              <enum>QAbstractItemView::ExtendedSelection</enum>
              </property>
              <property name="selectionBehavior">
               <enum>QAbstractItemView::SelectRows</enum>

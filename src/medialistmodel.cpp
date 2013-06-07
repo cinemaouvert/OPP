@@ -4,6 +4,7 @@
 #include <QIcon>
 
 #include "utils.h"
+#include "media.h"
 
 MediaListModel::MediaListModel(QObject *parent) :
     QAbstractTableModel(parent)
@@ -73,8 +74,10 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
     case Qt::DecorationRole:
         if (index.column() == Used) {
             QIcon icon;
-            // unckeck icon : /icons/resources/glyphicons/glyphicons_153_unchecked.png
-            icon.addFile(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_152_check.png"), QSize(), QIcon::Normal, QIcon::Off);
+            if (_mediaList[index.row()].isUsed())
+                icon.addFile(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_152_check.png"), QSize(), QIcon::Normal, QIcon::Off);
+            else
+                icon.addFile(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_153_unchecked.png"), QSize(), QIcon::Normal, QIcon::Off);
             return icon;
         }
         break;
@@ -113,21 +116,12 @@ bool MediaListModel::addMedia(const Media &media)
     if (!_mediaList.contains(media)) {
         beginInsertRows(QModelIndex(), count, count);
         _mediaList.append(media);
+        connect(&_mediaList.last(), SIGNAL(usageCountChanged()), this, SIGNAL(dataChanged()));
         endInsertRows();
         return true;
     } else {
         return false;
     }
-}
-
-Media* MediaListModel::findByPath(const QString &path) const
-{
-    foreach(const Media &m, _mediaList) {
-        if (m.location() == path) {
-            return const_cast<Media*>(&m);
-        }
-    }
-    return NULL;
 }
 
 QDataStream & operator << (QDataStream & out, const QList<Media> &list)

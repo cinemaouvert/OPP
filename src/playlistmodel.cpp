@@ -120,24 +120,26 @@ bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int
 bool PlaylistModel::addPlayback(const Playback &playback)
 {
     const int count = _playlist.count();
-        beginInsertRows(QModelIndex(), count, count);
-        _playlist.append(playback);
-        endInsertRows();
-        return true;
+
+    beginInsertRows(QModelIndex(), count, count);
+    _playlist.append(playback);
+    endInsertRows();
+
+    return true;
 }
 
 bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent )
 {
-    QString paths = data->text();
-    QString path;
-    int paths_number=paths.count("#***#");
-    for(int i=0;i<paths_number;i++)
-    {
-        path=paths.section("#***#",i,i);
-        Media *media = _mediaListModel->findByPath(path);
-        if (!media) {
+    QString indexes = data->html();
+    int countIndexes = indexes.count(":");
+
+    for (int i = 0; i < countIndexes; i++) {
+        Media *media = const_cast<Media*>( &_mediaListModel->mediaList().at(indexes.section(":", i, i).toInt()) );
+
+        if (!media)
             return false;
-        }
+
+        media->usageCountAdd();
         addPlayback(Playback(media));
     }
     return true;
