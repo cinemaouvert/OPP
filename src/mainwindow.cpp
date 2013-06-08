@@ -20,6 +20,7 @@
 #include "playlistmodel.h"
 #include "schedulelistmodel.h"
 #include "locker.h"
+#include "statuswidget.h"
 
 #include "application.h"
 #include "media.h"
@@ -40,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _videoWindow = new VideoWindow(this);
 
+    // internal core initalization
     _app = new Application();
     _mediaPlayer = new MediaPlayer(_app->vlcInstance());
     _mediaPlayer->setVideoView( (VideoView*) _videoWindow->videoWidget() );
@@ -51,6 +53,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->scheduleTableView->setModel(_scheduleListModel);
 
     ui->timelineWidget->setMediaPlayer(_mediaPlayer);
+
+    _statusWidget = new StatusWidget;
+    ui->statusBar->addWidget(_statusWidget);
+    connect(_mediaListModel, SIGNAL(mediaListChanged(int)), _statusWidget, SLOT(setMediaCount(int)));
 
     connect(ui->lockButton, SIGNAL(toggled(bool)), _locker, SLOT(toggle(bool)));
 

@@ -14,7 +14,8 @@ HEADERS += src/playertimelinewidget.h \
     src/seekwidget.h \
     src/schedulelistmodel.h \
     src/utils.h \
-    src/locker.h
+    src/locker.h \
+    src/statuswidget.h
 
 SOURCES += src/main.cpp \
     src/playertimelinewidget.cpp \
@@ -33,7 +34,8 @@ SOURCES += src/main.cpp \
     src/seekwidget.cpp \
     src/schedulelistmodel.cpp \
     src/utils.cpp \
-    src/locker.cpp
+    src/locker.cpp \
+    src/statuswidget.cpp
 
 FORMS += src/mainwindow.ui \
     src/playertimelinewidget.ui \
@@ -41,6 +43,7 @@ FORMS += src/mainwindow.ui \
     src/advancedpicturesettingswindow.ui \
     src/advancedsettingswindow.ui \
     src/settingswindow.ui \
-    src/locksettingswindow.ui
+    src/locksettingswindow.ui \
+    src/statuswidget.ui
 
 TRANSLATIONS = opp_fr.ts

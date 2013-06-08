@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include <QDataWidgetMapper>
+#include <QLabel>
 
 namespace Ui {
 class MainWindow;
@@ -15,6 +16,7 @@ class LockSettingsWindow;
 class AdvancedSettingsWindow;
 class AdvancedPictureSettingsWindow;
 class PlaylistTableView;
+class StatusWidget;
 
 class PlaylistModel;
 class MediaListModel;
@@ -88,6 +90,8 @@ private:
     LockSettingsWindow *_lockSettingsWindow;
     AdvancedSettingsWindow *_advancedSettingsWindow;
     AdvancedPictureSettingsWindow *_advancedPictureSettingsWindow;
+    StatusWidget *_statusWidget;
+
     QDataWidgetMapper *_mediaSettingsMapper;
 
     Application *_app;

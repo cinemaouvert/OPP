@@ -105,6 +105,8 @@ bool MediaListModel::removeMedia(int index)
     _mediaList.removeAt(index);
 
     endRemoveRows();
+
+    emit mediaListChanged(_mediaList.count());
     return true;
 }
 
@@ -121,6 +123,8 @@ bool MediaListModel::addMedia(Media *media)
     connect(media, SIGNAL(usageCountChanged()), this, SIGNAL(dataChanged()));
 
     endInsertRows();
+
+    emit mediaListChanged(_mediaList.count());
     return true;
 }
 

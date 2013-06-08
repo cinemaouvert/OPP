@@ -32,6 +32,13 @@ public:
 
     bool addMedia(Media *media);
 
+signals:
+    /**
+     * @brief signal mediaListChanged
+     * @param The number of media after the list changed
+     */
+    void mediaListChanged(int);
+
 private:
     QList<Media*> _mediaList;
 
