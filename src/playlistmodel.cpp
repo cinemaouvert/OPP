@@ -150,7 +150,7 @@ void PlaylistModel::removePlaybackWithDeps(Media *media)
 
     for (int i = 0; i < playbacks.count(); i++) {
         if (playbacks[i]->media() == media) {
-            removePlayback(_playlist.playbackList().indexOf(playbacks[i]));
+            removePlayback(_playlist.indexOf(playbacks[i]));
         }
     }
 }
@@ -160,7 +160,7 @@ void PlaylistModel::removePlayback(int index)
     Q_UNUSED(index);
     beginRemoveRows(QModelIndex(), index, index);
 
-    _playlist.playbackList().removeAt(index);
+    _playlist.removeAt(index);
 
     endRemoveRows();
     //return true;

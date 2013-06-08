@@ -33,6 +33,11 @@ void Playlist::removeAt(int index)
     _playbackList.removeAt(index);
 }
 
+int Playlist::indexOf(Playback *playback) const
+{
+    return _playbackList.indexOf(playback);
+}
+
 int Playlist::count() const
 {
     return _playbackList.count();

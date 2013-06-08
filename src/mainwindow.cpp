@@ -101,7 +101,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete _lockSettingsWindow;
-//    delete _testPatternPlayback;
     delete _mediaListModel;
     delete _mediaSettingsMapper;
     delete _videoWindow;
@@ -388,7 +387,7 @@ void MainWindow::on_openListingAction_triggered()
     }//end else
 }
 
-void MainWindow::on_renameSelectedPlaylistAction_triggered()
+void MainWindow::on_renamePlaylistAction_triggered()
 {
     int tabIndex = ui->playlistsTabWidget->currentIndex();
     bool ok;
@@ -461,4 +460,14 @@ void MainWindow::updateSettings()
     ui->saturationSpinBox->setValue(playback->mediaSettings()->saturation());
     qDebug()<<playback->mediaSettings()->hue();
     ui->hueSpinBox->setValue(playback->mediaSettings()->hue());
+}
+
+void MainWindow::on_removePlaylistItemAction_triggered()
+{
+    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+
+    if (indexes.count() == 0)
+        return;
+
+   currentPlaylistModel()->removePlayback(indexes.first().row());
 }

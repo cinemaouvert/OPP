@@ -1011,10 +1011,11 @@ p, li { white-space: pre-wrap; }
      <string>Edit</string>
     </property>
     <addaction name="newPlaylistAction"/>
+    <addaction name="renamePlaylistAction"/>
+    <addaction name="removePlaylistItemAction"/>
     <addaction name="separator"/>
     <addaction name="cancelAction"/>
     <addaction name="importAction"/>
-    <addaction name="renameSelectedPlaylistAction"/>
    </widget>
    <widget class="QMenu" name="menuDisplay">
     <property name="title">
@@ -1233,9 +1234,14 @@ p, li { white-space: pre-wrap; }
     <string>Add new playlist</string>
    </property>
   </action>
-  <action name="renameSelectedPlaylistAction">
+  <action name="renamePlaylistAction">
    <property name="text">
-    <string>Rename selected playlist</string>
+    <string>Rename playlist</string>
+   </property>
+  </action>
+  <action name="removePlaylistItemAction">
+   <property name="text">
+    <string>Remove playlist item</string>
    </property>
   </action>
  </widget>

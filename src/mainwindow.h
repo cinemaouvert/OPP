@@ -75,7 +75,8 @@ private slots:
 
     void createPlaylistTab();
     void on_playlistsTabWidget_tabCloseRequested(int index);
-    void on_renameSelectedPlaylistAction_triggered();
+    void on_renamePlaylistAction_triggered();
+    void on_removePlaylistItemAction_triggered();
 
 protected:
     Playback* selectedPlayback() const;
