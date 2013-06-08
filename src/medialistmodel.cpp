@@ -102,6 +102,7 @@ bool MediaListModel::removeMedia(int index)
     Q_UNUSED(index);
     beginRemoveRows(QModelIndex(), index, index);
 
+    _mediaFileList.removeAll(_mediaList[index]->location());
     _mediaList.removeAt(index);
 
     endRemoveRows();
@@ -111,8 +112,8 @@ bool MediaListModel::removeMedia(int index)
 }
 
 bool MediaListModel::addMedia(Media *media)
-{
-    if (_mediaList.contains(media))
+{   
+    if (_mediaFileList.contains(media->location()))
         return false;
 
     const int count = _mediaList.count();
@@ -123,6 +124,8 @@ bool MediaListModel::addMedia(Media *media)
     connect(media, SIGNAL(usageCountChanged()), this, SIGNAL(layoutChanged()));
 
     endInsertRows();
+
+    _mediaFileList.append(media->location());
 
     emit mediaListChanged(_mediaList.count());
     return true;

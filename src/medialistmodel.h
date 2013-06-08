@@ -3,10 +3,9 @@
 
 #include <QAbstractTableModel>
 #include <QList>
+#include <QStringList>
 
 #include "media.h"
-
-//class Media;
 
 class MediaListModel : public QAbstractTableModel
 {
@@ -41,6 +40,8 @@ signals:
 
 private:
     QList<Media*> _mediaList;
+
+    QStringList _mediaFileList;
 
     friend QDataStream & operator << (QDataStream &, const QList<Media> &);
     friend QDataStream & operator >> (QDataStream &, QList<Media> &);
