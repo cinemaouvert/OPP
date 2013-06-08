@@ -120,7 +120,7 @@ bool MediaListModel::addMedia(Media *media)
     beginInsertRows(QModelIndex(), count, count);
 
     _mediaList.append(media);
-    connect(media, SIGNAL(usageCountChanged()), this, SIGNAL(dataChanged()));
+    connect(media, SIGNAL(usageCountChanged()), this, SIGNAL(layoutChanged()));
 
     endInsertRows();
 

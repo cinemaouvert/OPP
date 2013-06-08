@@ -139,7 +139,6 @@ bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action
         if (!media)
             return false;
 
-        media->usageCountAdd();
         addPlayback(new Playback(media));
     }
     return true;

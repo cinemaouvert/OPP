@@ -18,6 +18,8 @@ public:
 
     void append(Playback *playback);
 
+    void removeAt(int index);
+
     int count() const;
 
     uint totalDuration() const;

@@ -1,5 +1,7 @@
 #include "playlist.h"
 
+#include <QDebug>
+
 Playlist::Playlist(QObject *parent) :
     QObject(parent)
 {
@@ -7,6 +9,11 @@ Playlist::Playlist(QObject *parent) :
 
 Playlist::~Playlist()
 {
+    qDebug() << "removed playlist " << this;
+    foreach(Playback *playback, _playbackList) {
+        playback->media()->usageCountAdd(-1);
+        delete playback;
+    }
 }
 
 Playback* Playlist::at(const int &index) const
@@ -16,7 +23,14 @@ Playback* Playlist::at(const int &index) const
 
 void Playlist::append(Playback *playback)
 {
+    playback->media()->usageCountAdd();
     _playbackList.append(playback);
+}
+
+void Playlist::removeAt(int index)
+{
+    _playbackList[index]->media()->usageCountAdd(-1);
+    _playbackList.removeAt(index);
 }
 
 int Playlist::count() const

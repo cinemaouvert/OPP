@@ -247,6 +247,8 @@ void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
     if (ui->playlistsTabWidget->count() == 1) {
         createPlaylistTab();
     }
+
+    delete (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(index))->model();
     ui->playlistsTabWidget->removeTab(index);
 }
 
@@ -255,10 +257,10 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
     PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->widget(index);
     PlaylistModel *model = (PlaylistModel*) view->model();
 
-    disconnect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(initMediaSettings(QModelIndex)));
+    disconnect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(updateSettings()));
     disconnect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
 
-    connect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(initMediaSettings(QModelIndex)));
+    connect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(updateSettings()));
     connect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
 
     _mediaSettingsMapper->setModel( model );
