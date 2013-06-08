@@ -199,6 +199,11 @@ void MediaPlayer::setCurrentHue(int hue)
 
 }
 
+void MediaPlayer::setCurrentAudioSync(double sync)
+{
+    libvlc_audio_set_delay(_vlcMediaPlayer,(int64_t)(1000000*sync));
+}
+
 void MediaPlayer::createCoreConnections()
 {
     QList<libvlc_event_e> list;

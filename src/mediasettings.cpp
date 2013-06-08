@@ -65,6 +65,11 @@ void MediaSettings::setHue(int hue) {
     emit saturationChanged(_saturation);
 }
 
+void MediaSettings::setAudioSync(double sync){
+    _audioSync = sync;
+    emit audioSyncChanged(_audioSync);
+}
+
 void MediaSettings::initDefault()
 {
     _ratio = Original;
@@ -79,6 +84,7 @@ void MediaSettings::initDefault()
     _audioTrack=0;
     _videoTrack=0;
     _subtitlesTrack=-1;
+    _audioSync=0;
 }
 
 QStringList MediaSettings::ratioValues()

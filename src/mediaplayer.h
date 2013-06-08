@@ -76,6 +76,7 @@ public slots:
     void setCurrentBrightness(int brightness);
     void setCurrentSaturation(int saturation);
     void setCurrentHue(int hue);
+    void setCurrentAudioSync(double sync);
 
 
 signals:

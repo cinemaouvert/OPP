@@ -65,6 +65,7 @@ private slots:
     void on_brightnessSpinBox_valueChanged(int arg1);
     void on_saturationSpinBox_valueChanged(int arg1);
     void on_hueSpinBox_valueChanged(int arg1);
+    void on_audioSyncDoubleSpinBox_valueChanged(double arg1);
 
     void on_testPatternAction_triggered();
 

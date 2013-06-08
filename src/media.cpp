@@ -33,7 +33,9 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
             i++;
             c=s[i];
         }
-        _audioTracks.append(QPair<int, QString>(trackAudio->i_id, QString(trackAudio->psz_name)));
+        QString track;
+        track=track.fromUtf8(trackAudio->psz_name);
+        _audioTracks.append(QPair<int, QString>(trackAudio->i_id, track));
         qDebug()<<trackAudio->i_id;
         qDebug()<<trackAudio->psz_name;
         trackAudio=trackAudio->p_next;
@@ -42,7 +44,9 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
     libvlc_track_description_t* trackVideo = libvlc_video_get_track_description (fakeplayer);
     while(trackVideo)
     {
-        _videoTracks.append(QPair<int, QString>(trackVideo->i_id, QString(trackVideo->psz_name)));
+        QString track;
+        track=track.fromUtf8(trackVideo->psz_name);
+        _videoTracks.append(QPair<int, QString>(trackVideo->i_id, track));
         qDebug()<<trackVideo->i_id;
         qDebug()<<trackVideo->psz_name;
         trackVideo=trackVideo->p_next;
@@ -51,7 +55,9 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
     libvlc_track_description_t* trackSubtitles = libvlc_video_get_spu_description (fakeplayer);
     while(trackSubtitles)
     {
-        _subtitlesTracks.append(QPair<int, QString>(trackSubtitles->i_id, QString(trackSubtitles->psz_name)));
+        QString track;
+        track=track.fromUtf8(trackSubtitles->psz_name);
+        _subtitlesTracks.append(QPair<int, QString>(trackSubtitles->i_id, track));
         qDebug()<<trackSubtitles->i_id;
         qDebug()<<trackSubtitles->psz_name;
         trackSubtitles=trackSubtitles->p_next;

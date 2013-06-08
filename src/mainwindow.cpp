@@ -330,6 +330,14 @@ void MainWindow::on_hueSpinBox_valueChanged(int arg1)
     // _mediaPlayer->setCurrentHue(arg1);
 }
 
+void MainWindow::on_audioSyncDoubleSpinBox_valueChanged(double arg1)
+{
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setAudioSync(arg1);
+    }
+}
+
 void MainWindow::on_testPatternAction_triggered()
 {
 //    _mediaPlayer->play(Media(QFileDialog::getOpenFileName(this, tr("Open test pattern"), QDir::homePath(), tr("Media (*.avi *.mkv *.jpg *.png)")), _app->vlcInstance()));

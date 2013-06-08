@@ -63,6 +63,7 @@ public:
     inline int brightness() const { return _brightness; }
     inline int saturation() const { return _saturation; }
     inline int hue() const { return _hue; }
+    inline double audioSync() const { return _audioSync; }
 
     void setRatio(Ratio ratio);
     void setScale(Scale scale);
@@ -73,6 +74,7 @@ public:
     void setBrightness(int brightness);
     void setSaturation(int saturation);
     void setHue(int hue);
+    void setAudioSync(double sync);
 
     static QStringList ratioValues();
     static QStringList deinterlacingValues();
@@ -92,6 +94,8 @@ signals:
     void brightnessChanged(int);
     void saturationChanged(int);
     void hueChanged(int);
+    void audioSyncChanged(double sync);
+
 
 private:
     Ratio _ratio;
@@ -103,6 +107,7 @@ private:
     int _brightness;
     int _saturation;
     int _hue;
+    double _audioSync;
 
     int _audioTrack;
     int _videoTrack;
