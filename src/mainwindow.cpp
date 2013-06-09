@@ -77,7 +77,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->newPlaylistAction, SIGNAL(triggered()), this, SLOT(createPlaylistTab()));
 
 //    DEBUG : this code add a media into the bin on launch
-    _mediaListModel->addMedia(new Media("/Users/floomoon/Movies/3ours-OCPM.mkv", _app->vlcInstance()));
+    //_mediaListModel->addMedia(new Media("/Users/floomoon/Movies/3ours-OCPM.mkv", _app->vlcInstance()));
 
     // set video mode actions data
     ui->actionProjection->setData(QVariant(VideoWindow::PROJECTION));
@@ -284,9 +284,9 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
 void MainWindow::on_audioTrackComboBox_currentIndexChanged(const QString &arg1)
 {
     Playback *playback = selectedPlayback();
+    int track=arg1.section(" ",1,1).toInt();
     if(playback)
     {
-        int track = getTrack(playback->media()->audioTracks(), arg1);
         playback->mediaSettings()->setAudioTrack(track);
     }
 }
@@ -294,9 +294,9 @@ void MainWindow::on_audioTrackComboBox_currentIndexChanged(const QString &arg1)
 void MainWindow::on_videoTrackComboBox_currentIndexChanged(const QString &arg1)
 {
     Playback *playback = selectedPlayback();
+    int track=arg1.section(" ",1,1).toInt();
     if(playback)
     {
-        int track = getTrack(playback->media()->videoTracks(), arg1);
         playback->mediaSettings()->setVideoTrack(track);
     }
 }
@@ -304,24 +304,11 @@ void MainWindow::on_videoTrackComboBox_currentIndexChanged(const QString &arg1)
 void MainWindow::on_subtitlesTrackComboBox_currentIndexChanged(const QString &arg1)
 {
     Playback *playback = selectedPlayback();
+    int track=arg1.section(" ",1,1).toInt();
     if(playback)
     {
-        int track = getTrack(playback->media()->subtitlesTracks(), arg1);
         playback->mediaSettings()->setSubtitlesTrack(track);
     }
-}
-
-
-/*getTrack returns the track identifier of the track given in parameter*/
-int MainWindow::getTrack(QList<QPair<int, QString> > list, QString track)
-{
-    int trackId=0;
-    for(int i=0;i<list.count();i++)
-    {
-        if(list.at(i).second==track)
-            trackId=list.at(i).first;
-    }
-    return trackId;
 }
 
 void MainWindow::on_ratioComboBox_currentIndexChanged(int index)
@@ -496,21 +483,49 @@ void MainWindow::updateSettings()
     }
     ui->mediaSettingsWidget->setEnabled(true);
 
+    QString item="";
     ui->audioTrackComboBox->clear();
     int listCount=playback->media()->audioTracks().count();
     for(int i=0;i<listCount;i++)
-        ui->audioTrackComboBox->addItem(playback->media()->audioTracks().at(i).second);
+    {
+        if(playback->media()->audioTracks().at(i)==-1)
+            item="Disabled";
+        else
+        {
+            item="Track ";
+            item+=QString::number(playback->media()->audioTracks().at(i));
+        }
+        ui->audioTrackComboBox->addItem(item);
+    }
 
 
     ui->videoTrackComboBox->clear();
     listCount=playback->media()->videoTracks().count();
     for(int i=0;i<listCount;i++)
-        ui->videoTrackComboBox->addItem(playback->media()->videoTracks().at(i).second);
+    {
+        if(playback->media()->videoTracks().at(i)==-1)
+            item="Disabled";
+        else
+        {
+            item="Track ";
+            item+=QString::number(playback->media()->videoTracks().at(i));
+        }
+        ui->videoTrackComboBox->addItem(item);
+    }
 
     ui->subtitlesTrackComboBox->clear();
     listCount=playback->media()->subtitlesTracks().count();
     for(int i=0;i<listCount;i++)
-        ui->subtitlesTrackComboBox->addItem(playback->media()->subtitlesTracks().at(i).second);
+    {
+        if(playback->media()->subtitlesTracks().at(i)==-1)
+            item="Disabled";
+        else
+        {
+            item="Track ";
+            item+=QString::number(playback->media()->subtitlesTracks().at(i));
+        }
+        ui->subtitlesTrackComboBox->addItem(item);
+    }
 
     ui->subtitlesSyncSpinBox->setValue(playback->mediaSettings()->subtitlesSync());
 
@@ -526,11 +541,11 @@ void MainWindow::updateSettings()
 }
 
 /*Returns a track index in a combo box*/
-int MainWindow::getTrackIndex(QList<QPair<int, QString> > list, int track)
+int MainWindow::getTrackIndex(QList<int> list, int track)
 {
     for(int i=0;i<list.count();i++)
     {
-        if(list.at(i).first==track)
+        if(list.at(i)==track)
             return i;
     }
     return 0;

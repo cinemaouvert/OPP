@@ -42,7 +42,7 @@ void MediaSettings::setSubtitlesSync(double sync){
 
 void MediaSettings::setAudioTrack(int track){
     _audioTrack=track;
-    emit audioTrackChanged(_audioTrack);
+    emit audioTrackChanged(track);
 }
 
 void MediaSettings::setVideoTrack(int track){

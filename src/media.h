@@ -30,9 +30,9 @@ public:
 
     bool exists() const;
 
-    QList< QPair<int, QString> > audioTracks() const;
-    QList< QPair<int, QString> > videoTracks() const;
-    QList< QPair<int, QString> > subtitlesTracks() const;
+    QList<int> audioTracks() const;
+    QList<int> videoTracks() const;
+    QList<int> subtitlesTracks() const;
 
     void usageCountAdd(int count = 1);
     bool isUsed() const;
@@ -48,9 +48,9 @@ private:
     QFileInfo _fileInfo;
     libvlc_media_t *_vlcMedia;
 
-    QList< QPair<int, QString> > _audioTracks;
-    QList< QPair<int, QString> > _videoTracks;
-    QList< QPair<int, QString> > _subtitlesTracks;
+    QList<int> _audioTracks;
+    QList<int> _videoTracks;
+    QList<int> _subtitlesTracks;
 
     int _usageCount;
 

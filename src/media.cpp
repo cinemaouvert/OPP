@@ -12,7 +12,8 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
 {
     initMedia(location);
     _vlcMedia = libvlc_media_new_path(vlcInstance, location.toLocal8Bit().data());
-
+    libvlc_media_parse_async(_vlcMedia);
+    usleep(100000);
     parseMediaInfos();
     /*
     // PATCH : We need to play the media to get the duration
@@ -69,9 +70,6 @@ Media::Media(const Media &media)
     initMedia(media._location);
     _usageCount = media._usageCount;
     _vlcMedia = libvlc_media_duplicate(media._vlcMedia);
-    _audioTracks = media.audioTracks();
-    _videoTracks = media.videoTracks();
-    _subtitlesTracks = media.subtitlesTracks();
 }
 
 Media::~Media()
@@ -82,7 +80,7 @@ Media::~Media()
 void Media::parseMediaInfos()
 {
     // TODO : use parse async + send signal when media is parsed
-    libvlc_media_parse(_vlcMedia);
+    //libvlc_media_parse(_vlcMedia);
 
     // @see libvlc_media_get_tracks_info
     // @see libvlc_media_tracks_get
@@ -91,6 +89,30 @@ void Media::parseMediaInfos()
 
 //    libvlc_media_track_info_t track[20 /*get tracks number ?*/];
 //    libvlc_media_get_tracks_info(_vlcMedia, &track);
+    _audioTracks.append(-1);
+    _videoTracks.append(-1);
+    _subtitlesTracks.append(-1);
+
+    libvlc_media_track_info_t* tracks;
+
+    libvlc_media_get_tracks_info(_vlcMedia, &tracks);
+    int track=0;
+    while(tracks[track].i_type<=2)
+    {
+        switch(tracks[track].i_type)
+        {
+            case 0 : //Audio track
+                _audioTracks.append(tracks[track].i_id);
+                break;
+            case 1 : //Video track
+                _videoTracks.append(tracks[track].i_id);
+                break;
+            case 2 : //Subtitles track
+                _subtitlesTracks.append(tracks[track].i_id);
+                break;
+        }
+        track++;
+    }
 
     qDebug()<<"=======================================================================";
     qDebug()<<"length : "<<duration();
@@ -137,7 +159,7 @@ bool Media::exists() const
     return _fileInfo.exists();
 }
 
-QList< QPair<int, QString> > Media::audioTracks() const
+QList<int> Media::audioTracks() const
 {
     return _audioTracks;
 }
@@ -153,12 +175,12 @@ bool Media::isUsed() const
     return _usageCount > 0;
 }
 
-QList< QPair<int, QString> > Media::videoTracks() const
+QList<int> Media::videoTracks() const
 {
     return _videoTracks;
 }
 
-QList< QPair<int, QString> > Media::subtitlesTracks() const
+QList<int> Media::subtitlesTracks() const
 {
     return _subtitlesTracks;
 }

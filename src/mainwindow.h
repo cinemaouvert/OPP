@@ -81,13 +81,11 @@ private slots:
 
     void on_audioTrackComboBox_currentIndexChanged(const QString &arg1);
 
-    int getTrack(QList<QPair<int, QString> > list, QString track);
-
     void on_videoTrackComboBox_currentIndexChanged(const QString &arg1);
 
     void on_subtitlesTrackComboBox_currentIndexChanged(const QString &arg1);
 
-    int getTrackIndex(QList<QPair<int, QString> > list, int track);
+    int getTrackIndex(QList<int> list, int track);
 
 protected:
     Playback* selectedPlayback() const;
