@@ -7,12 +7,15 @@
 #include "utils.h"
 #include "medialistmodel.h"
 #include "mediasettings.h"
+#include "playlistplayer.h"
 
 PlaylistModel::PlaylistModel(Playlist *playlist, MediaListModel *mediaListModel, QObject *parent) :
     QAbstractTableModel(parent),
     _mediaListModel(mediaListModel),
     _playlist(playlist)
 {
+    _activeItem.first = -1;
+    _activeItem.second = Idle;
 }
 
 PlaylistModel::~PlaylistModel()
@@ -79,6 +82,19 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 
     switch (role)
     {
+    case Qt::DecorationRole:
+        if (index.column() == Status && index.row() == _activeItem.first) {
+            switch(_activeItem.second)
+            {
+            case Playing:
+                return QIcon(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_173_play.png"));
+                break;
+            case Paused:
+                return QIcon(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_174_pause.png"));
+                break;
+            }
+        }
+        break;
     case Qt::ToolTipRole:
         switch (index.column()) {
         case Title:
@@ -169,4 +185,37 @@ void PlaylistModel::removePlayback(int index)
     _playlist->removeAt(index);
 
     endRemoveRows(); 
+}
+
+void PlaylistModel::setActiveItem(int index, PlaybackState state)
+{
+    _activeItem.first  = index;
+    _activeItem.second = state;
+
+    emit layoutChanged();
+}
+
+void PlaylistModel::playItem()
+{
+    _activeItem.second = Playing;
+    emit layoutChanged();
+}
+
+void PlaylistModel::pauseItem()
+{
+    _activeItem.second = Paused;
+    emit layoutChanged();
+}
+
+void PlaylistModel::stopItem()
+{
+    _activeItem.second = Idle;
+    emit layoutChanged();
+}
+
+void PlaylistModel::setPlayingItem(int index)
+{
+    qDebug()<< "index changed ======> "<<index;
+    _activeItem.first = index;
+    emit layoutChanged();
 }

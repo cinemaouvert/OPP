@@ -7,9 +7,9 @@
 
 PlaylistPlayer::PlaylistPlayer(libvlc_instance_t *vlcInstance, VideoView *video, PlaybackMode mode, QObject *parent) :
     QObject(parent),
-    _mode(mode)
+    _mode(mode),
+    _currentIndex(-1)
 {
-
     _mediaPlayer = new MediaPlayer(vlcInstance, this);
     _mediaPlayer->setVideoView(video);
 
@@ -18,6 +18,9 @@ PlaylistPlayer::PlaylistPlayer(libvlc_instance_t *vlcInstance, VideoView *video,
 
     libvlc_media_list_player_set_media_player(_vlcMediaListPlayer, _mediaPlayer->core());
     createCoreConnections();
+
+    connect(_mediaPlayer, SIGNAL(end()), this, SLOT(handlePlaylistEnd()));
+    connect(this, SIGNAL(end()), _mediaPlayer, SLOT(stop()));
 }
 
 PlaylistPlayer::~PlaylistPlayer()
@@ -40,8 +43,16 @@ void PlaylistPlayer::setMode(const PlaybackMode &mode)
     libvlc_media_list_player_set_playback_mode(_vlcMediaListPlayer, libvlc_playback_mode_t(mode));
 }
 
+bool PlaylistPlayer::isPlaying() const
+{
+    return libvlc_media_list_player_is_playing(_vlcMediaListPlayer);
+}
+
 void PlaylistPlayer::playItemAt(const int &index)
 {
+    _mediaPlayer->_isPaused = false;
+    _currentIndex = index - 1;
+
     libvlc_media_list_player_play_item_at_index(_vlcMediaListPlayer, index);
 }
 
@@ -52,16 +63,23 @@ void PlaylistPlayer::next()
 
 void PlaylistPlayer::play()
 {
+    _mediaPlayer->_isPaused = false;
+
     libvlc_media_list_player_play(_vlcMediaListPlayer);
 }
 
 void PlaylistPlayer::previous()
 {
+    _currentIndex -= 2;
+
     libvlc_media_list_player_previous(_vlcMediaListPlayer);
 }
 
 void PlaylistPlayer::stop()
 {
+    _mediaPlayer->_isPaused = false;
+    _currentIndex = -1;
+
     libvlc_media_list_player_stop(_vlcMediaListPlayer);
 }
 
@@ -71,14 +89,9 @@ void PlaylistPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
 
     switch(event->type)
     {
-    case libvlc_MediaListPlayerPlayed:
-        emit core->played();
-        break;
     case libvlc_MediaListPlayerNextItemSet:
-        emit core->nextItemSet(event->u.media_list_player_next_item_set.item);
-        break;
-    case libvlc_MediaListPlayerStopped:
-        emit core->stopped();
+        core->_currentIndex++;
+        emit core->itemChanged(core->_currentIndex);
         break;
     default:
         break;
@@ -88,9 +101,7 @@ void PlaylistPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
 void PlaylistPlayer::createCoreConnections()
 {
     QList<libvlc_event_e> list;
-    list << libvlc_MediaListPlayerPlayed
-        << libvlc_MediaListPlayerNextItemSet
-        << libvlc_MediaListPlayerStopped;
+    list << libvlc_MediaListPlayerNextItemSet;
 
     foreach(const libvlc_event_e &event, list) {
         libvlc_event_attach(_vlcEvents, event, libvlc_callback, this);
@@ -100,11 +111,16 @@ void PlaylistPlayer::createCoreConnections()
 void PlaylistPlayer::removeCoreConnections()
 {
     QList<libvlc_event_e> list;
-    list << libvlc_MediaListPlayerPlayed
-        << libvlc_MediaListPlayerNextItemSet
-        << libvlc_MediaListPlayerStopped;
+    list << libvlc_MediaListPlayerNextItemSet;
 
     foreach(const libvlc_event_e &event, list) {
         libvlc_event_detach(_vlcEvents, event, libvlc_callback, this);
+    }
+}
+
+void PlaylistPlayer::handlePlaylistEnd()
+{
+    if (_currentIndex == _playlist->count() - 1) {
+        emit end();
     }
 }

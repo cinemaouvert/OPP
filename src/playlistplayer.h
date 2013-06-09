@@ -40,6 +40,8 @@ public:
 
     void setMode(const PlaybackMode &mode);
 
+    bool isPlaying() const;
+
 public slots:
 
     void playItemAt(const int &index);
@@ -52,13 +54,17 @@ public slots:
 
     void stop();
 
+private slots:
+
+    void handlePlaylistEnd();
+
 signals:
 
-    void played();
+    void itemChanged(int);
 
-    void nextItemSet(libvlc_media_t *);
+    void nextItem();
 
-    void stopped();
+    void end();
 
 private:
     static void libvlc_callback(const libvlc_event_t *event, void *data);
@@ -74,6 +80,8 @@ private:
     MediaPlayer *_mediaPlayer;
 
     PlaybackMode _mode;
+
+    int _currentIndex;
 };
 
 #endif // PLAYLISTPLAYER_H

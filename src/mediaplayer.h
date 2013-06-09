@@ -5,6 +5,7 @@
 #include <QtGui/qwindowdefs.h>
 
 #include "mediasettings.h"
+#include "playlistplayer.h"
 
 class Playback;
 class VideoView;
@@ -19,6 +20,7 @@ struct libvlc_media_t;
 
 class MediaPlayer : public QObject
 {
+    friend class PlaylistPlayer;
     Q_OBJECT
 public:
     explicit MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent = 0);

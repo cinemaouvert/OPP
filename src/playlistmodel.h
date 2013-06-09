@@ -6,6 +6,7 @@
 
 #include "playlist.h"
 
+class PlaylistPlayer;
 class Playback;
 class MediaListModel;
 
@@ -14,12 +15,15 @@ class PlaylistModel : public QAbstractTableModel
     Q_OBJECT
 public:
     enum Columns { Title = 0, Duration = 1, Video = 2, Audio = 3, Subtitles = 4, TestPattern = 5, Gain = 6, Status = 7 };
+    enum PlaybackState { Playing = 0, Paused = 1, Idle = 2 };
 
     PlaylistModel(Playlist *playlist, MediaListModel *mediaListModel, QObject *parent = 0);
 
     virtual ~PlaylistModel();
 
     inline Playlist* playlist() const { return _playlist; }
+
+    int activeItemIndex() const { return _activeItem.first; }
 
     int columnCount(const QModelIndex &parent) const;
 
@@ -41,9 +45,22 @@ public:
 
     bool dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent );
 
+    void setActiveItem(int index, PlaybackState state);
+
+public slots:
+
+    void playItem();
+
+    void pauseItem();
+
+    void stopItem();
+
+    void setPlayingItem(int index);
+
 private:
     Playlist *_playlist;
     MediaListModel *_mediaListModel;
+    QPair<int, PlaybackState> _activeItem;
 };
 
 
