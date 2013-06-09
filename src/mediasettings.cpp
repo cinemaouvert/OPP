@@ -40,6 +40,21 @@ void MediaSettings::setSubtitlesSync(double sync){
     emit subtitlesSyncChanged(_subtitlesSync);
 }
 
+void MediaSettings::setAudioTrack(int track){
+    _audioTrack=track;
+    emit audioTrackChanged(_audioTrack);
+}
+
+void MediaSettings::setVideoTrack(int track){
+    _videoTrack=track;
+    emit videoTrackChanged(_videoTrack);
+}
+
+void MediaSettings::setSubtitlesTrack(int track){
+    _subtitlesTrack=track;
+    emit subtitlesTrackChanged(_subtitlesTrack);
+}
+
 void MediaSettings::setGamma(int gamma) {
     _gamma = gamma;
     emit gammaChanged(_gamma);
@@ -81,9 +96,9 @@ void MediaSettings::initDefault()
     _brightness = 50;
     _saturation = 50;
     _hue = 0;
-    _audioTrack=0;
+    _audioTrack=2;
     _videoTrack=0;
-    _subtitlesTrack=-1;
+    _subtitlesTrack=4;
     _audioSync=0;
 }
 

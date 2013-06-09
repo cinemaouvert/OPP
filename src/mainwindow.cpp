@@ -268,6 +268,50 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
     _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
 }
 
+
+void MainWindow::on_audioTrackComboBox_currentIndexChanged(const QString &arg1)
+{
+    Playback *playback = selectedPlayback();
+    if(playback)
+    {
+        int track = getTrack(playback->media()->audioTracks(), arg1);
+        playback->mediaSettings()->setAudioTrack(track);
+    }
+}
+
+void MainWindow::on_videoTrackComboBox_currentIndexChanged(const QString &arg1)
+{
+    Playback *playback = selectedPlayback();
+    if(playback)
+    {
+        int track = getTrack(playback->media()->videoTracks(), arg1);
+        playback->mediaSettings()->setVideoTrack(track);
+    }
+}
+
+void MainWindow::on_subtitlesTrackComboBox_currentIndexChanged(const QString &arg1)
+{
+    Playback *playback = selectedPlayback();
+    if(playback)
+    {
+        int track = getTrack(playback->media()->subtitlesTracks(), arg1);
+        playback->mediaSettings()->setSubtitlesTrack(track);
+    }
+}
+
+
+/*getTrack returns the track identifier of the track given in parameter*/
+int MainWindow::getTrack(QList<QPair<int, QString> > list, QString track)
+{
+    int trackId=0;
+    for(int i=0;i<list.count();i++)
+    {
+        if(list.at(i).second==track)
+            trackId=list.at(i).first;
+    }
+    return trackId;
+}
+
 void MainWindow::on_ratioComboBox_currentIndexChanged(int index)
 {
 //    Playback *playback = selectedPlayback();
@@ -443,31 +487,41 @@ void MainWindow::updateSettings()
     ui->audioTrackComboBox->clear();
     int listCount=playback->media()->audioTracks().count();
     for(int i=0;i<listCount;i++)
-        ui->audioTrackComboBox->addItem(playback->media()->audioTracks().at(i).second,playback->media()->audioTracks().at(i).first);
+        ui->audioTrackComboBox->addItem(playback->media()->audioTracks().at(i).second);
 
 
     ui->videoTrackComboBox->clear();
     listCount=playback->media()->videoTracks().count();
     for(int i=0;i<listCount;i++)
-        ui->videoTrackComboBox->addItem(playback->media()->videoTracks().at(i).second,playback->media()->videoTracks().at(i).first);
+        ui->videoTrackComboBox->addItem(playback->media()->videoTracks().at(i).second);
 
     ui->subtitlesTrackComboBox->clear();
     listCount=playback->media()->subtitlesTracks().count();
     for(int i=0;i<listCount;i++)
-        ui->subtitlesTrackComboBox->addItem(playback->media()->subtitlesTracks().at(i).second,playback->media()->subtitlesTracks().at(i).first);
+        ui->subtitlesTrackComboBox->addItem(playback->media()->subtitlesTracks().at(i).second);
 
     ui->subtitlesSyncSpinBox->setValue(playback->mediaSettings()->subtitlesSync());
 
-    qDebug()<<playback->mediaSettings()->gamma();
     ui->gammaSpinBox->setValue(playback->mediaSettings()->gamma());
-    qDebug()<<playback->mediaSettings()->contrast();
     ui->contrastSpinBox->setValue(playback->mediaSettings()->contrast());
-    qDebug()<<playback->mediaSettings()->brightness();
     ui->brightnessSpinBox->setValue(playback->mediaSettings()->brightness());
-    qDebug()<<playback->mediaSettings()->saturation();
     ui->saturationSpinBox->setValue(playback->mediaSettings()->saturation());
-    qDebug()<<playback->mediaSettings()->hue();
     ui->hueSpinBox->setValue(playback->mediaSettings()->hue());
+
+    ui->audioTrackComboBox->setCurrentIndex(getTrackIndex(playback->media()->audioTracks(), playback->mediaSettings()->audioTrack()));
+    ui->videoTrackComboBox->setCurrentIndex(getTrackIndex(playback->media()->videoTracks(), playback->mediaSettings()->videoTrack()));
+    ui->subtitlesTrackComboBox->setCurrentIndex(getTrackIndex(playback->media()->subtitlesTracks(), playback->mediaSettings()->subtitlesTrack()));
+}
+
+/*Returns a track index in a combo box*/
+int MainWindow::getTrackIndex(QList<QPair<int, QString> > list, int track)
+{
+    for(int i=0;i<list.count();i++)
+    {
+        if(list.at(i).first==track)
+            return i;
+    }
+    return 0;
 }
 
 void MainWindow::on_removePlaylistItemAction_triggered()

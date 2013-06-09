@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QStringList>
 #include <QList>
+#include <QDebug>
 
 enum Ratio {
     Original = 0,
@@ -64,6 +65,9 @@ public:
     inline int saturation() const { return _saturation; }
     inline int hue() const { return _hue; }
     inline double audioSync() const { return _audioSync; }
+    inline int audioTrack() const {return _audioTrack;}
+    inline int videoTrack() const {return _videoTrack;}
+    inline int subtitlesTrack() const {return _subtitlesTrack;}
 
     void setRatio(Ratio ratio);
     void setScale(Scale scale);
@@ -75,14 +79,14 @@ public:
     void setSaturation(int saturation);
     void setHue(int hue);
     void setAudioSync(double sync);
+    void setAudioTrack(int track);
+    void setVideoTrack(int track);
+    void setSubtitlesTrack(int track);
 
     static QStringList ratioValues();
     static QStringList deinterlacingValues();
     static QList<float> scaleValues();
 
-    inline int audioTrack() {return _audioTrack;}
-    inline int videoTrack() {return _videoTrack;}
-    inline int subtitlesTrack() {return _subtitlesTrack;}
 
 signals:
     void ratioChanged(Ratio);
@@ -95,6 +99,9 @@ signals:
     void saturationChanged(int);
     void hueChanged(int);
     void audioSyncChanged(double sync);
+    void audioTrackChanged(int track);
+    void videoTrackChanged(int track);
+    void subtitlesTrackChanged(int track);
 
 
 private:

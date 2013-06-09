@@ -71,6 +71,10 @@ public slots:
 
     void setCurrentSubtitlesSync(double sync);
 
+    void setCurrentAudioTrack(int track);
+    void setCurrentVideoTrack(int track);
+    void setCurrentSubtitlesTrack(int track);
+
     void setCurrentGamma(int gamma);
     void setCurrentContrast(int contrast);
     void setCurrentBrightness(int brightness);

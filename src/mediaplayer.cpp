@@ -63,6 +63,10 @@ void MediaPlayer::open(Playback *playback)
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(hueChanged(int)), this, SLOT(setCurrentHue(int)));
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(deinterlacingChanged(Deinterlacing)), this, SLOT(setCurrentDeinterlacing(Deinterlacing)));
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesSyncChanged(double)), this, SLOT(setCurrentSubtitlesSync(double)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(audioSyncChanged(double)), this, SLOT(setCurrentAudioSync(double)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(int)), this, SLOT(setCurrentAudioTrack(int)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
     }
 
     _currentPlayback = playback;
@@ -76,6 +80,10 @@ void MediaPlayer::open(Playback *playback)
     connect(_currentPlayback->mediaSettings(), SIGNAL(hueChanged(int)), this, SLOT(setCurrentHue(int)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(deinterlacingChanged(Deinterlacing)), this, SLOT(setCurrentDeinterlacing(Deinterlacing)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesSyncChanged(double)), this, SLOT(setCurrentSubtitlesSync(double)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(audioSyncChanged(double)), this, SLOT(setCurrentAudioSync(double)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(int)), this, SLOT(setCurrentAudioTrack(int)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
 }
 
 void MediaPlayer::play()
@@ -151,6 +159,21 @@ void MediaPlayer::setPosition(const float &position)
 void MediaPlayer::setPosition(const int &position)
 {
     setPosition( ((float) position) / 100.f);
+}
+
+void MediaPlayer::setCurrentAudioTrack(int track)
+{
+    libvlc_audio_set_track(_vlcMediaPlayer, track);
+}
+
+void MediaPlayer::setCurrentVideoTrack(int track)
+{
+    libvlc_video_set_track(_vlcMediaPlayer, track);
+}
+
+void MediaPlayer::setCurrentSubtitlesTrack(int track)
+{
+    libvlc_video_set_spu(_vlcMediaPlayer, track);
 }
 
 void MediaPlayer::setCurrentRatio(Ratio ratio)
