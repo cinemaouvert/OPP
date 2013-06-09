@@ -23,7 +23,7 @@ class MediaListModel;
 class ScheduleListModel;
 
 class Application;
-class MediaPlayer;
+class PlaylistPlayer;
 class Playback;
 class Locker;
 
@@ -54,8 +54,7 @@ private slots:
     void on_lockButton_clicked();
 
     /* player controls */
-    void on_playerPlayButton_clicked();
-    void on_playerStopButton_clicked();
+    void on_playerPlayButton_clicked(bool checked);
 
     void on_playlistsTabWidget_currentChanged(int index);
 
@@ -107,7 +106,7 @@ private:
     QDataWidgetMapper *_mediaSettingsMapper;
 
     Application *_app;
-    MediaPlayer *_mediaPlayer;
+    PlaylistPlayer *_playlistPlayer;
 
     MediaListModel *_mediaListModel;
     ScheduleListModel *_scheduleListModel;

@@ -24,6 +24,7 @@
 
 #include "application.h"
 #include "media.h"
+#include "playlistplayer.h"
 #include "mediaplayer.h"
 #include "playback.h"
 
@@ -38,21 +39,26 @@ MainWindow::MainWindow(QWidget *parent) :
     _locker = new Locker(lockedWidget, this);
 
     _lockSettingsWindow = new LockSettingsWindow(_locker, this);
-
     _videoWindow = new VideoWindow(this);
 
     // internal core initalization
     _app = new Application();
-    _mediaPlayer = new MediaPlayer(_app->vlcInstance());
-    _mediaPlayer->setVideoView( (VideoView*) _videoWindow->videoWidget() );
+
+    _playlistPlayer = new PlaylistPlayer(_app->vlcInstance(), (VideoView*) _videoWindow->videoWidget());
+    _playlistPlayer->mediaPlayer()->setVideoView( (VideoView*) _videoWindow->videoWidget() );
+    _playlistPlayer->mediaPlayer()->setVolume(ui->playerVolumeSlider->value());
+
+    connect(ui->playerVolumeSlider, SIGNAL(valueChanged(int)), _playlistPlayer->mediaPlayer(), SLOT(setVolume(int)));
+    connect(_playlistPlayer->mediaPlayer(), SIGNAL(played()), ui->playerPlayButton, SLOT(toggle()));
+    connect(ui->playerStopButton, SIGNAL(clicked()), _playlistPlayer, SLOT(stop()));
+    connect(ui->playerStopButton, SIGNAL(clicked(bool)), ui->playerPlayButton, SLOT(setChecked(bool)));
 
     _mediaListModel = new MediaListModel();
     _scheduleListModel = new ScheduleListModel();
 
     ui->binTableView->setModel(_mediaListModel);
     ui->scheduleTableView->setModel(_scheduleListModel);
-
-    ui->timelineWidget->setMediaPlayer(_mediaPlayer);
+    ui->timelineWidget->setMediaPlayer(_playlistPlayer->mediaPlayer());
 
     _statusWidget = new StatusWidget;
     ui->statusBar->addWidget(_statusWidget);
@@ -69,24 +75,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->newPlaylistAction, SIGNAL(triggered()), this, SLOT(createPlaylistTab()));
 
-    // core connections
-    connect(ui->playerVolumeSlider, SIGNAL(valueChanged(int)), _mediaPlayer, SLOT(setVolume(int)));
-    connect(_mediaPlayer, SIGNAL(end()), ui->playerPlayButton, SLOT(toggle()));
-
-    //DEBUG : this code add a media into the bin on launch
-//    Media media("/Users/floomoon/Movies/3ours-OCPM.mkv", _app->vlcInstance());
-//    _mediaListModel->addMedia(media);
+//    DEBUG : this code add a media into the bin on launch
+    _mediaListModel->addMedia(new Media("/Users/floomoon/Movies/3ours-OCPM.mkv", _app->vlcInstance()));
 
     // set video mode actions data
     ui->actionProjection->setData(QVariant(VideoWindow::PROJECTION));
     ui->actionWindow->setData(QVariant(VideoWindow::WINDOW));
 
-    // initialize from ui
-    _mediaPlayer->setVolume(ui->playerVolumeSlider->value());
-
     // media settings input mapping
     _mediaSettingsMapper = new QDataWidgetMapper(this);
-//    _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
 
     // initialize media settings input
     ui->ratioComboBox->addItems(MediaSettings::ratioValues());
@@ -104,7 +101,7 @@ MainWindow::~MainWindow()
     delete _mediaListModel;
     delete _mediaSettingsMapper;
     delete _videoWindow;
-    delete _mediaPlayer;
+    delete _playlistPlayer;
     delete _app;
 }
 
@@ -164,34 +161,28 @@ void MainWindow::on_lockSettingsAction_triggered()
     _lockSettingsWindow->activateWindow();
 }
 
-void MainWindow::on_playerPlayButton_clicked()
+void MainWindow::on_playerPlayButton_clicked(bool checked)
 {
-    if (_mediaPlayer->isPlaying()) {
-        _mediaPlayer->pause();
-    } else {
-        if (_mediaPlayer->isPaused()) {
-            _mediaPlayer->resume();
+    if (checked) {
+        if (_playlistPlayer->mediaPlayer()->isPlaying()) {
+            _playlistPlayer->mediaPlayer()->resume();
         } else {
+            // play or resume playback
             QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
 
+            // if no selected item play current playlist from first item
             if (indexes.count() == 0) {
-                ui->playerPlayButton->setChecked(false);
+                _playlistPlayer->play();
+            // play playlist at selected item otherwise
             } else {
-                Playback *playback = currentPlaylistModel()->playlist().at(indexes.first().row());
-                _mediaPlayer->open(playback);
-                _mediaPlayer->play();
+                _playlistPlayer->playItemAt(indexes.first().row());
             }
         }
+    } else {
+        _playlistPlayer->mediaPlayer()->pause();
     }
 }
 
-void MainWindow::on_playerStopButton_clicked()
-{
-    if (_mediaPlayer->isPlaying() || _mediaPlayer->isPaused()) {
-        _mediaPlayer->stop();
-        ui->playerPlayButton->setChecked(false);
-    }
-}
 void MainWindow::on_advancedSettingsButton_clicked()
 {
     _advancedSettingsWindow = new AdvancedSettingsWindow(this);
@@ -229,7 +220,7 @@ void MainWindow::on_menuVideoMode_triggered(QAction *action)
 void MainWindow::createPlaylistTab()
 {
     PlaylistTableView *newTab = new PlaylistTableView;
-    PlaylistModel *newModel = new PlaylistModel(_mediaListModel);
+    PlaylistModel *newModel = new PlaylistModel(new Playlist(_app->vlcInstance()), _mediaListModel);
 
     newTab->setModel(newModel);
     newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -256,8 +247,9 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
     PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->widget(index);
     PlaylistModel *model = (PlaylistModel*) view->model();
 
-    disconnect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(updateSettings()));
-    disconnect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
+    // TODO : disconnect when the index has not changed yet (to get the old selected index)
+//    disconnect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(updateSettings()));
+//    disconnect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
 
     connect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(updateSettings()));
     connect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
@@ -266,6 +258,8 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
 
     _mediaSettingsMapper->clearMapping();
     _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
+
+    _playlistPlayer->setPlaylist(model->playlist());
 }
 
 
@@ -462,7 +456,7 @@ Playback* MainWindow::selectedPlayback() const {
     if (indexes.count() == 0)
         return NULL;
 
-    return currentPlaylistModel()->playlist().at(indexes.first().row());
+    return currentPlaylistModel()->playlist()->at(indexes.first().row());
 }
 
 PlaylistTableView* MainWindow::currentPlaylistTableView() const

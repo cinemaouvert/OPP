@@ -15,9 +15,11 @@ class PlaylistModel : public QAbstractTableModel
 public:
     enum Columns { Title = 0, Duration = 1, Video = 2, Audio = 3, Subtitles = 4, TestPattern = 5, Gain = 6, Status = 7 };
 
-    PlaylistModel(MediaListModel *mediaListModel, QObject *parent = 0);
+    PlaylistModel(Playlist *playlist, MediaListModel *mediaListModel, QObject *parent = 0);
 
-    inline const Playlist & playlist() const { return _playlist; }
+    virtual ~PlaylistModel();
+
+    inline Playlist* playlist() const { return _playlist; }
 
     int columnCount(const QModelIndex &parent) const;
 
@@ -38,8 +40,9 @@ public:
     void removePlayback(int index);
 
     bool dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent );
+
 private:
-    Playlist _playlist;
+    Playlist *_playlist;
     MediaListModel *_mediaListModel;
 };
 

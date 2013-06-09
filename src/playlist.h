@@ -2,17 +2,22 @@
 #define PLAYLIST_H
 
 #include <QObject>
-#include "media.h"
+
 #include "playback.h"
+
+struct libvlc_media_list_t;
+struct libvlc_instance_t;
 
 class Playlist : public QObject
 {
     Q_OBJECT
 public:
-    Playlist(QObject *parent = 0);
+    Playlist(libvlc_instance_t *vlcInstance, QObject *parent = 0);
     virtual ~Playlist();
 
     inline const QList<Playback*>& playbackList() { return _playbackList; }
+
+    inline libvlc_media_list_t* core() const { return _vlcMediaList; }
 
     Playback* at(const int &index) const;
 
@@ -26,8 +31,14 @@ public:
 
     uint totalDuration() const;
 
+    void lock();
+
+    void unlock();
+
 private:
     QList<Playback*> _playbackList;
+
+    libvlc_media_list_t *_vlcMediaList;
     
 };
 

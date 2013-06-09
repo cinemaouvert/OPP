@@ -26,6 +26,8 @@ public:
 
     inline Playback *currentPlayback() const { return _currentPlayback; }
 
+    inline libvlc_media_player_t *core() const { return _vlcMediaPlayer; }
+
     inline bool isPaused() const { return _isPaused; }
 
     bool isPlaying() const;

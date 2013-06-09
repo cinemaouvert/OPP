@@ -8,10 +8,16 @@
 #include "medialistmodel.h"
 #include "mediasettings.h"
 
-PlaylistModel::PlaylistModel(MediaListModel *mediaListModel, QObject *parent) :
+PlaylistModel::PlaylistModel(Playlist *playlist, MediaListModel *mediaListModel, QObject *parent) :
     QAbstractTableModel(parent),
-    _mediaListModel(mediaListModel)
+    _mediaListModel(mediaListModel),
+    _playlist(playlist)
 {
+}
+
+PlaylistModel::~PlaylistModel()
+{
+    delete _playlist;
 }
 
 int PlaylistModel::columnCount(const QModelIndex &parent) const
@@ -21,7 +27,7 @@ int PlaylistModel::columnCount(const QModelIndex &parent) const
 
 int PlaylistModel::rowCount(const QModelIndex &parent) const
 {
-    return _playlist.count();
+    return _playlist->count();
 }
 
 Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const
@@ -67,7 +73,7 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= _playlist.count()) {
+    if (!index.isValid() || index.row() < 0 || index.row() >= _playlist->count()) {
         return QVariant();
     }
 
@@ -76,19 +82,19 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     case Qt::ToolTipRole:
         switch (index.column()) {
         case Title:
-            return _playlist.at(index.row())->media()->name();
+            return _playlist->at(index.row())->media()->name();
             break;
         }
         break;
     case Qt::DisplayRole:
         if (index.column() == Title) {
-            return _playlist.at(index.row())->media()->name();
+            return _playlist->at(index.row())->media()->name();
         }
         else if (index.column() == Duration) {
-            return msecToQTime(_playlist.at(index.row())->media()->duration()).toString("hh:mm:ss");
+            return msecToQTime(_playlist->at(index.row())->media()->duration()).toString("hh:mm:ss");
         }
         else if (index.column() == Video) {
-            return MediaSettings::ratioValues().at(_playlist.at(index.row())->mediaSettings()->ratio());
+            return MediaSettings::ratioValues().at(_playlist->at(index.row())->mediaSettings()->ratio());
         }
         break;
     }
@@ -98,7 +104,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 
 bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= _playlist.count() || value.toString().count() == 0) {
+    if (!index.isValid() || index.row() < 0 || index.row() >= _playlist->count() || value.toString().count() == 0) {
         return false;
     }
 
@@ -106,7 +112,7 @@ bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int
     {
     case Qt::EditRole:
         if (index.column() == Video) {
-            _playlist.at(index.row())->mediaSettings()->setRatio(
+            _playlist->at(index.row())->mediaSettings()->setRatio(
                 (Ratio) MediaSettings::ratioValues().indexOf(QRegExp(value.toString()))
             );
         }
@@ -119,10 +125,10 @@ bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int
 
 bool PlaylistModel::addPlayback(Playback *playback)
 {
-    const int count = _playlist.count();
+    const int count = _playlist->count();
 
     beginInsertRows(QModelIndex(), count, count);
-    _playlist.append(playback);
+    _playlist->append(playback);
     endInsertRows();
 
     return true;
@@ -146,11 +152,11 @@ bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action
 
 void PlaylistModel::removePlaybackWithDeps(Media *media)
 {
-    QList<Playback*> playbacks = _playlist.playbackList();
+    QList<Playback*> playbacks = _playlist->playbackList();
 
     for (int i = 0; i < playbacks.count(); i++) {
         if (playbacks[i]->media() == media) {
-            removePlayback(_playlist.indexOf(playbacks[i]));
+            removePlayback(_playlist->indexOf(playbacks[i]));
         }
     }
 }
@@ -160,8 +166,7 @@ void PlaylistModel::removePlayback(int index)
     Q_UNUSED(index);
     beginRemoveRows(QModelIndex(), index, index);
 
-    _playlist.removeAt(index);
+    _playlist->removeAt(index);
 
-    endRemoveRows();
-    //return true;
+    endRemoveRows(); 
 }
