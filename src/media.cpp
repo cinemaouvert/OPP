@@ -13,6 +13,8 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
     initMedia(location);
     _vlcMedia = libvlc_media_new_path(vlcInstance, location.toLocal8Bit().data());
 
+    parseMediaInfos();
+    /*
     // PATCH : We need to play the media to get the duration
     libvlc_media_player_t *fakeplayer = libvlc_media_player_new(vlcInstance);
     VLC_LAST_ERROR();
@@ -24,18 +26,7 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
     //qDebug()<<"Audio tracks";
     while(trackAudio)
     {
-        char* s = trackAudio->psz_name;
-        int i=0;
-        char c=s[i];
-        while(c!='\0')
-        {
-            qDebug()<<(int)c;
-            i++;
-            c=s[i];
-        }
-        QString track;
-        track=track.fromUtf8(trackAudio->psz_name);
-        _audioTracks.append(QPair<int, QString>(trackAudio->i_id, track));
+        _audioTracks.append(QPair<int, QString>(trackAudio->i_id, QString::fromUtf8(trackAudio->psz_name)));
         qDebug()<<trackAudio->i_id;
         qDebug()<<trackAudio->psz_name;
         trackAudio=trackAudio->p_next;
@@ -70,6 +61,7 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
     qDebug()<<_audioTracks;
     qDebug()<<_videoTracks;
     qDebug()<<_subtitlesTracks;
+    */
 }
 
 Media::Media(const Media &media)
@@ -85,6 +77,27 @@ Media::Media(const Media &media)
 Media::~Media()
 {
     libvlc_media_release(_vlcMedia);
+}
+
+void Media::parseMediaInfos()
+{
+    // TODO : use parse async + send signal when media is parsed
+    libvlc_media_parse(_vlcMedia);
+
+    // @see libvlc_media_get_tracks_info
+    // @see libvlc_media_tracks_get
+    // @see libvlc_media_tracks_release
+    // http://www.videolan.org/developers/vlc/doc/doxygen/html/group__libvlc__media.html#ga2102c151df0ab66d6158a80b7734f0f9
+
+//    libvlc_media_track_info_t track[20 /*get tracks number ?*/];
+//    libvlc_media_get_tracks_info(_vlcMedia, &track);
+
+    qDebug()<<"=======================================================================";
+    qDebug()<<"length : "<<duration();
+    qDebug()<<"audio : "<<_audioTracks;
+    qDebug()<<"video : "<<_videoTracks;
+    qDebug()<<"subtitles : "<<_subtitlesTracks;
+    qDebug()<<"=======================================================================";
 }
 
 void Media::initMedia(const QString &location)

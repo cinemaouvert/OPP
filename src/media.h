@@ -37,6 +37,9 @@ public:
     void usageCountAdd(int count = 1);
     bool isUsed() const;
 
+protected:
+    void parseMediaInfos();
+
 signals:
     void usageCountChanged();
 
