@@ -43,8 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // internal core initalization
     _app = new Application();
+    _playlistPlayer = new PlaylistPlayer(_app->vlcInstance());
 
-    _playlistPlayer = new PlaylistPlayer(_app->vlcInstance(), (VideoView*) _videoWindow->videoWidget());
     _playlistPlayer->mediaPlayer()->setVideoView( (VideoView*) _videoWindow->videoWidget() );
     _playlistPlayer->mediaPlayer()->setVolume(ui->playerVolumeSlider->value());
 
@@ -52,6 +52,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(_playlistPlayer->mediaPlayer(), SIGNAL(played()), ui->playerPlayButton, SLOT(toggle()));
     connect(ui->playerStopButton, SIGNAL(clicked()), _playlistPlayer, SLOT(stop()));
     connect(ui->playerStopButton, SIGNAL(clicked(bool)), ui->playerPlayButton, SLOT(setChecked(bool)));
+    connect(ui->playerPreviousButton, SIGNAL(clicked()), _playlistPlayer, SLOT(previous()));
+    connect(ui->playerNextButton, SIGNAL(clicked()), _playlistPlayer, SLOT(next()));
     connect(_playlistPlayer, SIGNAL(end()), ui->playerPlayButton, SLOT(toggle()));
 
     _mediaListModel = new MediaListModel();
@@ -168,7 +170,6 @@ void MainWindow::on_playerPlayButton_clicked(bool checked)
     if (checked) {
         if (_playlistPlayer->mediaPlayer()->isPaused()) {
             _playlistPlayer->mediaPlayer()->resume();
-//            playlistModel->setActiveItem(playlistModel->activeItemIndex(), PlaylistModel::Playing);
         } else {
             // play or resume playback
             QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
@@ -176,23 +177,15 @@ void MainWindow::on_playerPlayButton_clicked(bool checked)
             // if no selected item play current playlist from first item
             if (indexes.count() == 0) {
                 _playlistPlayer->play();
-//                playlistModel->setActiveItem(0, PlaylistModel::Playing);
             // play playlist at selected item otherwise
             } else {
                 const int index = indexes.first().row();
                 _playlistPlayer->playItemAt(index);
-//                playlistModel->setActiveItem(index, PlaylistModel::Playing);
             }
         }
     } else {
         _playlistPlayer->mediaPlayer()->pause();
-//        playlistModel->setActiveItem(playlistModel->activeItemIndex(), PlaylistModel::Paused);
     }
-}
-
-void MainWindow::on_playerStopButton_clicked()
-{
-//    currentPlaylistModel()->setActiveItem(-1, PlaylistModel::Idle);
 }
 
 void MainWindow::on_advancedSettingsButton_clicked()

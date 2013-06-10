@@ -2,7 +2,6 @@
 #define PLAYLISTPLAYER_H
 
 #include <QObject>
-#include "videoview.h"
 
 class MediaPlayer;
 class Playlist;
@@ -18,13 +17,8 @@ class PlaylistPlayer : public QObject
 {
     Q_OBJECT
 public:
-    enum PlaybackMode {
-        DefaultPlayback = 0,
-        Loop = 1,
-        Repeat = 2
-    };
 
-    explicit PlaylistPlayer(libvlc_instance_t *vlcInstance, VideoView *video, PlaybackMode mode = DefaultPlayback, QObject *parent = 0);
+    explicit PlaylistPlayer(libvlc_instance_t *vlcInstance, QObject *parent = 0);
     
     ~PlaylistPlayer();
 
@@ -34,11 +28,7 @@ public:
 
     Playlist* currentPlaylist() const { return _playlist; }
 
-    inline PlaybackMode mode() const { return _mode; }
-
     void setPlaylist(Playlist *list);
-
-    void setMode(const PlaybackMode &mode);
 
     bool isPlaying() const;
 
@@ -78,8 +68,6 @@ private:
     Playlist *_playlist;
 
     MediaPlayer *_mediaPlayer;
-
-    PlaybackMode _mode;
 
     int _currentIndex;
 };

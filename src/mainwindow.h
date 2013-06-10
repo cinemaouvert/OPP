@@ -55,7 +55,6 @@ private slots:
 
     /* player controls */
     void on_playerPlayButton_clicked(bool checked);
-    void on_playerStopButton_clicked();
 
     void on_playlistsTabWidget_currentChanged(int index);
 

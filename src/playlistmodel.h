@@ -45,8 +45,6 @@ public:
 
     bool dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent );
 
-    void setActiveItem(int index, PlaybackState state);
-
 public slots:
 
     void playItem();
