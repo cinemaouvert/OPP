@@ -430,5 +430,7 @@
         <file>resources/icons/icon_plus.png</file>
         <file>resources/icons/icon_previous.png</file>
         <file>resources/icons/icon_settings.png</file>
+        <file>resources/icons/icon_en.png</file>
+        <file>resources/icons/icon_fr.png</file>
     </qresource>
 </RCC>

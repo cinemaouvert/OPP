@@ -187,10 +187,18 @@
           <property name="text">
            <string>English</string>
           </property>
+          <property name="icon">
+           <iconset resource="../images.qrc">
+            <normaloff>:/icons/resources/icons/icon_en.png</normaloff>:/icons/resources/icons/icon_en.png</iconset>
+          </property>
          </item>
          <item>
           <property name="text">
            <string>Français</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../images.qrc">
+            <normaloff>:/icons/resources/icons/icon_fr.png</normaloff>:/icons/resources/icons/icon_fr.png</iconset>
           </property>
          </item>
         </widget>
@@ -224,6 +232,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../images.qrc"/>
+ </resources>
  <connections/>
 </ui>
