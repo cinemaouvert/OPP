@@ -168,11 +168,9 @@ bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action
 
 void PlaylistModel::removePlaybackWithDeps(Media *media)
 {
-    QList<Playback*> playbacks = _playlist->playbackList();
-
-    for (int i = 0; i < playbacks.count(); i++) {
-        if (playbacks[i]->media() == media) {
-            removePlayback(_playlist->indexOf(playbacks[i]));
+    for (int i = _playlist->count() - 1; i >= 0; i--) {
+        if (_playlist->at(i)->media() == media) {
+            removePlayback(i);
         }
     }
 }

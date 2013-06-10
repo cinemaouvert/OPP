@@ -80,6 +80,11 @@ void PlaylistPlayer::stop()
     libvlc_media_list_player_stop(_vlcMediaListPlayer);
 }
 
+void PlaylistPlayer::playPlaylist(Playlist *playlist)
+{
+    qDebug() << "AUTOMATOR : PLAY PLAYLIST";
+}
+
 void PlaylistPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
 {
     PlaylistPlayer *core = (PlaylistPlayer *)data;

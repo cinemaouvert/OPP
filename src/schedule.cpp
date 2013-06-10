@@ -38,8 +38,9 @@ void Schedule::start()
 {
     if (isExpired() || _timer.isActive())
         return;
-
-    _timer.singleShot(_launchAt.msecsTo(QDateTime::currentDateTime()), this, SLOT(timeout()));
+    qDebug() << QDateTime::currentDateTime().msecsTo(_launchAt);
+    _timer.singleShot(QDateTime::currentDateTime().msecsTo(_launchAt), this, SLOT(timeout()));
+    qDebug()<<"trace debug";
 }
 
 void Schedule::stop()
@@ -54,5 +55,6 @@ bool Schedule::isExpired() const
 
 void Schedule::timeout()
 {
+    qDebug() << "SCHEDULE TRIGGERED";
     emit triggered(_playlist);
 }

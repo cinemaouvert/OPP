@@ -104,6 +104,7 @@ bool MediaListModel::removeMedia(int index)
 
     _mediaFileList.removeAll(_mediaList[index]->location());
     _mediaList.removeAt(index);
+    delete _mediaList[index];
 
     endRemoveRows();
 

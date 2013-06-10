@@ -3,7 +3,8 @@
 #include "schedule.h"
 
 ScheduleListModel::ScheduleListModel(QObject *parent) :
-    QAbstractTableModel(parent)
+    QAbstractTableModel(parent),
+    _automationEnabled(true)
 {
 }
 
@@ -58,13 +59,13 @@ QVariant ScheduleListModel::data(const QModelIndex &index, int role) const
     case Qt::ToolTipRole:
         switch (index.column()) {
         case LaunchAt:
-            return _scheduleList[index.row()].launchAt();
+            return _scheduleList[index.row()]->launchAt();
             break;
         case FinishAt:
-            return _scheduleList[index.row()].finishAt();
+            return _scheduleList[index.row()]->finishAt();
             break;
         case PlaylistId:
-            return _scheduleList[index.row()].playlist()->totalDuration();
+            return _scheduleList[index.row()]->playlist()->title();
             break;
         case Running:
             break;
@@ -74,15 +75,50 @@ QVariant ScheduleListModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool ScheduleListModel::removeRows(int position, int rows, const QModelIndex &index)
+void ScheduleListModel::removeScheduleWithDeps(Playlist *playlist)
+{
+    for (int i = _scheduleList.count() - 1; i >= 0; --i) {
+        if (_scheduleList[i]->playlist() == playlist) {
+            removeSchedule(i);
+        }
+    }
+}
+
+void ScheduleListModel::removeSchedule(int index)
 {
     Q_UNUSED(index);
-    beginRemoveRows(QModelIndex(), position, position+rows-1);
 
-    for (int row = 0; row < rows; ++row) {
-        _scheduleList.removeAt(position);
-    }
-
+    beginRemoveRows(QModelIndex(), index, index);
+    delete _scheduleList[index];
+    _scheduleList.removeAt(index);
     endRemoveRows();
+}
+
+void ScheduleListModel::addSchedule(Schedule *schedule)
+{
+    const int count = _scheduleList.count();
+
+    beginInsertRows(QModelIndex(), count, count);
+    _scheduleList.append(schedule);
+    endInsertRows();
+
+    if (_automationEnabled)
+        schedule->start();
+}
+
+bool ScheduleListModel::isSchedulable(Schedule *schedule) const
+{
+    foreach (Schedule *other, _scheduleList) {
+        if (schedule->launchAt() >= other->launchAt() && schedule->launchAt() <= other->finishAt())
+            return false;
+    }
     return true;
+}
+
+bool ScheduleListModel::isScheduled(Playlist *playlist) const {
+    foreach(Schedule *schedule, _scheduleList) {
+        if (schedule->playlist() == playlist)
+            return true;
+    }
+    return false;
 }

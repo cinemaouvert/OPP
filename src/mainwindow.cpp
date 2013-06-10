@@ -55,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->playerPreviousButton, SIGNAL(clicked()), _playlistPlayer, SLOT(previous()));
     connect(ui->playerNextButton, SIGNAL(clicked()), _playlistPlayer, SLOT(next()));
     connect(_playlistPlayer, SIGNAL(end()), ui->playerPlayButton, SLOT(toggle()));
+//    connect(_playlistPlayer, SIGNAL(itemChanged(int)), ui->playerPlayButton, SLOT(playState()));
 
     _mediaListModel = new MediaListModel();
     _scheduleListModel = new ScheduleListModel();
@@ -95,6 +96,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->ratioComboBox, SIGNAL(currentIndexChanged(int)), _mediaSettingsMapper, SLOT(submit()));
 
     createPlaylistTab();
+
+    ui->scheduleLaunchAtDateEdit->setDate(QDate::currentDate());
+    ui->scheduleLaunchAtTimeEdit->setTime(QTime::currentTime());
 }
 
 MainWindow::~MainWindow()
@@ -108,10 +112,9 @@ MainWindow::~MainWindow()
     delete _app;
 }
 
-void MainWindow::initSettingsViews()
-{
-
-}
+/***********************************************************************************************\
+                                          Media List
+\***********************************************************************************************/
 
 void MainWindow::on_binAddMediaButton_clicked()
 {
@@ -131,10 +134,12 @@ void MainWindow::on_binAddMediaButton_clicked()
 
 void MainWindow::on_binDeleteMediaButton_clicked()
 {
-    QModelIndexList indexes = ui->binTableView->selectionModel()->selectedRows();
+    QItemSelectionModel *selectionModel = ui->binTableView->selectionModel();
 
-    foreach (QModelIndex index, indexes) {
+    while (selectionModel->selectedIndexes().count() != 0) {
+        QModelIndex index = selectionModel->selectedIndexes().first();
         Media *media = _mediaListModel->mediaList().at(index.row());
+
         if (media->isUsed()) {
             if (1 == QMessageBox::warning(this, "remove media", "This media is used. All references of this media into playlists will be deleted too.\n Are you sure to remove this media ?" ,"No", "Yes"))
             {
@@ -145,48 +150,14 @@ void MainWindow::on_binDeleteMediaButton_clicked()
                 }
             }
         }
+
         _mediaListModel->removeMedia(index.row());
     }
 }
 
-void MainWindow::on_settingsAction_triggered()
-{
-    _settingsWindow = new SettingsWindow(this);
-    _settingsWindow->show();
-    _settingsWindow->raise();
-    _settingsWindow->activateWindow();
-}
-
-void MainWindow::on_lockSettingsAction_triggered()
-{
-    _lockSettingsWindow->show();
-    _lockSettingsWindow->raise();
-    _lockSettingsWindow->activateWindow();
-}
-
-void MainWindow::on_playerPlayButton_clicked(bool checked)
-{
-    PlaylistModel *playlistModel = currentPlaylistModel();
-    if (checked) {
-        if (_playlistPlayer->mediaPlayer()->isPaused()) {
-            _playlistPlayer->mediaPlayer()->resume();
-        } else {
-            // play or resume playback
-            QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
-
-            // if no selected item play current playlist from first item
-            if (indexes.count() == 0) {
-                _playlistPlayer->playItemAt(0);
-            // play playlist at selected item otherwise
-            } else {
-                const int index = indexes.first().row();
-                _playlistPlayer->playItemAt(index);
-            }
-        }
-    } else {
-        _playlistPlayer->mediaPlayer()->pause();
-    }
-}
+/***********************************************************************************************\
+                                          Playback Settings
+\***********************************************************************************************/
 
 void MainWindow::on_advancedSettingsButton_clicked()
 {
@@ -204,84 +175,20 @@ void MainWindow::on_advancedPictureSettingsButton_clicked()
     _advancedPictureSettingsWindow->activateWindow();
 }
 
-void MainWindow::on_lockButton_clicked()
+void MainWindow::on_settingsAction_triggered()
 {
+    _settingsWindow = new SettingsWindow(this);
+    _settingsWindow->show();
+    _settingsWindow->raise();
+    _settingsWindow->activateWindow();
 }
 
-void MainWindow::on_menuVideoMode_triggered(QAction *action)
+void MainWindow::on_lockSettingsAction_triggered()
 {
-    foreach(QAction *otherAction, ui->menuVideoMode->actions()) {
-        if (otherAction != action) {
-            otherAction->setEnabled(true);
-            otherAction->setChecked(false);
-        } else {
-            action->setEnabled(false);
-            action->setChecked(true);
-            _videoWindow->setDisplayMode( (VideoWindow::DisplayMode) action->data().toInt() );
-        }
-    }
+    _lockSettingsWindow->show();
+    _lockSettingsWindow->raise();
+    _lockSettingsWindow->activateWindow();
 }
-
-void MainWindow::createPlaylistTab()
-{
-    PlaylistTableView *newTab = new PlaylistTableView;
-    PlaylistModel *newModel = new PlaylistModel(new Playlist(_app->vlcInstance()), _mediaListModel);
-
-    newTab->setModel(newModel);
-    newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
-    newTab->horizontalHeader()->setStretchLastSection(true);
-
-    int pos = ui->playlistsTabWidget->count();
-    ui->playlistsTabWidget->addTab(newTab, "New playlist");
-
-    ui->playlistsTabWidget->setCurrentWidget(newTab);
-}
-
-void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
-{
-    if (ui->playlistsTabWidget->count() == 1) {
-        createPlaylistTab();
-    }
-
-    delete (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(index))->model();
-    ui->playlistsTabWidget->removeTab(index);
-
-    updateSettings();
-}
-
-void MainWindow::on_playlistsTabWidget_currentChanged(int index)
-{
-    PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->widget(index);
-    PlaylistModel *model = (PlaylistModel*) view->model();
-
-    // TODO : disconnect when the index has not changed yet (to get the old selected index)
-//    disconnect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(updateSettings()));
-//    disconnect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
-
-    connect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(updateSettings()));
-    connect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
-
-    connect(_playlistPlayer->mediaPlayer(), SIGNAL(playing()), model, SLOT(playItem()));
-    connect(_playlistPlayer->mediaPlayer(), SIGNAL(paused()), model, SLOT(pauseItem()));
-    connect(_playlistPlayer->mediaPlayer(), SIGNAL(stopped()), model, SLOT(stopItem()));
-
-    connect(_playlistPlayer, SIGNAL(itemChanged(int)), model, SLOT(setPlayingItem(int)));
-
-    _mediaSettingsMapper->setModel( model );
-
-
-    _mediaSettingsMapper->clearMapping();
-    _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
-
-    QModelIndexList indexes = view->selectionModel()->selectedIndexes();
-    if(indexes.count()>0)
-        _mediaSettingsMapper->setCurrentModelIndex(indexes.first());
-
-    updateSettings();
-
-    _playlistPlayer->setPlaylist(model->playlist());
-}
-
 
 void MainWindow::on_audioTrackComboBox_currentIndexChanged(int index)
 {
@@ -393,99 +300,6 @@ void MainWindow::on_audioSyncDoubleSpinBox_valueChanged(double arg1)
     }
 }
 
-void MainWindow::on_testPatternAction_triggered()
-{
-//    _mediaPlayer->play(Media(QFileDialog::getOpenFileName(this, tr("Open test pattern"), QDir::homePath(), tr("Media (*.avi *.mkv *.jpg *.png)")), _app->vlcInstance()));
-}
-
-void MainWindow::on_saveAsAction_triggered()
-{
-    /* Bin save */
-
-    //on sauvegarde le fichier où on veut
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Project"), "", tr("OPP (*.opp);;All Files (*)"));
-    if (fileName.isEmpty())
-         return;
-     else {
-         QFile file(fileName);
-         if (!file.open(QIODevice::WriteOnly)) {
-             QMessageBox::information(this, tr("Unable to open file"),file.errorString());
-         }
-         //save data into the file
-         QDataStream out(&file);
-         out << _mediaListModel->mediaList();
-    }
-}
-
-void MainWindow::on_openListingAction_triggered()
-{
-    /* Bin Loading */
-
-    // Go seek the file to load
-    QString fileName = QFileDialog::getOpenFileName(this,tr("Open Project"), "",tr("OPP (*.opp);;All Files (*)"));
-    if (fileName.isEmpty())
-        return;
-    else{
-        QFile file(fileName);
-        if (!file.open(QIODevice::ReadOnly)){
-            QMessageBox::information(this, tr("Unable to open file"),
-                file.errorString());
-            return;
-        }
-
-        //reset the list once the file is selected
-        while(_mediaListModel->rowCount() > 0) {
-            _mediaListModel->removeRows(0, 1);
-        }
-
-        //load data from the file, and add media in _mediaListModel
-        QDataStream in(&file);
-        int i=0;
-        while(!in.atEnd()){
-            QString loc;
-            in >> loc;
-            _mediaListModel->addMedia(new Media(loc, _app->vlcInstance()));
-            i++;
-        }
-    }//end else
-}
-
-void MainWindow::on_renamePlaylistAction_triggered()
-{
-    int tabIndex = ui->playlistsTabWidget->currentIndex();
-    bool ok;
-
-    QString text = QInputDialog::getText(this,
-        tr("Rename playlist"),
-        tr("Playlist title :"),
-        QLineEdit::Normal,
-        ui->playlistsTabWidget->tabText(tabIndex),
-        &ok
-    );
-
-    if (ok && !text.isEmpty())
-        ui->playlistsTabWidget->setTabText(tabIndex, text);
-}
-
-Playback* MainWindow::selectedPlayback() const {
-    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
-
-    if (indexes.count() == 0)
-        return NULL;
-
-    return currentPlaylistModel()->playlist()->at(indexes.first().row());
-}
-
-PlaylistTableView* MainWindow::currentPlaylistTableView() const
-{
-    return (PlaylistTableView*) ui->playlistsTabWidget->currentWidget();
-}
-
-PlaylistModel* MainWindow::currentPlaylistModel() const
-{
-    return (PlaylistModel*) currentPlaylistTableView()->model();
-}
-
 void MainWindow::updateSettings()
 {
     qDebug() << "trace 0";
@@ -579,6 +393,149 @@ int MainWindow::getTrackIndex(QList<int> list, int track)
     return 0;
 }
 
+/***********************************************************************************************\
+                                          Player
+\***********************************************************************************************/
+
+void MainWindow::on_playerPlayButton_clicked(bool checked)
+{
+    PlaylistModel *playlistModel = currentPlaylistModel();
+    if (checked) {
+        if (_playlistPlayer->mediaPlayer()->isPaused()) {
+            _playlistPlayer->mediaPlayer()->resume();
+        } else {
+            // play or resume playback
+            QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+
+            // if no selected item play current playlist from first item
+            if (indexes.count() == 0) {
+                _playlistPlayer->playItemAt(0);
+            // play playlist at selected item otherwise
+            } else {
+                const int index = indexes.first().row();
+                _playlistPlayer->playItemAt(index);
+            }
+        }
+    } else {
+        _playlistPlayer->mediaPlayer()->pause();
+    }
+}
+
+void MainWindow::on_menuVideoMode_triggered(QAction *action)
+{
+    foreach(QAction *otherAction, ui->menuVideoMode->actions()) {
+        if (otherAction != action) {
+            otherAction->setEnabled(true);
+            otherAction->setChecked(false);
+        } else {
+            action->setEnabled(false);
+            action->setChecked(true);
+            _videoWindow->setDisplayMode( (VideoWindow::DisplayMode) action->data().toInt() );
+        }
+    }
+}
+
+void MainWindow::on_testPatternAction_triggered()
+{
+//    _mediaPlayer->play(Media(QFileDialog::getOpenFileName(this, tr("Open test pattern"), QDir::homePath(), tr("Media (*.avi *.mkv *.jpg *.png)")), _app->vlcInstance()));
+}
+
+/***********************************************************************************************\
+                                          Playlist
+\***********************************************************************************************/
+
+void MainWindow::createPlaylistTab()
+{
+    PlaylistTableView *newTab = new PlaylistTableView;
+    Playlist *playlist = new Playlist(_app->vlcInstance(), "new playlist");
+    PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel);
+
+    newTab->setModel(newModel);
+    newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
+    newTab->horizontalHeader()->setStretchLastSection(true);
+
+    ui->playlistsTabWidget->addTab(newTab, playlist->title());
+
+    ui->playlistsTabWidget->setCurrentWidget(newTab);
+
+    updatePlaylistListCombox();
+}
+
+void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
+{
+    Playlist *playlist = playlistAt(index);
+
+    // delete schedule which use the playlist
+    if (_scheduleListModel->isScheduled(playlist)) {
+        if (0 == QMessageBox::warning(this, "remove playlist", "This playlist was scheduled. All schedules which use this playlist will be deleted too.\n Are you sure to remove this playlist ?" ,"No", "Yes"))
+            return;
+        _scheduleListModel->removeScheduleWithDeps(playlist);
+    }
+
+    if (ui->playlistsTabWidget->count() == 1) {
+        createPlaylistTab();
+    }
+
+    delete (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(index))->model();
+    ui->playlistsTabWidget->removeTab(index);
+
+    updateSettings();
+    updatePlaylistListCombox();
+}
+
+void MainWindow::on_playlistsTabWidget_currentChanged(int index)
+{
+    PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->widget(index);
+    PlaylistModel *model = (PlaylistModel*) view->model();
+
+    // TODO : disconnect when the index has not changed yet (to get the old selected index)
+//    disconnect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(updateSettings()));
+//    disconnect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
+
+    connect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(updateSettings()));
+    connect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
+
+    connect(_playlistPlayer->mediaPlayer(), SIGNAL(playing()), model, SLOT(playItem()));
+    connect(_playlistPlayer->mediaPlayer(), SIGNAL(paused()), model, SLOT(pauseItem()));
+    connect(_playlistPlayer->mediaPlayer(), SIGNAL(stopped()), model, SLOT(stopItem()));
+
+    connect(_playlistPlayer, SIGNAL(itemChanged(int)), model, SLOT(setPlayingItem(int)));
+
+    _mediaSettingsMapper->setModel( model );
+
+
+    _mediaSettingsMapper->clearMapping();
+    _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
+
+    QModelIndexList indexes = view->selectionModel()->selectedIndexes();
+    if(indexes.count()>0)
+        _mediaSettingsMapper->setCurrentModelIndex(indexes.first());
+
+    updateSettings();
+
+    _playlistPlayer->setPlaylist(model->playlist());
+}
+
+void MainWindow::on_renamePlaylistAction_triggered()
+{
+    int tabIndex = ui->playlistsTabWidget->currentIndex();
+    bool ok;
+
+    QString text = QInputDialog::getText(this,
+        tr("Rename playlist"),
+        tr("Playlist title :"),
+        QLineEdit::Normal,
+        ui->playlistsTabWidget->tabText(tabIndex),
+        &ok
+    );
+
+    if (ok && !text.isEmpty()) {
+        ui->playlistsTabWidget->setTabText(tabIndex, text);
+        currentPlaylistModel()->playlist()->setTitle(text);
+        updatePlaylistListCombox();
+    }
+}
+
 void MainWindow::on_removePlaylistItemAction_triggered()
 {
     QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
@@ -588,4 +545,135 @@ void MainWindow::on_removePlaylistItemAction_triggered()
 
    currentPlaylistModel()->removePlayback(indexes.first().row());
    updateSettings();
+}
+
+/***********************************************************************************************\
+                                          Project import/export
+\***********************************************************************************************/
+
+void MainWindow::on_saveAsAction_triggered()
+{
+    /* Bin save */
+
+    //on sauvegarde le fichier où on veut
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Project"), "", tr("OPP (*.opp);;All Files (*)"));
+    if (fileName.isEmpty())
+         return;
+     else {
+         QFile file(fileName);
+         if (!file.open(QIODevice::WriteOnly)) {
+             QMessageBox::information(this, tr("Unable to open file"),file.errorString());
+         }
+         //save data into the file
+         QDataStream out(&file);
+         out << _mediaListModel->mediaList();
+    }
+}
+
+void MainWindow::on_openListingAction_triggered()
+{
+    /* Bin Loading */
+
+    // Go seek the file to load
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Open Project"), "",tr("OPP (*.opp);;All Files (*)"));
+    if (fileName.isEmpty())
+        return;
+    else{
+        QFile file(fileName);
+        if (!file.open(QIODevice::ReadOnly)){
+            QMessageBox::information(this, tr("Unable to open file"),
+                file.errorString());
+            return;
+        }
+
+        //reset the list once the file is selected
+        while(_mediaListModel->rowCount() > 0) {
+            _mediaListModel->removeRows(0, 1);
+        }
+
+        //load data from the file, and add media in _mediaListModel
+        QDataStream in(&file);
+        int i=0;
+        while(!in.atEnd()){
+            QString loc;
+            in >> loc;
+            _mediaListModel->addMedia(new Media(loc, _app->vlcInstance()));
+            i++;
+        }
+    }//end else
+}
+
+/***********************************************************************************************\
+                                          Automation
+\***********************************************************************************************/
+
+void MainWindow::updatePlaylistListCombox()
+{
+    QStringList tabs;
+
+    for (int i = 0; i < ui->playlistsTabWidget->count(); i++)
+        tabs << ui->playlistsTabWidget->tabText(i);
+
+    ui->schedulePlaylistListComboBox->clear();
+    ui->schedulePlaylistListComboBox->addItems(tabs);
+}
+
+void MainWindow::on_scheduleDeleteButton_clicked()
+{
+    QItemSelectionModel *selectionModel = ui->scheduleTableView->selectionModel();
+
+    while (selectionModel->selectedIndexes().count() != 0) {
+        QModelIndex index = selectionModel->selectedIndexes().first();
+        _scheduleListModel->removeSchedule(index.row());
+    }
+}
+
+void MainWindow::on_scheduleAddButton_clicked()
+{
+    QDateTime launchAt(ui->scheduleLaunchAtDateEdit->date(), ui->scheduleLaunchAtTimeEdit->time());
+    const int playlistIndex = ui->schedulePlaylistListComboBox->currentIndex();
+
+    if (launchAt <= QDateTime::currentDateTime()) {
+        // error : launch at validation
+        return;
+    }
+
+    Playlist *playlist = playlistAt(playlistIndex);
+    Schedule *schedule = new Schedule(playlist, launchAt);
+
+    if (_scheduleListModel->isSchedulable(schedule)) {
+        connect(schedule, SIGNAL(triggered(Playlist*)), _playlistPlayer, SLOT(playPlaylist(Playlist*)));
+        _scheduleListModel->addSchedule(schedule);
+    } else {
+        // error : date interval not available
+        delete schedule;
+    }
+}
+
+/***********************************************************************************************\
+                                          Helpers
+\***********************************************************************************************/
+
+Playback* MainWindow::selectedPlayback() const {
+    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+
+    if (indexes.count() == 0)
+        return NULL;
+
+    return currentPlaylistModel()->playlist()->at(indexes.first().row());
+}
+
+PlaylistTableView* MainWindow::currentPlaylistTableView() const
+{
+    return (PlaylistTableView*) ui->playlistsTabWidget->currentWidget();
+}
+
+PlaylistModel* MainWindow::currentPlaylistModel() const
+{
+    return (PlaylistModel*) currentPlaylistTableView()->model();
+}
+
+Playlist* MainWindow::playlistAt(int index) const
+{
+    return ( (PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(index) )->model() )->playlist();
 }

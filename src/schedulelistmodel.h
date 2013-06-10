@@ -13,7 +13,7 @@ public:
 
     explicit ScheduleListModel(QObject *parent = 0);
     
-    inline QList<Schedule>& scheduleList() { return _scheduleList; }
+    inline const QList<Schedule*>& scheduleList() { return _scheduleList; }
 
     int columnCount(const QModelIndex &parent) const;
 
@@ -25,10 +25,20 @@ public:
 
     QVariant data(const QModelIndex &index, int role) const;
 
-    bool removeRows(int position, int rows, const QModelIndex &index = QModelIndex());
+    void removeScheduleWithDeps(Playlist *playlist);
+
+    void removeSchedule(int index);
+
+    void addSchedule(Schedule *schedule);
+
+    bool isSchedulable(Schedule *schedule) const;
+
+    bool isScheduled(Playlist *playlist) const;
 
 private:
-    QList<Schedule> _scheduleList;
+    QList<Schedule*> _scheduleList;
+
+    bool _automationEnabled;
 };
 
 #endif // SCHEDULELISTMODEL_H
