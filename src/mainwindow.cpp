@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _playlistPlayer->mediaPlayer()->setVolume(ui->playerVolumeSlider->value());
 
     connect(ui->playerVolumeSlider, SIGNAL(valueChanged(int)), _playlistPlayer->mediaPlayer(), SLOT(setVolume(int)));
-    connect(_playlistPlayer->mediaPlayer(), SIGNAL(playing()), ui->playerPlayButton, SLOT(toggle()));
+    connect(_playlistPlayer->mediaPlayer(), SIGNAL(playing(bool)), ui->playerPlayButton, SLOT(setChecked(bool)));
     connect(ui->playerStopButton, SIGNAL(clicked()), _playlistPlayer, SLOT(stop()));
     connect(ui->playerStopButton, SIGNAL(clicked(bool)), ui->playerPlayButton, SLOT(setChecked(bool)));
     connect(ui->playerPreviousButton, SIGNAL(clicked()), _playlistPlayer, SLOT(previous()));

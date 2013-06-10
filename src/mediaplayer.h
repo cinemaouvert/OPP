@@ -99,7 +99,7 @@ signals:
     void opening();
     void pausableChanged(const bool &);
     void paused();
-    void playing();
+    void playing(bool = true);
     void positionChanged(const float &);
     void seekableChanged(const bool &);
     void snapshotTaken(const QString &);

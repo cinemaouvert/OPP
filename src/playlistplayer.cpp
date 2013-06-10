@@ -82,7 +82,9 @@ void PlaylistPlayer::stop()
 
 void PlaylistPlayer::playPlaylist(Playlist *playlist)
 {
-    qDebug() << "AUTOMATOR : PLAY PLAYLIST";
+    setPlaylist(playlist);
+
+    playItemAt(0);
 }
 
 void PlaylistPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
