@@ -167,6 +167,11 @@ void Media::usageCountAdd(int count)
     emit usageCountChanged();
 }
 
+bool Media::isImage() const
+{
+    return _audioTracks.count() == 1 && _videoTracks.count() == 2 && _subtitlesTracks.count() == 1;
+}
+
 bool Media::isUsed() const
 {
     return _usageCount > 0;

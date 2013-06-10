@@ -34,6 +34,8 @@ public:
     QList<int> videoTracks() const;
     QList<int> subtitlesTracks() const;
 
+    bool isImage() const;
+
     void usageCountAdd(int count = 1);
     bool isUsed() const;
 
