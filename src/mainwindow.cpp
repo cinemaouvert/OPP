@@ -176,7 +176,7 @@ void MainWindow::on_playerPlayButton_clicked(bool checked)
 
             // if no selected item play current playlist from first item
             if (indexes.count() == 0) {
-                _playlistPlayer->play();
+                _playlistPlayer->playItemAt(0);
             // play playlist at selected item otherwise
             } else {
                 const int index = indexes.first().row();

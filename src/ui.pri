@@ -15,7 +15,8 @@ HEADERS += src/playertimelinewidget.h \
     src/schedulelistmodel.h \
     src/utils.h \
     src/locker.h \
-    src/statuswidget.h
+    src/statuswidget.h \
+    src/passformdialog.h
 
 SOURCES += src/main.cpp \
     src/playertimelinewidget.cpp \
@@ -35,7 +36,8 @@ SOURCES += src/main.cpp \
     src/schedulelistmodel.cpp \
     src/utils.cpp \
     src/locker.cpp \
-    src/statuswidget.cpp
+    src/statuswidget.cpp \
+    src/passformdialog.cpp
 
 FORMS += src/mainwindow.ui \
     src/playertimelinewidget.ui \
@@ -44,6 +46,7 @@ FORMS += src/mainwindow.ui \
     src/advancedsettingswindow.ui \
     src/settingswindow.ui \
     src/locksettingswindow.ui \
-    src/statuswidget.ui
+    src/statuswidget.ui \
+    src/passformdialog.ui
 
 TRANSLATIONS = opp_fr.ts
