@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 
+#include <QDataWidgetMapper>
+#include <QLabel>
+
 namespace Ui {
 class MainWindow;
 }
@@ -13,12 +16,14 @@ class LockSettingsWindow;
 class AdvancedSettingsWindow;
 class AdvancedPictureSettingsWindow;
 class PlaylistTableView;
+class StatusWidget;
 
+class PlaylistModel;
 class MediaListModel;
 class ScheduleListModel;
 
 class Application;
-class MediaPlayer;
+class PlaylistPlayer;
 class Playback;
 class Locker;
 
@@ -49,8 +54,7 @@ private slots:
     void on_lockButton_clicked();
 
     /* player controls */
-    void on_playerPlayButton_clicked();
-    void on_playerStopButton_clicked();
+    void on_playerPlayButton_clicked(bool checked);
 
     void on_playlistsTabWidget_currentChanged(int index);
 
@@ -60,15 +64,32 @@ private slots:
     void on_brightnessSpinBox_valueChanged(int arg1);
     void on_saturationSpinBox_valueChanged(int arg1);
     void on_hueSpinBox_valueChanged(int arg1);
+    void on_audioSyncDoubleSpinBox_valueChanged(double arg1);
 
     void on_testPatternAction_triggered();
 
     void on_saveAsAction_triggered();
     void on_openListingAction_triggered();
 
+    void updateSettings();
+
+    void createPlaylistTab();
+    void on_playlistsTabWidget_tabCloseRequested(int index);
+    void on_renamePlaylistAction_triggered();
+    void on_removePlaylistItemAction_triggered();
+
+    void on_audioTrackComboBox_currentIndexChanged(const QString &arg1);
+
+    void on_videoTrackComboBox_currentIndexChanged(const QString &arg1);
+
+    void on_subtitlesTrackComboBox_currentIndexChanged(const QString &arg1);
+
+    int getTrackIndex(QList<int> list, int track);
+
 protected:
-    PlaylistTableView* createPlaylistTab();
     Playback* selectedPlayback() const;
+    PlaylistTableView* currentPlaylistTableView() const;
+    PlaylistModel* currentPlaylistModel() const;
 
 private:
     Ui::MainWindow *ui;
@@ -78,9 +99,12 @@ private:
     LockSettingsWindow *_lockSettingsWindow;
     AdvancedSettingsWindow *_advancedSettingsWindow;
     AdvancedPictureSettingsWindow *_advancedPictureSettingsWindow;
+    StatusWidget *_statusWidget;
+
+    QDataWidgetMapper *_mediaSettingsMapper;
 
     Application *_app;
-    MediaPlayer *_mediaPlayer;
+    PlaylistPlayer *_playlistPlayer;
 
     MediaListModel *_mediaListModel;
     ScheduleListModel *_scheduleListModel;

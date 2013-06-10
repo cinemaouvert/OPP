@@ -4,6 +4,7 @@
 #include <QIcon>
 
 #include "utils.h"
+#include "media.h"
 
 MediaListModel::MediaListModel(QObject *parent) :
     QAbstractTableModel(parent)
@@ -60,33 +61,35 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
     case Qt::ToolTipRole:
         switch (index.column()) {
         case Name:
-            return _mediaList[index.row()].name();
+            return _mediaList[index.row()]->name();
             break;
         case Location:
-            return _mediaList[index.row()].location();
+            return _mediaList[index.row()]->location();
             break;
         case Duration:
-            return msecToQTime(_mediaList[index.row()].duration()).toString("hh:mm:ss");
+            return msecToQTime(_mediaList[index.row()]->duration()).toString("hh:mm:ss");
             break;
         }
         break;
     case Qt::DecorationRole:
         if (index.column() == Used) {
             QIcon icon;
-            // unckeck icon : /icons/resources/glyphicons/glyphicons_153_unchecked.png
-            icon.addFile(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_152_check.png"), QSize(), QIcon::Normal, QIcon::Off);
+            if (_mediaList[index.row()]->isUsed())
+                icon.addFile(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_152_check.png"), QSize(), QIcon::Normal, QIcon::Off);
+            else
+                icon.addFile(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_153_unchecked.png"), QSize(), QIcon::Normal, QIcon::Off);
             return icon;
         }
         break;
     case Qt::DisplayRole:
         if (index.column() == Location) {
-            return _mediaList[index.row()].location();
+            return _mediaList[index.row()]->location();
         }
         if (index.column() == Name) {
-            return _mediaList[index.row()].name();
+            return _mediaList[index.row()]->name();
         }
         if (index.column() == Duration) {
-            return msecToQTime(_mediaList[index.row()].duration()).toString("hh:mm:ss");
+            return msecToQTime(_mediaList[index.row()]->duration()).toString("hh:mm:ss");
         }
         break;
     }
@@ -94,40 +97,38 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool MediaListModel::removeRows(int position, int rows, const QModelIndex &index)
+bool MediaListModel::removeMedia(int index)
 {
     Q_UNUSED(index);
-    beginRemoveRows(QModelIndex(), position, position+rows-1);
+    beginRemoveRows(QModelIndex(), index, index);
 
-    for (int row=0; row < rows; ++row) {
-        _mediaList.removeAt(position);
-    }
+    _mediaFileList.removeAll(_mediaList[index]->location());
+    _mediaList.removeAt(index);
 
     endRemoveRows();
+
+    emit mediaListChanged(_mediaList.count());
     return true;
 }
 
-bool MediaListModel::addMedia(const Media &media)
-{
-    const int count = _mediaList.count();
-    if (!_mediaList.contains(media)) {
-        beginInsertRows(QModelIndex(), count, count);
-        _mediaList.append(media);
-        endInsertRows();
-        return true;
-    } else {
+bool MediaListModel::addMedia(Media *media)
+{   
+    if (_mediaFileList.contains(media->location()))
         return false;
-    }
-}
 
-Media* MediaListModel::findByPath(const QString &path) const
-{
-    foreach(const Media &m, _mediaList) {
-        if (m.location() == path) {
-            return const_cast<Media*>(&m);
-        }
-    }
-    return NULL;
+    const int count = _mediaList.count();
+
+    beginInsertRows(QModelIndex(), count, count);
+
+    _mediaList.append(media);
+    connect(media, SIGNAL(usageCountChanged()), this, SIGNAL(layoutChanged()));
+
+    endInsertRows();
+
+    _mediaFileList.append(media->location());
+
+    emit mediaListChanged(_mediaList.count());
+    return true;
 }
 
 QDataStream & operator << (QDataStream & out, const QList<Media> &list)

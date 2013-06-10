@@ -50,33 +50,11 @@ bool MediaPlayer::isPlaying() const
 void MediaPlayer::setVideoView(VideoView *videoView)
 {
     _videoView = videoView;
-}
 
-void MediaPlayer::open(Playback *playback)
-{
-    if (_currentPlayback) {
-        disconnect(_currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
-    }
-
-    _currentPlayback = playback;
-    VLCERR( libvlc_media_player_set_media(_vlcMediaPlayer, playback->media()->core()) );
-
-    connect(_currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
-}
-
-void MediaPlayer::play()
-{
-    if (!_vlcMediaPlayer)
-        return;
-
-    if (_videoView) {
-        _currentWId = _videoView->request();
-    } else {
-        _currentWId = 0;
-    }
+    _currentWId = _videoView->request();
 
     if (_currentWId) {
-#if defined(Q_OS_WIN32)
+#if defined(Q_OS_WIN)
         libvlc_media_player_set_hwnd(_vlcMediaPlayer, (void *)_currentWId);
 #elif defined(Q_OS_MAC)
         libvlc_media_player_set_nsobject(_vlcMediaPlayer, (void *)_currentWId);
@@ -84,14 +62,50 @@ void MediaPlayer::play()
         libvlc_media_player_set_xwindow(_vlcMediaPlayer, _currentWId);
 #endif
     }
+}
 
+void MediaPlayer::open(Playback *playback)
+{
+    if (_currentPlayback) {
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(gammaChanged(int)), this, SLOT(setCurrentGamma(int)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(contrastChanged(int)), this, SLOT(setCurrentContrast(int)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(brightnessChanged(int)), this, SLOT(setCurrentBrightness(int)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(saturationChanged(int)), this, SLOT(setCurrentSaturation(int)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(hueChanged(int)), this, SLOT(setCurrentHue(int)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(deinterlacingChanged(Deinterlacing)), this, SLOT(setCurrentDeinterlacing(Deinterlacing)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesSyncChanged(double)), this, SLOT(setCurrentSubtitlesSync(double)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(audioSyncChanged(double)), this, SLOT(setCurrentAudioSync(double)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(int)), this, SLOT(setCurrentAudioTrack(int)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
+    }
+
+    _currentPlayback = playback;
+    VLCERR( libvlc_media_player_set_media(_vlcMediaPlayer, playback->media()->core()) );
+
+    connect(_currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(gammaChanged(int)), this, SLOT(setCurrentGamma(int)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(contrastChanged(int)), this, SLOT(setCurrentContrast(int)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(brightnessChanged(int)), this, SLOT(setCurrentBrightness(int)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(saturationChanged(int)), this, SLOT(setCurrentSaturation(int)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(hueChanged(int)), this, SLOT(setCurrentHue(int)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(deinterlacingChanged(Deinterlacing)), this, SLOT(setCurrentDeinterlacing(Deinterlacing)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesSyncChanged(double)), this, SLOT(setCurrentSubtitlesSync(double)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(audioSyncChanged(double)), this, SLOT(setCurrentAudioSync(double)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(int)), this, SLOT(setCurrentAudioTrack(int)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
+}
+
+void MediaPlayer::play()
+{
     VLCERR( libvlc_media_player_play(_vlcMediaPlayer) );
     _isPaused = false;
 }
 
 void MediaPlayer::pause()
 {
-    qDebug()<<libvlc_audio_get_channel(_vlcMediaPlayer);
     libvlc_media_player_set_pause(_vlcMediaPlayer, true);
     _isPaused = true;
 }
@@ -140,6 +154,21 @@ void MediaPlayer::setPosition(const int &position)
     setPosition( ((float) position) / 100.f);
 }
 
+void MediaPlayer::setCurrentAudioTrack(int track)
+{
+    libvlc_audio_set_track(_vlcMediaPlayer, track);
+}
+
+void MediaPlayer::setCurrentVideoTrack(int track)
+{
+    libvlc_video_set_track(_vlcMediaPlayer, track);
+}
+
+void MediaPlayer::setCurrentSubtitlesTrack(int track)
+{
+    libvlc_video_set_spu(_vlcMediaPlayer, track);
+}
+
 void MediaPlayer::setCurrentRatio(Ratio ratio)
 {
     libvlc_video_set_aspect_ratio(_vlcMediaPlayer, MediaSettings::ratioValues()[ratio].toUtf8().data());
@@ -152,7 +181,7 @@ void MediaPlayer::setCurrentDeinterlacing(Deinterlacing deinterlacing)
 
 void MediaPlayer::setCurrentSubtitlesSync(double sync)
 {
-    libvlc_video_set_spu_delay(_vlcMediaPlayer,(int64_t)(1000*sync));
+    libvlc_video_set_spu_delay(_vlcMediaPlayer,(int64_t)(1000000*sync));
 }
 
 void MediaPlayer::setCurrentGamma(int gamma)
@@ -183,6 +212,12 @@ void MediaPlayer::setCurrentHue(int hue)
 {
     libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
     libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Hue, (float)hue/100);
+
+}
+
+void MediaPlayer::setCurrentAudioSync(double sync)
+{
+    libvlc_audio_set_delay(_vlcMediaPlayer,(int64_t)(1000000*sync));
 }
 
 void MediaPlayer::createCoreConnections()

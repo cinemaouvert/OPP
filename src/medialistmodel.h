@@ -3,10 +3,9 @@
 
 #include <QAbstractTableModel>
 #include <QList>
+#include <QStringList>
 
 #include "media.h"
-
-//class Media;
 
 class MediaListModel : public QAbstractTableModel
 {
@@ -16,7 +15,7 @@ public:
 
     MediaListModel(QObject *parent = 0);
 
-    inline QList<Media>& mediaList() { return _mediaList; }
+    inline QList<Media*>& mediaList() { return _mediaList; }
 
     int columnCount(const QModelIndex &parent) const;
 
@@ -28,14 +27,21 @@ public:
 
     QVariant data(const QModelIndex &index, int role) const;
 
-    bool removeRows(int position, int rows, const QModelIndex &index = QModelIndex());
+    bool removeMedia(int index);
 
-    bool addMedia(const Media &media);
+    bool addMedia(Media *media);
 
-    Media* findByPath(const QString &path) const;
+signals:
+    /**
+     * @brief signal mediaListChanged
+     * @param The number of media after the list changed
+     */
+    void mediaListChanged(int);
 
 private:
-    QList<Media> _mediaList;
+    QList<Media*> _mediaList;
+
+    QStringList _mediaFileList;
 
     friend QDataStream & operator << (QDataStream &, const QList<Media> &);
     friend QDataStream & operator >> (QDataStream &, QList<Media> &);

@@ -6,6 +6,7 @@
 
 #include "playlist.h"
 
+class PlaylistPlayer;
 class Playback;
 class MediaListModel;
 
@@ -14,10 +15,15 @@ class PlaylistModel : public QAbstractTableModel
     Q_OBJECT
 public:
     enum Columns { Title = 0, Duration = 1, Video = 2, Audio = 3, Subtitles = 4, TestPattern = 5, Gain = 6, Status = 7 };
+    enum PlaybackState { Playing = 0, Paused = 1, Idle = 2 };
 
-    PlaylistModel(MediaListModel *mediaListModel, QObject *parent = 0);
+    PlaylistModel(Playlist *playlist, MediaListModel *mediaListModel, QObject *parent = 0);
 
-    inline const Playlist & playlist() const { return _playlist; }
+    virtual ~PlaylistModel();
+
+    inline Playlist* playlist() const { return _playlist; }
+
+    int activeItemIndex() const { return _activeItem.first; }
 
     int columnCount(const QModelIndex &parent) const;
 
@@ -29,12 +35,30 @@ public:
 
     QVariant data(const QModelIndex &index, int role) const;
 
-    bool addPlayback(const Playback &playback);
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::DisplayRole);
+
+    bool addPlayback(Playback *playback);
+
+    void removePlaybackWithDeps(Media *media);
+
+    void removePlayback(int index);
 
     bool dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent );
+
+public slots:
+
+    void playItem();
+
+    void pauseItem();
+
+    void stopItem();
+
+    void setPlayingItem(int index);
+
 private:
-    Playlist _playlist;
+    Playlist *_playlist;
     MediaListModel *_mediaListModel;
+    QPair<int, PlaybackState> _activeItem;
 };
 
 

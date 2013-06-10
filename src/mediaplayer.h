@@ -5,6 +5,7 @@
 #include <QtGui/qwindowdefs.h>
 
 #include "mediasettings.h"
+#include "playlistplayer.h"
 
 class Playback;
 class VideoView;
@@ -19,12 +20,15 @@ struct libvlc_media_t;
 
 class MediaPlayer : public QObject
 {
+    friend class PlaylistPlayer;
     Q_OBJECT
 public:
     explicit MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent = 0);
     virtual ~MediaPlayer();
 
     inline Playback *currentPlayback() const { return _currentPlayback; }
+
+    inline libvlc_media_player_t *core() const { return _vlcMediaPlayer; }
 
     inline bool isPaused() const { return _isPaused; }
 
@@ -71,11 +75,16 @@ public slots:
 
     void setCurrentSubtitlesSync(double sync);
 
+    void setCurrentAudioTrack(int track);
+    void setCurrentVideoTrack(int track);
+    void setCurrentSubtitlesTrack(int track);
+
     void setCurrentGamma(int gamma);
     void setCurrentContrast(int contrast);
     void setCurrentBrightness(int brightness);
     void setCurrentSaturation(int saturation);
     void setCurrentHue(int hue);
+    void setCurrentAudioSync(double sync);
 
 
 signals:
