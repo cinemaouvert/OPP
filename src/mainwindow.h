@@ -78,11 +78,9 @@ private slots:
     void on_renamePlaylistAction_triggered();
     void on_removePlaylistItemAction_triggered();
 
-    void on_audioTrackComboBox_currentIndexChanged(const QString &arg1);
-
-    void on_videoTrackComboBox_currentIndexChanged(const QString &arg1);
-
-    void on_subtitlesTrackComboBox_currentIndexChanged(const QString &arg1);
+    void on_audioTrackComboBox_currentIndexChanged(int index);
+    void on_videoTrackComboBox_currentIndexChanged(int index);
+    void on_subtitlesTrackComboBox_currentIndexChanged(int index);
 
     int getTrackIndex(QList<int> list, int track);
 

@@ -38,8 +38,6 @@ public slots:
 
     void next();
 
-    void play();
-
     void previous();
 
     void stop();

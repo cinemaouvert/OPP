@@ -96,9 +96,9 @@ void MediaSettings::initDefault()
     _brightness = 50;
     _saturation = 50;
     _hue = 0;
-    _audioTrack=2;
-    _videoTrack=0;
-    _subtitlesTrack=4;
+    _audioTrack = 0;
+    _videoTrack = 0;
+    _subtitlesTrack = -1;
     _audioSync=0;
 }
 

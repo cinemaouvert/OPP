@@ -45,6 +45,8 @@ void PlaylistPlayer::playItemAt(const int &index)
     _mediaPlayer->_isPaused = false;
     _currentIndex = index - 1;
 
+    //  apply media settings
+
     libvlc_media_list_player_play_item_at_index(_vlcMediaListPlayer, index);
 }
 
@@ -56,15 +58,6 @@ void PlaylistPlayer::next()
     }
 
     libvlc_media_list_player_next(_vlcMediaListPlayer);
-}
-
-void PlaylistPlayer::play()
-{
-    _mediaPlayer->_isPaused = false;
-
-    _currentIndex = -1;
-
-    libvlc_media_list_player_play(_vlcMediaListPlayer);
 }
 
 void PlaylistPlayer::previous()
