@@ -187,14 +187,6 @@ void PlaylistModel::removePlayback(int index)
     endRemoveRows(); 
 }
 
-void PlaylistModel::setActiveItem(int index, PlaybackState state)
-{
-    _activeItem.first  = index;
-    _activeItem.second = state;
-
-    emit layoutChanged();
-}
-
 void PlaylistModel::playItem()
 {
     _activeItem.second = Playing;
@@ -215,7 +207,6 @@ void PlaylistModel::stopItem()
 
 void PlaylistModel::setPlayingItem(int index)
 {
-    qDebug()<< "index changed ======> "<<index;
     _activeItem.first = index;
     emit layoutChanged();
 }

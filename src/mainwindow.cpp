@@ -170,7 +170,6 @@ void MainWindow::on_playerPlayButton_clicked(bool checked)
     if (checked) {
         if (_playlistPlayer->mediaPlayer()->isPaused()) {
             _playlistPlayer->mediaPlayer()->resume();
-//            playlistModel->setActiveItem(playlistModel->activeItemIndex(), PlaylistModel::Playing);
         } else {
             // play or resume playback
             QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
@@ -178,23 +177,15 @@ void MainWindow::on_playerPlayButton_clicked(bool checked)
             // if no selected item play current playlist from first item
             if (indexes.count() == 0) {
                 _playlistPlayer->play();
-//                playlistModel->setActiveItem(0, PlaylistModel::Playing);
             // play playlist at selected item otherwise
             } else {
                 const int index = indexes.first().row();
                 _playlistPlayer->playItemAt(index);
-//                playlistModel->setActiveItem(index, PlaylistModel::Playing);
             }
         }
     } else {
         _playlistPlayer->mediaPlayer()->pause();
-//        playlistModel->setActiveItem(playlistModel->activeItemIndex(), PlaylistModel::Paused);
     }
-}
-
-void MainWindow::on_playerStopButton_clicked()
-{
-//    currentPlaylistModel()->setActiveItem(-1, PlaylistModel::Idle);
 }
 
 void MainWindow::on_advancedSettingsButton_clicked()
