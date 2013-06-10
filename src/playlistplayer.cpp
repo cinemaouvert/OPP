@@ -90,11 +90,26 @@ void PlaylistPlayer::stop()
 void PlaylistPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
 {
     PlaylistPlayer *core = (PlaylistPlayer *)data;
-
+    Playback *currentPlayback;
     switch(event->type)
     {
     case libvlc_MediaListPlayerNextItemSet:
         core->_currentIndex++;
+        currentPlayback = core->_playlist->at(core->_currentIndex);
+
+        connect(currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), core->_mediaPlayer, SLOT(setCurrentRatio(Ratio)));
+        connect(currentPlayback->mediaSettings(), SIGNAL(gammaChanged(int)), core->_mediaPlayer, SLOT(setCurrentGamma(int)));
+        connect(currentPlayback->mediaSettings(), SIGNAL(contrastChanged(int)), core->_mediaPlayer, SLOT(setCurrentContrast(int)));
+        connect(currentPlayback->mediaSettings(), SIGNAL(brightnessChanged(int)), core->_mediaPlayer, SLOT(setCurrentBrightness(int)));
+        connect(currentPlayback->mediaSettings(), SIGNAL(saturationChanged(int)), core->_mediaPlayer, SLOT(setCurrentSaturation(int)));
+        connect(currentPlayback->mediaSettings(), SIGNAL(hueChanged(int)), core->_mediaPlayer, SLOT(setCurrentHue(int)));
+        connect(currentPlayback->mediaSettings(), SIGNAL(deinterlacingChanged(Deinterlacing)), core->_mediaPlayer, SLOT(setCurrentDeinterlacing(Deinterlacing)));
+        connect(currentPlayback->mediaSettings(), SIGNAL(subtitlesSyncChanged(double)), core->_mediaPlayer, SLOT(setCurrentSubtitlesSync(double)));
+        connect(currentPlayback->mediaSettings(), SIGNAL(audioSyncChanged(double)), core->_mediaPlayer, SLOT(setCurrentAudioSync(double)));
+        connect(currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(int)), core->_mediaPlayer, SLOT(setCurrentAudioTrack(int)));
+        connect(currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(int)), core->_mediaPlayer, SLOT(setCurrentVideoTrack(int)));
+        connect(currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), core->_mediaPlayer, SLOT(setCurrentSubtitlesTrack(int)));
+
         emit core->itemChanged(core->_currentIndex);
         break;
     default:
