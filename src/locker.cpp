@@ -1,4 +1,5 @@
 #include "locker.h"
+#include "passformdialog.h"
 
 #include <QWidget>
 #include <QDebug>
@@ -7,6 +8,8 @@ Locker::Locker(QList<QWidget*> widgets, QObject *parent) :
     QObject(parent),
     _widgets(widgets)
 {
+    _passDialog = new passformdialog(this);
+    this->setPasswordEnable(false);
 }
 
 bool Locker::getAutoLock(){
@@ -52,6 +55,10 @@ void Locker::lock()
     qDebug() << "locked";
     // pour chaque widgets enregistré dans _widgets
     //      faire un setEnabled(false)
+    foreach(QWidget *widget,_widgets)
+    {
+        widget->setEnabled(false);
+    }
 }
 
 void Locker::unlock()
@@ -59,6 +66,16 @@ void Locker::unlock()
     qDebug() << "unlocked";
     // pour chaque widgets enregistré dans _widgets
     //      faire un setEnabled(true)
+    if(this->passwordEnable()){
+        _passDialog->show();
+        _passDialog->raise();
+        _passDialog->activateWindow();
+    }else{
+        foreach(QWidget *widget,_widgets)
+        {
+            widget->setEnabled(true);
+        }
+    }
 }
 
 void Locker::toggle(bool checked)
@@ -66,4 +83,9 @@ void Locker::toggle(bool checked)
     checked ? lock() : unlock();
 
     // ca permet de connecté la methode toggle à un signal toggled emis par un clique bouton
+}
+
+QList<QWidget*> Locker::getWidgets()
+{
+    return _widgets;
 }

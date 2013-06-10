@@ -3,6 +3,9 @@
 
 #include <QObject>
 #include <QTimer>
+#include <QDialog>
+
+class passformdialog;
 
 class Locker : public QObject
 {
@@ -22,6 +25,7 @@ public:
     QString getPassword();
     void setPassword(QString);
     void setAutoLockDelay(int);
+    QList<QWidget*> getWidgets();
 
     /*
      * auto_lock enable,
@@ -39,6 +43,7 @@ private:
     QString _thePass;
     QTimer _timer;
     QList<QWidget*> _widgets;
+    passformdialog *_passDialog;
 
     /**
      * @brief delay in ms

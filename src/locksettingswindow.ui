@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>LockSettingsWindow</class>
  <widget class="QWidget" name="LockSettingsWindow">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -9,6 +12,12 @@
     <width>524</width>
     <height>288</height>
    </rect>
+  </property>
+  <property name="mouseTracking">
+   <bool>false</bool>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
   </property>
   <property name="windowTitle">
    <string>Lock</string>
@@ -79,6 +88,9 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_password">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>290</x>
@@ -86,6 +98,15 @@
      <width>191</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="mouseTracking">
+    <bool>false</bool>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
    </property>
   </widget>
   <widget class="QWidget" name="widget_password" native="true">
