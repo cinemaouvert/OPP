@@ -50,6 +50,11 @@ void PlaylistPlayer::playItemAt(const int &index)
 
 void PlaylistPlayer::next()
 {
+    if (_currentIndex == _playlist->count() - 1) {
+        playItemAt(0);
+        return;
+    }
+
     libvlc_media_list_player_next(_vlcMediaListPlayer);
 }
 
@@ -57,11 +62,18 @@ void PlaylistPlayer::play()
 {
     _mediaPlayer->_isPaused = false;
 
+    _currentIndex = -1;
+
     libvlc_media_list_player_play(_vlcMediaListPlayer);
 }
 
 void PlaylistPlayer::previous()
 {
+    if (_currentIndex <= 0) {
+        playItemAt(_playlist->count() - 1);
+        return;
+    }
+
     _currentIndex -= 2;
 
     libvlc_media_list_player_previous(_vlcMediaListPlayer);

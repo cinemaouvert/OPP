@@ -52,6 +52,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(_playlistPlayer->mediaPlayer(), SIGNAL(played()), ui->playerPlayButton, SLOT(toggle()));
     connect(ui->playerStopButton, SIGNAL(clicked()), _playlistPlayer, SLOT(stop()));
     connect(ui->playerStopButton, SIGNAL(clicked(bool)), ui->playerPlayButton, SLOT(setChecked(bool)));
+    connect(ui->playerPreviousButton, SIGNAL(clicked()), _playlistPlayer, SLOT(previous()));
+    connect(ui->playerNextButton, SIGNAL(clicked()), _playlistPlayer, SLOT(next()));
     connect(_playlistPlayer, SIGNAL(end()), ui->playerPlayButton, SLOT(toggle()));
 
     _mediaListModel = new MediaListModel();
