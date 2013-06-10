@@ -12,8 +12,6 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
 {
     initMedia(location);
     _vlcMedia = libvlc_media_new_path(vlcInstance, location.toLocal8Bit().data());
-    libvlc_media_parse_async(_vlcMedia);
-    usleep(100000);
     parseMediaInfos();
     /*
     // PATCH : We need to play the media to get the duration
@@ -89,15 +87,15 @@ void Media::parseMediaInfos()
 
 //    libvlc_media_track_info_t track[20 /*get tracks number ?*/];
 //    libvlc_media_get_tracks_info(_vlcMedia, &track);
+    libvlc_media_parse(_vlcMedia);
     _audioTracks.append(-1);
     _videoTracks.append(-1);
     _subtitlesTracks.append(-1);
 
     libvlc_media_track_info_t* tracks;
 
-    libvlc_media_get_tracks_info(_vlcMedia, &tracks);
-    int track=0;
-    while(tracks[track].i_type<=2)
+    int tracksCount = libvlc_media_get_tracks_info(_vlcMedia, &tracks);
+    for(int track=0;track<tracksCount;track++)
     {
         switch(tracks[track].i_type)
         {
@@ -111,7 +109,6 @@ void Media::parseMediaInfos()
                 _subtitlesTracks.append(tracks[track].i_id);
                 break;
         }
-        track++;
     }
 
     qDebug()<<"=======================================================================";
