@@ -630,6 +630,13 @@ p, li { white-space: pre-wrap; }
                            </property>
                           </widget>
                          </item>
+                         <item row="0" column="1">
+                          <widget class="QDoubleSpinBox" name="audioSyncDoubleSpinBox">
+                           <property name="minimum">
+                            <double>-99.989999999999995</double>
+                           </property>
+                          </widget>
+                         </item>
                          <item row="1" column="0">
                           <widget class="QLabel" name="audioGainLabel">
                            <property name="text">
@@ -641,34 +648,6 @@ p, li { white-space: pre-wrap; }
                           <widget class="QSpinBox" name="audioGainSpinBox">
                            <property name="minimum">
                             <number>-99</number>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="2" column="0">
-                          <widget class="QLabel" name="normalizationLabel">
-                           <property name="text">
-                            <string>Normalization</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="2" column="1">
-                          <widget class="QComboBox" name="normalizationComboBox">
-                           <item>
-                            <property name="text">
-                             <string>On</string>
-                            </property>
-                           </item>
-                           <item>
-                            <property name="text">
-                             <string>Off</string>
-                            </property>
-                           </item>
-                          </widget>
-                         </item>
-                         <item row="0" column="1">
-                          <widget class="QDoubleSpinBox" name="audioSyncDoubleSpinBox">
-                           <property name="minimum">
-                            <double>-99.989999999999995</double>
                            </property>
                           </widget>
                          </item>
