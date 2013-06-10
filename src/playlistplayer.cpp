@@ -5,13 +5,11 @@
 #include "mediaplayer.h"
 #include "global.h"
 
-PlaylistPlayer::PlaylistPlayer(libvlc_instance_t *vlcInstance, VideoView *video, PlaybackMode mode, QObject *parent) :
+PlaylistPlayer::PlaylistPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     QObject(parent),
-    _mode(mode),
     _currentIndex(-1)
 {
     _mediaPlayer = new MediaPlayer(vlcInstance, this);
-    _mediaPlayer->setVideoView(video);
 
     _vlcMediaListPlayer = libvlc_media_list_player_new(vlcInstance);
     _vlcEvents = libvlc_media_list_player_event_manager(_vlcMediaListPlayer);
@@ -35,12 +33,6 @@ void PlaylistPlayer::setPlaylist(Playlist *playlist)
 {
     _playlist = playlist;
     libvlc_media_list_player_set_media_list(_vlcMediaListPlayer, playlist->core());
-}
-
-void PlaylistPlayer::setMode(const PlaybackMode &mode)
-{
-    _mode = mode;
-    libvlc_media_list_player_set_playback_mode(_vlcMediaListPlayer, libvlc_playback_mode_t(mode));
 }
 
 bool PlaylistPlayer::isPlaying() const

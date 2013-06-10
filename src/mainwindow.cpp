@@ -43,8 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // internal core initalization
     _app = new Application();
+    _playlistPlayer = new PlaylistPlayer(_app->vlcInstance());
 
-    _playlistPlayer = new PlaylistPlayer(_app->vlcInstance(), (VideoView*) _videoWindow->videoWidget());
     _playlistPlayer->mediaPlayer()->setVideoView( (VideoView*) _videoWindow->videoWidget() );
     _playlistPlayer->mediaPlayer()->setVolume(ui->playerVolumeSlider->value());
 
