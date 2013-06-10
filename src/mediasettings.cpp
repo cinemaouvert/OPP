@@ -98,7 +98,7 @@ void MediaSettings::initDefault()
     _hue = 0;
     _audioTrack = 0;
     _videoTrack = 0;
-    _subtitlesTrack = -1;
+    _subtitlesTrack = 0;
     _audioSync=0;
 }
 

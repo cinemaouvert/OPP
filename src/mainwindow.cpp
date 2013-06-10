@@ -245,6 +245,8 @@ void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
 
     delete (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(index))->model();
     ui->playlistsTabWidget->removeTab(index);
+
+    updateSettings();
 }
 
 void MainWindow::on_playlistsTabWidget_currentChanged(int index)
@@ -267,8 +269,15 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
 
     _mediaSettingsMapper->setModel( model );
 
+
     _mediaSettingsMapper->clearMapping();
     _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
+
+    QModelIndexList indexes = view->selectionModel()->selectedIndexes();
+    if(indexes.count()>0)
+        _mediaSettingsMapper->setCurrentModelIndex(indexes.first());
+
+    updateSettings();
 
     _playlistPlayer->setPlaylist(model->playlist());
 }
@@ -479,16 +488,17 @@ PlaylistModel* MainWindow::currentPlaylistModel() const
 
 void MainWindow::updateSettings()
 {
-    ui->audioTrackComboBox->blockSignals(true);
-    ui->videoTrackComboBox->blockSignals(true);
-    ui->subtitlesTrackComboBox->blockSignals(true);
-
     qDebug() << "trace 0";
     Playback* playback = selectedPlayback();
     if(!playback){
         ui->mediaSettingsWidget->setEnabled(false);
         return;
     }
+
+    ui->audioTrackComboBox->blockSignals(true);
+    ui->videoTrackComboBox->blockSignals(true);
+    ui->subtitlesTrackComboBox->blockSignals(true);
+
     qDebug() << "trace 1";
     ui->mediaSettingsWidget->setEnabled(true);
 
@@ -548,7 +558,10 @@ qDebug() << "trace 4";
 
     ui->audioTrackComboBox->setCurrentIndex(getTrackIndex(playback->media()->audioTracks(), playback->mediaSettings()->audioTrack()));
     ui->videoTrackComboBox->setCurrentIndex(getTrackIndex(playback->media()->videoTracks(), playback->mediaSettings()->videoTrack()));
-    ui->subtitlesTrackComboBox->setCurrentIndex(getTrackIndex(playback->media()->subtitlesTracks(), playback->mediaSettings()->subtitlesTrack()));
+    ui->subtitlesTrackComboBox->setCurrentIndex(playback->mediaSettings()->subtitlesTrack());
+
+
+    ui->ratioComboBox->setCurrentIndex(playback->mediaSettings()->ratio());
 
     ui->audioTrackComboBox->blockSignals(false);
     ui->videoTrackComboBox->blockSignals(false);
@@ -574,4 +587,5 @@ void MainWindow::on_removePlaylistItemAction_triggered()
         return;
 
    currentPlaylistModel()->removePlayback(indexes.first().row());
+   updateSettings();
 }
