@@ -67,24 +67,29 @@ void SettingsWindow::on_buttonBox_rejected()
 
 void SettingsWindow::on_pushButton_VLCPath_clicked()
 {
+
     QString pathVlc = QFileDialog::getOpenFileName(this,"", QDir::homePath(),"");
-    ui->lineEdit_VLCPath->setText(pathVlc);
+    if(pathVlc!="")
+        ui->lineEdit_VLCPath->setText(pathVlc);
 }
 
 void SettingsWindow::on_pushButton_testPatternPath_clicked()
 {
     QString pathTestPattern = QFileDialog::getOpenFileName(this,"", QDir::homePath(),"");
-    ui->lineEdit_testPatternPath->setText(pathTestPattern);
+    if(pathTestPattern!="")
+        ui->lineEdit_testPatternPath->setText(pathTestPattern);
 }
 
 void SettingsWindow::on_pushButton_intertitlePath_clicked()
 {
     QString pathIntertitle = QFileDialog::getOpenFileName(this,"", QDir::homePath(),"");
-    ui->lineEdit_intertitlePath->setText(pathIntertitle);
+    if(pathIntertitle!="")
+        ui->lineEdit_intertitlePath->setText(pathIntertitle);
 }
 
 void SettingsWindow::on_pushButton_moviesPath_clicked()
 {
     QString pathMovies = QFileDialog::getExistingDirectory(this, tr("Open Directory"), QDir::homePath(),QFileDialog::ShowDirsOnly);
-    ui->lineEdit_moviesPath->setText(pathMovies);
+    if(pathMovies!="")
+        ui->lineEdit_moviesPath->setText(pathMovies);
 }
