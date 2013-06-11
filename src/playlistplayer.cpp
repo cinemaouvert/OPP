@@ -42,6 +42,9 @@ bool PlaylistPlayer::isPlaying() const
 
 void PlaylistPlayer::playItemAt(const int &index)
 {
+    if (index >= _playlist->count())
+        return;
+
     _mediaPlayer->_isPaused = false;
     _currentIndex = index - 1;
 
