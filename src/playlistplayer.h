@@ -48,6 +48,8 @@ private slots:
 
     void handlePlaylistEnd();
 
+    void applyCurrentPlaybackSettings();
+
 signals:
 
     void itemChanged(int);

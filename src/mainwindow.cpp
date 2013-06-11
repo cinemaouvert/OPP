@@ -92,15 +92,18 @@ MainWindow::MainWindow(QWidget *parent) :
     _mediaSettingsMapper = new QDataWidgetMapper(this);
 
     // initialize media settings input
-    ui->ratioComboBox->addItems(MediaSettings::ratioValues());
-    ui->ratioComboBox->setAutoCompletion(true);
+//    ui->ratioComboBox->addItems(MediaSettings::ratioValues());
+//    ui->ratioComboBox->setAutoCompletion(true);
 
-    connect(ui->ratioComboBox, SIGNAL(currentIndexChanged(int)), _mediaSettingsMapper, SLOT(submit()));
+//    connect(ui->ratioComboBox, SIGNAL(currentIndexChanged(int)), _mediaSettingsMapper, SLOT(submit()));
 
     createPlaylistTab();
 
     ui->scheduleLaunchAtDateEdit->setDate(QDate::currentDate());
     ui->scheduleLaunchAtTimeEdit->setTime(QTime::currentTime());
+
+    ui->ratioComboBox->clear();
+    ui->ratioComboBox->addItems(MediaSettings::ratioValues());
 }
 
 MainWindow::~MainWindow()
@@ -194,7 +197,6 @@ void MainWindow::on_lockSettingsAction_triggered()
 
 void MainWindow::on_audioTrackComboBox_currentIndexChanged(int index)
 {
-    qDebug() << "INDEX = "<<index;
     if (index == -1)
         return;
 
@@ -204,19 +206,23 @@ void MainWindow::on_audioTrackComboBox_currentIndexChanged(int index)
         const int track = playback->media()->audioTracks().at(index);
         playback->mediaSettings()->setAudioTrack(track);
     }
+
+    emit SIGNAL(layoutChanged());
 }
 
 void MainWindow::on_videoTrackComboBox_currentIndexChanged(int index)
 {
     if (index == -1)
         return;
-    qDebug() << "INDEX = "<<index;
+
     Playback *playback = selectedPlayback();
     if(playback)
     {
         const int track = playback->media()->videoTracks().at(index);
         playback->mediaSettings()->setVideoTrack(track);
     }
+
+//    emit currentPlaylistModel()->layoutChanged();
 }
 
 void MainWindow::on_subtitlesTrackComboBox_currentIndexChanged(int index)
@@ -230,14 +236,16 @@ void MainWindow::on_subtitlesTrackComboBox_currentIndexChanged(int index)
         //const int track = playback->media()->subtitlesTracks().at(index);
         playback->mediaSettings()->setSubtitlesTrack(index);
     }
+
+//    emit currentPlaylistModel()->layoutChanged();
 }
 
 void MainWindow::on_ratioComboBox_currentIndexChanged(int index)
 {
-//    Playback *playback = selectedPlayback();
-//    if (playback) {
-//        playback->mediaSettings()->setRatio((Ratio) index);
-//    }
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setRatio((Ratio) index);
+    }
 }
 
 void MainWindow::on_subtitlesSyncSpinBox_valueChanged(double arg1)
@@ -304,7 +312,6 @@ void MainWindow::on_audioSyncDoubleSpinBox_valueChanged(double arg1)
 
 void MainWindow::updateSettings()
 {
-    qDebug() << "trace 0";
     Playback* playback = selectedPlayback();
     if(!playback){
         ui->mediaSettingsWidget->setEnabled(false);
@@ -315,7 +322,6 @@ void MainWindow::updateSettings()
     ui->videoTrackComboBox->blockSignals(true);
     ui->subtitlesTrackComboBox->blockSignals(true);
 
-    qDebug() << "trace 1";
     ui->mediaSettingsWidget->setEnabled(true);
 
     QString item="";
@@ -332,7 +338,7 @@ void MainWindow::updateSettings()
         }
         ui->audioTrackComboBox->addItem(item);
     }
-    qDebug() << "trace 2";
+
     ui->videoTrackComboBox->clear();
     listCount=playback->media()->videoTracks().count();
     for(int i=0;i<listCount;i++)
@@ -346,14 +352,12 @@ void MainWindow::updateSettings()
         }
         ui->videoTrackComboBox->addItem(item);
     }
-qDebug() << "trace 3";
+
     ui->subtitlesTrackComboBox->clear();
-    qDebug() << "trace 3 b";
     listCount=playback->media()->subtitlesTracks().count();
-    qDebug() << "trace 3 bis";
+
     for(int i=0;i<listCount;i++)
     {
-        qDebug() << "trace 3 bis bis";
         if(playback->media()->subtitlesTracks().at(i)==-1)
             item="Disabled";
         else
@@ -363,7 +367,7 @@ qDebug() << "trace 3";
         }
         ui->subtitlesTrackComboBox->addItem(item);
     }
-qDebug() << "trace 4";
+
     ui->subtitlesSyncSpinBox->setValue(playback->mediaSettings()->subtitlesSync());
 
     ui->gammaSpinBox->setValue(playback->mediaSettings()->gamma());
@@ -375,7 +379,6 @@ qDebug() << "trace 4";
     ui->audioTrackComboBox->setCurrentIndex(getTrackIndex(playback->media()->audioTracks(), playback->mediaSettings()->audioTrack()));
     ui->videoTrackComboBox->setCurrentIndex(getTrackIndex(playback->media()->videoTracks(), playback->mediaSettings()->videoTrack()));
     ui->subtitlesTrackComboBox->setCurrentIndex(playback->mediaSettings()->subtitlesTrack());
-
 
     ui->ratioComboBox->setCurrentIndex(playback->mediaSettings()->ratio());
 
@@ -508,10 +511,11 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
 
 
     _mediaSettingsMapper->clearMapping();
-    _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
+//    _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
+//    _mediaSettingsMapper->addMapping(ui->subtitlesTrackComboBox, 4);
 
     QModelIndexList indexes = view->selectionModel()->selectedIndexes();
-    if(indexes.count()>0)
+    if(indexes.count() > 0)
         _mediaSettingsMapper->setCurrentModelIndex(indexes.first());
 
     updateSettings();

@@ -11,8 +11,8 @@
 
 MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     QObject(parent),
-    _videoView(NULL),
     _currentPlayback(NULL),
+    _videoView(NULL),
     _isPaused(false)
 {
     _vlcMediaPlayer = libvlc_media_player_new(vlcInstance);
@@ -154,6 +154,22 @@ void MediaPlayer::setPosition(const int &position)
     setPosition( ((float) position) / 100.f);
 }
 
+void MediaPlayer::applyMediaSettings(MediaSettings *settings)
+{
+//    setCurrentAudioTrack(settings->audioTrack());
+//    setCurrentVideoTrack(settings->videoTrack());
+    setCurrentBrightness(settings->brightness());
+//    setCurrentContrast(settings->contrast());
+//    setCurrentDeinterlacing(settings->deinterlacing());
+//    setCurrentGamma(settings->gamma());
+//    setCurrentHue(settings->hue());
+//    setCurrentRatio(settings->ratio());
+//    setCurrentSaturation(settings->saturation());
+//    setCurrentSubtitlesSync(settings->subtitlesSync());
+//    setCurrentSubtitlesTrack(settings->subtitlesTrack());
+//    setCurrentVideoTrack(settings->videoTrack());
+}
+
 void MediaPlayer::setCurrentAudioTrack(int track)
 {
     libvlc_audio_set_track(_vlcMediaPlayer, track);
@@ -198,6 +214,7 @@ void MediaPlayer::setCurrentContrast(int contrast)
 
 void MediaPlayer::setCurrentBrightness(int brightness)
 {
+    qDebug() << "set brightness " << brightness;
     libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
     libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Brightness, (float)3*brightness/100);
 }

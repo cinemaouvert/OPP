@@ -5,6 +5,8 @@
 #include "mediaplayer.h"
 #include "global.h"
 
+#include <QTimer>;
+
 PlaylistPlayer::PlaylistPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     QObject(parent),
     _currentIndex(-1)
@@ -114,6 +116,9 @@ void PlaylistPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
         connect(currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), core->_mediaPlayer, SLOT(setCurrentSubtitlesTrack(int)));
 
         emit core->itemChanged(core->_currentIndex);
+
+        QTimer::singleShot(1000, core, SLOT(applyCurrentPlaybackSettings()));
+
         break;
     default:
         break;
@@ -145,4 +150,9 @@ void PlaylistPlayer::handlePlaylistEnd()
     if (_currentIndex == _playlist->count() - 1) {
         emit end();
     }
+}
+
+void PlaylistPlayer::applyCurrentPlaybackSettings()
+{
+    _mediaPlayer->applyMediaSettings(_playlist->at(_currentIndex)->mediaSettings());
 }

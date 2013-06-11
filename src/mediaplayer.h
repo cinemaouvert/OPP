@@ -44,6 +44,8 @@ public:
 
     void open(Playback *playback);
 
+    void applyMediaSettings(MediaSettings *settings);
+
 public slots:
     void play();
 

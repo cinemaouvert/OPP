@@ -127,11 +127,18 @@ bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int
     switch (role)
     {
     case Qt::EditRole:
-        if (index.column() == Video) {
-            _playlist->at(index.row())->mediaSettings()->setRatio(
-                (Ratio) MediaSettings::ratioValues().indexOf(QRegExp(value.toString()))
-            );
-        }
+//        if (index.column() == Video) {
+//            _playlist->at(index.row())->mediaSettings()->setRatio(
+//                (Ratio) MediaSettings::ratioValues().indexOf(QRegExp(value.toString()))
+//            );
+//        }
+//        else if (index.column() == Subtitles) {
+//            qDebug() << value;
+////            _playlist->at(index.row())->mediaSettings()->setSubtitlesTrack();
+//        } else if (index.column() == Subtitles) {
+//            qDebug() << value;
+////            _playlist->at(index.row())->mediaSettings()->setSubtitlesTrack();
+//        }
         emit dataChanged(index, index);
         return true;
         break;
