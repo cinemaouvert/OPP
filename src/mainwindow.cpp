@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->binTableView->setModel(_mediaListModel);
     ui->scheduleTableView->setModel(_scheduleListModel);
-    ui->timelineWidget->setMediaPlayer(_playlistPlayer->mediaPlayer());
+    ui->seekWidget->setMediaPlayer(_playlistPlayer->mediaPlayer());
 
     _statusWidget = new StatusWidget;
     ui->statusBar->addWidget(_statusWidget);

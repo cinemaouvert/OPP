@@ -402,7 +402,7 @@ p, li { white-space: pre-wrap; }
                <number>1</number>
               </property>
               <item>
-               <widget class="PlayerTimelineWidget" name="timelineWidget" native="true">
+               <widget class="SeekWidget" name="seekWidget" native="true">
                 <layout class="QGridLayout" name="gridLayout"/>
                </widget>
               </item>
@@ -1259,15 +1259,15 @@ p, li { white-space: pre-wrap; }
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>PlayerTimelineWidget</class>
-   <extends>QWidget</extends>
-   <header>playertimelinewidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>MediaTableView</class>
    <extends>QTableView</extends>
    <header>mediatableview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SeekWidget</class>
+   <extends>QWidget</extends>
+   <header>seekwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
