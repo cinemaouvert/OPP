@@ -794,16 +794,6 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
            </item>
-           <item>
-            <widget class="SaturationWidget" name="saturationWidget" native="true">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
           </layout>
          </widget>
         </item>
@@ -1252,12 +1242,6 @@ p, li { white-space: pre-wrap; }
   </action>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>SaturationWidget</class>
-   <extends>QWidget</extends>
-   <header>saturationwidget.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>MediaTableView</class>
    <extends>QTableView</extends>
