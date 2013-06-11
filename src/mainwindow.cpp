@@ -58,10 +58,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->playerPreviousButton, SIGNAL(clicked()), _playlistPlayer, SLOT(previous()));
     connect(ui->playerNextButton, SIGNAL(clicked()), _playlistPlayer, SLOT(next()));
     connect(_playlistPlayer, SIGNAL(end()), ui->playerPlayButton, SLOT(toggle()));
-//    connect(_playlistPlayer, SIGNAL(itemChanged(int)), ui->playerPlayButton, SLOT(playState()));
 
     _mediaListModel = new MediaListModel();
     _scheduleListModel = new ScheduleListModel();
+
+    connect(ui->scheduleToggleEnabledButton, SIGNAL(toggled(bool)), _scheduleListModel, SLOT(toggleAutomation(bool)));
 
     ui->binTableView->setModel(_mediaListModel);
     ui->scheduleTableView->setModel(_scheduleListModel);
@@ -660,6 +661,15 @@ void MainWindow::on_scheduleDelayButton_clicked()
     int delay = ui->scheduleDelaySpinBox->value() /*min*/;
 
     _scheduleListModel->delayAll(delay * 60 * 1000 /*ms*/);
+}
+
+void MainWindow::on_scheduleToggleEnabledButton_toggled(bool checked)
+{
+    if (checked) {
+        ui->scheduleToggleEnabledButton->setText("Stop automation");
+    } else {
+        ui->scheduleToggleEnabledButton->setText("Start automation");
+    }
 }
 
 /***********************************************************************************************\

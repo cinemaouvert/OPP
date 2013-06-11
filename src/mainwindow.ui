@@ -261,7 +261,10 @@ p, li { white-space: pre-wrap; }
            <item>
             <widget class="QPushButton" name="scheduleToggleEnabledButton">
              <property name="text">
-              <string>Stop automation</string>
+              <string>Start automation</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
              </property>
             </widget>
            </item>

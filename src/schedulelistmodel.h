@@ -12,6 +12,8 @@ public:
     enum Columns { LaunchAt = 0, FinishAt = 1, PlaylistId = 2, State = 3 };
 
     explicit ScheduleListModel(QObject *parent = 0);
+
+    inline bool isAutomationEnabled() const { return _automationEnabled; }
     
     inline const QList<Schedule*>& scheduleList() { return _scheduleList; }
 
@@ -36,6 +38,13 @@ public:
     bool isScheduled(Playlist *playlist) const;
 
     void delayAll(int ms);
+
+    void startAutomation();
+
+    void stopAutomation();
+
+public slots:
+    void toggleAutomation(bool checked);
 
 private:
     QList<Schedule*> _scheduleList;

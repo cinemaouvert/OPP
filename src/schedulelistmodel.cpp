@@ -6,7 +6,7 @@
 
 ScheduleListModel::ScheduleListModel(QObject *parent) :
     QAbstractTableModel(parent),
-    _automationEnabled(true)
+    _automationEnabled(false)
 {
 }
 
@@ -60,13 +60,28 @@ QVariant ScheduleListModel::data(const QModelIndex &index, int role) const
     case Qt::DecorationRole:
         if (index.column() == State) {
             if (_scheduleList[index.row()]->isExpired()) {
-                return QIcon(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_206_ok_2.png"));
+                if (_scheduleList[index.row()]->wasTriggered())
+                    return QIcon(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_206_ok_2.png"));
+                else
+                    return QIcon(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_207_remove_2.png"));
             } else {
                 return QIcon(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_187_more.png"));
             }
         }
         break;
     case Qt::DisplayRole:
+        switch (index.column()) {
+        case LaunchAt:
+            return _scheduleList[index.row()]->launchAt();
+            break;
+        case FinishAt:
+            return _scheduleList[index.row()]->finishAt();
+            break;
+        case PlaylistId:
+            return _scheduleList[index.row()]->playlist()->title();
+            break;
+        }
+        break;
     case Qt::ToolTipRole:
         switch (index.column()) {
         case LaunchAt:
@@ -79,6 +94,16 @@ QVariant ScheduleListModel::data(const QModelIndex &index, int role) const
             return _scheduleList[index.row()]->playlist()->title();
             break;
         case State:
+            if (index.column() == State) {
+                if (_scheduleList[index.row()]->isExpired()) {
+                    if (_scheduleList[index.row()]->wasTriggered())
+                        return tr("played");
+                    else
+                        return tr("ignored");
+                } else {
+                    return tr("pending...");
+                }
+            }
             break;
         }
         break;
@@ -145,4 +170,24 @@ void ScheduleListModel::delayAll(int ms)
     }
 
     emit layoutChanged();
+}
+
+void ScheduleListModel::toggleAutomation(bool checked) {
+    checked ? startAutomation() : stopAutomation();
+}
+
+void ScheduleListModel::startAutomation() {
+    foreach(Schedule *schedule, _scheduleList) {
+        schedule->start();
+    }
+
+    _automationEnabled = true;
+}
+
+void ScheduleListModel::stopAutomation() {
+    foreach(Schedule *schedule, _scheduleList) {
+        schedule->stop();
+    }
+
+    _automationEnabled = false;
 }

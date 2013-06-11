@@ -24,6 +24,7 @@ public:
 
     bool isExpired() const;
     bool isActive() const;
+    bool wasTriggered() const;
 
     inline const QDateTime & launchAt() const { return _launchAt; }
     QDateTime finishAt() const;
@@ -41,6 +42,7 @@ private:
     QDateTime _launchAt;
 
     Playlist *_playlist;
+    bool _wasTriggered;
 };
 
 #endif // SCHEDULE_H

@@ -5,7 +5,8 @@
 Schedule::Schedule(Playlist *playlist, const QDateTime &launchAt, QObject *parent) :
     QObject(parent),
     _playlist(playlist),
-    _launchAt(launchAt)
+    _launchAt(launchAt),
+    _wasTriggered(false)
 {
 }
 
@@ -57,6 +58,11 @@ bool Schedule::isActive() const
     return _timer.isActive();
 }
 
+bool Schedule::wasTriggered() const
+{
+    return _wasTriggered;
+}
+
 void Schedule::delay(int ms)
 {
     bool wasActived = isActive();
@@ -70,5 +76,7 @@ void Schedule::delay(int ms)
 
 void Schedule::timeout()
 {
+    _wasTriggered = true;
+
     emit triggered(_playlist);
 }
