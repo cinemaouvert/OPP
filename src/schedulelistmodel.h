@@ -9,7 +9,7 @@ class ScheduleListModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    enum Columns { LaunchAt = 0, FinishAt = 1, PlaylistId = 2, Running = 3 };
+    enum Columns { LaunchAt = 0, FinishAt = 1, PlaylistId = 2, State = 3 };
 
     explicit ScheduleListModel(QObject *parent = 0);
     

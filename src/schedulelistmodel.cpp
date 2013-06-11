@@ -1,5 +1,7 @@
 #include "schedulelistmodel.h"
 
+#include <QIcon>
+
 #include "schedule.h"
 
 ScheduleListModel::ScheduleListModel(QObject *parent) :
@@ -38,8 +40,8 @@ QVariant ScheduleListModel::headerData(int section, Qt::Orientation orientation,
         case PlaylistId:
             return trUtf8("Playlist");
             break;
-        case Running:
-            return trUtf8("Running");
+        case State:
+            return trUtf8("State");
             break;
         }
     }
@@ -55,6 +57,15 @@ QVariant ScheduleListModel::data(const QModelIndex &index, int role) const
 
     switch (role)
     {
+    case Qt::DecorationRole:
+        if (index.column() == State) {
+            if (_scheduleList[index.row()]->isExpired()) {
+                return QIcon(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_206_ok_2.png"));
+            } else {
+                return QIcon(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_187_more.png"));
+            }
+        }
+        break;
     case Qt::DisplayRole:
     case Qt::ToolTipRole:
         switch (index.column()) {
@@ -67,7 +78,7 @@ QVariant ScheduleListModel::data(const QModelIndex &index, int role) const
         case PlaylistId:
             return _scheduleList[index.row()]->playlist()->title();
             break;
-        case Running:
+        case State:
             break;
         }
         break;
@@ -102,6 +113,8 @@ void ScheduleListModel::addSchedule(Schedule *schedule)
     _scheduleList.append(schedule);
     endInsertRows();
 
+    connect(schedule, SIGNAL(triggered(Playlist*)), this, SIGNAL(layoutChanged()));
+
     if (_automationEnabled)
         schedule->start();
 }
@@ -126,6 +139,7 @@ bool ScheduleListModel::isScheduled(Playlist *playlist) const {
 void ScheduleListModel::delayAll(int ms)
 {
     if (ms == 0) return;
+
     foreach(Schedule *schedule, _scheduleList) {
         schedule->delay(ms);
     }
