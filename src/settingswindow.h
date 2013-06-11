@@ -23,6 +23,14 @@ private slots:
 
     void on_buttonBox_rejected();
 
+    void on_pushButton_VLCPath_clicked();
+
+    void on_pushButton_testPatternPath_clicked();
+
+    void on_pushButton_intertitlePath_clicked();
+
+    void on_pushButton_moviesPath_clicked();
+
 private:
     Ui::SettingsWindow *ui;
 };

@@ -2,6 +2,8 @@
 #include "ui_settingswindow.h"
 #include <QSettings>
 #include <QString>
+#include <QFileDialog>
+#include <QDir>
 
 SettingsWindow::SettingsWindow(QWidget *parent) :
     QDialog(parent),
@@ -61,4 +63,28 @@ void SettingsWindow::on_buttonBox_accepted()
 void SettingsWindow::on_buttonBox_rejected()
 {
     this->close();
+}
+
+void SettingsWindow::on_pushButton_VLCPath_clicked()
+{
+    QString pathVlc = QFileDialog::getOpenFileName(this,"", QDir::homePath(),"");
+    ui->lineEdit_VLCPath->setText(pathVlc);
+}
+
+void SettingsWindow::on_pushButton_testPatternPath_clicked()
+{
+    QString pathTestPattern = QFileDialog::getOpenFileName(this,"", QDir::homePath(),"");
+    ui->lineEdit_testPatternPath->setText(pathTestPattern);
+}
+
+void SettingsWindow::on_pushButton_intertitlePath_clicked()
+{
+    QString pathIntertitle = QFileDialog::getOpenFileName(this,"", QDir::homePath(),"");
+    ui->lineEdit_intertitlePath->setText(pathIntertitle);
+}
+
+void SettingsWindow::on_pushButton_moviesPath_clicked()
+{
+    QString pathMovies = QFileDialog::getExistingDirectory(this, tr("Open Directory"), QDir::homePath(),QFileDialog::ShowDirsOnly);
+    ui->lineEdit_moviesPath->setText(pathMovies);
 }
