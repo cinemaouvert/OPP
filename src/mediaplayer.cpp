@@ -68,10 +68,10 @@ void MediaPlayer::open(Playback *playback)
 {
     if (_currentPlayback) {
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
-        disconnect(_currentPlayback->mediaSettings(), SIGNAL(gammaChanged(int)), this, SLOT(setCurrentGamma(int)));
-        disconnect(_currentPlayback->mediaSettings(), SIGNAL(contrastChanged(int)), this, SLOT(setCurrentContrast(int)));
-        disconnect(_currentPlayback->mediaSettings(), SIGNAL(brightnessChanged(int)), this, SLOT(setCurrentBrightness(int)));
-        disconnect(_currentPlayback->mediaSettings(), SIGNAL(saturationChanged(int)), this, SLOT(setCurrentSaturation(int)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(gammaChanged(float)), this, SLOT(setCurrentGamma(float)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(contrastChanged(float)), this, SLOT(setCurrentContrast(float)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(brightnessChanged(float)), this, SLOT(setCurrentBrightness(float)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(saturationChanged(float)), this, SLOT(setCurrentSaturation(float)));
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(hueChanged(int)), this, SLOT(setCurrentHue(int)));
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(deinterlacingChanged(Deinterlacing)), this, SLOT(setCurrentDeinterlacing(Deinterlacing)));
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesSyncChanged(double)), this, SLOT(setCurrentSubtitlesSync(double)));
@@ -85,10 +85,10 @@ void MediaPlayer::open(Playback *playback)
     VLCERR( libvlc_media_player_set_media(_vlcMediaPlayer, playback->media()->core()) );
 
     connect(_currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
-    connect(_currentPlayback->mediaSettings(), SIGNAL(gammaChanged(int)), this, SLOT(setCurrentGamma(int)));
-    connect(_currentPlayback->mediaSettings(), SIGNAL(contrastChanged(int)), this, SLOT(setCurrentContrast(int)));
-    connect(_currentPlayback->mediaSettings(), SIGNAL(brightnessChanged(int)), this, SLOT(setCurrentBrightness(int)));
-    connect(_currentPlayback->mediaSettings(), SIGNAL(saturationChanged(int)), this, SLOT(setCurrentSaturation(int)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(gammaChanged(float)), this, SLOT(setCurrentGamma(float)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(contrastChanged(float)), this, SLOT(setCurrentContrast(float)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(brightnessChanged(float)), this, SLOT(setCurrentBrightness(float)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(saturationChanged(float)), this, SLOT(setCurrentSaturation(float)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(hueChanged(int)), this, SLOT(setCurrentHue(int)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(deinterlacingChanged(Deinterlacing)), this, SLOT(setCurrentDeinterlacing(Deinterlacing)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesSyncChanged(double)), this, SLOT(setCurrentSubtitlesSync(double)));
@@ -166,8 +166,7 @@ void MediaPlayer::applyMediaSettings(MediaSettings *settings)
     setCurrentRatio(settings->ratio());
     setCurrentSaturation(settings->saturation());
     setCurrentSubtitlesSync(settings->subtitlesSync());
-    // TODO : fix it
-//    setCurrentSubtitlesTrack(settings->subtitlesTrack());
+    setCurrentSubtitlesTrack(settings->subtitlesTrack());
     setCurrentVideoTrack(settings->videoTrack());
 }
 
@@ -201,35 +200,37 @@ void MediaPlayer::setCurrentSubtitlesSync(double sync)
     libvlc_video_set_spu_delay(_vlcMediaPlayer,(int64_t)(1000000*sync));
 }
 
-void MediaPlayer::setCurrentGamma(int gamma)
+void MediaPlayer::setCurrentGamma(float gamma)
 {
+    qDebug()<<"Gamma : "<<gamma;
     libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
-    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Gamma, (float)gamma/10);
+    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Gamma, gamma);
+    qDebug()<<"Gamma done";
 }
 
-void MediaPlayer::setCurrentContrast(int contrast)
+void MediaPlayer::setCurrentContrast(float contrast)
 {
     libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
-    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Contrast, (float)contrast/50);
+    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Contrast, contrast);
 }
 
-void MediaPlayer::setCurrentBrightness(int brightness)
+void MediaPlayer::setCurrentBrightness(float brightness)
 {
     qDebug() << "set brightness " << brightness;
     libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
-    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Brightness, (float)3*brightness/100);
+    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Brightness, brightness);
 }
 
-void MediaPlayer::setCurrentSaturation(int saturation)
+void MediaPlayer::setCurrentSaturation(float saturation)
 {
     libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
-    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Saturation, (float)saturation/50);
+    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Saturation, saturation);
 }
 
 void MediaPlayer::setCurrentHue(int hue)
 {
     libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
-    libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Hue, (int)hue*3.6);
+    libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Hue, hue);
 
 }
 

@@ -55,22 +55,24 @@ void MediaSettings::setSubtitlesTrack(int track){
     emit subtitlesTrackChanged(_subtitlesTrack);
 }
 
-void MediaSettings::setGamma(int gamma) {
+void MediaSettings::setGamma(float gamma) {
+    qDebug()<<"Set gamma "<<gamma;
     _gamma = gamma;
     emit gammaChanged(_gamma);
+    qDebug()<<"Set gamma done "<<_gamma;
 }
 
-void MediaSettings::setContrast(int contrast) {
+void MediaSettings::setContrast(float contrast) {
     _contrast = contrast;
     emit contrastChanged(_contrast);
 }
 
-void MediaSettings::setBrightness(int brightness) {
+void MediaSettings::setBrightness(float brightness) {
     _brightness = brightness;
     emit brightnessChanged(_brightness);
 }
 
-void MediaSettings::setSaturation(int saturation) {
+void MediaSettings::setSaturation(float saturation) {
     _saturation = saturation;
     emit saturationChanged(_saturation);
 }
@@ -91,11 +93,11 @@ void MediaSettings::initDefault()
     _scale = NoScale;
     _deinterlacing = Disabled;
     _subtitlesSync = 0;
-    _gamma = 10;
-    _contrast = 50;
-    _brightness = 50;
-    _saturation = 50;
-    _hue = 50;
+    _gamma = 1;
+    _contrast = 1;
+    _brightness = 1;
+    _saturation = 1;
+    _hue = 0;
     _audioTrack = 0;
     _videoTrack = 0;
     _subtitlesTrack = 0;

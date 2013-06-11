@@ -59,10 +59,10 @@ public:
     inline Scale scale() const { return _scale; }
     inline Deinterlacing deinterlacing() const { return _deinterlacing; }
     inline double subtitlesSync() const { return _subtitlesSync; }
-    inline int gamma() const { return _gamma; }
-    inline int contrast() const { return _contrast; }
-    inline int brightness() const { return _brightness; }
-    inline int saturation() const { return _saturation; }
+    inline float gamma() const { return _gamma; }
+    inline float contrast() const { return _contrast; }
+    inline float brightness() const { return _brightness; }
+    inline float saturation() const { return _saturation; }
     inline int hue() const { return _hue; }
     inline double audioSync() const { return _audioSync; }
     inline int audioTrack() const {return _audioTrack;}
@@ -73,10 +73,10 @@ public:
     void setScale(Scale scale);
     void setDeinterlacing(Deinterlacing deinterlacing);
     void setSubtitlesSync(double sync);
-    void setGamma(int gamma);
-    void setContrast(int contrast);
-    void setBrightness(int brightness);
-    void setSaturation(int saturation);
+    void setGamma(float gamma);
+    void setContrast(float contrast);
+    void setBrightness(float brightness);
+    void setSaturation(float saturation);
     void setHue(int hue);
     void setAudioSync(double sync);
     void setAudioTrack(int track);
@@ -93,10 +93,10 @@ signals:
     void scaleChanged(Scale);
     void deinterlacingChanged(Deinterlacing);
     void subtitlesSyncChanged(double);
-    void gammaChanged(int);
-    void contrastChanged(int);
-    void brightnessChanged(int);
-    void saturationChanged(int);
+    void gammaChanged(float);
+    void contrastChanged(float);
+    void brightnessChanged(float);
+    void saturationChanged(float);
     void hueChanged(int);
     void audioSyncChanged(double sync);
     void audioTrackChanged(int track);
@@ -109,10 +109,10 @@ private:
     Scale _scale;
     Deinterlacing _deinterlacing;
     double _subtitlesSync;
-    int _gamma;
-    int _contrast;
-    int _brightness;
-    int _saturation;
+    float _gamma;
+    float _contrast;
+    float _brightness;
+    float _saturation;
     int _hue;
     double _audioSync;
 
