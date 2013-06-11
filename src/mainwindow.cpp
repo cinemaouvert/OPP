@@ -635,7 +635,7 @@ void MainWindow::on_scheduleAddButton_clicked()
     const int playlistIndex = ui->schedulePlaylistListComboBox->currentIndex();
 
     if (launchAt <= QDateTime::currentDateTime()) {
-        // error : launch at validation
+        QMessageBox::critical(this, "Schedule validation", QString("The schedule launch date must be later than the current date."));
         return;
     }
 
@@ -646,7 +646,10 @@ void MainWindow::on_scheduleAddButton_clicked()
         connect(schedule, SIGNAL(triggered(Playlist*)), _playlistPlayer, SLOT(playPlaylist(Playlist*)));
         _scheduleListModel->addSchedule(schedule);
     } else {
-        // error : date interval not available
+        QMessageBox::critical(this, "Schedule validation", QString("A playlist was already scheduled between the %1 and %2, \nPlease choose an other launch date.")
+                                .arg(schedule->launchAt().toString())
+                                .arg(schedule->finishAt().toString())
+                              );
         delete schedule;
     }
 }
