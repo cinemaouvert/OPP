@@ -778,7 +778,8 @@ p, li { white-space: pre-wrap; }
                       </property>
                       <property name="icon">
                        <iconset resource="../images.qrc">
-                        <normaloff>:/icons/resources/glyphicons/glyphicons_044_keys.png</normaloff>:/icons/resources/glyphicons/glyphicons_044_keys.png</iconset>
+                        <normaloff>:/icons/resources/glyphicons/glyphicons_204_unlock.png</normaloff>
+                        <normalon>:/icons/resources/glyphicons/glyphicons_203_lock.png</normalon>:/icons/resources/glyphicons/glyphicons_204_unlock.png</iconset>
                       </property>
                       <property name="checkable">
                        <bool>true</bool>

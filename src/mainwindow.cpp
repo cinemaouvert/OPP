@@ -38,6 +38,9 @@ MainWindow::MainWindow(QWidget *parent) :
     lockedWidget << ui->playlistsTabWidget;
     _locker = new Locker(lockedWidget, this);
 
+    connect(_locker, SIGNAL(toggled(bool)), ui->lockButton, SLOT(setChecked(bool)));
+    connect(ui->lockButton, SIGNAL(clicked(bool)), _locker, SLOT(toggle(bool)));
+
     _lockSettingsWindow = new LockSettingsWindow(_locker, this);
     _videoWindow = new VideoWindow(this);
 
@@ -67,8 +70,6 @@ MainWindow::MainWindow(QWidget *parent) :
     _statusWidget = new StatusWidget;
     ui->statusBar->addWidget(_statusWidget);
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)), _statusWidget, SLOT(setMediaCount(int)));
-
-    connect(ui->lockButton, SIGNAL(toggled(bool)), _locker, SLOT(toggle(bool)));
 
     // show/hide pannel actions
     connect(ui->quitAction, SIGNAL(triggered()), this, SLOT(close()));
