@@ -72,10 +72,10 @@ QVariant ScheduleListModel::data(const QModelIndex &index, int role) const
     case Qt::DisplayRole:
         switch (index.column()) {
         case LaunchAt:
-            return _scheduleList[index.row()]->launchAt();
+            return _scheduleList[index.row()]->launchAt().toString("dd/MM/yy hh:mm:ss");
             break;
         case FinishAt:
-            return _scheduleList[index.row()]->finishAt();
+            return _scheduleList[index.row()]->finishAt().toString("dd/MM/yy hh:mm:ss");
             break;
         case PlaylistId:
             return _scheduleList[index.row()]->playlist()->title();
@@ -85,10 +85,10 @@ QVariant ScheduleListModel::data(const QModelIndex &index, int role) const
     case Qt::ToolTipRole:
         switch (index.column()) {
         case LaunchAt:
-            return _scheduleList[index.row()]->launchAt();
+            return _scheduleList[index.row()]->launchAt().toString();
             break;
         case FinishAt:
-            return _scheduleList[index.row()]->finishAt();
+            return _scheduleList[index.row()]->finishAt().toString();
             break;
         case PlaylistId:
             return _scheduleList[index.row()]->playlist()->title();
