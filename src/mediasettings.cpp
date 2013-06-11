@@ -91,11 +91,11 @@ void MediaSettings::initDefault()
     _scale = NoScale;
     _deinterlacing = Disabled;
     _subtitlesSync = 0;
-    _gamma = 50;
+    _gamma = 10;
     _contrast = 50;
     _brightness = 50;
     _saturation = 50;
-    _hue = 0;
+    _hue = 50;
     _audioTrack = 0;
     _videoTrack = 0;
     _subtitlesTrack = 0;

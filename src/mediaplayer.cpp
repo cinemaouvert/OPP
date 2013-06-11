@@ -187,7 +187,7 @@ void MediaPlayer::setCurrentSubtitlesSync(double sync)
 void MediaPlayer::setCurrentGamma(int gamma)
 {
     libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
-    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Gamma, (float)gamma/50);
+    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Gamma, (float)gamma/10);
 }
 
 void MediaPlayer::setCurrentContrast(int contrast)
@@ -199,7 +199,7 @@ void MediaPlayer::setCurrentContrast(int contrast)
 void MediaPlayer::setCurrentBrightness(int brightness)
 {
     libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
-    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Brightness, (float)brightness/50);
+    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Brightness, (float)3*brightness/100);
 }
 
 void MediaPlayer::setCurrentSaturation(int saturation)
@@ -211,7 +211,7 @@ void MediaPlayer::setCurrentSaturation(int saturation)
 void MediaPlayer::setCurrentHue(int hue)
 {
     libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
-    libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Hue, (float)hue/100);
+    libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Hue, (int)hue*3.6);
 
 }
 
