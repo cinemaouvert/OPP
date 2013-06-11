@@ -156,18 +156,19 @@ void MediaPlayer::setPosition(const int &position)
 
 void MediaPlayer::applyMediaSettings(MediaSettings *settings)
 {
-//    setCurrentAudioTrack(settings->audioTrack());
-//    setCurrentVideoTrack(settings->videoTrack());
+    setCurrentAudioTrack(settings->audioTrack());
+    setCurrentVideoTrack(settings->videoTrack());
     setCurrentBrightness(settings->brightness());
-//    setCurrentContrast(settings->contrast());
-//    setCurrentDeinterlacing(settings->deinterlacing());
-//    setCurrentGamma(settings->gamma());
-//    setCurrentHue(settings->hue());
-//    setCurrentRatio(settings->ratio());
-//    setCurrentSaturation(settings->saturation());
-//    setCurrentSubtitlesSync(settings->subtitlesSync());
+    setCurrentContrast(settings->contrast());
+    setCurrentDeinterlacing(settings->deinterlacing());
+    setCurrentGamma(settings->gamma());
+    setCurrentHue(settings->hue());
+    setCurrentRatio(settings->ratio());
+    setCurrentSaturation(settings->saturation());
+    setCurrentSubtitlesSync(settings->subtitlesSync());
+    // TODO : fix it
 //    setCurrentSubtitlesTrack(settings->subtitlesTrack());
-//    setCurrentVideoTrack(settings->videoTrack());
+    setCurrentVideoTrack(settings->videoTrack());
 }
 
 void MediaPlayer::setCurrentAudioTrack(int track)
