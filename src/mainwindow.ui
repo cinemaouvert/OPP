@@ -297,7 +297,7 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QPushButton" name="binAddMediaButton">
                <property name="text">
-                <string>          Add a movie</string>
+                <string>Add a movie</string>
                </property>
                <property name="icon">
                 <iconset resource="../images.qrc">
@@ -308,7 +308,7 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QPushButton" name="binDeleteMediaButton">
                <property name="text">
-                <string>         Delete</string>
+                <string>Delete</string>
                </property>
                <property name="icon">
                 <iconset resource="../images.qrc">
@@ -513,7 +513,7 @@ p, li { white-space: pre-wrap; }
                     <item>
                      <widget class="QPushButton" name="advancedSettingsButton">
                       <property name="text">
-                       <string>         Advanced settings</string>
+                       <string>Advanced settings</string>
                       </property>
                       <property name="icon">
                        <iconset resource="../images.qrc">
@@ -691,7 +691,7 @@ p, li { white-space: pre-wrap; }
                     <item>
                      <widget class="QPushButton" name="advancedPictureSettingsButton">
                       <property name="text">
-                       <string>      Advanced picture settings</string>
+                       <string>Advanced picture settings</string>
                       </property>
                       <property name="icon">
                        <iconset resource="../images.qrc">
@@ -773,7 +773,7 @@ p, li { white-space: pre-wrap; }
                     <item>
                      <widget class="QPushButton" name="lockButton">
                       <property name="text">
-                       <string>         Lock</string>
+                       <string>Lock</string>
                       </property>
                       <property name="icon">
                        <iconset resource="../images.qrc">
@@ -838,7 +838,7 @@ p, li { white-space: pre-wrap; }
            <property name="bottomMargin">
             <number>0</number>
            </property>
-           <item alignment="Qt::AlignBottom">
+           <item>
             <widget class="QPushButton" name="playerPlayButton">
              <property name="minimumSize">
               <size>
@@ -862,7 +862,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item alignment="Qt::AlignBottom">
+           <item>
             <widget class="QPushButton" name="playerPreviousButton">
              <property name="minimumSize">
               <size>
@@ -879,7 +879,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item alignment="Qt::AlignBottom">
+           <item>
             <widget class="QPushButton" name="playerNextButton">
              <property name="minimumSize">
               <size>
@@ -896,7 +896,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item alignment="Qt::AlignBottom">
+           <item>
             <widget class="QPushButton" name="playerStopButton">
              <property name="minimumSize">
               <size>
@@ -913,7 +913,17 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item alignment="Qt::AlignBottom">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../images.qrc">:/icons/resources/glyphicons/glyphicons_183_volume_down.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QSlider" name="playerVolumeSlider">
              <property name="maximumSize">
               <size>
@@ -935,7 +945,17 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item alignment="Qt::AlignBottom">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../images.qrc">:/icons/resources/glyphicons/glyphicons_184_volume_up.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QLabel" name="playerVolumeLabel">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -956,7 +976,7 @@ p, li { white-space: pre-wrap; }
               </size>
              </property>
              <property name="text">
-              <string>50</string>
+              <string notr="true">50</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
