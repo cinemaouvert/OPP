@@ -122,3 +122,13 @@ bool ScheduleListModel::isScheduled(Playlist *playlist) const {
     }
     return false;
 }
+
+void ScheduleListModel::delayAll(int ms)
+{
+    if (ms == 0) return;
+    foreach(Schedule *schedule, _scheduleList) {
+        schedule->delay(ms);
+    }
+
+    emit layoutChanged();
+}

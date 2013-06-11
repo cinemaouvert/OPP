@@ -35,6 +35,8 @@ public:
 
     bool isScheduled(Playlist *playlist) const;
 
+    void delayAll(int ms);
+
 private:
     QList<Schedule*> _scheduleList;
 

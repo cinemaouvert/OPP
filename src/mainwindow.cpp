@@ -654,6 +654,13 @@ void MainWindow::on_scheduleAddButton_clicked()
     }
 }
 
+void MainWindow::on_scheduleDelayButton_clicked()
+{
+    int delay = ui->scheduleDelaySpinBox->value() /*min*/;
+
+    _scheduleListModel->delayAll(delay * 60 * 1000 /*ms*/);
+}
+
 /***********************************************************************************************\
                                           Helpers
 \***********************************************************************************************/

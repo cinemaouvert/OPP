@@ -28,6 +28,8 @@ public:
     inline const QDateTime & launchAt() const { return _launchAt; }
     QDateTime finishAt() const;
 
+    void delay(int ms);
+
 signals:
     void triggered(Playlist *playlist);
 

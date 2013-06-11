@@ -87,6 +87,7 @@ private slots:
 
     void on_scheduleAddButton_clicked();
     void on_scheduleDeleteButton_clicked();
+    void on_scheduleDelayButton_clicked();
 protected:
     Playback* selectedPlayback() const;
     PlaylistTableView* currentPlaylistTableView() const;

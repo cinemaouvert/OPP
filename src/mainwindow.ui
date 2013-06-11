@@ -233,7 +233,14 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QSpinBox" name="scheduleDelaySpinBox"/>
+              <widget class="QSpinBox" name="scheduleDelaySpinBox">
+               <property name="minimum">
+                <number>-180</number>
+               </property>
+               <property name="maximum">
+                <number>180</number>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QLabel" name="label_delay2">
