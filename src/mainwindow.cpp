@@ -138,8 +138,8 @@ void MainWindow::on_binDeleteMediaButton_clicked()
 {
     QItemSelectionModel *selectionModel = ui->binTableView->selectionModel();
 
-    while (selectionModel->selectedIndexes().count() != 0) {
-        QModelIndex index = selectionModel->selectedIndexes().first();
+    while (selectionModel->selectedRows().count() != 0) {
+        QModelIndex index = selectionModel->selectedRows().first();
         Media *media = _mediaListModel->mediaList().at(index.row());
 
         if (media->isUsed()) {
@@ -625,8 +625,8 @@ void MainWindow::on_scheduleDeleteButton_clicked()
 {
     QItemSelectionModel *selectionModel = ui->scheduleTableView->selectionModel();
 
-    while (selectionModel->selectedIndexes().count() != 0) {
-        QModelIndex index = selectionModel->selectedIndexes().first();
+    while (selectionModel->selectedRows().count() != 0) {
+        QModelIndex index = selectionModel->selectedRows().first();
         _scheduleListModel->removeSchedule(index.row());
     }
 }

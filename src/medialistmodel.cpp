@@ -103,8 +103,8 @@ bool MediaListModel::removeMedia(int index)
     beginRemoveRows(QModelIndex(), index, index);
 
     _mediaFileList.removeAll(_mediaList[index]->location());
-    _mediaList.removeAt(index);
     delete _mediaList[index];
+    _mediaList.removeAt(index);
 
     endRemoveRows();
 
