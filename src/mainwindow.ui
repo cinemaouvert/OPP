@@ -198,17 +198,6 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="scheduleSettingsButton">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="../images.qrc">
-                 <normaloff>:/icons/resources/glyphicons/glyphicons_280_settings.png</normaloff>:/icons/resources/glyphicons/glyphicons_280_settings.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QPushButton" name="scheduleDeleteButton">
                <property name="text">
                 <string/>
