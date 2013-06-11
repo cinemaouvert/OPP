@@ -451,12 +451,13 @@ void MainWindow::createPlaylistTab()
     Playlist *playlist = new Playlist(_app->vlcInstance(), "new playlist");
     PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel);
 
+    connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
+
     newTab->setModel(newModel);
     newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
     newTab->horizontalHeader()->setStretchLastSection(true);
 
     ui->playlistsTabWidget->addTab(newTab, playlist->title());
-
     ui->playlistsTabWidget->setCurrentWidget(newTab);
 
     updatePlaylistListCombox();

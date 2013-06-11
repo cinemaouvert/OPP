@@ -25,6 +25,7 @@ Playlist::~Playlist()
 void Playlist::setTitle(const QString &title)
 {
     _title = title;
+    emit titleChanged();
 }
 
 Playback* Playlist::at(const int &index) const

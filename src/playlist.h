@@ -39,6 +39,9 @@ public:
 
     void unlock();
 
+signals:
+    void titleChanged();
+
 private:
     QList<Playback*> _playbackList;
 
