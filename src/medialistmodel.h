@@ -53,12 +53,6 @@ private:
 
     QStringList _mediaFileList;
 
-    uint duration=0;
-
-    int _numberImage;
-
-    int _numberFilms;
-
     friend QDataStream & operator << (QDataStream &, const QList<Media> &);
     friend QDataStream & operator >> (QDataStream &, QList<Media> &);
 

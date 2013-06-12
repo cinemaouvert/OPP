@@ -148,46 +148,42 @@ QDataStream & operator >> (QDataStream & in, QList<Media> &list)
     return in;
 }
 
-QTime MediaListModel::summaryTotalDuration() {
+QTime MediaListModel::summaryTotalDuration()
+{
+    int duration = 0;
 
-     duration = 0;
-    foreach (Media* media, _mediaList)
-    {
+    foreach (Media* media, _mediaList) {
          duration += media->duration();
     }
 
-   return  msecToQTime(duration);
-
+    return  msecToQTime(duration);
 }
 
-int MediaListModel::imageNumber(){
+int MediaListModel::imageNumber()
+{
+    int numberImage = 0 ;
 
-    _numberImage = 0 ;
-    foreach (Media* media, _mediaList)
-    {
-
-        if(media->isImage()) _numberImage += 1;
-
-
+    foreach (Media* media, _mediaList) {
+        if (media->isImage())
+            numberImage += 1;
     }
 
- return _numberImage;
-
+    return numberImage;
 }
 
-int MediaListModel::filmsNumber(){
+int MediaListModel::filmsNumber()
+{
+    int numberFilms = 0;
 
-    _numberFilms = 0;
-    foreach (Media* media, _mediaList)
-    {
-        if(!(media->isImage())) _numberFilms += 1;
-
+    foreach (Media* media, _mediaList) {
+        if (!media->isImage())
+            numberFilms += 1;
     }
-    return _numberFilms;
+
+    return numberFilms;
 }
 
-void MediaListModel::infosCodecs(){
-
-
+void MediaListModel::infosCodecs()
+{
 }
 

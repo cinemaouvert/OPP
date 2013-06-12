@@ -104,6 +104,8 @@ void Media::parseMediaInfos()
                 break;
             case libvlc_track_video : //Video track
                 _videoTracks.append(tracks[track].i_id);
+                _videoResolution.setWidth(tracks[track].u.video.i_width);
+                _videoResolution.setHeight(tracks[track].u.video.i_height);
                 break;
             case libvlc_track_text : //Subtitles track
                 _subtitlesTracks.append(tracks[track].i_id);
