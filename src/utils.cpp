@@ -9,3 +9,11 @@ QTime msecToQTime(uint msecs)
     return QTime(hours,minutes,seconds);
 }
 
+int qTimeToMsec(QTime time)
+{
+    int hours = time.hour();
+    int minutes = time.minute();
+    int seconds = time.second();
+    return 1000*seconds+60000*minutes+3600000*hours;
+}
+

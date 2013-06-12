@@ -120,6 +120,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->ratioComboBox->clear();
     ui->ratioComboBox->addItems(MediaSettings::ratioValues());
+
+    _advancedSettingsWindow = new AdvancedSettingsWindow(this);
+    _advancedPictureSettingsWindow = new AdvancedPictureSettingsWindow(this);
+    _settingsWindow = new SettingsWindow(this);
 }
 
 MainWindow::~MainWindow()
@@ -193,7 +197,7 @@ void MainWindow::on_binDeleteMediaButton_clicked()
 
 void MainWindow::on_advancedSettingsButton_clicked()
 {
-    _advancedSettingsWindow = new AdvancedSettingsWindow(this);
+    _advancedSettingsWindow->setPlayback(selectedPlayback());
     _advancedSettingsWindow->show();
     _advancedSettingsWindow->raise();
     _advancedSettingsWindow->activateWindow();
@@ -201,7 +205,7 @@ void MainWindow::on_advancedSettingsButton_clicked()
 
 void MainWindow::on_advancedPictureSettingsButton_clicked()
 {
-    _advancedPictureSettingsWindow = new AdvancedPictureSettingsWindow(this);
+    _advancedPictureSettingsWindow->setPlayback(selectedPlayback());
     _advancedPictureSettingsWindow->show();
     _advancedPictureSettingsWindow->raise();
     _advancedPictureSettingsWindow->activateWindow();
@@ -209,7 +213,6 @@ void MainWindow::on_advancedPictureSettingsButton_clicked()
 
 void MainWindow::on_settingsAction_triggered()
 {
-    _settingsWindow = new SettingsWindow(this);
     _settingsWindow->show();
     _settingsWindow->raise();
     _settingsWindow->activateWindow();
@@ -217,6 +220,7 @@ void MainWindow::on_settingsAction_triggered()
 
 void MainWindow::on_lockSettingsAction_triggered()
 {
+    _lockSettingsWindow->setLocker();
     _lockSettingsWindow->show();
     _lockSettingsWindow->raise();
     _lockSettingsWindow->activateWindow();

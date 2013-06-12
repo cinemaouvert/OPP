@@ -87,11 +87,29 @@ void MediaSettings::setAudioSync(double sync){
     emit audioSyncChanged(_audioSync);
 }
 
+void MediaSettings::setTestPattern(bool testpattern)
+{
+    _testPattern = testpattern;
+    emit testPatternChanged(_testPattern);
+}
+
+void MediaSettings::setInMark(int mark)
+{
+    _inMark = mark;
+    emit inMarkChanged(_inMark);
+}
+
+void MediaSettings::setOutMark(int mark)
+{
+    _outMark = mark;
+    emit outMarkChanged(_outMark);
+}
+
 void MediaSettings::initDefault()
 {
     _ratio = Original;
     _scale = NoScale;
-    _deinterlacing = Disabled;
+    _deinterlacing = Discard;
     _subtitlesSync = 0;
     _gamma = 1;
     _contrast = 1;
@@ -99,6 +117,9 @@ void MediaSettings::initDefault()
     _saturation = 1;
     _hue = 0;
     _audioSync=0;
+    _testPattern = false;
+    _inMark = 0;
+    _outMark = 0;
 }
 
 QStringList MediaSettings::ratioValues()
@@ -122,13 +143,11 @@ QStringList MediaSettings::ratioValues()
 QStringList MediaSettings::deinterlacingValues()
 {
     QStringList list;
-    list << "default"
-        << "discard"
-        << "blend"
-        << "man"
-        << "bob"
-        << "linear"
-        << "x";
+    list << "Discard"
+        << "Blend"
+        << "Mean"
+        << "Bob"
+        << "Linear";
 
     return list;
 }
