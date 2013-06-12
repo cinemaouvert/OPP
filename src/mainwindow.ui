@@ -168,7 +168,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QTimeEdit" name="scheduleLaunchAtTimeEdit"/>
+              <widget class="QTimeEdit" name="scheduleLaunchAtTimeEdit">
+               <property name="displayFormat">
+                <string>HH:mm:ss</string>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QPushButton" name="scheduleAddButton">
@@ -178,17 +182,6 @@
                <property name="icon">
                 <iconset resource="../images.qrc">
                  <normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="scheduleSettingsButton">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="../images.qrc">
-                 <normaloff>:/icons/resources/glyphicons/glyphicons_280_settings.png</normaloff>:/icons/resources/glyphicons/glyphicons_280_settings.png</iconset>
                </property>
               </widget>
              </item>
@@ -207,6 +200,9 @@
            </item>
            <item>
             <widget class="QTableView" name="scheduleTableView">
+             <property name="selectionBehavior">
+              <enum>QAbstractItemView::SelectRows</enum>
+             </property>
              <attribute name="horizontalHeaderStretchLastSection">
               <bool>true</bool>
              </attribute>
@@ -225,7 +221,14 @@
               </widget>
              </item>
              <item>
-              <widget class="QSpinBox" name="scheduleDelaySpinBox"/>
+              <widget class="QSpinBox" name="scheduleDelaySpinBox">
+               <property name="minimum">
+                <number>-180</number>
+               </property>
+               <property name="maximum">
+                <number>180</number>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QLabel" name="label_delay2">
@@ -246,7 +249,10 @@
            <item>
             <widget class="QPushButton" name="scheduleToggleEnabledButton">
              <property name="text">
-              <string>Stop automation</string>
+              <string>Start automation</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -270,7 +276,7 @@
              <item>
               <widget class="QPushButton" name="binAddMediaButton">
                <property name="text">
-                <string>          Add a movie</string>
+                <string>Add a movie</string>
                </property>
                <property name="icon">
                 <iconset resource="../images.qrc">
@@ -281,7 +287,7 @@
              <item>
               <widget class="QPushButton" name="binDeleteMediaButton">
                <property name="text">
-                <string>         Delete</string>
+                <string>Delete</string>
                </property>
                <property name="icon">
                 <iconset resource="../images.qrc">
@@ -348,7 +354,7 @@
                <number>1</number>
               </property>
               <item>
-               <widget class="PlayerTimelineWidget" name="timelineWidget" native="true">
+               <widget class="SeekWidget" name="seekWidget" native="true">
                 <layout class="QGridLayout" name="gridLayout"/>
                </widget>
               </item>
@@ -450,7 +456,7 @@
                     <item>
                      <widget class="QPushButton" name="advancedSettingsButton">
                       <property name="text">
-                       <string>         Advanced settings</string>
+                       <string>Advanced settings</string>
                       </property>
                       <property name="icon">
                        <iconset resource="../images.qrc">
@@ -519,82 +525,6 @@
                            </property>
                           </widget>
                          </item>
-                         <item row="0" column="1">
-                          <widget class="QSpinBox" name="gammaSpinBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="minimum">
-                            <number>0</number>
-                           </property>
-                           <property name="maximum">
-                            <number>100</number>
-                           </property>
-                           <property name="value">
-                            <number>50</number>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="1" column="1">
-                          <widget class="QSpinBox" name="contrastSpinBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="minimum">
-                            <number>0</number>
-                           </property>
-                           <property name="maximum">
-                            <number>100</number>
-                           </property>
-                           <property name="value">
-                            <number>50</number>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="2" column="1">
-                          <widget class="QSpinBox" name="brightnessSpinBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="minimum">
-                            <number>0</number>
-                           </property>
-                           <property name="maximum">
-                            <number>100</number>
-                           </property>
-                           <property name="value">
-                            <number>50</number>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="3" column="1">
-                          <widget class="QSpinBox" name="saturationSpinBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="minimum">
-                            <number>0</number>
-                           </property>
-                           <property name="maximum">
-                            <number>100</number>
-                           </property>
-                           <property name="value">
-                            <number>50</number>
-                           </property>
-                          </widget>
-                         </item>
                          <item row="4" column="1">
                           <widget class="QSpinBox" name="hueSpinBox">
                            <property name="sizePolicy">
@@ -607,7 +537,71 @@
                             <number>0</number>
                            </property>
                            <property name="maximum">
-                            <number>100</number>
+                            <number>20</number>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="0" column="1">
+                          <widget class="QDoubleSpinBox" name="gammaSpinBox">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="maximum">
+                            <double>10.000000000000000</double>
+                           </property>
+                           <property name="singleStep">
+                            <double>0.100000000000000</double>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="1" column="1">
+                          <widget class="QDoubleSpinBox" name="contrastSpinBox">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="maximum">
+                            <double>2.000000000000000</double>
+                           </property>
+                           <property name="singleStep">
+                            <double>0.100000000000000</double>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="2" column="1">
+                          <widget class="QDoubleSpinBox" name="brightnessSpinBox">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="maximum">
+                            <double>2.000000000000000</double>
+                           </property>
+                           <property name="singleStep">
+                            <double>0.100000000000000</double>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="3" column="1">
+                          <widget class="QDoubleSpinBox" name="saturationSpinBox">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="maximum">
+                            <double>3.000000000000000</double>
+                           </property>
+                           <property name="singleStep">
+                            <double>0.100000000000000</double>
                            </property>
                           </widget>
                          </item>
@@ -619,7 +613,7 @@
                     <item>
                      <widget class="QPushButton" name="advancedPictureSettingsButton">
                       <property name="text">
-                       <string>      Advanced picture settings</string>
+                       <string>Advanced picture settings</string>
                       </property>
                       <property name="icon">
                        <iconset resource="../images.qrc">
@@ -663,6 +657,13 @@
                            </property>
                           </widget>
                          </item>
+                         <item row="0" column="1">
+                          <widget class="QDoubleSpinBox" name="audioSyncDoubleSpinBox">
+                           <property name="minimum">
+                            <double>-99.989999999999995</double>
+                           </property>
+                          </widget>
+                         </item>
                          <item row="1" column="0">
                           <widget class="QLabel" name="audioGainLabel">
                            <property name="text">
@@ -677,34 +678,6 @@
                            </property>
                           </widget>
                          </item>
-                         <item row="2" column="0">
-                          <widget class="QLabel" name="normalizationLabel">
-                           <property name="text">
-                            <string>Normalization</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="2" column="1">
-                          <widget class="QComboBox" name="normalizationComboBox">
-                           <item>
-                            <property name="text">
-                             <string>On</string>
-                            </property>
-                           </item>
-                           <item>
-                            <property name="text">
-                             <string>Off</string>
-                            </property>
-                           </item>
-                          </widget>
-                         </item>
-                         <item row="0" column="1">
-                          <widget class="QDoubleSpinBox" name="audioSyncDoubleSpinBox">
-                           <property name="minimum">
-                            <double>-99.989999999999995</double>
-                           </property>
-                          </widget>
-                         </item>
                         </layout>
                        </item>
                       </layout>
@@ -713,11 +686,12 @@
                     <item>
                      <widget class="QPushButton" name="lockButton">
                       <property name="text">
-                       <string>         Lock</string>
+                       <string>Lock</string>
                       </property>
                       <property name="icon">
                        <iconset resource="../images.qrc">
-                        <normaloff>:/icons/resources/glyphicons/glyphicons_044_keys.png</normaloff>:/icons/resources/glyphicons/glyphicons_044_keys.png</iconset>
+                        <normaloff>:/icons/resources/glyphicons/glyphicons_204_unlock.png</normaloff>
+                        <normalon>:/icons/resources/glyphicons/glyphicons_203_lock.png</normalon>:/icons/resources/glyphicons/glyphicons_204_unlock.png</iconset>
                       </property>
                       <property name="checkable">
                        <bool>true</bool>
@@ -731,16 +705,6 @@
                </widget>
               </item>
              </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="SaturationWidget" name="saturationWidget" native="true">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
             </widget>
            </item>
           </layout>
@@ -768,7 +732,7 @@
            <property name="margin">
             <number>0</number>
            </property>
-           <item alignment="Qt::AlignBottom">
+           <item>
             <widget class="QPushButton" name="playerPlayButton">
              <property name="minimumSize">
               <size>
@@ -792,7 +756,7 @@
              </property>
             </widget>
            </item>
-           <item alignment="Qt::AlignBottom">
+           <item>
             <widget class="QPushButton" name="playerPreviousButton">
              <property name="minimumSize">
               <size>
@@ -809,7 +773,7 @@
              </property>
             </widget>
            </item>
-           <item alignment="Qt::AlignBottom">
+           <item>
             <widget class="QPushButton" name="playerNextButton">
              <property name="minimumSize">
               <size>
@@ -826,7 +790,7 @@
              </property>
             </widget>
            </item>
-           <item alignment="Qt::AlignBottom">
+           <item>
             <widget class="QPushButton" name="playerStopButton">
              <property name="minimumSize">
               <size>
@@ -843,7 +807,17 @@
              </property>
             </widget>
            </item>
-           <item alignment="Qt::AlignBottom">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../images.qrc">:/icons/resources/glyphicons/glyphicons_183_volume_down.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QSlider" name="playerVolumeSlider">
              <property name="maximumSize">
               <size>
@@ -865,7 +839,17 @@
              </property>
             </widget>
            </item>
-           <item alignment="Qt::AlignBottom">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../images.qrc">:/icons/resources/glyphicons/glyphicons_184_volume_up.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QLabel" name="playerVolumeLabel">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -886,7 +870,7 @@
               </size>
              </property>
              <property name="text">
-              <string>50</string>
+              <string notr="true">50</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -1163,21 +1147,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SaturationWidget</class>
-   <extends>QWidget</extends>
-   <header>saturationwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>PlayerTimelineWidget</class>
-   <extends>QWidget</extends>
-   <header>playertimelinewidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>MediaTableView</class>
    <extends>QTableView</extends>
    <header>mediatableview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SeekWidget</class>
+   <extends>QWidget</extends>
+   <header>seekwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

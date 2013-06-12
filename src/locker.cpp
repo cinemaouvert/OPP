@@ -82,7 +82,7 @@ void Locker::toggle(bool checked)
 {
     checked ? lock() : unlock();
 
-    // ca permet de connecté la methode toggle à un signal toggled emis par un clique bouton
+    emit toggled(checked);
 }
 
 QList<QWidget*> Locker::getWidgets()

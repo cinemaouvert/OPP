@@ -5,8 +5,9 @@
 #include "global.h"
 #include "media.h"
 
-Playlist::Playlist(libvlc_instance_t *vlcInstance, QObject *parent) :
-    QObject(parent)
+Playlist::Playlist(libvlc_instance_t *vlcInstance, const QString &title, QObject *parent) :
+    QObject(parent),
+    _title(title)
 {
     _vlcMediaList = libvlc_media_list_new(vlcInstance);
 }
@@ -19,6 +20,12 @@ Playlist::~Playlist()
     }
 
     libvlc_media_list_release(_vlcMediaList);
+}
+
+void Playlist::setTitle(const QString &title)
+{
+    _title = title;
+    emit titleChanged();
 }
 
 Playback* Playlist::at(const int &index) const

@@ -44,6 +44,8 @@ public:
 
     void open(Playback *playback);
 
+    void applyMediaSettings(MediaSettings *settings);
+
 public slots:
     void play();
 
@@ -79,10 +81,10 @@ public slots:
     void setCurrentVideoTrack(int track);
     void setCurrentSubtitlesTrack(int track);
 
-    void setCurrentGamma(int gamma);
-    void setCurrentContrast(int contrast);
-    void setCurrentBrightness(int brightness);
-    void setCurrentSaturation(int saturation);
+    void setCurrentGamma(float gamma);
+    void setCurrentContrast(float contrast);
+    void setCurrentBrightness(float brightness);
+    void setCurrentSaturation(float saturation);
     void setCurrentHue(int hue);
     void setCurrentAudioSync(double sync);
 
@@ -99,7 +101,7 @@ signals:
     void opening();
     void pausableChanged(const bool &);
     void paused();
-    void playing();
+    void playing(bool = true);
     void positionChanged(const float &);
     void seekableChanged(const bool &);
     void snapshotTaken(const QString &);

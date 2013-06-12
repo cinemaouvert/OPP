@@ -5,7 +5,8 @@
 Schedule::Schedule(Playlist *playlist, const QDateTime &launchAt, QObject *parent) :
     QObject(parent),
     _playlist(playlist),
-    _launchAt(launchAt)
+    _launchAt(launchAt),
+    _wasTriggered(false)
 {
 }
 
@@ -36,10 +37,10 @@ QDateTime Schedule::finishAt() const
 
 void Schedule::start()
 {
-    if (isExpired() || _timer.isActive())
+    if (isExpired() || isActive())
         return;
 
-    _timer.singleShot(_launchAt.msecsTo(QDateTime::currentDateTime()), this, SLOT(timeout()));
+    _timer.singleShot(QDateTime::currentDateTime().msecsTo(_launchAt), this, SLOT(timeout()));
 }
 
 void Schedule::stop()
@@ -52,7 +53,30 @@ bool Schedule::isExpired() const
     return _launchAt < QDateTime::currentDateTime();
 }
 
+bool Schedule::isActive() const
+{
+    return _timer.isActive();
+}
+
+bool Schedule::wasTriggered() const
+{
+    return _wasTriggered;
+}
+
+void Schedule::delay(int ms)
+{
+    bool wasActived = isActive();
+    stop();
+
+    _launchAt = _launchAt.addMSecs(ms);
+
+    if (wasActived)
+        start();
+}
+
 void Schedule::timeout()
 {
+    _wasTriggered = true;
+
     emit triggered(_playlist);
 }

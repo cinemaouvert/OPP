@@ -99,13 +99,13 @@ void Media::parseMediaInfos()
     {
         switch(tracks[track].i_type)
         {
-            case 0 : //Audio track
+            case libvlc_track_audio : //Audio track
                 _audioTracks.append(tracks[track].i_id);
                 break;
-            case 1 : //Video track
+            case libvlc_track_video : //Video track
                 _videoTracks.append(tracks[track].i_id);
                 break;
-            case 2 : //Subtitles track
+            case libvlc_track_text : //Subtitles track
                 _subtitlesTracks.append(tracks[track].i_id);
                 break;
         }

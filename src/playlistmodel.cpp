@@ -127,11 +127,18 @@ bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int
     switch (role)
     {
     case Qt::EditRole:
-        if (index.column() == Video) {
-            _playlist->at(index.row())->mediaSettings()->setRatio(
-                (Ratio) MediaSettings::ratioValues().indexOf(QRegExp(value.toString()))
-            );
-        }
+//        if (index.column() == Video) {
+//            _playlist->at(index.row())->mediaSettings()->setRatio(
+//                (Ratio) MediaSettings::ratioValues().indexOf(QRegExp(value.toString()))
+//            );
+//        }
+//        else if (index.column() == Subtitles) {
+//            qDebug() << value;
+////            _playlist->at(index.row())->mediaSettings()->setSubtitlesTrack();
+//        } else if (index.column() == Subtitles) {
+//            qDebug() << value;
+////            _playlist->at(index.row())->mediaSettings()->setSubtitlesTrack();
+//        }
         emit dataChanged(index, index);
         return true;
         break;
@@ -168,11 +175,9 @@ bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action
 
 void PlaylistModel::removePlaybackWithDeps(Media *media)
 {
-    QList<Playback*> playbacks = _playlist->playbackList();
-
-    for (int i = 0; i < playbacks.count(); i++) {
-        if (playbacks[i]->media() == media) {
-            removePlayback(_playlist->indexOf(playbacks[i]));
+    for (int i = _playlist->count() - 1; i >= 0; i--) {
+        if (_playlist->at(i)->media() == media) {
+            removePlayback(i);
         }
     }
 }

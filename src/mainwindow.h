@@ -27,6 +27,7 @@ class ScheduleListModel;
 class Application;
 class PlaylistPlayer;
 class Playback;
+class Playlist;
 class Locker;
 
 class MainWindow : public QMainWindow
@@ -38,7 +39,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void initSettingsViews();
     void on_ratioComboBox_currentIndexChanged(int index);
 
     /* bin events */
@@ -58,7 +58,6 @@ private slots:
     /*parameters events*/
     void on_advancedSettingsButton_clicked();
     void on_advancedPictureSettingsButton_clicked();
-    void on_lockButton_clicked();
 
     /* player controls */
     void on_playerPlayButton_clicked(bool checked);
@@ -66,10 +65,10 @@ private slots:
     void on_playlistsTabWidget_currentChanged(int index);
 
     void on_subtitlesSyncSpinBox_valueChanged(double arg1);
-    void on_gammaSpinBox_valueChanged(int arg1);
-    void on_contrastSpinBox_valueChanged(int arg1);
-    void on_brightnessSpinBox_valueChanged(int arg1);
-    void on_saturationSpinBox_valueChanged(int arg1);
+    void on_gammaSpinBox_valueChanged(double arg1);
+    void on_contrastSpinBox_valueChanged(double arg1);
+    void on_brightnessSpinBox_valueChanged(double arg1);
+    void on_saturationSpinBox_valueChanged(double arg1);
     void on_hueSpinBox_valueChanged(int arg1);
     void on_audioSyncDoubleSpinBox_valueChanged(double arg1);
 
@@ -89,12 +88,19 @@ private slots:
     void on_videoTrackComboBox_currentIndexChanged(int index);
     void on_subtitlesTrackComboBox_currentIndexChanged(int index);
 
+    void updatePlaylistListCombox();
+
     int getTrackIndex(QList<int> list, int track);
 
+    void on_scheduleAddButton_clicked();
+    void on_scheduleDeleteButton_clicked();
+    void on_scheduleDelayButton_clicked();
+    void on_scheduleToggleEnabledButton_toggled(bool checked);
 protected:
     Playback* selectedPlayback() const;
     PlaylistTableView* currentPlaylistTableView() const;
     PlaylistModel* currentPlaylistModel() const;
+    Playlist* playlistAt(int index) const;
 
 private:
     Ui::MainWindow *ui;

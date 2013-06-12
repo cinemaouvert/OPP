@@ -42,9 +42,13 @@ public slots:
 
     void stop();
 
+    void playPlaylist(Playlist *playlist);
+
 private slots:
 
     void handlePlaylistEnd();
+
+    void applyCurrentPlaybackSettings();
 
 signals:
 

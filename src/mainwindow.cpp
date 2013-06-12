@@ -39,6 +39,9 @@ MainWindow::MainWindow(QWidget *parent) :
     lockedWidget << ui->playlistsTabWidget;
     _locker = new Locker(lockedWidget, this);
 
+    connect(_locker, SIGNAL(toggled(bool)), ui->lockButton, SLOT(setChecked(bool)));
+    connect(ui->lockButton, SIGNAL(clicked(bool)), _locker, SLOT(toggle(bool)));
+
     _lockSettingsWindow = new LockSettingsWindow(_locker, this);
     _videoWindow = new VideoWindow(this);
 
@@ -50,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _playlistPlayer->mediaPlayer()->setVolume(ui->playerVolumeSlider->value());
 
     connect(ui->playerVolumeSlider, SIGNAL(valueChanged(int)), _playlistPlayer->mediaPlayer(), SLOT(setVolume(int)));
-    connect(_playlistPlayer->mediaPlayer(), SIGNAL(played()), ui->playerPlayButton, SLOT(toggle()));
+    connect(_playlistPlayer->mediaPlayer(), SIGNAL(playing(bool)), ui->playerPlayButton, SLOT(setChecked(bool)));
     connect(ui->playerStopButton, SIGNAL(clicked()), _playlistPlayer, SLOT(stop()));
     connect(ui->playerStopButton, SIGNAL(clicked(bool)), ui->playerPlayButton, SLOT(setChecked(bool)));
     connect(ui->playerPreviousButton, SIGNAL(clicked()), _playlistPlayer, SLOT(previous()));
@@ -60,9 +63,11 @@ MainWindow::MainWindow(QWidget *parent) :
     _mediaListModel = new MediaListModel();
     _scheduleListModel = new ScheduleListModel();
 
+    connect(ui->scheduleToggleEnabledButton, SIGNAL(toggled(bool)), _scheduleListModel, SLOT(toggleAutomation(bool)));
+
     ui->binTableView->setModel(_mediaListModel);
     ui->scheduleTableView->setModel(_scheduleListModel);
-    ui->timelineWidget->setMediaPlayer(_playlistPlayer->mediaPlayer());
+    ui->seekWidget->setMediaPlayer(_playlistPlayer->mediaPlayer());
 
     // ###########################################################################################
     ui->progEdit->setText("Nom de la programmation:    ");
@@ -82,8 +87,6 @@ MainWindow::MainWindow(QWidget *parent) :
     _statusWidget = new StatusWidget;
     ui->statusBar->addWidget(_statusWidget);
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)), _statusWidget, SLOT(setMediaCount(int)));
-
-    connect(ui->lockButton, SIGNAL(toggled(bool)), _locker, SLOT(toggle(bool)));
 
     // show/hide pannel actions
     connect(ui->quitAction, SIGNAL(triggered()), this, SLOT(close()));
@@ -105,12 +108,18 @@ MainWindow::MainWindow(QWidget *parent) :
     _mediaSettingsMapper = new QDataWidgetMapper(this);
 
     // initialize media settings input
-    ui->ratioComboBox->addItems(MediaSettings::ratioValues());
-    ui->ratioComboBox->setAutoCompletion(true);
+//    ui->ratioComboBox->addItems(MediaSettings::ratioValues());
+//    ui->ratioComboBox->setAutoCompletion(true);
 
-    connect(ui->ratioComboBox, SIGNAL(currentIndexChanged(int)), _mediaSettingsMapper, SLOT(submit()));
+//    connect(ui->ratioComboBox, SIGNAL(currentIndexChanged(int)), _mediaSettingsMapper, SLOT(submit()));
 
     createPlaylistTab();
+
+    ui->scheduleLaunchAtDateEdit->setDate(QDate::currentDate());
+    ui->scheduleLaunchAtTimeEdit->setTime(QTime::currentTime());
+
+    ui->ratioComboBox->clear();
+    ui->ratioComboBox->addItems(MediaSettings::ratioValues());
 }
 
 MainWindow::~MainWindow()
@@ -138,10 +147,6 @@ void MainWindow::setDetails(int count)
 }
 
 
-void MainWindow::initSettingsViews()
-{
-
-}
 
 void MainWindow::on_binAddMediaButton_clicked()
 {
@@ -161,10 +166,12 @@ void MainWindow::on_binAddMediaButton_clicked()
 
 void MainWindow::on_binDeleteMediaButton_clicked()
 {
-    QModelIndexList indexes = ui->binTableView->selectionModel()->selectedRows();
+    QItemSelectionModel *selectionModel = ui->binTableView->selectionModel();
 
-    foreach (QModelIndex index, indexes) {
+    while (selectionModel->selectedRows().count() != 0) {
+        QModelIndex index = selectionModel->selectedRows().first();
         Media *media = _mediaListModel->mediaList().at(index.row());
+
         if (media->isUsed()) {
             if (1 == QMessageBox::warning(this, "remove media", "This media is used. All references of this media into playlists will be deleted too.\n Are you sure to remove this media ?" ,"No", "Yes"))
             {
@@ -175,48 +182,14 @@ void MainWindow::on_binDeleteMediaButton_clicked()
                 }
             }
         }
+
         _mediaListModel->removeMedia(index.row());
     }
 }
 
-void MainWindow::on_settingsAction_triggered()
-{
-    _settingsWindow = new SettingsWindow(this);
-    _settingsWindow->show();
-    _settingsWindow->raise();
-    _settingsWindow->activateWindow();
-}
-
-void MainWindow::on_lockSettingsAction_triggered()
-{
-    _lockSettingsWindow->show();
-    _lockSettingsWindow->raise();
-    _lockSettingsWindow->activateWindow();
-}
-
-void MainWindow::on_playerPlayButton_clicked(bool checked)
-{
-    PlaylistModel *playlistModel = currentPlaylistModel();
-    if (checked) {
-        if (_playlistPlayer->mediaPlayer()->isPaused()) {
-            _playlistPlayer->mediaPlayer()->resume();
-        } else {
-            // play or resume playback
-            QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
-
-            // if no selected item play current playlist from first item
-            if (indexes.count() == 0) {
-                _playlistPlayer->playItemAt(0);//->play();
-            // play playlist at selected item otherwise
-            } else {
-                const int index = indexes.first().row();
-                _playlistPlayer->playItemAt(index);
-            }
-        }
-    } else {
-        _playlistPlayer->mediaPlayer()->pause();
-    }
-}
+/***********************************************************************************************\
+                                          Playback Settings
+\***********************************************************************************************/
 
 void MainWindow::on_advancedSettingsButton_clicked()
 {
@@ -234,8 +207,250 @@ void MainWindow::on_advancedPictureSettingsButton_clicked()
     _advancedPictureSettingsWindow->activateWindow();
 }
 
-void MainWindow::on_lockButton_clicked()
+void MainWindow::on_settingsAction_triggered()
 {
+    _settingsWindow = new SettingsWindow(this);
+    _settingsWindow->show();
+    _settingsWindow->raise();
+    _settingsWindow->activateWindow();
+}
+
+void MainWindow::on_lockSettingsAction_triggered()
+{
+    _lockSettingsWindow->show();
+    _lockSettingsWindow->raise();
+    _lockSettingsWindow->activateWindow();
+}
+
+void MainWindow::on_audioTrackComboBox_currentIndexChanged(int index)
+{
+    if (index == -1)
+        return;
+
+    Playback *playback = selectedPlayback();
+    if(playback)
+    {
+        const int track = playback->media()->audioTracks().at(index);
+        playback->mediaSettings()->setAudioTrack(track);
+    }
+
+    emit SIGNAL(layoutChanged());
+}
+
+void MainWindow::on_videoTrackComboBox_currentIndexChanged(int index)
+{
+    if (index == -1)
+        return;
+
+    Playback *playback = selectedPlayback();
+    if(playback)
+    {
+        const int track = playback->media()->videoTracks().at(index);
+        playback->mediaSettings()->setVideoTrack(track);
+    }
+
+//    emit currentPlaylistModel()->layoutChanged();
+}
+
+void MainWindow::on_subtitlesTrackComboBox_currentIndexChanged(int index)
+{
+    if (index == -1)
+        return;
+    qDebug() << "INDEX = "<<index;
+    Playback *playback = selectedPlayback();
+    if(playback)
+    {
+        //const int track = playback->media()->subtitlesTracks().at(index);
+        playback->mediaSettings()->setSubtitlesTrack(index);
+    }
+
+//    emit currentPlaylistModel()->layoutChanged();
+}
+
+void MainWindow::on_ratioComboBox_currentIndexChanged(int index)
+{
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setRatio((Ratio) index);
+    }
+}
+
+void MainWindow::on_subtitlesSyncSpinBox_valueChanged(double arg1)
+{
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setSubtitlesSync(arg1);
+    }
+   //_mediaPlayer->setCurrentSubtitlesSync(arg1);
+}
+
+void MainWindow::on_gammaSpinBox_valueChanged(double arg1)
+{
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setGamma(arg1);
+    }
+    // _mediaPlayer->setCurrentGamma(arg1);
+}
+
+void MainWindow::on_contrastSpinBox_valueChanged(double arg1)
+{
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setContrast(arg1);
+    }
+    // _mediaPlayer->setCurrentContrast(arg1);
+}
+
+void MainWindow::on_brightnessSpinBox_valueChanged(double arg1)
+{
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setBrightness(arg1);
+    }
+   // _mediaPlayer->setCurrentBrightness(arg1);
+}
+
+void MainWindow::on_saturationSpinBox_valueChanged(double arg1)
+{
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setSaturation(arg1);
+    }
+    // _mediaPlayer->setCurrentSaturation(arg1);
+}
+
+void MainWindow::on_hueSpinBox_valueChanged(int arg1)
+{
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setHue((int)arg1);
+    }
+    // _mediaPlayer->setCurrentHue(arg1);
+}
+
+void MainWindow::on_audioSyncDoubleSpinBox_valueChanged(double arg1)
+{
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setAudioSync(arg1);
+    }
+}
+
+void MainWindow::updateSettings()
+{
+    Playback* playback = selectedPlayback();
+    if(!playback){
+        ui->mediaSettingsWidget->setEnabled(false);
+        return;
+    }
+
+    ui->audioTrackComboBox->blockSignals(true);
+    ui->videoTrackComboBox->blockSignals(true);
+    ui->subtitlesTrackComboBox->blockSignals(true);
+
+    ui->mediaSettingsWidget->setEnabled(true);
+
+    QString item="";
+    ui->audioTrackComboBox->clear();
+    int listCount=playback->media()->audioTracks().count();
+    for(int i=0;i<listCount;i++)
+    {
+        if(playback->media()->audioTracks().at(i)==-1)
+            item="Disabled";
+        else
+        {
+            item="Track ";
+            item+=QString::number(playback->media()->audioTracks().at(i));
+        }
+        ui->audioTrackComboBox->addItem(item);
+    }
+
+    ui->videoTrackComboBox->clear();
+    listCount=playback->media()->videoTracks().count();
+    for(int i=0;i<listCount;i++)
+    {
+        if(playback->media()->videoTracks().at(i)==-1)
+            item="Disabled";
+        else
+        {
+            item="Track ";
+            item+=QString::number(playback->media()->videoTracks().at(i));
+        }
+        ui->videoTrackComboBox->addItem(item);
+    }
+
+    ui->subtitlesTrackComboBox->clear();
+    listCount=playback->media()->subtitlesTracks().count();
+
+    for(int i=0;i<listCount;i++)
+    {
+        if(playback->media()->subtitlesTracks().at(i)==-1)
+            item="Disabled";
+        else
+        {
+            item="Track ";
+            item+=QString::number(playback->media()->subtitlesTracks().at(i));
+        }
+        ui->subtitlesTrackComboBox->addItem(item);
+    }
+
+    ui->subtitlesSyncSpinBox->setValue(playback->mediaSettings()->subtitlesSync());
+
+    ui->gammaSpinBox->setValue(playback->mediaSettings()->gamma());
+    ui->contrastSpinBox->setValue(playback->mediaSettings()->contrast());
+    ui->brightnessSpinBox->setValue(playback->mediaSettings()->brightness());
+    ui->saturationSpinBox->setValue(playback->mediaSettings()->saturation());
+    ui->hueSpinBox->setValue(playback->mediaSettings()->hue());
+
+    ui->audioTrackComboBox->setCurrentIndex(getTrackIndex(playback->media()->audioTracks(), playback->mediaSettings()->audioTrack()));
+    ui->videoTrackComboBox->setCurrentIndex(getTrackIndex(playback->media()->videoTracks(), playback->mediaSettings()->videoTrack()));
+    ui->subtitlesTrackComboBox->setCurrentIndex(playback->mediaSettings()->subtitlesTrack());
+
+    ui->ratioComboBox->setCurrentIndex(playback->mediaSettings()->ratio());
+
+    ui->audioTrackComboBox->blockSignals(false);
+    ui->videoTrackComboBox->blockSignals(false);
+    ui->subtitlesTrackComboBox->blockSignals(false);
+}
+
+/*Returns a track index in a combo box*/
+int MainWindow::getTrackIndex(QList<int> list, int track)
+{
+    for(int i=0;i<list.count();i++)
+    {
+        if(list.at(i)==track)
+            return i;
+    }
+    return 0;
+}
+
+/***********************************************************************************************\
+                                          Player
+\***********************************************************************************************/
+
+void MainWindow::on_playerPlayButton_clicked(bool checked)
+{
+    PlaylistModel *playlistModel = currentPlaylistModel();
+    if (checked) {
+        if (_playlistPlayer->mediaPlayer()->isPaused()) {
+            _playlistPlayer->mediaPlayer()->resume();
+        } else {
+            // play or resume playback
+            QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+
+            // if no selected item play current playlist from first item
+            if (indexes.count() == 0) {
+                _playlistPlayer->playItemAt(0);
+            // play playlist at selected item otherwise
+            } else {
+                const int index = indexes.first().row();
+                _playlistPlayer->playItemAt(index);
+            }
+        }
+    } else {
+        _playlistPlayer->mediaPlayer()->pause();
+    }
 }
 
 void MainWindow::on_menuVideoMode_triggered(QAction *action)
@@ -252,29 +467,53 @@ void MainWindow::on_menuVideoMode_triggered(QAction *action)
     }
 }
 
+void MainWindow::on_testPatternAction_triggered()
+{
+//    _mediaPlayer->play(Media(QFileDialog::getOpenFileName(this, tr("Open test pattern"), QDir::homePath(), tr("Media (*.avi *.mkv *.jpg *.png)")), _app->vlcInstance()));
+}
+
+/***********************************************************************************************\
+                                          Playlist
+\***********************************************************************************************/
+
 void MainWindow::createPlaylistTab()
 {
     PlaylistTableView *newTab = new PlaylistTableView;
-    PlaylistModel *newModel = new PlaylistModel(new Playlist(_app->vlcInstance()), _mediaListModel);
+    Playlist *playlist = new Playlist(_app->vlcInstance(), "new playlist");
+    PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel);
+
+    connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
 
     newTab->setModel(newModel);
     newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
     newTab->horizontalHeader()->setStretchLastSection(true);
 
-    int pos = ui->playlistsTabWidget->count();
-    ui->playlistsTabWidget->addTab(newTab, "New playlist");
-
+    ui->playlistsTabWidget->addTab(newTab, playlist->title());
     ui->playlistsTabWidget->setCurrentWidget(newTab);
+
+    updatePlaylistListCombox();
 }
 
 void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
 {
+    Playlist *playlist = playlistAt(index);
+
+    // delete schedule which use the playlist
+    if (_scheduleListModel->isScheduled(playlist)) {
+        if (0 == QMessageBox::warning(this, "remove playlist", "This playlist was scheduled. All schedules which use this playlist will be deleted too.\n Are you sure to remove this playlist ?" ,"No", "Yes"))
+            return;
+        _scheduleListModel->removeScheduleWithDeps(playlist);
+    }
+
     if (ui->playlistsTabWidget->count() == 1) {
         createPlaylistTab();
     }
 
     delete (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(index))->model();
     ui->playlistsTabWidget->removeTab(index);
+
+    updateSettings();
+    updatePlaylistListCombox();
 }
 
 void MainWindow::on_playlistsTabWidget_currentChanged(int index)
@@ -297,127 +536,54 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
 
     _mediaSettingsMapper->setModel( model );
 
+
     _mediaSettingsMapper->clearMapping();
-    _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
+//    _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
+//    _mediaSettingsMapper->addMapping(ui->subtitlesTrackComboBox, 4);
+
+    QModelIndexList indexes = view->selectionModel()->selectedIndexes();
+    if(indexes.count() > 0)
+        _mediaSettingsMapper->setCurrentModelIndex(indexes.first());
+
+    updateSettings();
 
     _playlistPlayer->setPlaylist(model->playlist());
 }
 
-
-void MainWindow::on_audioTrackComboBox_currentIndexChanged(int index)
+void MainWindow::on_renamePlaylistAction_triggered()
 {
-    qDebug() << "INDEX = "<<index;
-    if (index == -1)
+    int tabIndex = ui->playlistsTabWidget->currentIndex();
+    bool ok;
+
+    QString text = QInputDialog::getText(this,
+        tr("Rename playlist"),
+        tr("Playlist title :"),
+        QLineEdit::Normal,
+        ui->playlistsTabWidget->tabText(tabIndex),
+        &ok
+    );
+
+    if (ok && !text.isEmpty()) {
+        ui->playlistsTabWidget->setTabText(tabIndex, text);
+        currentPlaylistModel()->playlist()->setTitle(text);
+        updatePlaylistListCombox();
+    }
+}
+
+void MainWindow::on_removePlaylistItemAction_triggered()
+{
+    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+
+    if (indexes.count() == 0)
         return;
 
-    Playback *playback = selectedPlayback();
-    if(playback)
-    {
-        const int track = playback->media()->audioTracks().at(index);
-        playback->mediaSettings()->setAudioTrack(track);
-    }
+   currentPlaylistModel()->removePlayback(indexes.first().row());
+   updateSettings();
 }
 
-void MainWindow::on_videoTrackComboBox_currentIndexChanged(int index)
-{
-    if (index == -1)
-        return;
-    qDebug() << "INDEX = "<<index;
-    Playback *playback = selectedPlayback();
-    if(playback)
-    {
-        const int track = playback->media()->videoTracks().at(index);
-        playback->mediaSettings()->setVideoTrack(track);
-    }
-}
-
-void MainWindow::on_subtitlesTrackComboBox_currentIndexChanged(int index)
-{
-    if (index == -1)
-        return;
-    qDebug() << "INDEX = "<<index;
-    Playback *playback = selectedPlayback();
-    if(playback)
-    {
-        const int track = playback->media()->subtitlesTracks().at(index);
-        playback->mediaSettings()->setSubtitlesTrack(track);
-    }
-}
-
-void MainWindow::on_ratioComboBox_currentIndexChanged(int index)
-{
-//    Playback *playback = selectedPlayback();
-//    if (playback) {
-//        playback->mediaSettings()->setRatio((Ratio) index);
-//    }
-}
-
-void MainWindow::on_subtitlesSyncSpinBox_valueChanged(double arg1)
-{
-    Playback *playback = selectedPlayback();
-    if (playback) {
-        playback->mediaSettings()->setSubtitlesSync(arg1);
-    }
-   //_mediaPlayer->setCurrentSubtitlesSync(arg1);
-}
-
-void MainWindow::on_gammaSpinBox_valueChanged(int arg1)
-{
-    Playback *playback = selectedPlayback();
-    if (playback) {
-        playback->mediaSettings()->setGamma(arg1);
-    }
-    // _mediaPlayer->setCurrentGamma(arg1);
-}
-
-void MainWindow::on_contrastSpinBox_valueChanged(int arg1)
-{
-    Playback *playback = selectedPlayback();
-    if (playback) {
-        playback->mediaSettings()->setContrast(arg1);
-    }
-    // _mediaPlayer->setCurrentContrast(arg1);
-}
-
-void MainWindow::on_brightnessSpinBox_valueChanged(int arg1)
-{
-    Playback *playback = selectedPlayback();
-    if (playback) {
-        playback->mediaSettings()->setBrightness(arg1);
-    }
-   // _mediaPlayer->setCurrentBrightness(arg1);
-}
-
-void MainWindow::on_saturationSpinBox_valueChanged(int arg1)
-{
-    Playback *playback = selectedPlayback();
-    if (playback) {
-        playback->mediaSettings()->setSaturation(arg1);
-    }
-    // _mediaPlayer->setCurrentSaturation(arg1);
-}
-
-void MainWindow::on_hueSpinBox_valueChanged(int arg1)
-{
-    Playback *playback = selectedPlayback();
-    if (playback) {
-        playback->mediaSettings()->setHue(arg1);
-    }
-    // _mediaPlayer->setCurrentHue(arg1);
-}
-
-void MainWindow::on_audioSyncDoubleSpinBox_valueChanged(double arg1)
-{
-    Playback *playback = selectedPlayback();
-    if (playback) {
-        playback->mediaSettings()->setAudioSync(arg1);
-    }
-}
-
-void MainWindow::on_testPatternAction_triggered()
-{
-//    _mediaPlayer->play(Media(QFileDialog::getOpenFileName(this, tr("Open test pattern"), QDir::homePath(), tr("Media (*.avi *.mkv *.jpg *.png)")), _app->vlcInstance()));
-}
+/***********************************************************************************************\
+                                          Project import/export
+\***********************************************************************************************/
 
 void MainWindow::on_saveAsAction_triggered()
 {
@@ -471,22 +637,75 @@ void MainWindow::on_openListingAction_triggered()
     }//end else
 }
 
-void MainWindow::on_renamePlaylistAction_triggered()
+/***********************************************************************************************\
+                                          Automation
+\***********************************************************************************************/
+
+void MainWindow::updatePlaylistListCombox()
 {
-    int tabIndex = ui->playlistsTabWidget->currentIndex();
-    bool ok;
+    QStringList tabs;
 
-    QString text = QInputDialog::getText(this,
-        tr("Rename playlist"),
-        tr("Playlist title :"),
-        QLineEdit::Normal,
-        ui->playlistsTabWidget->tabText(tabIndex),
-        &ok
-    );
+    for (int i = 0; i < ui->playlistsTabWidget->count(); i++)
+        tabs << ui->playlistsTabWidget->tabText(i);
 
-    if (ok && !text.isEmpty())
-        ui->playlistsTabWidget->setTabText(tabIndex, text);
+    ui->schedulePlaylistListComboBox->clear();
+    ui->schedulePlaylistListComboBox->addItems(tabs);
 }
+
+void MainWindow::on_scheduleDeleteButton_clicked()
+{
+    QItemSelectionModel *selectionModel = ui->scheduleTableView->selectionModel();
+
+    while (selectionModel->selectedRows().count() != 0) {
+        QModelIndex index = selectionModel->selectedRows().first();
+        _scheduleListModel->removeSchedule(index.row());
+    }
+}
+
+void MainWindow::on_scheduleAddButton_clicked()
+{
+    QDateTime launchAt(ui->scheduleLaunchAtDateEdit->date(), ui->scheduleLaunchAtTimeEdit->time());
+    const int playlistIndex = ui->schedulePlaylistListComboBox->currentIndex();
+
+    if (launchAt <= QDateTime::currentDateTime()) {
+        QMessageBox::critical(this, "Schedule validation", QString("The schedule launch date must be later than the current date."));
+        return;
+    }
+
+    Playlist *playlist = playlistAt(playlistIndex);
+    Schedule *schedule = new Schedule(playlist, launchAt);
+
+    if (_scheduleListModel->isSchedulable(schedule)) {
+        connect(schedule, SIGNAL(triggered(Playlist*)), _playlistPlayer, SLOT(playPlaylist(Playlist*)));
+        _scheduleListModel->addSchedule(schedule);
+    } else {
+        QMessageBox::critical(this, "Schedule validation", QString("A playlist was already scheduled between the %1 and %2, \nPlease choose an other launch date.")
+                                .arg(schedule->launchAt().toString())
+                                .arg(schedule->finishAt().toString())
+                              );
+        delete schedule;
+    }
+}
+
+void MainWindow::on_scheduleDelayButton_clicked()
+{
+    int delay = ui->scheduleDelaySpinBox->value() /*min*/;
+
+    _scheduleListModel->delayAll(delay * 60 * 1000 /*ms*/);
+}
+
+void MainWindow::on_scheduleToggleEnabledButton_toggled(bool checked)
+{
+    if (checked) {
+        ui->scheduleToggleEnabledButton->setText("Stop automation");
+    } else {
+        ui->scheduleToggleEnabledButton->setText("Start automation");
+    }
+}
+
+/***********************************************************************************************\
+                                          Helpers
+\***********************************************************************************************/
 
 Playback* MainWindow::selectedPlayback() const {
     QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
@@ -507,101 +726,7 @@ PlaylistModel* MainWindow::currentPlaylistModel() const
     return (PlaylistModel*) currentPlaylistTableView()->model();
 }
 
-void MainWindow::updateSettings()
+Playlist* MainWindow::playlistAt(int index) const
 {
-    ui->audioTrackComboBox->blockSignals(true);
-    ui->videoTrackComboBox->blockSignals(true);
-    ui->subtitlesTrackComboBox->blockSignals(true);
-
-    qDebug() << "trace 0";
-    Playback* playback = selectedPlayback();
-    if(!playback){
-        ui->mediaSettingsWidget->setEnabled(false);
-        return;
-    }
-    qDebug() << "trace 1";
-    ui->mediaSettingsWidget->setEnabled(true);
-
-    QString item="";
-    ui->audioTrackComboBox->clear();
-    int listCount=playback->media()->audioTracks().count();
-    for(int i=0;i<listCount;i++)
-    {
-        if(playback->media()->audioTracks().at(i)==-1)
-            item="Disabled";
-        else
-        {
-            item="Track ";
-            item+=QString::number(playback->media()->audioTracks().at(i));
-        }
-        ui->audioTrackComboBox->addItem(item);
-    }
-    qDebug() << "trace 2";
-    ui->videoTrackComboBox->clear();
-    listCount=playback->media()->videoTracks().count();
-    for(int i=0;i<listCount;i++)
-    {
-        if(playback->media()->videoTracks().at(i)==-1)
-            item="Disabled";
-        else
-        {
-            item="Track ";
-            item+=QString::number(playback->media()->videoTracks().at(i));
-        }
-        ui->videoTrackComboBox->addItem(item);
-    }
-qDebug() << "trace 3";
-    ui->subtitlesTrackComboBox->clear();
-    qDebug() << "trace 3 b";
-    listCount=playback->media()->subtitlesTracks().count();
-    qDebug() << "trace 3 bis";
-    for(int i=0;i<listCount;i++)
-    {
-        qDebug() << "trace 3 bis bis";
-        if(playback->media()->subtitlesTracks().at(i)==-1)
-            item="Disabled";
-        else
-        {
-            item="Track ";
-            item+=QString::number(playback->media()->subtitlesTracks().at(i));
-        }
-        ui->subtitlesTrackComboBox->addItem(item);
-    }
-qDebug() << "trace 4";
-    ui->subtitlesSyncSpinBox->setValue(playback->mediaSettings()->subtitlesSync());
-
-    ui->gammaSpinBox->setValue(playback->mediaSettings()->gamma());
-    ui->contrastSpinBox->setValue(playback->mediaSettings()->contrast());
-    ui->brightnessSpinBox->setValue(playback->mediaSettings()->brightness());
-    ui->saturationSpinBox->setValue(playback->mediaSettings()->saturation());
-    ui->hueSpinBox->setValue(playback->mediaSettings()->hue());
-
-    ui->audioTrackComboBox->setCurrentIndex(getTrackIndex(playback->media()->audioTracks(), playback->mediaSettings()->audioTrack()));
-    ui->videoTrackComboBox->setCurrentIndex(getTrackIndex(playback->media()->videoTracks(), playback->mediaSettings()->videoTrack()));
-    ui->subtitlesTrackComboBox->setCurrentIndex(getTrackIndex(playback->media()->subtitlesTracks(), playback->mediaSettings()->subtitlesTrack()));
-
-    ui->audioTrackComboBox->blockSignals(false);
-    ui->videoTrackComboBox->blockSignals(false);
-    ui->subtitlesTrackComboBox->blockSignals(false);
-}
-
-/*Returns a track index in a combo box*/
-int MainWindow::getTrackIndex(QList<int> list, int track)
-{
-    for(int i=0;i<list.count();i++)
-    {
-        if(list.at(i)==track)
-            return i;
-    }
-    return 0;
-}
-
-void MainWindow::on_removePlaylistItemAction_triggered()
-{
-    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
-
-    if (indexes.count() == 0)
-        return;
-
-   currentPlaylistModel()->removePlayback(indexes.first().row());
+    return ( (PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(index) )->model() )->playlist();
 }

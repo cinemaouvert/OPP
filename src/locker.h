@@ -65,7 +65,7 @@ signals:
     void autoLocked();
     void locked();
     void unlocked();
-    void toggled();
+    void toggled(bool checked);
     
 };
 

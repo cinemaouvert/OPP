@@ -5,6 +5,8 @@
 #include "mediaplayer.h"
 #include "global.h"
 
+#include <QTimer>;
+
 PlaylistPlayer::PlaylistPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     QObject(parent),
     _currentIndex(-1)
@@ -42,6 +44,9 @@ bool PlaylistPlayer::isPlaying() const
 
 void PlaylistPlayer::playItemAt(const int &index)
 {
+    if (index >= _playlist->count())
+        return;
+
     _mediaPlayer->_isPaused = false;
     _currentIndex = index - 1;
 
@@ -80,6 +85,13 @@ void PlaylistPlayer::stop()
     libvlc_media_list_player_stop(_vlcMediaListPlayer);
 }
 
+void PlaylistPlayer::playPlaylist(Playlist *playlist)
+{
+    setPlaylist(playlist);
+
+    playItemAt(0);
+}
+
 void PlaylistPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
 {
     PlaylistPlayer *core = (PlaylistPlayer *)data;
@@ -91,10 +103,10 @@ void PlaylistPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
         currentPlayback = core->_playlist->at(core->_currentIndex);
 
         connect(currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), core->_mediaPlayer, SLOT(setCurrentRatio(Ratio)));
-        connect(currentPlayback->mediaSettings(), SIGNAL(gammaChanged(int)), core->_mediaPlayer, SLOT(setCurrentGamma(int)));
-        connect(currentPlayback->mediaSettings(), SIGNAL(contrastChanged(int)), core->_mediaPlayer, SLOT(setCurrentContrast(int)));
-        connect(currentPlayback->mediaSettings(), SIGNAL(brightnessChanged(int)), core->_mediaPlayer, SLOT(setCurrentBrightness(int)));
-        connect(currentPlayback->mediaSettings(), SIGNAL(saturationChanged(int)), core->_mediaPlayer, SLOT(setCurrentSaturation(int)));
+        connect(currentPlayback->mediaSettings(), SIGNAL(gammaChanged(float)), core->_mediaPlayer, SLOT(setCurrentGamma(float)));
+        connect(currentPlayback->mediaSettings(), SIGNAL(contrastChanged(float)), core->_mediaPlayer, SLOT(setCurrentContrast(float)));
+        connect(currentPlayback->mediaSettings(), SIGNAL(brightnessChanged(float)), core->_mediaPlayer, SLOT(setCurrentBrightness(float)));
+        connect(currentPlayback->mediaSettings(), SIGNAL(saturationChanged(float)), core->_mediaPlayer, SLOT(setCurrentSaturation(float)));
         connect(currentPlayback->mediaSettings(), SIGNAL(hueChanged(int)), core->_mediaPlayer, SLOT(setCurrentHue(int)));
         connect(currentPlayback->mediaSettings(), SIGNAL(deinterlacingChanged(Deinterlacing)), core->_mediaPlayer, SLOT(setCurrentDeinterlacing(Deinterlacing)));
         connect(currentPlayback->mediaSettings(), SIGNAL(subtitlesSyncChanged(double)), core->_mediaPlayer, SLOT(setCurrentSubtitlesSync(double)));
@@ -104,6 +116,9 @@ void PlaylistPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
         connect(currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), core->_mediaPlayer, SLOT(setCurrentSubtitlesTrack(int)));
 
         emit core->itemChanged(core->_currentIndex);
+
+        QTimer::singleShot(1000, core, SLOT(applyCurrentPlaybackSettings()));
+
         break;
     default:
         break;
@@ -135,4 +150,9 @@ void PlaylistPlayer::handlePlaylistEnd()
     if (_currentIndex == _playlist->count() - 1) {
         emit end();
     }
+}
+
+void PlaylistPlayer::applyCurrentPlaybackSettings()
+{
+    _mediaPlayer->applyMediaSettings(_playlist->at(_currentIndex)->mediaSettings());
 }

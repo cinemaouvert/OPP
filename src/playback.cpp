@@ -5,6 +5,8 @@ Playback::Playback(Media *media, QObject *parent) :
 {
     _media = media;
     _mediaSettings = new MediaSettings();
+    _mediaSettings->setAudioTrack(_media->audioTracks().count()==1 ? -1 : _media->audioTracks().at(1));
+    _mediaSettings->setVideoTrack(_media->videoTracks().count()==1 ? -1 : _media->videoTracks().at(1));
 }
 
 Playback::Playback(const Playback &playback)
