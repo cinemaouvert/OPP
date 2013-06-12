@@ -36,13 +36,11 @@ enum Scale {
 };
 
 enum Deinterlacing {
-    Disabled = 0,
-    Discard = 1,
-    Blend = 2,
-    Mean = 3,
-    Bob = 4,
-    Linear = 5,
-    X = 6
+    Discard = 0,
+    Blend = 1,
+    Mean = 2,
+    Bob = 3,
+    Linear = 4
 };
 
 class MediaSettings : public QObject

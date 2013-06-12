@@ -91,7 +91,7 @@ void MediaSettings::initDefault()
 {
     _ratio = Original;
     _scale = NoScale;
-    _deinterlacing = Disabled;
+    _deinterlacing = Discard;
     _subtitlesSync = 0;
     _gamma = 1;
     _contrast = 1;
@@ -125,13 +125,11 @@ QStringList MediaSettings::ratioValues()
 QStringList MediaSettings::deinterlacingValues()
 {
     QStringList list;
-    list << "default"
-        << "discard"
-        << "blend"
-        << "man"
-        << "bob"
-        << "linear"
-        << "x";
+    list << "Discard"
+        << "Blend"
+        << "Mean"
+        << "Bob"
+        << "Linear";
 
     return list;
 }
