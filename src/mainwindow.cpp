@@ -220,6 +220,7 @@ void MainWindow::on_settingsAction_triggered()
 
 void MainWindow::on_lockSettingsAction_triggered()
 {
+    _lockSettingsWindow->setLocker();
     _lockSettingsWindow->show();
     _lockSettingsWindow->raise();
     _lockSettingsWindow->activateWindow();

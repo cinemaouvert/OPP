@@ -15,7 +15,7 @@ class LockSettingsWindow : public QDialog
 public:
     explicit LockSettingsWindow(Locker *locker, QWidget *parent = 0);
     ~LockSettingsWindow();
-    
+    void setLocker();
 private slots:
     void on_radioButton_passwordOn_clicked();
 
@@ -26,6 +26,10 @@ private slots:
     void on_radioButton_autoLockOff_clicked();
 
     void on_lineEdit_password_editingFinished();
+
+    void on_buttonBox_accepted();
+
+    void on_buttonBox_rejected();
 
 private:
     Ui::LockSettingsWindow *ui;

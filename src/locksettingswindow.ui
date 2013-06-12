@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>524</width>
-    <height>288</height>
+    <width>548</width>
+    <height>347</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -25,170 +25,189 @@
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
   </property>
-  <widget class="QLabel" name="label_password">
+  <widget class="QGroupBox" name="groupBox_password">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>20</y>
-     <width>111</width>
-     <height>16</height>
+     <y>10</y>
+     <width>531</width>
+     <height>151</height>
     </rect>
    </property>
-   <property name="text">
+   <property name="title">
     <string>Password</string>
    </property>
+   <widget class="QWidget" name="verticalLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>511</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QWidget" name="widget_password" native="true">
+       <widget class="QRadioButton" name="radioButton_passwordOn">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>111</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Activated</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="radioButton_passwordOff">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>40</y>
+          <width>121</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Inactive</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Set password : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_password">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="mouseTracking">
+          <bool>false</bool>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
   </widget>
-  <widget class="QLabel" name="label_autoLock">
+  <widget class="QGroupBox" name="groupBox_autoLock">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>170</y>
-     <width>181</width>
-     <height>16</height>
+     <width>531</width>
+     <height>141</height>
     </rect>
    </property>
-   <property name="text">
+   <property name="title">
     <string>Automatic lock</string>
    </property>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>511</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QWidget" name="widget_autoLock" native="true">
+         <widget class="QRadioButton" name="radioButton_autoLockOn">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>111</width>
+            <height>17</height>
+           </rect>
+          </property>
+          <property name="contextMenuPolicy">
+           <enum>Qt::DefaultContextMenu</enum>
+          </property>
+          <property name="text">
+           <string>Activated</string>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButton_autoLockOff">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>30</y>
+            <width>101</width>
+            <height>17</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Inactive</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="label_lockdelay">
+           <property name="text">
+            <string>Lock delay : </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="spinBox_delay"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_minutes">
+           <property name="text">
+            <string>minutes</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
   </widget>
-  <widget class="QLabel" name="label_lockdelay">
-   <property name="geometry">
-    <rect>
-     <x>310</x>
-     <y>170</y>
-     <width>191</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Lock delay</string>
-   </property>
-  </widget>
-  <widget class="QSpinBox" name="spinBox_delay">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>190</y>
-     <width>41</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_minutes">
+  <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
      <x>360</x>
-     <y>190</y>
-     <width>91</width>
-     <height>16</height>
+     <y>310</y>
+     <width>176</width>
+     <height>27</height>
     </rect>
    </property>
-   <property name="text">
-    <string>minutes</string>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEdit_password">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>20</y>
-     <width>191</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="mouseTracking">
-    <bool>false</bool>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::StrongFocus</enum>
-   </property>
-   <property name="echoMode">
-    <enum>QLineEdit::Password</enum>
-   </property>
-  </widget>
-  <widget class="QWidget" name="widget_password" native="true">
-   <property name="geometry">
-    <rect>
-     <x>120</x>
-     <y>20</y>
-     <width>121</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <widget class="QRadioButton" name="radioButton_passwordOn">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Activated</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="radioButton_passwordOff">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>30</y>
-      <width>121</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Inactive</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QWidget" name="widget_autoLock" native="true">
-   <property name="geometry">
-    <rect>
-     <x>190</x>
-     <y>170</y>
-     <width>111</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <widget class="QRadioButton" name="radioButton_autoLockOn">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::DefaultContextMenu</enum>
-    </property>
-    <property name="text">
-     <string>Activated</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="radioButton_autoLockOff">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>30</y>
-      <width>101</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Inactive</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
-    </property>
-   </widget>
   </widget>
  </widget>
  <resources/>
