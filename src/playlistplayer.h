@@ -44,11 +44,11 @@ public slots:
 
     void playPlaylist(Playlist *playlist);
 
+    void applyCurrentPlaybackSettings();
+
 private slots:
 
     void handlePlaylistEnd();
-
-    void applyCurrentPlaybackSettings();
 
 signals:
 

@@ -40,18 +40,18 @@ void MediaSettings::setSubtitlesSync(double sync){
     emit subtitlesSyncChanged(_subtitlesSync);
 }
 
-void MediaSettings::setAudioTrack(int track){
-    _audioTrack=track;
-    emit audioTrackChanged(track);
+void MediaSettings::setAudioTrack(const AudioTrack &track) {
+    _audioTrack = track;
+    emit audioTrackChanged(_audioTrack);
 }
 
-void MediaSettings::setVideoTrack(int track){
-    _videoTrack=track;
+void MediaSettings::setVideoTrack(const VideoTrack &track){
+    _videoTrack = track;
     emit videoTrackChanged(_videoTrack);
 }
 
-void MediaSettings::setSubtitlesTrack(int track){
-    _subtitlesTrack=track;
+void MediaSettings::setSubtitlesTrack(const Track &track){
+    _subtitlesTrack = track;
     emit subtitlesTrackChanged(_subtitlesTrack);
 }
 
@@ -98,9 +98,6 @@ void MediaSettings::initDefault()
     _brightness = 1;
     _saturation = 1;
     _hue = 0;
-    _audioTrack = 0;
-    _videoTrack = 0;
-    _subtitlesTrack = 0;
     _audioSync=0;
 }
 

@@ -7,6 +7,10 @@
 #include <QPair>
 #include <QSize>
 
+#include "audiotrack.h"
+#include "videotrack.h"
+#include "track.h"
+
 struct libvlc_media_t;
 struct libvlc_instance_t;
 
@@ -32,9 +36,13 @@ public:
 
     bool exists() const;
 
-    QList<int> audioTracks() const;
-    QList<int> videoTracks() const;
-    QList<int> subtitlesTracks() const;
+    QList<AudioTrack> audioTracks() const;
+    QList<VideoTrack> videoTracks() const;
+    QList<Track> subtitlesTracks() const;
+
+    QStringList audioTracksName() const;
+    QStringList videoTracksName() const;
+    QStringList subtitlesTracksName() const;
 
     bool isImage() const;
 
@@ -50,11 +58,12 @@ signals:
 private:
     QString _location;
     QFileInfo _fileInfo;
+
     libvlc_media_t *_vlcMedia;
 
-    QList<int> _audioTracks;
-    QList<int> _videoTracks;
-    QList<int> _subtitlesTracks;
+    QList<AudioTrack> _audioTracks;
+    QList<VideoTrack> _videoTracks;
+    QList<Track> _subtitlesTracks;
 
     int _usageCount;
     QSize _videoResolution;

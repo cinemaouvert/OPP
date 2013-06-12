@@ -157,7 +157,6 @@ void MediaPlayer::setPosition(const int &position)
 void MediaPlayer::applyMediaSettings(MediaSettings *settings)
 {
     setCurrentAudioTrack(settings->audioTrack());
-    setCurrentVideoTrack(settings->videoTrack());
     setCurrentBrightness(settings->brightness());
     setCurrentContrast(settings->contrast());
     setCurrentDeinterlacing(settings->deinterlacing());
@@ -170,19 +169,20 @@ void MediaPlayer::applyMediaSettings(MediaSettings *settings)
     setCurrentVideoTrack(settings->videoTrack());
 }
 
-void MediaPlayer::setCurrentAudioTrack(int track)
+void MediaPlayer::setCurrentAudioTrack(const AudioTrack &track)
 {
-    libvlc_audio_set_track(_vlcMediaPlayer, track);
+    libvlc_audio_set_track(_vlcMediaPlayer, track.trackId());
 }
 
-void MediaPlayer::setCurrentVideoTrack(int track)
+void MediaPlayer::setCurrentVideoTrack(const VideoTrack &track)
 {
-    libvlc_video_set_track(_vlcMediaPlayer, track);
+    qDebug() << "set video : "<<track.trackId();
+    libvlc_video_set_track(_vlcMediaPlayer, track.trackId());
 }
 
-void MediaPlayer::setCurrentSubtitlesTrack(int track)
+void MediaPlayer::setCurrentSubtitlesTrack(const Track &track)
 {
-    libvlc_video_set_spu(_vlcMediaPlayer, track);
+    libvlc_video_set_spu(_vlcMediaPlayer, track.trackId());
 }
 
 void MediaPlayer::setCurrentRatio(Ratio ratio)

@@ -11,6 +11,9 @@ class Playback;
 class VideoView;
 class MediaSettings;
 class Media;
+class Track;
+class VideoTrack;
+class AudioTrack;
 
 struct libvlc_instance_t;
 struct libvlc_media_player_t;
@@ -77,9 +80,9 @@ public slots:
 
     void setCurrentSubtitlesSync(double sync);
 
-    void setCurrentAudioTrack(int track);
-    void setCurrentVideoTrack(int track);
-    void setCurrentSubtitlesTrack(int track);
+    void setCurrentAudioTrack(const AudioTrack &track);
+    void setCurrentVideoTrack(const VideoTrack &track);
+    void setCurrentSubtitlesTrack(const Track &track);
 
     void setCurrentGamma(float gamma);
     void setCurrentContrast(float contrast);

@@ -9,7 +9,7 @@
 
 PlaylistPlayer::PlaylistPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     QObject(parent),
-    _currentIndex(-1)
+    _currentIndex(0)
 {
     _mediaPlayer = new MediaPlayer(vlcInstance, this);
 
@@ -100,20 +100,23 @@ void PlaylistPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
     {
     case libvlc_MediaListPlayerNextItemSet:
         core->_currentIndex++;
+
         currentPlayback = core->_playlist->at(core->_currentIndex);
 
-        connect(currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), core->_mediaPlayer, SLOT(setCurrentRatio(Ratio)));
-        connect(currentPlayback->mediaSettings(), SIGNAL(gammaChanged(float)), core->_mediaPlayer, SLOT(setCurrentGamma(float)));
-        connect(currentPlayback->mediaSettings(), SIGNAL(contrastChanged(float)), core->_mediaPlayer, SLOT(setCurrentContrast(float)));
-        connect(currentPlayback->mediaSettings(), SIGNAL(brightnessChanged(float)), core->_mediaPlayer, SLOT(setCurrentBrightness(float)));
-        connect(currentPlayback->mediaSettings(), SIGNAL(saturationChanged(float)), core->_mediaPlayer, SLOT(setCurrentSaturation(float)));
-        connect(currentPlayback->mediaSettings(), SIGNAL(hueChanged(int)), core->_mediaPlayer, SLOT(setCurrentHue(int)));
-        connect(currentPlayback->mediaSettings(), SIGNAL(deinterlacingChanged(Deinterlacing)), core->_mediaPlayer, SLOT(setCurrentDeinterlacing(Deinterlacing)));
-        connect(currentPlayback->mediaSettings(), SIGNAL(subtitlesSyncChanged(double)), core->_mediaPlayer, SLOT(setCurrentSubtitlesSync(double)));
-        connect(currentPlayback->mediaSettings(), SIGNAL(audioSyncChanged(double)), core->_mediaPlayer, SLOT(setCurrentAudioSync(double)));
-        connect(currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(int)), core->_mediaPlayer, SLOT(setCurrentAudioTrack(int)));
-        connect(currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(int)), core->_mediaPlayer, SLOT(setCurrentVideoTrack(int)));
-        connect(currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), core->_mediaPlayer, SLOT(setCurrentSubtitlesTrack(int)));
+        // TODO : set param on change in mainwindow.
+
+//        connect(currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), core->_mediaPlayer, SLOT(setCurrentRatio(Ratio)));
+//        connect(currentPlayback->mediaSettings(), SIGNAL(gammaChanged(float)), core->_mediaPlayer, SLOT(setCurrentGamma(float)));
+//        connect(currentPlayback->mediaSettings(), SIGNAL(contrastChanged(float)), core->_mediaPlayer, SLOT(setCurrentContrast(float)));
+//        connect(currentPlayback->mediaSettings(), SIGNAL(brightnessChanged(float)), core->_mediaPlayer, SLOT(setCurrentBrightness(float)));
+//        connect(currentPlayback->mediaSettings(), SIGNAL(saturationChanged(float)), core->_mediaPlayer, SLOT(setCurrentSaturation(float)));
+//        connect(currentPlayback->mediaSettings(), SIGNAL(hueChanged(int)), core->_mediaPlayer, SLOT(setCurrentHue(int)));
+//        connect(currentPlayback->mediaSettings(), SIGNAL(deinterlacingChanged(Deinterlacing)), core->_mediaPlayer, SLOT(setCurrentDeinterlacing(Deinterlacing)));
+//        connect(currentPlayback->mediaSettings(), SIGNAL(subtitlesSyncChanged(double)), core->_mediaPlayer, SLOT(setCurrentSubtitlesSync(double)));
+//        connect(currentPlayback->mediaSettings(), SIGNAL(audioSyncChanged(double)), core->_mediaPlayer, SLOT(setCurrentAudioSync(double)));
+//        connect(currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(AudioTrack)), core->_mediaPlayer, SLOT(setCurrentAudioTrack(AudioTrack)));
+//        connect(currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(VideoTrack)), core->_mediaPlayer, SLOT(setCurrentVideoTrack(VideoTrack)));
+//        connect(currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(Track)), core->_mediaPlayer, SLOT(setCurrentSubtitlesTrack(Track)));
 
         emit core->itemChanged(core->_currentIndex);
 

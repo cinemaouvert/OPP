@@ -1,10 +1,15 @@
 #include "media.h"
 
-#include "global.h"
-#include "application.h"
 #include <unistd.h>
 #include <string.h>
-#include <QThread>
+#include <vlc_fourcc.h>
+#include <vlc_common.h>
+#include <vlc_es.h>
+
+#include <QStringList>
+
+#include "global.h"
+#include "application.h"
 
 Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *parent) :
     QObject(parent),
@@ -77,47 +82,41 @@ Media::~Media()
 
 void Media::parseMediaInfos()
 {
-    // TODO : use parse async + send signal when media is parsed
-    //libvlc_media_parse(_vlcMedia);
-
-    // @see libvlc_media_get_tracks_info
-    // @see libvlc_media_tracks_get
-    // @see libvlc_media_tracks_release
-    // http://www.videolan.org/developers/vlc/doc/doxygen/html/group__libvlc__media.html#ga2102c151df0ab66d6158a80b7734f0f9
-
-//    libvlc_media_track_info_t track[20 /*get tracks number ?*/];
-//    libvlc_media_get_tracks_info(_vlcMedia, &track);
     libvlc_media_parse(_vlcMedia);
-    _audioTracks.append(-1);
-    _videoTracks.append(-1);
-    _subtitlesTracks.append(-1);
+qDebug()<<"=======================================================================";
+//    _audioTracks.append(-1);
+//    _videoTracks.append(-1);
+//    _subtitlesTracks.append(-1);
 
     libvlc_media_track_info_t* tracks;
-
     int tracksCount = libvlc_media_get_tracks_info(_vlcMedia, &tracks);
-    for(int track=0;track<tracksCount;track++)
-    {
-        switch(tracks[track].i_type)
+
+    for (int track = 0; track < tracksCount; track++) {
+//        if (tracks[track].i_type == libvlc_track_audio) {
+//            AudioTrack audio(tracks + track);
+//        }
+        switch (tracks[track].i_type)
         {
-            case libvlc_track_audio : //Audio track
-                _audioTracks.append(tracks[track].i_id);
+            case libvlc_track_audio:
+                _audioTracks << AudioTrack(&tracks[track]);
                 break;
-            case libvlc_track_video : //Video track
-                _videoTracks.append(tracks[track].i_id);
-                _videoResolution.setWidth(tracks[track].u.video.i_width);
-                _videoResolution.setHeight(tracks[track].u.video.i_height);
+            case libvlc_track_video:
+//                _videoTracks.append(tracks[track].i_id);
+                _videoTracks.append( VideoTrack(&tracks[track]) );
+                qDebug() << _videoTracks.last().trackId();
+//                _videoResolution.setWidth(tracks[track].u.video.i_width);
+//                _videoResolution.setHeight(tracks[track].u.video.i_height);
+
+//                qDebug() << "CODEC : "<<vlc_fourcc_GetDescription(UNKNOWN_ES, tracks[track].i_codec);
+
                 break;
-            case libvlc_track_text : //Subtitles track
-                _subtitlesTracks.append(tracks[track].i_id);
+            case libvlc_track_text:
+//                _subtitlesTracks.append(tracks[track].i_id);
+                _subtitlesTracks.append( Track(&tracks[track]) );
                 break;
         }
     }
 
-    qDebug()<<"=======================================================================";
-    qDebug()<<"length : "<<duration();
-    qDebug()<<"audio : "<<_audioTracks;
-    qDebug()<<"video : "<<_videoTracks;
-    qDebug()<<"subtitles : "<<_subtitlesTracks;
     qDebug()<<"=======================================================================";
 }
 
@@ -133,7 +132,6 @@ Media & Media::operator=(const Media &media)
         _location = media._location;
         _fileInfo = QFileInfo(_location);
         _vlcMedia = libvlc_media_duplicate(media._vlcMedia);
-//        _usageCount = media._usageCount;
     }
     return *this;
 }
@@ -158,11 +156,6 @@ bool Media::exists() const
     return _fileInfo.exists();
 }
 
-QList<int> Media::audioTracks() const
-{
-    return _audioTracks;
-}
-
 void Media::usageCountAdd(int count)
 {
     _usageCount += count;
@@ -179,12 +172,47 @@ bool Media::isUsed() const
     return _usageCount > 0;
 }
 
-QList<int> Media::videoTracks() const
+QList<AudioTrack> Media::audioTracks() const
+{
+    return _audioTracks;
+}
+
+QList<VideoTrack> Media::videoTracks() const
 {
     return _videoTracks;
 }
 
-QList<int> Media::subtitlesTracks() const
+QList<Track> Media::subtitlesTracks() const
 {
     return _subtitlesTracks;
+}
+
+QStringList Media::audioTracksName() const
+{
+    QStringList list;
+
+    foreach (const AudioTrack &track, _audioTracks)
+        list << ("Track " + QString::number(track.trackId()));
+
+    return list;
+}
+
+QStringList Media::videoTracksName() const
+{
+    QStringList list;
+
+    foreach (const VideoTrack &track, _videoTracks)
+        list << ("Track " + QString::number(track.trackId()));
+
+    return list;
+}
+
+QStringList Media::subtitlesTracksName() const
+{
+    QStringList list;
+
+    foreach (const Track &track, _subtitlesTracks)
+        list << ("Track " + QString::number(track.trackId()));
+
+    return list;
 }

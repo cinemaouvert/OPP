@@ -228,10 +228,13 @@ void MainWindow::on_audioTrackComboBox_currentIndexChanged(int index)
         return;
 
     Playback *playback = selectedPlayback();
-    if(playback)
-    {
-        const int track = playback->media()->audioTracks().at(index);
-        playback->mediaSettings()->setAudioTrack(track);
+
+    if (playback) {
+        if (index == 0) {
+            playback->mediaSettings()->setAudioTrack( AudioTrack() );
+        } else {
+            playback->mediaSettings()->setAudioTrack(playback->media()->audioTracks().at(index - 1));
+        }
     }
 
     emit SIGNAL(layoutChanged());
@@ -243,28 +246,26 @@ void MainWindow::on_videoTrackComboBox_currentIndexChanged(int index)
         return;
 
     Playback *playback = selectedPlayback();
-    if(playback)
-    {
-        const int track = playback->media()->videoTracks().at(index);
-        playback->mediaSettings()->setVideoTrack(track);
-    }
 
-//    emit currentPlaylistModel()->layoutChanged();
+    if (index == 0) {
+        playback->mediaSettings()->setVideoTrack( VideoTrack() );
+    } else {
+        playback->mediaSettings()->setVideoTrack(playback->media()->videoTracks().at(index - 1));
+    }
 }
 
 void MainWindow::on_subtitlesTrackComboBox_currentIndexChanged(int index)
 {
     if (index == -1)
         return;
-    qDebug() << "INDEX = "<<index;
-    Playback *playback = selectedPlayback();
-    if(playback)
-    {
-        //const int track = playback->media()->subtitlesTracks().at(index);
-        playback->mediaSettings()->setSubtitlesTrack(index);
-    }
 
-//    emit currentPlaylistModel()->layoutChanged();
+    Playback *playback = selectedPlayback();
+
+    if (index == 0) {
+        playback->mediaSettings()->setSubtitlesTrack( Track() );
+    } else {
+        playback->mediaSettings()->setSubtitlesTrack(playback->media()->subtitlesTracks().at(index - 1));
+    }
 }
 
 void MainWindow::on_ratioComboBox_currentIndexChanged(int index)
@@ -281,7 +282,6 @@ void MainWindow::on_subtitlesSyncSpinBox_valueChanged(double arg1)
     if (playback) {
         playback->mediaSettings()->setSubtitlesSync(arg1);
     }
-   //_mediaPlayer->setCurrentSubtitlesSync(arg1);
 }
 
 void MainWindow::on_gammaSpinBox_valueChanged(double arg1)
@@ -290,7 +290,6 @@ void MainWindow::on_gammaSpinBox_valueChanged(double arg1)
     if (playback) {
         playback->mediaSettings()->setGamma(arg1);
     }
-    // _mediaPlayer->setCurrentGamma(arg1);
 }
 
 void MainWindow::on_contrastSpinBox_valueChanged(double arg1)
@@ -299,7 +298,6 @@ void MainWindow::on_contrastSpinBox_valueChanged(double arg1)
     if (playback) {
         playback->mediaSettings()->setContrast(arg1);
     }
-    // _mediaPlayer->setCurrentContrast(arg1);
 }
 
 void MainWindow::on_brightnessSpinBox_valueChanged(double arg1)
@@ -308,7 +306,6 @@ void MainWindow::on_brightnessSpinBox_valueChanged(double arg1)
     if (playback) {
         playback->mediaSettings()->setBrightness(arg1);
     }
-   // _mediaPlayer->setCurrentBrightness(arg1);
 }
 
 void MainWindow::on_saturationSpinBox_valueChanged(double arg1)
@@ -317,7 +314,6 @@ void MainWindow::on_saturationSpinBox_valueChanged(double arg1)
     if (playback) {
         playback->mediaSettings()->setSaturation(arg1);
     }
-    // _mediaPlayer->setCurrentSaturation(arg1);
 }
 
 void MainWindow::on_hueSpinBox_valueChanged(int arg1)
@@ -326,7 +322,6 @@ void MainWindow::on_hueSpinBox_valueChanged(int arg1)
     if (playback) {
         playback->mediaSettings()->setHue((int)arg1);
     }
-    // _mediaPlayer->setCurrentHue(arg1);
 }
 
 void MainWindow::on_audioSyncDoubleSpinBox_valueChanged(double arg1)
@@ -351,49 +346,17 @@ void MainWindow::updateSettings()
 
     ui->mediaSettingsWidget->setEnabled(true);
 
-    QString item="";
     ui->audioTrackComboBox->clear();
-    int listCount=playback->media()->audioTracks().count();
-    for(int i=0;i<listCount;i++)
-    {
-        if(playback->media()->audioTracks().at(i)==-1)
-            item="Disabled";
-        else
-        {
-            item="Track ";
-            item+=QString::number(playback->media()->audioTracks().at(i));
-        }
-        ui->audioTrackComboBox->addItem(item);
-    }
+    ui->audioTrackComboBox->addItem("Default");
+    ui->audioTrackComboBox->addItems(playback->media()->audioTracksName());
 
     ui->videoTrackComboBox->clear();
-    listCount=playback->media()->videoTracks().count();
-    for(int i=0;i<listCount;i++)
-    {
-        if(playback->media()->videoTracks().at(i)==-1)
-            item="Disabled";
-        else
-        {
-            item="Track ";
-            item+=QString::number(playback->media()->videoTracks().at(i));
-        }
-        ui->videoTrackComboBox->addItem(item);
-    }
+    ui->videoTrackComboBox->addItem("Disabled");
+    ui->videoTrackComboBox->addItems(playback->media()->videoTracksName());
 
     ui->subtitlesTrackComboBox->clear();
-    listCount=playback->media()->subtitlesTracks().count();
-
-    for(int i=0;i<listCount;i++)
-    {
-        if(playback->media()->subtitlesTracks().at(i)==-1)
-            item="Disabled";
-        else
-        {
-            item="Track ";
-            item+=QString::number(playback->media()->subtitlesTracks().at(i));
-        }
-        ui->subtitlesTrackComboBox->addItem(item);
-    }
+    ui->subtitlesTrackComboBox->addItem("Disabled");
+    ui->subtitlesTrackComboBox->addItems(playback->media()->subtitlesTracksName());
 
     ui->subtitlesSyncSpinBox->setValue(playback->mediaSettings()->subtitlesSync());
 
@@ -403,11 +366,25 @@ void MainWindow::updateSettings()
     ui->saturationSpinBox->setValue(playback->mediaSettings()->saturation());
     ui->hueSpinBox->setValue(playback->mediaSettings()->hue());
 
-    ui->audioTrackComboBox->setCurrentIndex(getTrackIndex(playback->media()->audioTracks(), playback->mediaSettings()->audioTrack()));
-    ui->videoTrackComboBox->setCurrentIndex(getTrackIndex(playback->media()->videoTracks(), playback->mediaSettings()->videoTrack()));
-    ui->subtitlesTrackComboBox->setCurrentIndex(playback->mediaSettings()->subtitlesTrack());
+//    qDebug() << playback->mediaSettings()->audioTrack().trackId();
+//    qDebug() << playback->mediaSettings()->videoTrack().trackId();
+//    qDebug() << playback->mediaSettings()->subtitlesTrack().trackId();
 
-    ui->ratioComboBox->setCurrentIndex(playback->mediaSettings()->ratio());
+    int index;
+
+    index = playback->media()->audioTracks().indexOf( playback->mediaSettings()->audioTrack() );
+    ui->audioTrackComboBox->setCurrentIndex( index == -1 ? 0 : index + 1 );
+    qDebug() << index;
+
+    index = playback->media()->videoTracks().indexOf( playback->mediaSettings()->videoTrack() );
+    ui->videoTrackComboBox->setCurrentIndex( index == -1 ? 0 : index + 1);
+    qDebug() << index;
+
+    index = playback->media()->subtitlesTracks().indexOf( playback->mediaSettings()->subtitlesTrack() );
+    ui->subtitlesTrackComboBox->setCurrentIndex( index == -1 ? 0 : index + 1);
+    qDebug() << index;
+
+    ui->ratioComboBox->setCurrentIndex( playback->mediaSettings()->ratio() );
 
     ui->audioTrackComboBox->blockSignals(false);
     ui->videoTrackComboBox->blockSignals(false);

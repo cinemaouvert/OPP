@@ -9,7 +9,10 @@ HEADERS += src/media.h \
     src/mediaplayer.h \
     src/videoview.h \
     src/application.h \
-    src/global.h
+    src/global.h \
+    src/track.h \
+    src/audiotrack.h \
+    src/videotrack.h
 
 SOURCES += src/media.cpp \
     src/playlist.cpp \
@@ -20,7 +23,10 @@ SOURCES += src/media.cpp \
     src/project.cpp \
     src/playlistplayer.cpp \
     src/mediaplayer.cpp \
-    src/application.cpp
+    src/application.cpp \
+    src/track.cpp \
+    src/audiotrack.cpp \
+    src/videotrack.cpp
 
 mac:LIBVLC_LIB_DIR = "/Applications/VLC.app/Contents/MacOS/lib"
 mac:LIBVLC_INCLUDE_DIR = "/Applications/VLC.app/Contents/MacOS/include"

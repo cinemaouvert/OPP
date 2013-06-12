@@ -6,6 +6,10 @@
 #include <QList>
 #include <QDebug>
 
+#include "track.h"
+#include "videotrack.h"
+#include "audiotrack.h"
+
 enum Ratio {
     Original = 0,
     R_16_9 = 1,
@@ -65,9 +69,9 @@ public:
     inline float saturation() const { return _saturation; }
     inline int hue() const { return _hue; }
     inline double audioSync() const { return _audioSync; }
-    inline int audioTrack() const {return _audioTrack;}
-    inline int videoTrack() const {return _videoTrack;}
-    inline int subtitlesTrack() const {return _subtitlesTrack;}
+    inline const AudioTrack & audioTrack() const { return _audioTrack; }
+    inline const VideoTrack & videoTrack() const { return _videoTrack; }
+    inline const Track & subtitlesTrack() const { return _subtitlesTrack; }
 
     void setRatio(Ratio ratio);
     void setScale(Scale scale);
@@ -79,9 +83,9 @@ public:
     void setSaturation(float saturation);
     void setHue(int hue);
     void setAudioSync(double sync);
-    void setAudioTrack(int track);
-    void setVideoTrack(int track);
-    void setSubtitlesTrack(int track);
+    void setAudioTrack(const AudioTrack &track);
+    void setVideoTrack(const VideoTrack &track);
+    void setSubtitlesTrack(const Track &track);
 
     static QStringList ratioValues();
     static QStringList deinterlacingValues();
@@ -99,10 +103,9 @@ signals:
     void saturationChanged(float);
     void hueChanged(int);
     void audioSyncChanged(double sync);
-    void audioTrackChanged(int track);
-    void videoTrackChanged(int track);
-    void subtitlesTrackChanged(int track);
-
+    void audioTrackChanged(AudioTrack);
+    void videoTrackChanged(VideoTrack);
+    void subtitlesTrackChanged(Track);
 
 private:
     Ratio _ratio;
@@ -116,9 +119,9 @@ private:
     int _hue;
     double _audioSync;
 
-    int _audioTrack;
-    int _videoTrack;
-    int _subtitlesTrack;
+    AudioTrack _audioTrack;
+    VideoTrack _videoTrack;
+    Track _subtitlesTrack;
 };
 
 #endif // MEDIASETTINGS_H
