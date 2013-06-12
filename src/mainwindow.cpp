@@ -197,7 +197,7 @@ void MainWindow::on_binDeleteMediaButton_clicked()
 
 void MainWindow::on_advancedSettingsButton_clicked()
 {
-    //_advancedSettingsWindow−>setMediaSettings(selectedPlayback()->mediaSettings());
+    _advancedSettingsWindow->setPlayback(selectedPlayback());
     _advancedSettingsWindow->show();
     _advancedSettingsWindow->raise();
     _advancedSettingsWindow->activateWindow();

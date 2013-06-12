@@ -202,10 +202,8 @@ void MediaPlayer::setCurrentSubtitlesSync(double sync)
 
 void MediaPlayer::setCurrentGamma(float gamma)
 {
-    qDebug()<<"Gamma : "<<gamma;
     libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
     libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Gamma, gamma);
-    qDebug()<<"Gamma done";
 }
 
 void MediaPlayer::setCurrentContrast(float contrast)
