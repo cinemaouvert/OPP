@@ -125,6 +125,7 @@ bool MediaListModel::addMedia(Media *media)
 
     endInsertRows();
 
+
     _mediaFileList.append(media->location());
 
     emit mediaListChanged(_mediaList.count());
@@ -145,3 +146,47 @@ QDataStream & operator >> (QDataStream & in, QList<Media> &list)
     in >> list;
     return in;
 }
+
+QTime MediaListModel::summaryTotalDuration() {
+
+     duration = 0;
+    foreach (Media* media, _mediaList)
+    {
+         duration += media->duration();
+    }
+
+   return  msecToQTime(duration);
+
+}
+
+int MediaListModel::imageNumber(){
+
+    _numberImage = 0 ;
+    foreach (Media* media, _mediaList)
+    {
+
+        if(media->isImage()) _numberImage += 1;
+
+
+    }
+
+ return _numberImage;
+
+}
+
+int MediaListModel::filmsNumber(){
+
+    _numberFilms = 0;
+    foreach (Media* media, _mediaList)
+    {
+        if(!(media->isImage())) _numberFilms += 1;
+
+    }
+    return _numberFilms;
+}
+
+void MediaListModel::infosCodecs(){
+
+
+}
+

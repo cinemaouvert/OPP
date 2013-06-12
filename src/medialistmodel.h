@@ -6,6 +6,8 @@
 #include <QStringList>
 
 #include "media.h"
+#include<QTime>
+#include "utils.h"
 
 class MediaListModel : public QAbstractTableModel
 {
@@ -19,6 +21,12 @@ public:
 
     int columnCount(const QModelIndex &parent) const;
 
+    QTime summaryTotalDuration() ;
+
+    int imageNumber();
+
+    int filmsNumber();
+
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
     Qt::ItemFlags flags(const QModelIndex &index) const;
@@ -31,6 +39,8 @@ public:
 
     bool addMedia(Media *media);
 
+    void infosCodecs();
+
 signals:
     /**
      * @brief signal mediaListChanged
@@ -42,6 +52,12 @@ private:
     QList<Media*> _mediaList;
 
     QStringList _mediaFileList;
+
+    uint duration=0;
+
+    int _numberImage;
+
+    int _numberFilms;
 
     friend QDataStream & operator << (QDataStream &, const QList<Media> &);
     friend QDataStream & operator >> (QDataStream &, QList<Media> &);

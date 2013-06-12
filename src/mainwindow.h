@@ -5,6 +5,8 @@
 
 #include <QDataWidgetMapper>
 #include <QLabel>
+#include<QModelIndexList>
+#include<QTime>
 
 namespace Ui {
 class MainWindow;
@@ -42,6 +44,11 @@ private slots:
     /* bin events */
     void on_binAddMediaButton_clicked();
     void on_binDeleteMediaButton_clicked();
+
+    /*projecttabwidget */
+    void setSummary(int count);
+    void setDetails(int count);
+    //void setMediaCount();
 
     /* action bar events */
     void on_settingsAction_triggered();
