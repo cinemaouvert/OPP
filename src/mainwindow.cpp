@@ -27,6 +27,7 @@
 #include "playlistplayer.h"
 #include "mediaplayer.h"
 #include "playback.h"
+#include "utils.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -68,6 +69,21 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->scheduleTableView->setModel(_scheduleListModel);
     ui->seekWidget->setMediaPlayer(_playlistPlayer->mediaPlayer());
 
+    // ###########################################################################################
+    ui->progEdit->setText("Nom de la programmation:    ");
+    ui->nbrfilmlabel->setText("Nombre de films:  "+QString::number(0)+"                   Nombre images:   "+QString::number(0));
+    ui->durelabel_2->setText("Duree totale: "+msecToQTime(0).toString("hh:mm:ss"));
+    ui->noteEdit->setText("Note(s):     ");
+
+    connect(_mediaListModel, SIGNAL(mediaListChanged(int)),this, SLOT(setSummary(int)));
+
+    ui->audiolabel->setText("Codecs audio:  ");
+    ui->videolabel->setText("Codecs video:  ");
+    ui->canauxaudiolabel->setText("Canaux audio:  ");
+    ui->formatlabel->setText("Formats images:  ");
+
+    connect(_mediaListModel, SIGNAL(mediaListChanged(int)),this, SLOT(setDetails(int)));
+   //##############################################################################################
     _statusWidget = new StatusWidget;
     ui->statusBar->addWidget(_statusWidget);
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)), _statusWidget, SLOT(setMediaCount(int)));
@@ -121,9 +137,20 @@ MainWindow::~MainWindow()
     delete _app;
 }
 
-/***********************************************************************************************\
-                                          Media List
-\***********************************************************************************************/
+void MainWindow::setSummary(int count)
+{
+    ui->nbrfilmlabel->setText("Nombre de films:   "+QString::number(_mediaListModel->filmsNumber())+
+                              "Nombre images:     "+QString::number( _mediaListModel->imageNumber()));
+    ui->durelabel_2->setText("Duree totale: "+_mediaListModel->summaryTotalDuration().toString("hh:mm:ss"));
+}
+
+void MainWindow::setDetails(int count)
+{
+
+
+}
+
+
 
 void MainWindow::on_binAddMediaButton_clicked()
 {

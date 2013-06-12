@@ -5,6 +5,7 @@
 #include <QFileInfo>
 #include <QTime>
 #include <QPair>
+#include <QSize>
 
 struct libvlc_media_t;
 struct libvlc_instance_t;
@@ -24,6 +25,7 @@ public:
 
     inline const QString & location() const { return _location; }
     inline libvlc_media_t* core() const { return _vlcMedia; }
+    inline QSize videoResolution() const { return _videoResolution; }
 
     uint duration() const;
     QString name() const;
@@ -55,6 +57,7 @@ private:
     QList<int> _subtitlesTracks;
 
     int _usageCount;
+    QSize _videoResolution;
 
     friend QDataStream & operator << (QDataStream &, const QList<Media> &);
     friend QDataStream & operator >> (QDataStream &, QList<Media> &);

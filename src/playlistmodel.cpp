@@ -25,7 +25,7 @@ PlaylistModel::~PlaylistModel()
 
 int PlaylistModel::columnCount(const QModelIndex &parent) const
 {
-    return 8;
+    return 7;
 }
 
 int PlaylistModel::rowCount(const QModelIndex &parent) const
@@ -61,9 +61,6 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
             break;
         case TestPattern:
             return trUtf8("Test pattern");
-            break;
-        case Gain:
-            return trUtf8("Gain");
             break;
         case Status:
             return trUtf8("Status");
@@ -110,7 +107,8 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             return msecToQTime(_playlist->at(index.row())->media()->duration()).toString("hh:mm:ss");
         }
         else if (index.column() == Video) {
-            return MediaSettings::ratioValues().at(_playlist->at(index.row())->mediaSettings()->ratio());
+            QSize size = _playlist->at(index.row())->media()->videoResolution();
+            return QString("%1 x %2").arg(size.width()).arg(size.height());
         }
         break;
     }
