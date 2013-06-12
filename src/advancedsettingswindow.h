@@ -15,11 +15,16 @@ public:
     explicit AdvancedSettingsWindow(QWidget *parent = 0);
     ~AdvancedSettingsWindow();
     void setPlayback(Playback* playback);
+    void updateLength();
     
 private slots:
     void on_buttonBox_OKCancel_accepted();
 
     void on_buttonBox_OKCancel_rejected();
+
+    void on_timeEdit_inMark_timeChanged(const QTime &date);
+
+    void on_timeEdit_outMark_timeChanged(const QTime &date);
 
 private:
     Ui::AdvancedSettingsWindow *ui;

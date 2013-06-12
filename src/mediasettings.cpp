@@ -87,6 +87,24 @@ void MediaSettings::setAudioSync(double sync){
     emit audioSyncChanged(_audioSync);
 }
 
+void MediaSettings::setTestPattern(bool testpattern)
+{
+    _testPattern = testpattern;
+    emit testPatternChanged(_testPattern);
+}
+
+void MediaSettings::setInMark(int mark)
+{
+    _inMark = mark;
+    emit inMarkChanged(_inMark);
+}
+
+void MediaSettings::setOutMark(int mark)
+{
+    _outMark = mark;
+    emit outMarkChanged(_outMark);
+}
+
 void MediaSettings::initDefault()
 {
     _ratio = Original;
@@ -102,6 +120,9 @@ void MediaSettings::initDefault()
     _videoTrack = 0;
     _subtitlesTrack = 0;
     _audioSync=0;
+    _testPattern = false;
+    _inMark = 0;
+    _outMark = 0;
 }
 
 QStringList MediaSettings::ratioValues()

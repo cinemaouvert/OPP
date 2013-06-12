@@ -66,6 +66,9 @@ public:
     inline int audioTrack() const {return _audioTrack;}
     inline int videoTrack() const {return _videoTrack;}
     inline int subtitlesTrack() const {return _subtitlesTrack;}
+    inline bool testPattern() const {return _testPattern;}
+    inline int inMark() const {return _inMark;}
+    inline int outMark() const {return _outMark;}
 
     void setRatio(Ratio ratio);
     void setScale(Scale scale);
@@ -80,6 +83,9 @@ public:
     void setAudioTrack(int track);
     void setVideoTrack(int track);
     void setSubtitlesTrack(int track);
+    void setTestPattern(bool testpattern);
+    void setInMark (int mark);
+    void setOutMark(int mark);
 
     static QStringList ratioValues();
     static QStringList deinterlacingValues();
@@ -100,6 +106,9 @@ signals:
     void audioTrackChanged(int track);
     void videoTrackChanged(int track);
     void subtitlesTrackChanged(int track);
+    void testPatternChanged(bool);
+    void inMarkChanged(int);
+    void outMarkChanged(int);
 
 
 private:
@@ -117,6 +126,10 @@ private:
     int _audioTrack;
     int _videoTrack;
     int _subtitlesTrack;
+
+    bool _testPattern;
+    int _inMark;
+    int _outMark;
 };
 
 #endif // MEDIASETTINGS_H
