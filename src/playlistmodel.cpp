@@ -25,7 +25,7 @@ PlaylistModel::~PlaylistModel()
 
 int PlaylistModel::columnCount(const QModelIndex &parent) const
 {
-    return 8;
+    return 7;
 }
 
 int PlaylistModel::rowCount(const QModelIndex &parent) const
@@ -61,9 +61,6 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
             break;
         case TestPattern:
             return trUtf8("Test pattern");
-            break;
-        case Gain:
-            return trUtf8("Gain");
             break;
         case Status:
             return trUtf8("Status");
