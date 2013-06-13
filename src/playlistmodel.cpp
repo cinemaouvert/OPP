@@ -118,38 +118,16 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         else if (index.column() == Audio) {
             return mediaSettings->audioTrack().codecDescription();
         }
+        else if (index.column() == Subtitles) {
+            if (mediaSettings->subtitlesTrack().trackId() == -1)
+                return "Disabled";
+            else
+                return QString("Track %1").arg(mediaSettings->subtitlesTrack().trackId());
+        }
         break;
     }
 
     return QVariant();
-}
-
-bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    if (!index.isValid() || index.row() < 0 || index.row() >= _playlist->count() || value.toString().count() == 0) {
-        return false;
-    }
-
-    switch (role)
-    {
-    case Qt::EditRole:
-//        if (index.column() == Video) {
-//            _playlist->at(index.row())->mediaSettings()->setRatio(
-//                (Ratio) MediaSettings::ratioValues().indexOf(QRegExp(value.toString()))
-//            );
-//        }
-//        else if (index.column() == Subtitles) {
-//            qDebug() << value;
-////            _playlist->at(index.row())->mediaSettings()->setSubtitlesTrack();
-//        } else if (index.column() == Subtitles) {
-//            qDebug() << value;
-////            _playlist->at(index.row())->mediaSettings()->setSubtitlesTrack();
-//        }
-        emit dataChanged(index, index);
-        return true;
-        break;
-    }
-    return false;
 }
 
 bool PlaylistModel::addPlayback(Playback *playback)
@@ -219,5 +197,10 @@ void PlaylistModel::stopItem()
 void PlaylistModel::setPlayingItem(int index)
 {
     _activeItem.first = index;
+    emit layoutChanged();
+}
+
+void PlaylistModel::updateLayout()
+{
     emit layoutChanged();
 }

@@ -92,20 +92,21 @@ qDebug()<<"=====================================================================
 //        if (tracks[track].i_type == libvlc_track_audio) {
 //            AudioTrack audio(tracks + track);
 //        }
+//        qDebug() << tracks[track].i_profile;
         switch (tracks[track].i_type)
         {
             case libvlc_track_audio:
-                _audioTracks << AudioTrack(&tracks[track]);
+                _audioTracks << AudioTrack( &tracks[track] );
                 break;
             case libvlc_track_video:
-                _videoTracks.append( VideoTrack(&tracks[track]) );
+                _videoTracks << VideoTrack( &tracks[track] );
 
 //                _videoResolution.setWidth(tracks[track].u.video.i_width);
 //                _videoResolution.setHeight(tracks[track].u.video.i_height);
                 break;
             case libvlc_track_text:
 //                _subtitlesTracks.append(tracks[track].i_id);
-                _subtitlesTracks.append( Track(&tracks[track]) );
+                _subtitlesTracks << Track( &tracks[track] );
                 break;
         }
     }

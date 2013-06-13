@@ -182,8 +182,3 @@ int MediaListModel::filmsNumber()
 
     return numberFilms;
 }
-
-void MediaListModel::infosCodecs()
-{
-}
-

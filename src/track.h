@@ -33,6 +33,7 @@ public:
 protected:
 
     libvlc_media_track_info_t _vlcTrackInfo;
+
 };
 
 #endif // TRACK_H

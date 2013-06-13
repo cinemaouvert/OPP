@@ -1,6 +1,7 @@
 #include "mediaplayer.h"
 
 #include <QTime>
+#include <QTimer>
 
 #include "global.h"
 #include "application.h"
@@ -23,11 +24,15 @@ MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     libvlc_video_set_key_input(_vlcMediaPlayer, false);
     libvlc_video_set_mouse_input(_vlcMediaPlayer, false);
 
+    connect(this, SIGNAL(vout(int)), this, SLOT(applyCurrentPlaybackSettings()));
+
     createCoreConnections();
 }
 
 MediaPlayer::~MediaPlayer()
 {
+    disconnect(this, SIGNAL(vout(int)), this, SLOT(applyCurrentPlaybackSettings()));
+
     removeCoreConnections();
     libvlc_media_player_release(_vlcMediaPlayer);
 }
@@ -76,9 +81,9 @@ void MediaPlayer::open(Playback *playback)
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(deinterlacingChanged(Deinterlacing)), this, SLOT(setCurrentDeinterlacing(Deinterlacing)));
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesSyncChanged(double)), this, SLOT(setCurrentSubtitlesSync(double)));
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(audioSyncChanged(double)), this, SLOT(setCurrentAudioSync(double)));
-        disconnect(_currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(int)), this, SLOT(setCurrentAudioTrack(int)));
-        disconnect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
-        disconnect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(AudioTrack)), this, SLOT(setCurrentAudioTrack(AudioTrack)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(VideoTrack)), this, SLOT(setCurrentVideoTrack(VideoTrack)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(Track)), this, SLOT(setCurrentSubtitlesTrack(Track)));
     }
 
     _currentPlayback = playback;
@@ -93,9 +98,9 @@ void MediaPlayer::open(Playback *playback)
     connect(_currentPlayback->mediaSettings(), SIGNAL(deinterlacingChanged(Deinterlacing)), this, SLOT(setCurrentDeinterlacing(Deinterlacing)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesSyncChanged(double)), this, SLOT(setCurrentSubtitlesSync(double)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(audioSyncChanged(double)), this, SLOT(setCurrentAudioSync(double)));
-    connect(_currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(int)), this, SLOT(setCurrentAudioTrack(int)));
-    connect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
-    connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(AudioTrack)), this, SLOT(setCurrentAudioTrack(AudioTrack)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(VideoTrack)), this, SLOT(setCurrentVideoTrack(VideoTrack)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(Track)), this, SLOT(setCurrentSubtitlesTrack(Track)));
 }
 
 void MediaPlayer::play()
@@ -154,35 +159,37 @@ void MediaPlayer::setPosition(const int &position)
     setPosition( ((float) position) / 100.f);
 }
 
-void MediaPlayer::applyMediaSettings(MediaSettings *settings)
+void MediaPlayer::applyCurrentPlaybackSettings()
 {
-    setCurrentAudioTrack(settings->audioTrack());
-    setCurrentBrightness(settings->brightness());
-    setCurrentContrast(settings->contrast());
-    setCurrentDeinterlacing(settings->deinterlacing());
-    setCurrentGamma(settings->gamma());
-    setCurrentHue(settings->hue());
-    setCurrentRatio(settings->ratio());
-    setCurrentSaturation(settings->saturation());
-    setCurrentSubtitlesSync(settings->subtitlesSync());
-    setCurrentSubtitlesTrack(settings->subtitlesTrack());
-    setCurrentVideoTrack(settings->videoTrack());
+    setCurrentSubtitlesTrack(_currentPlayback->mediaSettings()->subtitlesTrack());
+    setCurrentVideoTrack(_currentPlayback->mediaSettings()->videoTrack());
+    setCurrentAudioTrack(_currentPlayback->mediaSettings()->audioTrack());
+
+    setCurrentBrightness(_currentPlayback->mediaSettings()->brightness());
+    setCurrentContrast(_currentPlayback->mediaSettings()->contrast());
+    setCurrentDeinterlacing(_currentPlayback->mediaSettings()->deinterlacing());
+    setCurrentGamma(_currentPlayback->mediaSettings()->gamma());
+    setCurrentHue(_currentPlayback->mediaSettings()->hue());
+    setCurrentRatio(_currentPlayback->mediaSettings()->ratio());
+    setCurrentSaturation(_currentPlayback->mediaSettings()->saturation());
+    setCurrentSubtitlesSync(_currentPlayback->mediaSettings()->subtitlesSync());
 }
 
 void MediaPlayer::setCurrentAudioTrack(const AudioTrack &track)
 {
-    libvlc_audio_set_track(_vlcMediaPlayer, track.trackId());
+    const int index = _currentPlayback->media()->audioTracks().indexOf(track);
+    libvlc_audio_set_track(_vlcMediaPlayer, index == -1 ? 0 : index + 1);
 }
 
 void MediaPlayer::setCurrentVideoTrack(const VideoTrack &track)
 {
-    qDebug() << "set video : "<<track.trackId();
-    libvlc_video_set_track(_vlcMediaPlayer, track.trackId());
+    libvlc_video_set_track(_vlcMediaPlayer, _currentPlayback->media()->videoTracks().indexOf(track));
 }
 
 void MediaPlayer::setCurrentSubtitlesTrack(const Track &track)
 {
-    libvlc_video_set_spu(_vlcMediaPlayer, track.trackId());
+    const int index = _currentPlayback->media()->subtitlesTracks().indexOf(track);
+    libvlc_video_set_spu(_vlcMediaPlayer, index == -1 ? 0 : index + 1);
 }
 
 void MediaPlayer::setCurrentRatio(Ratio ratio)
@@ -310,6 +317,7 @@ void MediaPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
         break;
     case libvlc_MediaPlayerBuffering:
         emit player->buffering(event->u.media_player_buffering.new_cache);
+        break;
     case libvlc_MediaPlayerPlaying:
         emit player->playing();
         break;
@@ -353,6 +361,7 @@ void MediaPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
         emit player->lengthChanged(event->u.media_player_length_changed.new_length);
         break;
     case libvlc_MediaPlayerVout:
+        qDebug() << "<<<<<<<<<<<<<< vout >>>>>>>>>>>>>";
         emit player->vout(event->u.media_player_vout.new_count);
         break;
     default:

@@ -47,8 +47,6 @@ public:
 
     void open(Playback *playback);
 
-    void applyMediaSettings(MediaSettings *settings);
-
 public slots:
     void play();
 
@@ -91,6 +89,9 @@ public slots:
     void setCurrentHue(int hue);
     void setCurrentAudioSync(double sync);
 
+private slots:
+
+    void applyCurrentPlaybackSettings();
 
 signals:
     void backward();

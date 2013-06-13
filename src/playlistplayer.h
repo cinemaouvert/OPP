@@ -48,7 +48,7 @@ public slots:
 
 private slots:
 
-    void handlePlaylistEnd();
+    void handlePlayerEnd();
 
 signals:
 

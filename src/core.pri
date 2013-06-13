@@ -2,7 +2,6 @@ HEADERS += src/media.h \
     src/playlist.h \
     src/playback.h \
     src/mediasettings.h \
-    src/automator.h \
     src/schedule.h \
     src/project.h \
     src/playlistplayer.h \
@@ -18,7 +17,6 @@ SOURCES += src/media.cpp \
     src/playlist.cpp \
     src/playback.cpp \
     src/mediasettings.cpp \
-    src/automator.cpp \
     src/schedule.cpp \
     src/project.cpp \
     src/playlistplayer.cpp \

@@ -39,8 +39,6 @@ public:
 
     bool addMedia(Media *media);
 
-    void infosCodecs();
-
 signals:
     /**
      * @brief signal mediaListChanged

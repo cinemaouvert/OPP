@@ -231,7 +231,7 @@ void MainWindow::on_audioTrackComboBox_currentIndexChanged(int index)
         }
     }
 
-    emit SIGNAL(layoutChanged());
+    currentPlaylistModel()->updateLayout();
 }
 
 void MainWindow::on_videoTrackComboBox_currentIndexChanged(int index)
@@ -241,11 +241,15 @@ void MainWindow::on_videoTrackComboBox_currentIndexChanged(int index)
 
     Playback *playback = selectedPlayback();
 
-    if (index == 0) {
-        playback->mediaSettings()->setVideoTrack( VideoTrack() );
-    } else {
-        playback->mediaSettings()->setVideoTrack(playback->media()->videoTracks().at(index - 1));
+    if (playback) {
+        if (index == 0) {
+            playback->mediaSettings()->setVideoTrack( VideoTrack() );
+        } else {
+            playback->mediaSettings()->setVideoTrack(playback->media()->videoTracks().at(index - 1));
+        }
     }
+
+    currentPlaylistModel()->updateLayout();
 }
 
 void MainWindow::on_subtitlesTrackComboBox_currentIndexChanged(int index)
@@ -255,11 +259,15 @@ void MainWindow::on_subtitlesTrackComboBox_currentIndexChanged(int index)
 
     Playback *playback = selectedPlayback();
 
-    if (index == 0) {
-        playback->mediaSettings()->setSubtitlesTrack( Track() );
-    } else {
-        playback->mediaSettings()->setSubtitlesTrack(playback->media()->subtitlesTracks().at(index - 1));
+    if (playback) {
+        if (index == 0) {
+            playback->mediaSettings()->setSubtitlesTrack( Track() );
+        } else {
+            playback->mediaSettings()->setSubtitlesTrack(playback->media()->subtitlesTracks().at(index - 1));
+        }
     }
+
+    currentPlaylistModel()->updateLayout();
 }
 
 void MainWindow::on_ratioComboBox_currentIndexChanged(int index)

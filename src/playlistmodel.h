@@ -35,8 +35,6 @@ public:
 
     QVariant data(const QModelIndex &index, int role) const;
 
-    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::DisplayRole);
-
     bool addPlayback(Playback *playback);
 
     void removePlaybackWithDeps(Media *media);
@@ -44,6 +42,8 @@ public:
     void removePlayback(int index);
 
     bool dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent );
+
+    void updateLayout();
 
 public slots:
 
