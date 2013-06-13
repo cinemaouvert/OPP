@@ -2,9 +2,6 @@
 
 #include <unistd.h>
 #include <string.h>
-#include <vlc_fourcc.h>
-#include <vlc_common.h>
-#include <vlc_es.h>
 
 #include <QStringList>
 
@@ -101,14 +98,10 @@ qDebug()<<"=====================================================================
                 _audioTracks << AudioTrack(&tracks[track]);
                 break;
             case libvlc_track_video:
-//                _videoTracks.append(tracks[track].i_id);
                 _videoTracks.append( VideoTrack(&tracks[track]) );
-                qDebug() << _videoTracks.last().trackId();
+
 //                _videoResolution.setWidth(tracks[track].u.video.i_width);
 //                _videoResolution.setHeight(tracks[track].u.video.i_height);
-
-//                qDebug() << "CODEC : "<<vlc_fourcc_GetDescription(UNKNOWN_ES, tracks[track].i_codec);
-
                 break;
             case libvlc_track_text:
 //                _subtitlesTracks.append(tracks[track].i_id);

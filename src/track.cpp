@@ -1,5 +1,11 @@
 #include "track.h"
 
+#include <vlc_fourcc.h>
+#include <vlc_common.h>
+#include <vlc_es.h>
+
+#include <QDebug>
+
 Track::Track(libvlc_media_track_info_t *vlcTrackInfo, QObject *parent) :
     QObject(parent),
     _vlcTrackInfo(*vlcTrackInfo)
@@ -37,5 +43,5 @@ bool Track::operator==(const Track &track)
 
 QString Track::codecDescription() const
 {
-    return QString("codec");
+    return QString( vlc_fourcc_GetDescription(UNKNOWN_ES, _vlcTrackInfo.i_codec) );
 }

@@ -10,3 +10,7 @@ AudioTrack::AudioTrack(QObject *parent) :
 {
 }
 
+uint AudioTrack::rate() const
+{
+    return _vlcTrackInfo.u.audio.i_rate;
+}

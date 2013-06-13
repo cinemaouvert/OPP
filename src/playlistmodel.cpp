@@ -77,6 +77,9 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
+    Media *media = _playlist->at(index.row())->media();
+    MediaSettings *mediaSettings = _playlist->at(index.row())->mediaSettings();
+
     switch (role)
     {
     case Qt::DecorationRole:
@@ -95,20 +98,25 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     case Qt::ToolTipRole:
         switch (index.column()) {
         case Title:
-            return _playlist->at(index.row())->media()->name();
+            return media->name();
             break;
         }
         break;
     case Qt::DisplayRole:
         if (index.column() == Title) {
-            return _playlist->at(index.row())->media()->name();
+            return media->name();
         }
         else if (index.column() == Duration) {
-            return msecToQTime(_playlist->at(index.row())->media()->duration()).toString("hh:mm:ss");
+            return msecToQTime(media->duration()).toString("hh:mm:ss");
         }
         else if (index.column() == Video) {
-            QSize size = _playlist->at(index.row())->media()->videoResolution();
-            return QString("%1 x %2").arg(size.width()).arg(size.height());
+            return QString("%1 x %2 ")
+                    .arg(mediaSettings->videoTrack().width())
+                    .arg(mediaSettings->videoTrack().height()
+            ) + mediaSettings->videoTrack().codecDescription();
+        }
+        else if (index.column() == Audio) {
+            return mediaSettings->audioTrack().codecDescription();
         }
         break;
     }
