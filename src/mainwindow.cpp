@@ -104,15 +104,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionProjection->setData(QVariant(VideoWindow::PROJECTION));
     ui->actionWindow->setData(QVariant(VideoWindow::WINDOW));
 
-    // media settings input mapping
-    _mediaSettingsMapper = new QDataWidgetMapper(this);
-
-    // initialize media settings input
-//    ui->ratioComboBox->addItems(MediaSettings::ratioValues());
-//    ui->ratioComboBox->setAutoCompletion(true);
-
-//    connect(ui->ratioComboBox, SIGNAL(currentIndexChanged(int)), _mediaSettingsMapper, SLOT(submit()));
-
     createPlaylistTab();
 
     ui->scheduleLaunchAtDateEdit->setDate(QDate::currentDate());
@@ -131,7 +122,6 @@ MainWindow::~MainWindow()
     delete ui;
     delete _lockSettingsWindow;
     delete _mediaListModel;
-    delete _mediaSettingsMapper;
     delete _videoWindow;
     delete _playlistPlayer;
     delete _app;
@@ -512,29 +502,12 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
     PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->widget(index);
     PlaylistModel *model = (PlaylistModel*) view->model();
 
-    // TODO : disconnect when the index has not changed yet (to get the old selected index)
-//    disconnect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(updateSettings()));
-//    disconnect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
-
     connect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(updateSettings()));
-    connect(view->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), _mediaSettingsMapper, SLOT(setCurrentModelIndex(QModelIndex)));
 
     connect(_playlistPlayer->mediaPlayer(), SIGNAL(playing()), model, SLOT(playItem()));
     connect(_playlistPlayer->mediaPlayer(), SIGNAL(paused()), model, SLOT(pauseItem()));
     connect(_playlistPlayer->mediaPlayer(), SIGNAL(stopped()), model, SLOT(stopItem()));
-
     connect(_playlistPlayer, SIGNAL(itemChanged(int)), model, SLOT(setPlayingItem(int)));
-
-    _mediaSettingsMapper->setModel( model );
-
-
-    _mediaSettingsMapper->clearMapping();
-//    _mediaSettingsMapper->addMapping(ui->ratioComboBox, 2);
-//    _mediaSettingsMapper->addMapping(ui->subtitlesTrackComboBox, 4);
-
-    QModelIndexList indexes = view->selectionModel()->selectedIndexes();
-    if(indexes.count() > 0)
-        _mediaSettingsMapper->setCurrentModelIndex(indexes.first());
 
     updateSettings();
 

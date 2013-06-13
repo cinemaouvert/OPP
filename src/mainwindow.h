@@ -114,8 +114,6 @@ private:
     AdvancedPictureSettingsWindow *_advancedPictureSettingsWindow;
     StatusWidget *_statusWidget;
 
-    QDataWidgetMapper *_mediaSettingsMapper;
-
     Application *_app;
     PlaylistPlayer *_playlistPlayer;
 
