@@ -32,7 +32,11 @@ SOURCES += src/media.cpp \
 mac:LIBS += -L"/Applications/VLC.app/Contents/MacOS/lib"
 unix:LIBS += -lvlc -lvlccore
 windows:LIBS += -L"C:\Program Files (x86)\VideoLAN\VLC\sdk\lib" -llibvlc -llibvlccore
-INCLUDEPATH += ./include
+
+mac:INCLUDEPATH += ./include
+mac:INCLUDEPATH += "/Applications/VLC.app/Contents/MacOS/include"
 
 mac:LIBS += -framework Cocoa
 mac:QMAKE_CXXFLAGS+=-x objective-c++
+
+# install deps dll on windows
