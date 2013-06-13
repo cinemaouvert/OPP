@@ -1,8 +1,8 @@
 #include "track.h"
 
-#include <vlc_fourcc.h>
-#include <vlc_common.h>
-#include <vlc_es.h>
+#include <vlc/plugins/vlc_fourcc.h>
+#include <vlc/plugins/vlc_common.h>
+#include <vlc/plugins/vlc_es.h>
 
 #include <QDebug>
 
