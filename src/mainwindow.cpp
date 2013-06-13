@@ -359,7 +359,7 @@ void MainWindow::updateSettings()
     ui->playerControlsWidget->setEnabled(true);
 
     ui->audioTrackComboBox->clear();
-    ui->audioTrackComboBox->addItem("Default");
+    ui->audioTrackComboBox->addItem("Disabled");
     ui->audioTrackComboBox->addItems(playback->media()->audioTracksName());
 
     ui->videoTrackComboBox->clear();
@@ -377,24 +377,18 @@ void MainWindow::updateSettings()
     ui->brightnessSpinBox->setValue(playback->mediaSettings()->brightness());
     ui->saturationSpinBox->setValue(playback->mediaSettings()->saturation());
     ui->hueSpinBox->setValue(playback->mediaSettings()->hue());
-
-//    qDebug() << playback->mediaSettings()->audioTrack().trackId();
-//    qDebug() << playback->mediaSettings()->videoTrack().trackId();
-//    qDebug() << playback->mediaSettings()->subtitlesTrack().trackId();
+    ui->audioGainDoubleSpinBox->setValue(playback->mediaSettings()->gain());
 
     int index;
 
     index = playback->media()->audioTracks().indexOf( playback->mediaSettings()->audioTrack() );
     ui->audioTrackComboBox->setCurrentIndex( index == -1 ? 0 : index + 1 );
-    qDebug() << index;
 
     index = playback->media()->videoTracks().indexOf( playback->mediaSettings()->videoTrack() );
     ui->videoTrackComboBox->setCurrentIndex( index == -1 ? 0 : index + 1);
-    qDebug() << index;
 
     index = playback->media()->subtitlesTracks().indexOf( playback->mediaSettings()->subtitlesTrack() );
     ui->subtitlesTrackComboBox->setCurrentIndex( index == -1 ? 0 : index + 1);
-    qDebug() << index;
 
     ui->ratioComboBox->setCurrentIndex( playback->mediaSettings()->ratio() );
 

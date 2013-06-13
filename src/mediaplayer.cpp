@@ -1,5 +1,7 @@
 #include "mediaplayer.h"
 
+#include <math.h>
+
 #include <QTime>
 #include <QTimer>
 
@@ -14,7 +16,9 @@ MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     QObject(parent),
     _currentPlayback(NULL),
     _videoView(NULL),
-    _isPaused(false)
+    _isPaused(false),
+    _currentVolume(50),
+    _currentGain(0)
 {
     _vlcMediaPlayer = libvlc_media_player_new(vlcInstance);
     VLC_LAST_ERROR();
@@ -72,6 +76,7 @@ void MediaPlayer::setVideoView(VideoView *videoView)
 void MediaPlayer::open(Playback *playback)
 {
     if (_currentPlayback) {
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(gainChanged(float)), this, SLOT(setCurrentGain(float)));
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(gammaChanged(float)), this, SLOT(setCurrentGamma(float)));
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(contrastChanged(float)), this, SLOT(setCurrentContrast(float)));
@@ -89,6 +94,7 @@ void MediaPlayer::open(Playback *playback)
     _currentPlayback = playback;
     VLCERR( libvlc_media_player_set_media(_vlcMediaPlayer, playback->media()->core()) );
 
+    connect(_currentPlayback->mediaSettings(), SIGNAL(gainChanged(float)), this, SLOT(setCurrentGain(float)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(gammaChanged(float)), this, SLOT(setCurrentGamma(float)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(contrastChanged(float)), this, SLOT(setCurrentContrast(float)));
@@ -141,12 +147,19 @@ void MediaPlayer::setCurrentTime(int time)
 
 void MediaPlayer::setVolume(int volume)
 {
-    libvlc_audio_set_volume(_vlcMediaPlayer, volume);
+    _currentVolume = volume > 100 ? 100 : volume;
+
+    libvlc_audio_set_volume(_vlcMediaPlayer, ((float) _currentVolume) * powf(10.f, _currentGain/10.f) );
+    qDebug() << "<<<<<<<<< VOLUME : " << ((float) _currentVolume) * powf(10.f, _currentGain/10.f) << "GAIN : " << _currentGain;
 }
 
 float MediaPlayer::position() const
 {
     return libvlc_media_player_get_position(_vlcMediaPlayer);
+}
+
+int MediaPlayer::volume() const {
+    return libvlc_audio_get_volume(_vlcMediaPlayer);
 }
 
 void MediaPlayer::setPosition(const float &position)
@@ -161,6 +174,8 @@ void MediaPlayer::setPosition(const int &position)
 
 void MediaPlayer::applyCurrentPlaybackSettings()
 {
+    setCurrentGain(_currentPlayback->mediaSettings()->gain());
+
     setCurrentSubtitlesTrack(_currentPlayback->mediaSettings()->subtitlesTrack());
     setCurrentVideoTrack(_currentPlayback->mediaSettings()->videoTrack());
     setCurrentAudioTrack(_currentPlayback->mediaSettings()->audioTrack());
@@ -173,6 +188,12 @@ void MediaPlayer::applyCurrentPlaybackSettings()
     setCurrentRatio(_currentPlayback->mediaSettings()->ratio());
     setCurrentSaturation(_currentPlayback->mediaSettings()->saturation());
     setCurrentSubtitlesSync(_currentPlayback->mediaSettings()->subtitlesSync());
+}
+
+void MediaPlayer::setCurrentGain(float gain)
+{
+    _currentGain = gain;
+    setVolume(_currentVolume);
 }
 
 void MediaPlayer::setCurrentAudioTrack(const AudioTrack &track)

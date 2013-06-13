@@ -43,6 +43,12 @@ public:
 
     float position() const;
 
+    /**
+     * @brief get current software volume
+     * @return
+     */
+    int volume() const;
+
     void setVideoView(VideoView *videoView);
 
     void open(Playback *playback);
@@ -59,6 +65,8 @@ public slots:
     void setCurrentTime(int time);
 
     void setVolume(int volume);
+
+    void setCurrentGain(float gain);
 
     /**
      * @brief setPosition
@@ -127,6 +135,9 @@ private:
     Playback *_currentPlayback;
     VideoView *_videoView;
     WId _currentWId;
+
+    int _currentVolume;
+    int _currentGain;
 
     bool _isPaused;
 };
