@@ -67,18 +67,12 @@ public:
     inline float saturation() const { return _saturation; }
     inline int hue() const { return _hue; }
     inline double audioSync() const { return _audioSync; }
-<<<<<<< HEAD
     inline const AudioTrack & audioTrack() const { return _audioTrack; }
     inline const VideoTrack & videoTrack() const { return _videoTrack; }
     inline const Track & subtitlesTrack() const { return _subtitlesTrack; }
-=======
-    inline int audioTrack() const {return _audioTrack;}
-    inline int videoTrack() const {return _videoTrack;}
-    inline int subtitlesTrack() const {return _subtitlesTrack;}
     inline bool testPattern() const {return _testPattern;}
     inline int inMark() const {return _inMark;}
     inline int outMark() const {return _outMark;}
->>>>>>> c0b22faac479ab5fbcf8d003e1da02e6de5d9f4c
 
     void setRatio(Ratio ratio);
     void setScale(Scale scale);
@@ -90,18 +84,14 @@ public:
     void setSaturation(float saturation);
     void setHue(int hue);
     void setAudioSync(double sync);
-<<<<<<< HEAD
+
     void setAudioTrack(const AudioTrack &track);
     void setVideoTrack(const VideoTrack &track);
     void setSubtitlesTrack(const Track &track);
-=======
-    void setAudioTrack(int track);
-    void setVideoTrack(int track);
-    void setSubtitlesTrack(int track);
+
     void setTestPattern(bool testpattern);
     void setInMark (int mark);
     void setOutMark(int mark);
->>>>>>> c0b22faac479ab5fbcf8d003e1da02e6de5d9f4c
 
     static QStringList ratioValues();
     static QStringList deinterlacingValues();
@@ -119,19 +109,14 @@ signals:
     void saturationChanged(float);
     void hueChanged(int);
     void audioSyncChanged(double sync);
-<<<<<<< HEAD
+
     void audioTrackChanged(AudioTrack);
     void videoTrackChanged(VideoTrack);
     void subtitlesTrackChanged(Track);
-=======
-    void audioTrackChanged(int track);
-    void videoTrackChanged(int track);
-    void subtitlesTrackChanged(int track);
+
     void testPatternChanged(bool);
     void inMarkChanged(int);
     void outMarkChanged(int);
-
->>>>>>> c0b22faac479ab5fbcf8d003e1da02e6de5d9f4c
 
 private:
     Ratio _ratio;
@@ -145,19 +130,13 @@ private:
     int _hue;
     double _audioSync;
 
-<<<<<<< HEAD
     AudioTrack _audioTrack;
     VideoTrack _videoTrack;
     Track _subtitlesTrack;
-=======
-    int _audioTrack;
-    int _videoTrack;
-    int _subtitlesTrack;
 
     bool _testPattern;
     int _inMark;
     int _outMark;
->>>>>>> c0b22faac479ab5fbcf8d003e1da02e6de5d9f4c
 };
 
 #endif // MEDIASETTINGS_H
