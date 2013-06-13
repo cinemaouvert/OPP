@@ -18,7 +18,6 @@ moc_*.cpp
 *.idb
 *.ib_pdb_index
 build
-include/*
 doc/html/*
 doc/qch/*
 config.pri
@@ -27,7 +26,6 @@ config.log
 mobility.prf
 mobilityconfig.prf
 install/*
-lib/*
 *.app
 
 .qmake.cache
