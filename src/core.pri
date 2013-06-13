@@ -29,7 +29,7 @@ SOURCES += src/media.cpp \
     src/videotrack.cpp
 
 # vlc library and headers
-mac:LIBS = -L"/Applications/VLC.app/Contents/MacOS/lib"
+mac:LIBS += -L"/Applications/VLC.app/Contents/MacOS/lib"
 unix:LIBS += -lvlc -lvlccore
 windows:LIBS += -L"C:\Program Files (x86)\VideoLAN\VLC\sdk\lib" -llibvlc -llibvlccore
 INCLUDEPATH += ./include

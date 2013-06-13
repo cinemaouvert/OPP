@@ -672,9 +672,12 @@
                           </widget>
                          </item>
                          <item row="1" column="1">
-                          <widget class="QSpinBox" name="audioGainSpinBox">
-                           <property name="minimum">
-                            <number>-99</number>
+                          <widget class="QDoubleSpinBox" name="audioGainDoubleSpinBox">
+                           <property name="maximum">
+                            <double>3.010000000000000</double>
+                           </property>
+                           <property name="singleStep">
+                            <double>0.010000000000000</double>
                            </property>
                           </widget>
                          </item>
@@ -1147,15 +1150,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MediaTableView</class>
-   <extends>QTableView</extends>
-   <header>mediatableview.h</header>
-  </customwidget>
-  <customwidget>
    <class>SeekWidget</class>
    <extends>QWidget</extends>
    <header>seekwidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MediaTableView</class>
+   <extends>QTableView</extends>
+   <header>mediatableview.h</header>
   </customwidget>
  </customwidgets>
  <resources>

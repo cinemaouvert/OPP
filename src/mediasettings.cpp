@@ -105,6 +105,12 @@ void MediaSettings::setOutMark(int mark)
     emit outMarkChanged(_outMark);
 }
 
+void MediaSettings::setGain(float gain)
+{
+    _gain=gain;
+    emit gainChanged(_gain);
+}
+
 void MediaSettings::initDefault()
 {
     _ratio = Original;
@@ -120,6 +126,7 @@ void MediaSettings::initDefault()
     _testPattern = false;
     _inMark = 0;
     _outMark = 0;
+    _gain=0;
 }
 
 QStringList MediaSettings::ratioValues()

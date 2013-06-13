@@ -73,6 +73,7 @@ public:
     inline bool testPattern() const {return _testPattern;}
     inline int inMark() const {return _inMark;}
     inline int outMark() const {return _outMark;}
+    inline float gain() const {return _gain;}
 
     void setRatio(Ratio ratio);
     void setScale(Scale scale);
@@ -84,6 +85,7 @@ public:
     void setSaturation(float saturation);
     void setHue(int hue);
     void setAudioSync(double sync);
+    void setGain(float gain);
 
     void setAudioTrack(const AudioTrack &track);
     void setVideoTrack(const VideoTrack &track);
@@ -118,6 +120,8 @@ signals:
     void inMarkChanged(int);
     void outMarkChanged(int);
 
+    void gainChanged(float);
+
 private:
     Ratio _ratio;
     Scale _scale;
@@ -137,6 +141,8 @@ private:
     bool _testPattern;
     int _inMark;
     int _outMark;
+
+    float _gain;
 };
 
 #endif // MEDIASETTINGS_H

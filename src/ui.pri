@@ -1,5 +1,4 @@
-HEADERS += src/playertimelinewidget.h \
-    src/mainwindow.h \
+HEADERS += src/mainwindow.h \
     src/saturationwidget.h \
     src/advancedpicturesettingswindow.h \
     src/advancedsettingswindow.h \
@@ -19,7 +18,6 @@ HEADERS += src/playertimelinewidget.h \
     src/passformdialog.h
 
 SOURCES += src/main.cpp \
-    src/playertimelinewidget.cpp \
     src/mainwindow.cpp \
     src/saturationwidget.cpp \
     src/advancedpicturesettingswindow.cpp \
@@ -40,7 +38,6 @@ SOURCES += src/main.cpp \
     src/passformdialog.cpp
 
 FORMS += src/mainwindow.ui \
-    src/playertimelinewidget.ui \
     src/saturationwidget.ui \
     src/advancedpicturesettingswindow.ui \
     src/advancedsettingswindow.ui \

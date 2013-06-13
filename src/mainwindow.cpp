@@ -70,17 +70,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->seekWidget->setMediaPlayer(_playlistPlayer->mediaPlayer());
 
     // ###########################################################################################
-    ui->progEdit->setText("Nom de la programmation:    ");
-    ui->nbrfilmlabel->setText("Nombre de films:  "+QString::number(0)+"                   Nombre images:   "+QString::number(0));
-    ui->durelabel_2->setText("Duree totale: "+msecToQTime(0).toString("hh:mm:ss"));
-    ui->noteEdit->setText("Note(s):     ");
+    ui->progEdit->setText(tr("Listing name: "));
+    ui->nbrfilmlabel->setText(tr("Number of movies:  ")+QString::number(0)+tr("                   Number of pictures:   ")+QString::number(0));
+    ui->durelabel_2->setText(tr("Total duration: ")+msecToQTime(0).toString("hh:mm:ss"));
+    ui->noteEdit->setText(tr("Notes:     "));
 
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)),this, SLOT(setSummary(int)));
 
-    ui->audiolabel->setText("Codecs audio:  ");
-    ui->videolabel->setText("Codecs video:  ");
-    ui->canauxaudiolabel->setText("Canaux audio:  ");
-    ui->formatlabel->setText("Formats images:  ");
+    ui->audiolabel->setText(tr("Audio codecs: "));
+    ui->videolabel->setText(tr("Video codecs: "));
+    ui->canauxaudiolabel->setText(tr("Audio channels: "));
+    ui->formatlabel->setText(tr("Picture formats: "));
 
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)),this, SLOT(setDetails(int)));
    //##############################################################################################
@@ -139,9 +139,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::setSummary(int count)
 {
-    ui->nbrfilmlabel->setText("Nombre de films:   "+QString::number(_mediaListModel->filmsNumber())+
-                              "Nombre images:     "+QString::number( _mediaListModel->imageNumber()));
-    ui->durelabel_2->setText("Duree totale: "+_mediaListModel->summaryTotalDuration().toString("hh:mm:ss"));
+    ui->nbrfilmlabel->setText("Number of movies: "+QString::number(_mediaListModel->filmsNumber())+
+                              "Number of pictures: "+QString::number( _mediaListModel->imageNumber()));
+    ui->durelabel_2->setText("Total duration: "+_mediaListModel->summaryTotalDuration().toString("hh:mm:ss"));
 }
 
 void MainWindow::setDetails(int count)
@@ -336,11 +336,20 @@ void MainWindow::on_audioSyncDoubleSpinBox_valueChanged(double arg1)
     }
 }
 
+void MainWindow::on_audioGainDoubleSpinBox_valueChanged(double arg1)
+{
+    Playback *playback = selectedPlayback();
+    if (playback) {
+        playback->mediaSettings()->setGain(arg1);
+    }
+}
+
 void MainWindow::updateSettings()
 {
     Playback* playback = selectedPlayback();
     if(!playback){
         ui->mediaSettingsWidget->setEnabled(false);
+        ui->playerControlsWidget->setEnabled(false);
         return;
     }
 
@@ -349,6 +358,7 @@ void MainWindow::updateSettings()
     ui->subtitlesTrackComboBox->blockSignals(true);
 
     ui->mediaSettingsWidget->setEnabled(true);
+    ui->playerControlsWidget->setEnabled(true);
 
     ui->audioTrackComboBox->clear();
     ui->audioTrackComboBox->addItem("Default");
