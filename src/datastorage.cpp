@@ -10,13 +10,21 @@
 #include "mediasettings.h"
 #include "schedulelistmodel.h"
 
-DataStorage::DataStorage(QObject *parent) :
+#include "medialistmodel.h"
+#include "playlistmodel.h"
+#include "schedulelistmodel.h"
+#include "application.h"
+
+#include "mainwindow.h" // FIX : ref 0000001
+
+DataStorage::DataStorage(Application *app, MainWindow *win /*FIX : ref 0000001*/, QObject *parent) :
     QObject(parent),
     _mediaListModel(0),
-    _scheduleListModel(0)
+    _scheduleListModel(0),
+    _app(app),
+    _win(win) // FIX : ref 0000001
 {
 }
-
 
 void DataStorage::setMediaListModel(MediaListModel* model)
 {
@@ -148,5 +156,76 @@ void DataStorage::save(QFile &file)
 
 void DataStorage::load(const QFile &file)
 {
+    // Remove all data from models
+    _scheduleListModel->removeAll();
+    foreach(PlaylistModel *model, _playlistModelList)
+        model->removeAll();
+    _mediaListModel->removeAll();
 
+    _playlistModelList.clear();
+
+    // open xml document
+    QFile myFile("/Users/floomoon/test.opp");
+    myFile.open(QIODevice::ReadWrite);
+
+    QDomDocument doc;
+
+    if (!doc.setContent(&myFile)) {
+        // error
+        return;
+    }
+
+    QDomElement root = doc.documentElement();
+
+    QDomNodeList mediaNodeList = root.elementsByTagName("media");
+    QDomNodeList playlistNodeList = root.elementsByTagName("playlist");
+    QDomNodeList scheduleNodeList = root.elementsByTagName("schedule");
+
+    // load media
+    for (int i = 0; i < mediaNodeList.length(); i++) {
+        QDomNamedNodeMap mediaAttributes = mediaNodeList.at(i).attributes();
+
+        for (int k = 0; k < mediaAttributes.length(); k++) {
+            Media *media = new Media(mediaAttributes.item(i).nodeValue(), _app->vlcInstance());
+            if (media->exists())
+                _mediaListModel->addMedia(media);
+            else
+                delete media;
+        }
+    }
+
+    // load playlist
+    for (int i = 0; i < playlistNodeList.length(); i++) {
+        QDomNode playlistNode = playlistNodeList.at(i);
+        QDomNamedNodeMap playlistAttributes = playlistNode.attributes();
+        QDomNodeList playbackNodeList = playlistNode.childNodes();
+
+        Playlist *playlist = new Playlist(_app->vlcInstance(), playlistAttributes.namedItem("title").nodeValue());
+        PlaylistModel *model = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
+
+        // FIX : ref 0000001
+        _win->restorePlaylistTab(model);
+
+        // load playbacks
+        for (int j = 0; j < playbackNodeList.count(); j++) {
+            QDomNode playbackNode = playbackNodeList.at(j);
+            QDomNamedNodeMap playbackAttributes = playbackNode.attributes();
+
+            const int mediaId = playbackAttributes.namedItem("media-id").nodeValue().toInt();
+
+            Media *media = _mediaListModel->findById(mediaId);
+            if (!media)
+                continue;
+
+            Playback *playback = new Playback(media);
+            model->addPlayback(playback);
+        }
+    }
+
+    // load schedule
+    for (int i = 0; i < scheduleNodeList.length(); i++) {
+
+    }
+
+    myFile.close();
 }

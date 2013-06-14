@@ -45,6 +45,8 @@ public:
 
     void updateLayout();
 
+    void removeAll();
+
 public slots:
     void toggleAutomation(bool checked);
 

@@ -182,3 +182,19 @@ int MediaListModel::filmsNumber()
 
     return numberFilms;
 }
+
+void MediaListModel::removeAll()
+{
+    for (int i = _mediaList.count()-1; i >= 0; i--) {
+        removeMedia(i);
+    }
+}
+
+Media* MediaListModel::findById(int id) const
+{
+    foreach(Media *m, _mediaList) {
+        if (m->id() == id)
+            return m;
+    }
+    return 0;
+}

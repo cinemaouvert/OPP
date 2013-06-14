@@ -50,6 +50,8 @@ public:
 
     bool moveDown(const QModelIndex &index);
 
+    void removeAll();
+
 public slots:
 
     void playItem();

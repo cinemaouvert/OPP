@@ -8,12 +8,16 @@
 class MediaListModel;
 class PlaylistModel;
 class ScheduleListModel;
+class Application;
+
+// FIX : ref 0000001
+class MainWindow;
 
 class DataStorage : public QObject
 {
     Q_OBJECT
 public:
-    explicit DataStorage(QObject *parent = 0);
+    explicit DataStorage(Application *app, MainWindow *win/*FIX : ref 0000001*/, QObject *parent = 0);
 
     void setMediaListModel(MediaListModel* model);
     void addPlaylistModel(PlaylistModel* model);
@@ -34,7 +38,10 @@ private :
     ScheduleListModel* _scheduleListModel;
     QString _projectTitle;
     QString _projectNotes;
-    
+    Application *_app;
+
+    // FIX : ref 0000001
+    MainWindow *_win;
 };
 
 #endif // DATASTORAGE_H

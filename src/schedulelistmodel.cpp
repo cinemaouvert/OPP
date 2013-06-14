@@ -202,3 +202,11 @@ void ScheduleListModel::updateLayout()
 {
     emit layoutChanged();
 }
+
+void ScheduleListModel::removeAll()
+{
+    for (int i = _scheduleList.count()-1; i >= 0; i--) {
+        removeSchedule(i);
+    }
+}
+

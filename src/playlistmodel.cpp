@@ -231,3 +231,11 @@ bool PlaylistModel::moveDown(const QModelIndex &index)
     }
     return false;
 }
+
+void PlaylistModel::removeAll()
+{
+    for (int i = _playlist->count()-1; i >= 0; i--) {
+        removePlayback(i);
+    }
+}
+

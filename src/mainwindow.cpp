@@ -105,7 +105,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionProjection->setData(QVariant(VideoWindow::PROJECTION));
     ui->actionWindow->setData(QVariant(VideoWindow::WINDOW));
 
-    _dataStorage = new DataStorage();
+    _dataStorage = new DataStorage(_app, this/*FIX : ref 0000001*/);
     _dataStorage->setMediaListModel(_mediaListModel);
     _dataStorage->setScheduleListModel(_scheduleListModel);
 
@@ -127,6 +127,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     currentPlaylistTableView()->setDragDropMode(QAbstractItemView::InternalMove);
     currentPlaylistTableView()->setDragEnabled(true);
+
+    _dataStorage->load(QFile(""));
 }
 
 MainWindow::~MainWindow()
@@ -136,8 +138,8 @@ MainWindow::~MainWindow()
     delete _mediaListModel;
     delete _videoWindow;
     delete _playlistPlayer;
-    delete _app;
     delete _dataStorage;
+    delete _app;
 }
 
 void MainWindow::setSummary(int count)
@@ -562,6 +564,24 @@ void MainWindow::on_removePlaylistItemAction_triggered()
    _scheduleListModel->updateLayout();
 }
 
+// FIX : ref 0000001
+void MainWindow::restorePlaylistTab(PlaylistModel *model)
+{
+    PlaylistTableView *newTab = new PlaylistTableView;
+
+    connect(model->playlist(), SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
+
+    newTab->setModel(model);
+    newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
+    newTab->horizontalHeader()->setStretchLastSection(true);
+
+    ui->playlistsTabWidget->addTab(newTab, model->playlist()->title());
+    ui->playlistsTabWidget->setCurrentWidget(newTab);
+
+    _dataStorage->addPlaylistModel(model);
+    updatePlaylistListCombox();
+}
+
 /***********************************************************************************************\
                                           Project import/export
 \***********************************************************************************************/
@@ -598,46 +618,24 @@ void MainWindow::on_saveAsAction_triggered()
 
 void MainWindow::on_openListingAction_triggered()
 {
-    /* Bin Loading */
-/******************
-    // Go seek the file to load
-    QString fileName = QFileDialog::getOpenFileName(this,tr("Open Project"), "",tr("OPP (*.opp);;All Files (*)"));
-    if (fileName.isEmpty())
-        return;
-    else{
-        QFile file(fileName);
-        if (!file.open(QIODevice::ReadOnly)){
-            QMessageBox::information(this, tr("Unable to open file"),
-                file.errorString());
-            return;
-        }
+//    QString fileName = QFileDialog::getSaveFileName(this, tr("Open Project"), "", tr("OPP (*.opp);;All Files (*)"));
+//    if (fileName.isEmpty())
+//         return;
+//     else
+//    {
+//        QFile file(fileName);
+//        if (!file.open(QIODevice::WriteOnly)) {
+//            QMessageBox::information(this, tr("Unable to open file"),file.errorString());
+//        }
 
-        //reset the list once the file is selected
-        while(_mediaListModel->rowCount() > 0) {
-            _mediaListModel->removeRows(0, 1);
-        }
+        // FIX : delete all playlist tabs before loading a new project
+        // TODO : It should be done by the DataStorage instance, but we need something that manage the list of playlist
+        createPlaylistTab();
+        while (ui->playlistsTabWidget->count() > 1)
+            ui->playlistsTabWidget->removeTab(0);
 
-        //load data from the file, and add media in _mediaListModel
-        QDataStream in(&file);
-        int i=0;
-        while(!in.atEnd()){
-            QString loc;
-            in >> loc;
-            _mediaListModel->addMedia(new Media(loc, _app->vlcInstance()));
-            i++;
-        }
-    }//end else*************/
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Open Project"), "", tr("OPP (*.opp);;All Files (*)"));
-    if (fileName.isEmpty())
-         return;
-     else
-    {
-        QFile file(fileName);
-        if (!file.open(QIODevice::WriteOnly)) {
-            QMessageBox::information(this, tr("Unable to open file"),file.errorString());
-        }
-        _dataStorage->load(file);
-    }
+        _dataStorage->load(QFile(""));
+//    }
 }
 
 /***********************************************************************************************\

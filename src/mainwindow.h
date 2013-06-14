@@ -39,6 +39,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    // FIX : ref 0000001
+    void restorePlaylistTab(PlaylistModel *model);
+
 private slots:
     void on_ratioComboBox_currentIndexChanged(int index);
 

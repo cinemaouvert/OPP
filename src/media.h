@@ -42,7 +42,7 @@ public:
 
     inline const QString & location() const { return _location; }
     inline libvlc_media_t* core() const { return _vlcMedia; }
-    inline QSize videoResolution() const { return _videoResolution; }
+    inline int id() const { return _id; }
 
     uint duration() const;
     QString name() const;
@@ -74,6 +74,9 @@ signals:
     void usageCountChanged();
 
 private:
+    static int s_instanceCount;
+    int _id;
+
     QString _location;
     QFileInfo _fileInfo;
 
@@ -84,10 +87,10 @@ private:
     QList<Track> _subtitlesTracks;
 
     int _usageCount;
-    QSize _videoResolution;
 
     friend QDataStream & operator << (QDataStream &, const QList<Media> &);
     friend QDataStream & operator >> (QDataStream &, QList<Media> &);
+
 };
 
 #endif // MEDIA_H

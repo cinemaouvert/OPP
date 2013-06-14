@@ -39,6 +39,10 @@ public:
 
     bool addMedia(Media *media);
 
+    void removeAll();
+
+    Media* findById(int id) const;
+
 signals:
     /**
      * @brief signal mediaListChanged
