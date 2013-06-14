@@ -11,6 +11,8 @@
 #include "videotrack.h"
 #include "track.h"
 
+#define EXTENSIONS_IMAGE "*.png;*.jpeg;*.jpg;*.gif;*.tiff"
+
 struct libvlc_media_t;
 struct libvlc_instance_t;
 
@@ -48,6 +50,11 @@ public:
 
     void usageCountAdd(int count = 1);
     bool isUsed() const;
+
+    static QStringList audioExtensions();
+    static QStringList videoExtensions();
+    static QStringList imageExtensions();
+    static QStringList mediaExtensions();
 
 protected:
     void parseMediaInfos();

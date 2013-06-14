@@ -144,7 +144,7 @@ void MainWindow::setDetails(int count)
 
 void MainWindow::on_binAddMediaButton_clicked()
 {
-    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("New media"), QDir::homePath(), tr("Media (*.avi *.mkv *.jpg *.png)"));
+    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("New media"), QDir::homePath(), tr("Media (%1)").arg(Media::mediaExtensions().join(" ")));
 
     foreach (QString fileName, fileNames) {
         Media *media = new Media(fileName, _app->vlcInstance());

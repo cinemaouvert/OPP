@@ -5,6 +5,9 @@
 
 #include <QStringList>
 
+#include <vlc/plugins/vlc_common.h>
+#include <vlc/plugins/vlc_interface.h>
+
 #include "global.h"
 #include "application.h"
 
@@ -209,4 +212,24 @@ QStringList Media::subtitlesTracksName() const
         list << ("Track " + QString::number(track.trackId()));
 
     return list;
+}
+
+QStringList Media::audioExtensions()
+{
+    return QString(EXTENSIONS_AUDIO).split(";");
+}
+
+QStringList Media::videoExtensions()
+{
+    return QString(EXTENSIONS_VIDEO).split(";");
+}
+
+QStringList Media::imageExtensions()
+{
+    return QString(EXTENSIONS_IMAGE).split(";");
+}
+
+QStringList Media::mediaExtensions()
+{
+    return Media::audioExtensions() + Media::videoExtensions() + Media::imageExtensions();
 }
