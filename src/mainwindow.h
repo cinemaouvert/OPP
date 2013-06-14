@@ -29,6 +29,7 @@ class PlaylistPlayer;
 class Playback;
 class Playlist;
 class Locker;
+class DataStorage;
 
 class MainWindow : public QMainWindow
 {
@@ -99,8 +100,9 @@ private slots:
     void on_audioGainDoubleSpinBox_valueChanged(double arg1);
 
     void on_playlistUpButton_clicked();
-
     void on_playlistDownButton_clicked();
+
+    void on_notesEdit_textChanged();
 
 protected:
     Playback* selectedPlayback() const;
@@ -125,6 +127,8 @@ private:
     ScheduleListModel *_scheduleListModel;
 
     Locker *_locker;
+
+    DataStorage* _dataStorage;
 };
 
 #endif // MAINWINDOW_H

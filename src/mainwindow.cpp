@@ -28,6 +28,7 @@
 #include "mediaplayer.h"
 #include "playback.h"
 #include "utils.h"
+#include "datastorage.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -70,10 +71,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->seekWidget->setMediaPlayer(_playlistPlayer->mediaPlayer());
 
     // ###########################################################################################
-    ui->progEdit->setText(tr("Listing name: "));
+    //ui->progEdit->setText(tr("Listing name: "));
     ui->nbrfilmlabel->setText(tr("Number of movies:  ")+QString::number(0)+tr("                   Number of pictures:   ")+QString::number(0));
     ui->durelabel_2->setText(tr("Total duration: ")+msecToQTime(0).toString("hh:mm:ss"));
-    ui->noteEdit->setText(tr("Notes:     "));
+    //ui->noteEdit->setText(tr("Notes:     "));
 
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)),this, SLOT(setSummary(int)));
 
@@ -104,6 +105,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionProjection->setData(QVariant(VideoWindow::PROJECTION));
     ui->actionWindow->setData(QVariant(VideoWindow::WINDOW));
 
+    _dataStorage = new DataStorage();
+    _dataStorage->setMediaListModel(_mediaListModel);
+    _dataStorage->setScheduleListModel(_scheduleListModel);
+
+    connect(ui->progEdit,SIGNAL(textChanged(QString)), _dataStorage, SLOT(setProjectTitle(QString)));
+
     createPlaylistTab();
 
     ui->scheduleLaunchAtDateEdit->setDate(QDate::currentDate());
@@ -130,6 +137,7 @@ MainWindow::~MainWindow()
     delete _videoWindow;
     delete _playlistPlayer;
     delete _app;
+    delete _dataStorage;
 }
 
 void MainWindow::setSummary(int count)
@@ -479,6 +487,7 @@ void MainWindow::createPlaylistTab()
     ui->playlistsTabWidget->addTab(newTab, playlist->title());
     ui->playlistsTabWidget->setCurrentWidget(newTab);
 
+    _dataStorage->addPlaylistModel(newModel);
     updatePlaylistListCombox();
 }
 
@@ -559,8 +568,19 @@ void MainWindow::on_removePlaylistItemAction_triggered()
 
 void MainWindow::on_saveAsAction_triggered()
 {
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Project"), "", tr("OPP (*.opp);;All Files (*)"));
+    if (fileName.isEmpty())
+         return;
+     else
+    {
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly)) {
+            QMessageBox::information(this, tr("Unable to open file"),file.errorString());
+        }
+        _dataStorage->save(file);
+    }
     /* Bin save */
-
+/******
     //on sauvegarde le fichier où on veut
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save Project"), "", tr("OPP (*.opp);;All Files (*)"));
     if (fileName.isEmpty())
@@ -573,13 +593,13 @@ void MainWindow::on_saveAsAction_triggered()
          //save data into the file
          QDataStream out(&file);
          out << _mediaListModel->mediaList();
-    }
+    }******/
 }
 
 void MainWindow::on_openListingAction_triggered()
 {
     /* Bin Loading */
-
+/******************
     // Go seek the file to load
     QString fileName = QFileDialog::getOpenFileName(this,tr("Open Project"), "",tr("OPP (*.opp);;All Files (*)"));
     if (fileName.isEmpty())
@@ -606,7 +626,17 @@ void MainWindow::on_openListingAction_triggered()
             _mediaListModel->addMedia(new Media(loc, _app->vlcInstance()));
             i++;
         }
-    }//end else
+    }//end else*************/
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Open Project"), "", tr("OPP (*.opp);;All Files (*)"));
+    if (fileName.isEmpty())
+         return;
+     else
+    {
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly)) {
+            QMessageBox::information(this, tr("Unable to open file"),file.errorString());
+        }
+        _dataStorage->load(file);
 }
 
 /***********************************************************************************************\
@@ -723,4 +753,9 @@ void MainWindow::on_playlistDownButton_clicked()
         return;
     if(currentPlaylistModel()->moveDown(indexes.first()))
         currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() + 1, indexes.first().column()));
+}
+
+void MainWindow::on_notesEdit_textChanged()
+{
+    _dataStorage->setProjectNotes(ui->notesEdit->document()->toPlainText());
 }
