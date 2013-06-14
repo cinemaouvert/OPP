@@ -24,7 +24,6 @@ MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     VLC_LAST_ERROR();
     _vlcEvents = libvlc_media_player_event_manager(_vlcMediaPlayer);
 
-//    /* Disable mouse and keyboard events */
     libvlc_video_set_key_input(_vlcMediaPlayer, false);
     libvlc_video_set_mouse_input(_vlcMediaPlayer, false);
 
@@ -150,7 +149,6 @@ void MediaPlayer::setVolume(int volume)
     _currentVolume = volume > 100 ? 100 : volume;
 
     libvlc_audio_set_volume(_vlcMediaPlayer, ((float) _currentVolume) * powf(10.f, _currentGain/10.f) );
-    qDebug() << "<<<<<<<<< VOLUME : " << ((float) _currentVolume) * powf(10.f, _currentGain/10.f) << "GAIN : " << _currentGain;
 }
 
 float MediaPlayer::position() const
@@ -209,7 +207,13 @@ void MediaPlayer::setCurrentVideoTrack(const VideoTrack &track)
 
 void MediaPlayer::setCurrentSubtitlesTrack(const Track &track)
 {
-    const int index = _currentPlayback->media()->subtitlesTracks().indexOf(track);
+    const QList<Track> &tracks = _currentPlayback->media()->subtitlesTracks();
+
+    if (tracks.count() == 0)
+        return;
+
+    const int index = tracks.indexOf(track);
+
     libvlc_video_set_spu(_vlcMediaPlayer, index == -1 ? 0 : index + 1);
 }
 
@@ -242,7 +246,6 @@ void MediaPlayer::setCurrentContrast(float contrast)
 
 void MediaPlayer::setCurrentBrightness(float brightness)
 {
-    qDebug() << "set brightness " << brightness;
     libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
     libvlc_video_set_adjust_float(_vlcMediaPlayer,libvlc_adjust_Brightness, brightness);
 }
@@ -257,7 +260,6 @@ void MediaPlayer::setCurrentHue(int hue)
 {
     libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Enable,1);
     libvlc_video_set_adjust_int(_vlcMediaPlayer,libvlc_adjust_Hue, hue);
-
 }
 
 void MediaPlayer::setCurrentAudioSync(double sync)
