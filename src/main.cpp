@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QTranslator>
 #include <QSettings>
+#include <QLibraryInfo>
 
 #include "mainwindow.h"
 #include "media.h"
@@ -67,6 +68,11 @@ int main(int argc, char *argv[])
     QTranslator translator;
     translator.load(translationFile);
     a.installTranslator(&translator);
+
+    QTranslator translator2;
+    translator2.load(QString("qt_") + settings.value("lang").toString(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    a.installTranslator(&translator2);
+
 
     /* for save and load */
     qRegisterMetaType<MediaListModel*>("MediaListModel*");
