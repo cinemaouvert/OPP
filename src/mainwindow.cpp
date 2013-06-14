@@ -637,6 +637,7 @@ void MainWindow::on_openListingAction_triggered()
             QMessageBox::information(this, tr("Unable to open file"),file.errorString());
         }
         _dataStorage->load(file);
+    }
 }
 
 /***********************************************************************************************\
