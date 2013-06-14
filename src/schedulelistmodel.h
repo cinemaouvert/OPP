@@ -43,6 +43,8 @@ public:
 
     void stopAutomation();
 
+    void updateLayout();
+
 public slots:
     void toggleAutomation(bool checked);
 

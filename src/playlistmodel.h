@@ -9,6 +9,7 @@
 class PlaylistPlayer;
 class Playback;
 class MediaListModel;
+class ScheduleListModel;
 
 class PlaylistModel : public QAbstractTableModel
 {
@@ -17,7 +18,7 @@ public:
     enum Columns { Title = 0, Duration = 1, Video = 2, Audio = 3, Subtitles = 4, TestPattern = 5, Status = 6 };
     enum PlaybackState { Playing = 0, Paused = 1, Idle = 2 };
 
-    PlaylistModel(Playlist *playlist, MediaListModel *mediaListModel, QObject *parent = 0);
+    PlaylistModel(Playlist *playlist, MediaListModel *mediaListModel, ScheduleListModel *scheduleListModel, QObject *parent = 0);
 
     virtual ~PlaylistModel();
 
@@ -59,6 +60,7 @@ private:
     Playlist *_playlist;
     MediaListModel *_mediaListModel;
     QPair<int, PlaybackState> _activeItem;
+    ScheduleListModel *_scheduleListModel;
 };
 
 

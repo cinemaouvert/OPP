@@ -8,11 +8,14 @@
 #include "medialistmodel.h"
 #include "mediasettings.h"
 #include "playlistplayer.h"
+#include "schedulelistmodel.h"
 
-PlaylistModel::PlaylistModel(Playlist *playlist, MediaListModel *mediaListModel, QObject *parent) :
+PlaylistModel::PlaylistModel(Playlist *playlist, MediaListModel *mediaListModel, ScheduleListModel *scheduleListModel, QObject *parent) :
     QAbstractTableModel(parent),
     _mediaListModel(mediaListModel),
-    _playlist(playlist)
+    _playlist(playlist),
+    _scheduleListModel(scheduleListModel)
+
 {
     _activeItem.first = -1;
     _activeItem.second = Idle;
@@ -137,6 +140,7 @@ bool PlaylistModel::addPlayback(Playback *playback)
     beginInsertRows(QModelIndex(), count, count);
     _playlist->append(playback);
     endInsertRows();
+    _scheduleListModel->updateLayout();
 
     return true;
 }
@@ -174,6 +178,7 @@ void PlaylistModel::removePlayback(int index)
     _playlist->removeAt(index);
 
     endRemoveRows(); 
+    _scheduleListModel->updateLayout();
 }
 
 void PlaylistModel::playItem()

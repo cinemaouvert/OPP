@@ -29,6 +29,7 @@ SOURCES += src/media.cpp \
 # vlc library and headers
 mac:LIBS += -L"/Applications/VLC.app/Contents/MacOS/lib"
 unix:LIBS += -lvlc -lvlccore
+unix:INCLUDEPATH += /usr/include/vlc/plugins
 windows:LIBS += -L"C:\Program Files (x86)\VideoLAN\VLC\sdk\lib" -llibvlc -llibvlccore
 
 mac:INCLUDEPATH += ./include

@@ -64,9 +64,11 @@ QVariant ScheduleListModel::data(const QModelIndex &index, int role) const
                     return QIcon(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_206_ok_2.png"));
                 else
                     return QIcon(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_207_remove_2.png"));
-            } else {
+            } else if (_automationEnabled) {
                 return QIcon(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_187_more.png"));
             }
+            else
+                return QIcon(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_230_moon.png"));
         }
         break;
     case Qt::DisplayRole:
@@ -97,12 +99,14 @@ QVariant ScheduleListModel::data(const QModelIndex &index, int role) const
             if (index.column() == State) {
                 if (_scheduleList[index.row()]->isExpired()) {
                     if (_scheduleList[index.row()]->wasTriggered())
-                        return tr("played");
+                        return tr("Played");
                     else
-                        return tr("ignored");
-                } else {
-                    return tr("pending...");
+                        return tr("Ignored");
+                } else if (_automationEnabled){
+                    return tr("Pending...");
                 }
+                else
+                    return tr("Sleeping...");
             }
             break;
         }
@@ -174,6 +178,7 @@ void ScheduleListModel::delayAll(int ms)
 
 void ScheduleListModel::toggleAutomation(bool checked) {
     checked ? startAutomation() : stopAutomation();
+    updateLayout();
 }
 
 void ScheduleListModel::startAutomation() {
@@ -190,4 +195,9 @@ void ScheduleListModel::stopAutomation() {
     }
 
     _automationEnabled = false;
+}
+
+void ScheduleListModel::updateLayout()
+{
+    emit layoutChanged();
 }

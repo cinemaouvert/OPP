@@ -115,6 +115,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _advancedSettingsWindow = new AdvancedSettingsWindow(this);
     _advancedPictureSettingsWindow = new AdvancedPictureSettingsWindow(this);
     _settingsWindow = new SettingsWindow(this);
+
+    ui->scheduleToggleEnabledButton->click();
 }
 
 MainWindow::~MainWindow()
@@ -463,7 +465,7 @@ void MainWindow::createPlaylistTab()
 {
     PlaylistTableView *newTab = new PlaylistTableView;
     Playlist *playlist = new Playlist(_app->vlcInstance(), "new playlist");
-    PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel);
+    PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
 
     connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
 
@@ -545,6 +547,7 @@ void MainWindow::on_removePlaylistItemAction_triggered()
 
    currentPlaylistModel()->removePlayback(indexes.first().row());
    updateSettings();
+   _scheduleListModel->updateLayout();
 }
 
 /***********************************************************************************************\
@@ -664,8 +667,10 @@ void MainWindow::on_scheduleToggleEnabledButton_toggled(bool checked)
 {
     if (checked) {
         ui->scheduleToggleEnabledButton->setText("Stop automation");
+       // ui->scheduleTableView->setEnabled(true);
     } else {
         ui->scheduleToggleEnabledButton->setText("Start automation");
+        //ui->scheduleTableView->setEnabled(false);
     }
 }
 
