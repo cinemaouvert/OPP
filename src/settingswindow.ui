@@ -185,7 +185,7 @@
         <widget class="QComboBox" name="comboBox_language">
          <item>
           <property name="text">
-           <string>English</string>
+           <string notr="true">English</string>
           </property>
           <property name="icon">
            <iconset resource="../images.qrc">
@@ -194,7 +194,7 @@
          </item>
          <item>
           <property name="text">
-           <string>Français</string>
+           <string notr="true">Français</string>
           </property>
           <property name="icon">
            <iconset resource="../images.qrc">

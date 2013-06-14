@@ -51,7 +51,14 @@ int main(int argc, char *argv[])
     #endif
 
     if(!settings.contains("lang"))
-        settings.setValue("lang","en");
+    {
+        /*Check if OS language is available, if not English is set as default language*/
+        QString locale = QLocale::system().name().section('_', 0, 0);
+        if(locale=="fr")
+            settings.setValue("lang","fr");
+        else
+            settings.setValue("lang","en");
+    }
 
     /*Translation file*/
     QString translationFile = "opp_";
