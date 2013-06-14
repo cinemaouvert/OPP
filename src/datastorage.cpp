@@ -104,6 +104,7 @@ void DataStorage::save(QFile &file)
             playback.setAttribute("id", playbackId);
             playbackId++;
             playback.setAttribute("media-id", mediaList.indexOf(playbackElement->media()));
+            playback.setAttribute("media-id", playbackElement->media()->id());
             playback.setAttribute("ratio", playbackElement->mediaSettings()->ratio());
             playback.setAttribute("scale", playbackElement->mediaSettings()->scale());
             playback.setAttribute("deinterlacing", playbackElement->mediaSettings()->deinterlacing());
