@@ -1,6 +1,19 @@
 #ifndef MEDIA_H
 #define MEDIA_H
 
+#define EXTENSIONS_AUDIO "*.3ga;*.669;*.a52;*.aac;*.ac3;*.adt;*.adts;*.aif;*.aifc;*.aiff;*.amr;*.aob;" \
+    "*.ape;*.awb;*.caf;*.dts;*.flac;*.it;*.kar;*.m4a;*.m4p;*.m5p;*.mid;*.mka;*.mlp;*.mod;*.mpa;*.mp1;*.mp2;" \
+    "*.mp3;*.mpc;*.mpga;*.oga;*.ogg;*.oma;*.opus;*.qcp;*.ra;*.rmi;*.s3m;*.spx;*.thd;*.tta;*.voc;*.vqf;*.w64;" \
+    "*.wav;*.wma;*.wv;*.xa;*.xm"
+
+#define EXTENSIONS_VIDEO "*.3g2;*.3gp;*.3gp2;*.3gpp;*.amv;*.asf;*.avi;*.bin;*.divx;*.drc;*.dv;*f4v;*.flv;*.gvi;*.gvi;*.gxf;*.iso;*.m1v;*.m2v;" \
+                         "*.m2t;*.m2ts;*.m4v;*.mkv;*.mov;*.mp2;*.mp2v;*.mp4;*.mp4v;*.mpe;*.mpeg;*.mpeg1;" \
+                         "*.mpeg2;*.mpeg4;*.mpg;*.mpv2;*.mts;*.mtv;*.mxf;*.mxg;*.nsv;*.nuv;" \
+                         "*.ogg;*.ogm;*.ogv;*.ogx;*.ps;" \
+                         "*.rec;*.rm;*.rmvb;*.tod;*.ts;*.tts;*.vob;*.vro;*.webm;*.wm;*.wmv;*.wtv;*.xesc"
+
+#define EXTENSIONS_IMAGE "*.png;*.jpeg;*.jpg;*.gif;*.tiff"
+
 #include <QtCore/QObject>
 #include <QFileInfo>
 #include <QTime>
@@ -10,8 +23,6 @@
 #include "audiotrack.h"
 #include "videotrack.h"
 #include "track.h"
-
-#define EXTENSIONS_IMAGE "*.png;*.jpeg;*.jpg;*.gif;*.tiff"
 
 struct libvlc_media_t;
 struct libvlc_instance_t;

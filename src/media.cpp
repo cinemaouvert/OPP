@@ -5,9 +5,6 @@
 
 #include <QStringList>
 
-#include <vlc/plugins/vlc_common.h>
-#include <vlc/plugins/vlc_interface.h>
-
 #include "global.h"
 #include "application.h"
 
