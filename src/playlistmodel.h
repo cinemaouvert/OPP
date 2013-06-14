@@ -46,6 +46,10 @@ public:
 
     void updateLayout();
 
+    bool moveUp(const QModelIndex &index);
+
+    bool moveDown(const QModelIndex &index);
+
 public slots:
 
     void playItem();

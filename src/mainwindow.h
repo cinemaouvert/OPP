@@ -98,6 +98,10 @@ private slots:
     void on_scheduleToggleEnabledButton_toggled(bool checked);
     void on_audioGainDoubleSpinBox_valueChanged(double arg1);
 
+    void on_playlistUpButton_clicked();
+
+    void on_playlistDownButton_clicked();
+
 protected:
     Playback* selectedPlayback() const;
     PlaylistTableView* currentPlaylistTableView() const;

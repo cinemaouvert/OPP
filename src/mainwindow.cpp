@@ -117,6 +117,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _settingsWindow = new SettingsWindow(this);
 
     ui->scheduleToggleEnabledButton->click();
+
+    currentPlaylistTableView()->setDragDropMode(QAbstractItemView::InternalMove);
+    currentPlaylistTableView()->setDragEnabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -700,4 +703,24 @@ PlaylistModel* MainWindow::currentPlaylistModel() const
 Playlist* MainWindow::playlistAt(int index) const
 {
     return ( (PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(index) )->model() )->playlist();
+}
+
+void MainWindow::on_playlistUpButton_clicked()
+{
+    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+    if(indexes.count()==0)
+        return;
+
+    if(currentPlaylistModel()->moveUp(indexes.first()))
+        currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() - 1, indexes.first().column()));
+}
+
+void MainWindow::on_playlistDownButton_clicked()
+{
+    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+
+    if(indexes.count()==0)
+        return;
+    if(currentPlaylistModel()->moveDown(indexes.first()))
+        currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() + 1, indexes.first().column()));
 }

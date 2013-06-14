@@ -209,3 +209,25 @@ void PlaylistModel::updateLayout()
 {
     emit layoutChanged();
 }
+
+bool PlaylistModel::moveUp(const QModelIndex &index)
+{
+    if(index.row()>0)
+    {
+        _playlist->move(index.row(),index.row()-1);
+        updateLayout();
+        return true;
+    }
+    return false;
+}
+
+bool PlaylistModel::moveDown(const QModelIndex &index)
+{
+    if(index.row()<_playlist->count()-1)
+    {
+        _playlist->move(index.row(),index.row()+1);
+        updateLayout();
+        return true;
+    }
+    return false;
+}

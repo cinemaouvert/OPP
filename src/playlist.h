@@ -31,6 +31,8 @@ public:
 
     int indexOf(Playback *playback) const;
 
+    void move(int from, int to);
+
     int count() const;
 
     uint totalDuration() const;

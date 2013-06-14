@@ -63,6 +63,12 @@ int Playlist::indexOf(Playback *playback) const
     return _playbackList.indexOf(playback);
 }
 
+void Playlist::move(int from, int to)
+{
+    _playbackList.move(from, to);
+}
+
+
 int Playlist::count() const
 {
     return _playbackList.count();
