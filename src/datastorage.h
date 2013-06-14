@@ -19,7 +19,7 @@ public:
     void addPlaylistModel(PlaylistModel* model);
     void setScheduleListModel(ScheduleListModel *model);
 
-    void save(const QFile &file);
+    void save(QFile &file);
     void load(const QFile &file);
     
 signals:

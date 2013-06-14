@@ -3,6 +3,12 @@
 #include <QDebug>
 #include <QtXml>
 #include <QMessageBox>
+#include "media.h"
+#include "medialistmodel.h"
+#include "playlistmodel.h"
+#include "playback.h"
+#include "mediasettings.h"
+#include "schedulelistmodel.h"
 
 DataStorage::DataStorage(QObject *parent) :
     QObject(parent),
@@ -40,15 +46,15 @@ void DataStorage::setProjectNotes(const QString &notes)
     _projectNotes = notes;
 }
 
-void DataStorage::save(const QFile &file)
+void DataStorage::save(QFile &file)
 {
     qDebug()<<"Start save";
     QDomDocument doc;
     QDomNode xmlNode = doc.createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
     doc.insertBefore(xmlNode, doc.firstChild());
     QDomElement opp = doc.createElement("opp");
-    opp.setAttribute("name", "name");
-    opp.setAttribute("notes", "notes");
+    opp.setAttribute("name", _projectTitle);
+    opp.setAttribute("notes", _projectNotes);
     doc.appendChild(opp);
 
     QDomElement medias = doc.createElement("medias");
@@ -58,30 +64,82 @@ void DataStorage::save(const QFile &file)
     opp.appendChild(playlists);
     opp.appendChild(schedules);
 
-    QDomElement media1 = doc.createElement("media");
-    media1.setAttribute("id",1);
-    media1.setAttribute("location","location");
-    medias.appendChild(media1);
+    /*List of medias*/
+    QDomElement media;
+    const QList<Media*>& mediaList = _mediaListModel->mediaList();
+    int mediaId=0;
+    foreach(Media* mediaElement, mediaList)
+    {
+        media= doc.createElement("media");
+        media.setAttribute("id",mediaId);
+        mediaId++;
+        media.setAttribute("location",mediaElement->location());
+        medias.appendChild(media);
+    }
 
-    QDomElement playlist1 = doc.createElement("playlist");
-    playlist1.setAttribute("title", "title");
-    playlists.appendChild(playlist1);
+    /*List of playlists*/
+    QDomElement playlist;
+    int playlistId=0;
+    foreach(PlaylistModel* playlistElement, _playlistModelList)
+    {
+        playlist= doc.createElement("playlist");
+        playlist.setAttribute("title", playlistElement->playlist()->title());
+        playlist.setAttribute("id", playlistId);
+        playlistId++;
+        playlists.appendChild(playlist);
+        const QList<Playback*>& playbackList = playlistElement->playlist()->playbackList();
+        QDomElement playback;
+        int playbackId=0;
+        foreach(Playback* playbackElement, playbackList)
+        {
+            playback = doc.createElement("playback");
+            playback.setAttribute("id", playbackId);
+            playbackId++;
+            playback.setAttribute("media-id", mediaList.indexOf(playbackElement->media()));
+            playback.setAttribute("ratio", playbackElement->mediaSettings()->ratio());
+            playback.setAttribute("scale", playbackElement->mediaSettings()->scale());
+            playback.setAttribute("deinterlacing", playbackElement->mediaSettings()->deinterlacing());
+            playback.setAttribute("subtitlesSync", playbackElement->mediaSettings()->subtitlesSync());
+            playback.setAttribute("gamma", playbackElement->mediaSettings()->gamma());
+            playback.setAttribute("contrast", playbackElement->mediaSettings()->contrast());
+            playback.setAttribute("brightness", playbackElement->mediaSettings()->brightness());
+            playback.setAttribute("saturation", playbackElement->mediaSettings()->saturation());
+            playback.setAttribute("hue", playbackElement->mediaSettings()->hue());
+            playback.setAttribute("audioSync", playbackElement->mediaSettings()->audioSync());
+            playback.setAttribute("audioTrack", playbackElement->mediaSettings()->audioTrack().trackId());
+            playback.setAttribute("videoTrack", playbackElement->mediaSettings()->videoTrack().trackId());
+            playback.setAttribute("subtitlesTrack", playbackElement->mediaSettings()->subtitlesTrack().trackId());
+            playback.setAttribute("testPattern", playbackElement->mediaSettings()->testPattern());
+            playback.setAttribute("inMark", playbackElement->mediaSettings()->inMark());
+            playback.setAttribute("outMark", playbackElement->mediaSettings()->outMark());
+            playback.setAttribute("gain", playbackElement->mediaSettings()->gain());
+            playlist.appendChild(playback);
+        }
+    }
 
-    QDomElement playback1 = doc.createElement("playback");
-    playback1.setAttribute("id", 1);
-    playback1.setAttribute("media-id", 1);
-    playback1.setAttribute("ratio", 1);
-    playlist1.appendChild(playback1);
 
-    QDomElement schedule1 = doc.createElement("schedule");
-    schedule1.setAttribute("playlist-id", 1);
-    schedule1.setAttribute("launchAt", 123456);
-    schedule1.setAttribute("wasTriggered", 0);
-    schedules.appendChild(schedule1);
+    /*List of schedules*/
+    QDomElement schedule;
+    const QList<Schedule*>& scheduleList = _scheduleListModel->scheduleList();
+    foreach(Schedule* scheduleElement, scheduleList)
+    {
+        schedule= doc.createElement("schedule");
+        for(int i=0;i<_playlistModelList.size();i++)
+        {
+            if(_playlistModelList.at(i)->playlist()==scheduleElement->playlist())
+                schedule.setAttribute("playlist-id", i);
+        }
+        schedule.setAttribute("launchAt", scheduleElement->launchAt().toString("dd/MM/yyyy hh:mm:ss"));
+        if(scheduleElement->wasTriggered())
+            schedule.setAttribute("wasTriggered", 1);
+        else
+            schedule.setAttribute("wasTriggered", 0);
+        schedules.appendChild(schedule);
+    }
 
-    QFile fichier("test.opp");
-    fichier.open(QIODevice::WriteOnly);
-    QTextStream ts(&fichier);
+    /*Save*/
+    file.open(QIODevice::WriteOnly);
+    QTextStream ts(&file);
     int indent = 2;
     doc.save(ts, indent);
 
