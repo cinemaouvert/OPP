@@ -32,7 +32,6 @@
 #include <QContextMenuEvent>
 #include <QInputDialog>
 
-#include "global.h"
 #include "videowindow.h"
 #include "settingswindow.h"
 #include "advancedsettingswindow.h"

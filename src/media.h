@@ -35,64 +35,253 @@ public:
     Media(const Media &media);
     virtual ~Media();
 
+    /**
+     * @brief initMedia
+     * @param location
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void initMedia(const QString &location);
 
+    /**
+     * @brief operator =
+     * @param media
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     Media & operator=(const Media &media);
+
+    /**
+     * @brief operator ==
+     * @param media
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     bool operator==(const Media &media) const;
 
+    /**
+     * @brief setId
+     * @param id
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void setId(int id);
 
+    /**
+     * @brief location
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     inline const QString & location() const { return _location; }
+
+    /**
+     * @brief core
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     inline libvlc_media_t* core() const { return _vlcMedia; }
+
+    /**
+     * @brief id
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     inline int id() const { return _id; }
 
+    /**
+     * @brief duration
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     uint duration() const;
+
+    /**
+     * @brief name
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     QString name() const;
 
+    /**
+     * @brief exists
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     bool exists() const;
 
+    /**
+     * @brief audioTracks
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     QList<AudioTrack> audioTracks() const;
+
+    /**
+     * @brief videoTracks
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     QList<VideoTrack> videoTracks() const;
+
+    /**
+     * @brief subtitlesTracks
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     QList<Track> subtitlesTracks() const;
 
+    /**
+     * @brief audioTracksName
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     QStringList audioTracksName() const;
+
+    /**
+     * @brief videoTracksName
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     QStringList videoTracksName() const;
+
+    /**
+     * @brief subtitlesTracksName
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     QStringList subtitlesTracksName() const;
 
+    /**
+     * @brief isImage
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     bool isImage() const;
 
+    /**
+     * @brief usageCountAdd
+     * @param count
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void usageCountAdd(int count = 1);
+
+    /**
+     * @brief isUsed
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     bool isUsed() const;
 
+    /**
+     * @brief audioExtensions
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     static QStringList audioExtensions();
+
+    /**
+     * @brief videoExtensions
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     static QStringList videoExtensions();
+
+    /**
+     * @brief imageExtensions
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     static QStringList imageExtensions();
+
+    /**
+     * @brief mediaExtensions
+     * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     static QStringList mediaExtensions();
 
 protected:
+    /**
+     * @brief parseMediaInfos
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void parseMediaInfos();
 
 signals:
+    /**
+     * @brief usageCountChanged
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void usageCountChanged();
 
 private:
+    /**
+     * @brief s_instanceCount
+     */
     static int s_instanceCount;
+
+    /**
+     * @brief _id
+     */
     int _id;
 
+    /**
+     * @brief _location
+     */
     QString _location;
+
+    /**
+     * @brief _fileInfo
+     */
     QFileInfo _fileInfo;
 
+    /**
+     * @brief _vlcMedia
+     */
     libvlc_media_t *_vlcMedia;
 
+    /**
+     * @brief _audioTracks
+     */
     QList<AudioTrack> _audioTracks;
+
+    /**
+     * @brief _videoTracks
+     */
     QList<VideoTrack> _videoTracks;
+
+    /**
+     * @brief _subtitlesTracks
+     */
     QList<Track> _subtitlesTracks;
 
+    /**
+     * @brief _usageCount
+     */
     int _usageCount;
-
-    friend QDataStream & operator << (QDataStream &, const QList<Media> &);
-    friend QDataStream & operator >> (QDataStream &, QList<Media> &);
-
 };
 
 #endif // MEDIA_H

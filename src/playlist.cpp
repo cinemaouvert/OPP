@@ -2,7 +2,8 @@
 
 #include <QDebug>
 
-#include "global.h"
+#include <vlc/vlc.h>
+
 #include "media.h"
 
 int Playlist::s_instanceCount = 0;

@@ -1,11 +1,13 @@
 #include "playlistplayer.h"
 
+#include <QTimer>;
+
+#include <vlc/vlc.h>
+
 #include "playlist.h"
 #include "media.h"
 #include "mediaplayer.h"
-#include "global.h"
 
-#include <QTimer>;
 
 PlaylistPlayer::PlaylistPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     QObject(parent),

@@ -18,7 +18,7 @@ bool Locker::getAutoLock(){
 
 void Locker::setAutoLock(bool lock){
     _autoLock = lock;
-    if(lock == false){
+    if (lock == false){
         _timer.stop();
     }
 }
@@ -36,43 +36,32 @@ QString Locker::getPassword(){
 }
 
 void Locker::setPassword(QString newPass){
-    if(passwordEnable()==true){
+    if (passwordEnable() == true) {
         _thePass = newPass;
     }
 }
 
 void Locker::setAutoLockDelay(int time){
-    if(getAutoLock()==true){
-        // attention, ça va lancer le timer indéfiniment.
-        // Tout les "time" millisecondes, le timer emet un signal timeout
-        // pour emettre un seul timeout, il faut utiliser singleShot()
+    if (getAutoLock() == true) {
         _timer.start(time);
     }
 }
 
 void Locker::lock()
 {
-    qDebug() << "locked";
-    // pour chaque widgets enregistré dans _widgets
-    //      faire un setEnabled(false)
-    foreach(QWidget *widget,_widgets)
-    {
+    foreach(QWidget *widget, _widgets) {
         widget->setEnabled(false);
     }
 }
 
 void Locker::unlock()
 {
-    qDebug() << "unlocked";
-    // pour chaque widgets enregistré dans _widgets
-    //      faire un setEnabled(true)
-    if(this->passwordEnable()){
+    if (this->passwordEnable()) {
         _passDialog->show();
         _passDialog->raise();
         _passDialog->activateWindow();
-    }else{
-        foreach(QWidget *widget,_widgets)
-        {
+    } else {
+        foreach(QWidget *widget, _widgets) {
             widget->setEnabled(true);
         }
     }

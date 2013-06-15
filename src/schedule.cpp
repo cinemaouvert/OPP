@@ -14,22 +14,6 @@ Schedule::~Schedule()
 {
 }
 
-Schedule::Schedule(const Schedule &other)
-{
-    _playlist = other._playlist;
-    _launchAt = other._launchAt;
-}
-
-Schedule & Schedule::operator=(const Schedule &other)
-{
-    if (this != &other) {
-        _playlist = other._playlist;
-        _launchAt = other._launchAt;
-    }
-    return *this;
-}
-
-
 QDateTime Schedule::finishAt() const
 {
     return _launchAt.addMSecs(_playlist->totalDuration());

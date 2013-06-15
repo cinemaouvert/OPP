@@ -1,8 +1,9 @@
 #include "application.h"
 
 #include <QStringList>
+#include <QDebug>
 
-#include "global.h"
+#include <vlc/vlc.h>
 
 Application::Application()
 {
@@ -43,6 +44,6 @@ void Application::initVlcInstanceFromArgs(const QStringList &args)
         qDebug() << "Using libvlc version:" << QString(libvlc_get_version());
     } else {
         qDebug() << "opp error: libvlc failed to load!";
-        abort(); // TODO : exception ??
+        abort();
     }
 }

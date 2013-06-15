@@ -5,7 +5,8 @@
 #include <QTime>
 #include <QTimer>
 
-#include "global.h"
+#include <vlc/vlc.h>
+
 #include "application.h"
 #include "media.h"
 #include "videoview.h"
@@ -21,7 +22,6 @@ MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     _currentGain(0)
 {
     _vlcMediaPlayer = libvlc_media_player_new(vlcInstance);
-    VLC_LAST_ERROR();
     _vlcEvents = libvlc_media_player_event_manager(_vlcMediaPlayer);
 
     libvlc_video_set_key_input(_vlcMediaPlayer, false);
@@ -91,7 +91,7 @@ void MediaPlayer::open(Playback *playback)
     }
 
     _currentPlayback = playback;
-    VLCERR( libvlc_media_player_set_media(_vlcMediaPlayer, playback->media()->core()) );
+    libvlc_media_player_set_media(_vlcMediaPlayer, playback->media()->core());
 
     connect(_currentPlayback->mediaSettings(), SIGNAL(gainChanged(float)), this, SLOT(setCurrentGain(float)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
@@ -110,7 +110,7 @@ void MediaPlayer::open(Playback *playback)
 
 void MediaPlayer::play()
 {
-    VLCERR( libvlc_media_player_play(_vlcMediaPlayer) );
+    libvlc_media_player_play(_vlcMediaPlayer);
     _isPaused = false;
 }
 

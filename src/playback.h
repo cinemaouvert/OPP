@@ -11,14 +11,30 @@ class Playback : public QObject
 public:
     explicit Playback(Media *media, QObject *parent = 0);
 
-
     virtual ~Playback();
 
+    /**
+     * @brief media
+     * @return
+     */
     inline Media* media() const {return _media;}
+
+    /**
+     * @brief mediaSettings
+     * @return
+     */
     inline MediaSettings* mediaSettings() const {return _mediaSettings;}
     
 private:
+
+    /**
+     * @brief _media
+     */
     Media *_media;
+
+    /**
+     * @brief _mediaSettings
+     */
     MediaSettings *_mediaSettings;
     
 };

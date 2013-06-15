@@ -12,9 +12,22 @@ public:
     explicit VideoTrack(libvlc_media_track_info_t *vlcTrackInfo, QObject *parent = 0);
     explicit VideoTrack(QObject *parent = 0);
 
+    /**
+     * @brief size
+     * @return
+     */
     QSize size() const;
 
+    /**
+     * @brief width
+     * @return
+     */
     uint width() const;
+
+    /**
+     * @brief height
+     * @return
+     */
     uint height() const;
 };
 

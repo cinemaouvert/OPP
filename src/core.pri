@@ -8,7 +8,6 @@ HEADERS += src/media.h \
     src/mediaplayer.h \
     src/videoview.h \
     src/application.h \
-    src/global.h \
     src/track.h \
     src/audiotrack.h \
     src/videotrack.h

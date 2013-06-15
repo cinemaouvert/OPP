@@ -78,13 +78,6 @@ int main(int argc, char *argv[])
     translator2.load(QString("qt_") + settings.value("lang").toString(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     a.installTranslator(&translator2);
 
-
-    /* for save and load */
-    qRegisterMetaType<MediaListModel*>("MediaListModel*");
-    qRegisterMetaType< QList<Media> >("QList<Media>");
-    qRegisterMetaTypeStreamOperators< QList<Media> >("QList<Media>");
-
-
     MainWindow win;
     win.show();
 
