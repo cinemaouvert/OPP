@@ -5,10 +5,13 @@
 #include "global.h"
 #include "media.h"
 
+int Playlist::s_instanceCount = 0;
+
 Playlist::Playlist(libvlc_instance_t *vlcInstance, const QString &title, QObject *parent) :
     QObject(parent),
     _title(title)
 {
+    _id = Playlist::s_instanceCount++;
     _vlcMediaList = libvlc_media_list_new(vlcInstance);
 }
 
@@ -20,6 +23,11 @@ Playlist::~Playlist()
     }
 
     libvlc_media_list_release(_vlcMediaList);
+}
+
+void Playlist::setId(int id)
+{
+    _id = id;
 }
 
 void Playlist::setTitle(const QString &title)

@@ -7,6 +7,11 @@
 #include "mainwindow.h"
 #include "media.h"
 
+/*
+ * TO FIX
+ *
+ *     ref 0000001 - move codes into PlaylistListManager.
+ */
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

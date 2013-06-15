@@ -48,6 +48,11 @@ void Schedule::stop()
     _timer.stop();
 }
 
+void Schedule::cancel()
+{
+    _wasTriggered = true;
+}
+
 bool Schedule::isExpired() const
 {
     return _launchAt < QDateTime::currentDateTime();

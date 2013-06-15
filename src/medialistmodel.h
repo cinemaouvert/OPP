@@ -41,8 +41,6 @@ public:
 
     void removeAll();
 
-    Media* findById(int id) const;
-
 signals:
     /**
      * @brief signal mediaListChanged

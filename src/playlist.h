@@ -17,10 +17,13 @@ public:
 
     inline const QList<Playback*>& playbackList() { return _playbackList; }
 
+    inline int id() const { return _id; }
+
     inline libvlc_media_list_t* core() const { return _vlcMediaList; }
 
     inline QString title() const { return _title; }
 
+    void setId(int id);
     void setTitle(const QString &title);
 
     Playback* at(const int &index) const;
@@ -45,6 +48,9 @@ signals:
     void titleChanged();
 
 private:
+    static int s_instanceCount;
+    int _id;
+
     QList<Playback*> _playbackList;
 
     libvlc_media_list_t *_vlcMediaList;

@@ -86,9 +86,23 @@ public slots:
 
     void setCurrentSubtitlesSync(double sync);
 
-    void setCurrentAudioTrack(const AudioTrack &track);
-    void setCurrentVideoTrack(const VideoTrack &track);
-    void setCurrentSubtitlesTrack(const Track &track);
+    /**
+     * @brief setCurrentAudioTrack
+     * @param track Set 0 to disable audio track, 1 to use the first track...
+     */
+    void setCurrentAudioTrack(const int &track);
+
+    /**
+     * @brief setCurrentVideoTrack
+     * @param track Set -1 to disable video track, 0 to use the first track...
+     */
+    void setCurrentVideoTrack(const int &track);
+
+    /**
+     * @brief setCurrentSubtitlesTrack
+     * @param track Set 0 to disable subtitles track, 1 to use the first track...
+     */
+    void setCurrentSubtitlesTrack(const int &track);
 
     void setCurrentGamma(float gamma);
     void setCurrentContrast(float contrast);

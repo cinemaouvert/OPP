@@ -16,7 +16,8 @@ HEADERS += src/mainwindow.h \
     src/locker.h \
     src/statuswidget.h \
     src/passformdialog.h \
-    src/datastorage.h
+    src/datastorage.h \
+    src/playlistlistmanager.h
 
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
@@ -37,7 +38,8 @@ SOURCES += src/main.cpp \
     src/locker.cpp \
     src/statuswidget.cpp \
     src/passformdialog.cpp \
-    src/datastorage.cpp
+    src/datastorage.cpp \
+    src/playlistlistmanager.cpp
 
 FORMS += src/mainwindow.ui \
     src/saturationwidget.ui \

@@ -21,6 +21,7 @@ public:
 
     void start();
     void stop();
+    void cancel();
 
     bool isExpired() const;
     bool isActive() const;

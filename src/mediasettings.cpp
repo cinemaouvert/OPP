@@ -7,19 +7,6 @@ MediaSettings::MediaSettings(QObject *parent) :
     initDefault();
 }
 
-MediaSettings::MediaSettings(MediaSettings &mediasettings)
-{
-    _ratio = mediasettings.ratio();
-}
-
-MediaSettings& MediaSettings::operator =(const MediaSettings &mediasettings)
-{
-    if (this != &mediasettings) {
-        _ratio = mediasettings.ratio();
-    }
-    return *this;
-}
-
 void MediaSettings::setRatio(Ratio ratio) {
     _ratio = ratio;
     emit ratioChanged(_ratio);
@@ -40,26 +27,24 @@ void MediaSettings::setSubtitlesSync(double sync){
     emit subtitlesSyncChanged(_subtitlesSync);
 }
 
-void MediaSettings::setAudioTrack(const AudioTrack &track) {
+void MediaSettings::setAudioTrack(const int &track) {
     _audioTrack = track;
     emit audioTrackChanged(_audioTrack);
 }
 
-void MediaSettings::setVideoTrack(const VideoTrack &track){
+void MediaSettings::setVideoTrack(const int &track){
     _videoTrack = track;
     emit videoTrackChanged(_videoTrack);
 }
 
-void MediaSettings::setSubtitlesTrack(const Track &track){
+void MediaSettings::setSubtitlesTrack(const int &track){
     _subtitlesTrack = track;
     emit subtitlesTrackChanged(_subtitlesTrack);
 }
 
 void MediaSettings::setGamma(float gamma) {
-    qDebug()<<"Set gamma "<<gamma;
     _gamma = gamma;
     emit gammaChanged(_gamma);
-    qDebug()<<"Set gamma done "<<_gamma;
 }
 
 void MediaSettings::setContrast(float contrast) {
@@ -113,6 +98,9 @@ void MediaSettings::setGain(float gain)
 
 void MediaSettings::initDefault()
 {
+    _audioTrack = 0;
+    _videoTrack = 0;
+    _subtitlesTrack = 0;
     _ratio = Original;
     _scale = NoScale;
     _deinterlacing = Discard;

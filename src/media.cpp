@@ -78,6 +78,11 @@ bool Media::operator==(const Media &media) const
     return _location == media.location();
 }
 
+void Media::setId(int id)
+{
+    _id = id;
+}
+
 uint Media::duration() const
 {
     return libvlc_media_get_duration(_vlcMedia);

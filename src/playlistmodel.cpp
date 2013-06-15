@@ -113,19 +113,29 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             return msecToQTime(media->duration()).toString("hh:mm:ss");
         }
         else if (index.column() == Video) {
-            return QString("%1 x %2 ")
-                    .arg(mediaSettings->videoTrack().width())
-                    .arg(mediaSettings->videoTrack().height()
-            ) + mediaSettings->videoTrack().codecDescription();
+            if (media->videoTracks().count() == 0 || mediaSettings->videoTrack() < 0) {
+                return "Disabled";
+            } else {
+                return QString("%1 x %2 ")
+                        .arg(media->videoTracks().at(mediaSettings->videoTrack()).width())
+                        .arg(media->videoTracks().at(mediaSettings->videoTrack()).height())
+                    + media->videoTracks().at(mediaSettings->videoTrack()).codecDescription();
+            }
         }
         else if (index.column() == Audio) {
-            return mediaSettings->audioTrack().codecDescription();
+            if (media->audioTracks().count() == 0  || mediaSettings->audioTrack() == 0) {
+                return "Disabled";
+            } else {
+                return media->audioTracks().at(mediaSettings->audioTrack()-1).codecDescription();
+            }
         }
         else if (index.column() == Subtitles) {
-            if (mediaSettings->subtitlesTrack().trackId() == -1)
+            if (media->subtitlesTracks().count() == 0 || mediaSettings->subtitlesTrack() == 0) {
                 return "Disabled";
-            else
-                return QString("Track %1").arg(mediaSettings->subtitlesTrack().trackId());
+            } else {
+                return QString("Track %1")
+                        .arg(media->subtitlesTracks().at(mediaSettings->subtitlesTrack()-1).trackId());
+            }
         }
         break;
     }

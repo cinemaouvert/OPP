@@ -85,9 +85,9 @@ void MediaPlayer::open(Playback *playback)
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(deinterlacingChanged(Deinterlacing)), this, SLOT(setCurrentDeinterlacing(Deinterlacing)));
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesSyncChanged(double)), this, SLOT(setCurrentSubtitlesSync(double)));
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(audioSyncChanged(double)), this, SLOT(setCurrentAudioSync(double)));
-        disconnect(_currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(AudioTrack)), this, SLOT(setCurrentAudioTrack(AudioTrack)));
-        disconnect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(VideoTrack)), this, SLOT(setCurrentVideoTrack(VideoTrack)));
-        disconnect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(Track)), this, SLOT(setCurrentSubtitlesTrack(Track)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(int)), this, SLOT(setCurrentAudioTrack(int)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
+        disconnect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
     }
 
     _currentPlayback = playback;
@@ -103,9 +103,9 @@ void MediaPlayer::open(Playback *playback)
     connect(_currentPlayback->mediaSettings(), SIGNAL(deinterlacingChanged(Deinterlacing)), this, SLOT(setCurrentDeinterlacing(Deinterlacing)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesSyncChanged(double)), this, SLOT(setCurrentSubtitlesSync(double)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(audioSyncChanged(double)), this, SLOT(setCurrentAudioSync(double)));
-    connect(_currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(AudioTrack)), this, SLOT(setCurrentAudioTrack(AudioTrack)));
-    connect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(VideoTrack)), this, SLOT(setCurrentVideoTrack(VideoTrack)));
-    connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(Track)), this, SLOT(setCurrentSubtitlesTrack(Track)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(int)), this, SLOT(setCurrentAudioTrack(int)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
 }
 
 void MediaPlayer::play()
@@ -194,27 +194,19 @@ void MediaPlayer::setCurrentGain(float gain)
     setVolume(_currentVolume);
 }
 
-void MediaPlayer::setCurrentAudioTrack(const AudioTrack &track)
+void MediaPlayer::setCurrentAudioTrack(const int &track)
 {
-    const int index = _currentPlayback->media()->audioTracks().indexOf(track);
-    libvlc_audio_set_track(_vlcMediaPlayer, index == -1 ? 0 : index + 1);
+    libvlc_audio_set_track(_vlcMediaPlayer, track);
 }
 
-void MediaPlayer::setCurrentVideoTrack(const VideoTrack &track)
+void MediaPlayer::setCurrentVideoTrack(const int &track)
 {
-    libvlc_video_set_track(_vlcMediaPlayer, _currentPlayback->media()->videoTracks().indexOf(track));
+    libvlc_video_set_track(_vlcMediaPlayer, track);
 }
 
-void MediaPlayer::setCurrentSubtitlesTrack(const Track &track)
+void MediaPlayer::setCurrentSubtitlesTrack(const int &track)
 {
-    const QList<Track> &tracks = _currentPlayback->media()->subtitlesTracks();
-
-    if (tracks.count() == 0)
-        return;
-
-    const int index = tracks.indexOf(track);
-
-    libvlc_video_set_spu(_vlcMediaPlayer, index == -1 ? 0 : index + 1);
+    libvlc_video_set_spu(_vlcMediaPlayer, track);
 }
 
 void MediaPlayer::setCurrentRatio(Ratio ratio)

@@ -29,39 +29,32 @@ DataStorage::DataStorage(Application *app, MainWindow *win /*FIX : ref 0000001*/
 void DataStorage::setMediaListModel(MediaListModel* model)
 {
     _mediaListModel = model;
-    qDebug() << "add media list model";
 }
 
 void DataStorage::addPlaylistModel(PlaylistModel* model)
 {
     _playlistModelList.append(model);
-    qDebug() << "add playlist model";
 }
 void DataStorage::setScheduleListModel(ScheduleListModel *model)
 {
     _scheduleListModel = model;
-    qDebug() << "add schedule list model";
 }
 void DataStorage::setProjectTitle(const QString &title)
 {
     _projectTitle = title;
-    qDebug() << "set title";
 }
 void DataStorage::setProjectNotes(const QString &notes)
 {
-    qDebug() << "set notes";
-
     _projectNotes = notes;
 }
 
 void DataStorage::save(QFile &file)
 {
-    qDebug()<<"Start save";
     QDomDocument doc;
     QDomNode xmlNode = doc.createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
     doc.insertBefore(xmlNode, doc.firstChild());
     QDomElement opp = doc.createElement("opp");
-    opp.setAttribute("name", _projectTitle);
+    opp.setAttribute("title", _projectTitle);
     opp.setAttribute("notes", _projectNotes);
     doc.appendChild(opp);
 
@@ -90,6 +83,7 @@ void DataStorage::save(QFile &file)
     int playlistId=0;
     foreach(PlaylistModel* playlistElement, _playlistModelList)
     {
+        qDebug() << "save playlist " << playlistElement->playlist()->title();
         playlist= doc.createElement("playlist");
         playlist.setAttribute("title", playlistElement->playlist()->title());
         playlist.setAttribute("id", playlistId);
@@ -103,7 +97,6 @@ void DataStorage::save(QFile &file)
             playback = doc.createElement("playback");
             playback.setAttribute("id", playbackId);
             playbackId++;
-            playback.setAttribute("media-id", mediaList.indexOf(playbackElement->media()));
             playback.setAttribute("media-id", playbackElement->media()->id());
             playback.setAttribute("ratio", playbackElement->mediaSettings()->ratio());
             playback.setAttribute("scale", playbackElement->mediaSettings()->scale());
@@ -115,9 +108,9 @@ void DataStorage::save(QFile &file)
             playback.setAttribute("saturation", playbackElement->mediaSettings()->saturation());
             playback.setAttribute("hue", playbackElement->mediaSettings()->hue());
             playback.setAttribute("audioSync", playbackElement->mediaSettings()->audioSync());
-            playback.setAttribute("audioTrack", playbackElement->mediaSettings()->audioTrack().trackId());
-            playback.setAttribute("videoTrack", playbackElement->mediaSettings()->videoTrack().trackId());
-            playback.setAttribute("subtitlesTrack", playbackElement->mediaSettings()->subtitlesTrack().trackId());
+            playback.setAttribute("audioTrack", playbackElement->mediaSettings()->audioTrack());
+            playback.setAttribute("videoTrack", playbackElement->mediaSettings()->videoTrack());
+            playback.setAttribute("subtitlesTrack", playbackElement->mediaSettings()->subtitlesTrack());
             playback.setAttribute("testPattern", playbackElement->mediaSettings()->testPattern());
             playback.setAttribute("inMark", playbackElement->mediaSettings()->inMark());
             playback.setAttribute("outMark", playbackElement->mediaSettings()->outMark());
@@ -139,10 +132,7 @@ void DataStorage::save(QFile &file)
                 schedule.setAttribute("playlist-id", i);
         }
         schedule.setAttribute("launchAt", scheduleElement->launchAt().toString("dd/MM/yyyy hh:mm:ss"));
-        if(scheduleElement->wasTriggered())
-            schedule.setAttribute("wasTriggered", 1);
-        else
-            schedule.setAttribute("wasTriggered", 0);
+        schedule.setAttribute("wasTriggered", scheduleElement->wasTriggered());
         schedules.appendChild(schedule);
     }
 
@@ -152,31 +142,30 @@ void DataStorage::save(QFile &file)
     int indent = 2;
     doc.save(ts, indent);
 
+    _playlistModelList.clear();
     qDebug()<<"End save";
 }
 
-void DataStorage::load(const QFile &file)
+void DataStorage::load(QFile &file)
 {
-    // Remove all data from models
-    _scheduleListModel->removeAll();
-    foreach(PlaylistModel *model, _playlistModelList)
-        model->removeAll();
-    _mediaListModel->removeAll();
+    // FIX : ref 0000001
+    int oldPlaylistCount = _win->playlistTabWidget()->count();
 
-    _playlistModelList.clear();
+    // Remove all data from models
+    clear();
 
     // open xml document
-    QFile myFile("/Users/floomoon/test.opp");
-    myFile.open(QIODevice::ReadWrite);
-
     QDomDocument doc;
 
-    if (!doc.setContent(&myFile)) {
-        // error
+    if (!doc.setContent(&file)) {
+        qDebug()<< "load error";
         return;
     }
 
     QDomElement root = doc.documentElement();
+
+    setProjectTitle(root.attribute("title"));
+    setProjectNotes(root.attribute("notes"));
 
     QDomNodeList mediaNodeList = root.elementsByTagName("media");
     QDomNodeList playlistNodeList = root.elementsByTagName("playlist");
@@ -186,13 +175,13 @@ void DataStorage::load(const QFile &file)
     for (int i = 0; i < mediaNodeList.length(); i++) {
         QDomNamedNodeMap mediaAttributes = mediaNodeList.at(i).attributes();
 
-        for (int k = 0; k < mediaAttributes.length(); k++) {
-            Media *media = new Media(mediaAttributes.item(i).nodeValue(), _app->vlcInstance());
-            if (media->exists())
-                _mediaListModel->addMedia(media);
-            else
-                delete media;
-        }
+        Media *media = new Media(mediaAttributes.namedItem("location").nodeValue(), _app->vlcInstance());
+        media->setId(mediaAttributes.namedItem("id").nodeValue().toInt());
+
+        if (media->exists())
+            _mediaListModel->addMedia(media);
+        else
+            delete media;
     }
 
     // load playlist
@@ -202,6 +191,8 @@ void DataStorage::load(const QFile &file)
         QDomNodeList playbackNodeList = playlistNode.childNodes();
 
         Playlist *playlist = new Playlist(_app->vlcInstance(), playlistAttributes.namedItem("title").nodeValue());
+        playlist->setId(playlistAttributes.namedItem("id").nodeValue().toInt());
+
         PlaylistModel *model = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
 
         // FIX : ref 0000001
@@ -214,19 +205,89 @@ void DataStorage::load(const QFile &file)
 
             const int mediaId = playbackAttributes.namedItem("media-id").nodeValue().toInt();
 
-            Media *media = _mediaListModel->findById(mediaId);
+            Media *media = findMediaById(mediaId);
             if (!media)
                 continue;
 
             Playback *playback = new Playback(media);
+            MediaSettings *settings = playback->mediaSettings();
+
+            settings->setRatio( (Ratio) playbackAttributes.namedItem("ratio").nodeValue().toInt() );
+            settings->setScale( (Scale) playbackAttributes.namedItem("scale").nodeValue().toInt() );
+            settings->setDeinterlacing( (Deinterlacing) playbackAttributes.namedItem("deinterlacing").nodeValue().toInt() );
+            settings->setSubtitlesSync( playbackAttributes.namedItem("subtitlesSync").nodeValue().toDouble() );
+            settings->setGamma( playbackAttributes.namedItem("gamma").nodeValue().toFloat() );
+            settings->setContrast( playbackAttributes.namedItem("contrast").nodeValue().toFloat() );
+            settings->setBrightness( playbackAttributes.namedItem("brightness").nodeValue().toFloat() );
+            settings->setSaturation( playbackAttributes.namedItem("saturation").nodeValue().toFloat() );
+            settings->setHue( playbackAttributes.namedItem("hue").nodeValue().toInt() );
+            settings->setAudioSync( playbackAttributes.namedItem("audioSync").nodeValue().toDouble() );
+            settings->setAudioTrack( playbackAttributes.namedItem("audioTrack").nodeValue().toInt() );
+            settings->setVideoTrack( playbackAttributes.namedItem("videoTrack").nodeValue().toInt() );
+            settings->setSubtitlesTrack( playbackAttributes.namedItem("subtitlesTrack").nodeValue().toInt() );
+            settings->setTestPattern( playbackAttributes.namedItem("testPattern").nodeValue().toInt() );
+            settings->setInMark( playbackAttributes.namedItem("outMark").nodeValue().toInt() );
+            settings->setOutMark( playbackAttributes.namedItem("inMark").nodeValue().toInt() );
+            settings->setGain( playbackAttributes.namedItem("gain").nodeValue().toFloat() );
+
             model->addPlayback(playback);
         }
     }
 
-    // load schedule
-    for (int i = 0; i < scheduleNodeList.length(); i++) {
-
+    // FIX : ref 0000001
+    // remove old tabs
+    while(oldPlaylistCount > 0) {
+        _win->playlistTabWidget()->removeTab(0);
+        oldPlaylistCount--;
     }
 
-    myFile.close();
+    // load schedule
+    for (int i = 0; i < scheduleNodeList.length(); i++) {
+        QDomNode scheduleNode = scheduleNodeList.at(i);
+        QDomNamedNodeMap scheduleAttributes = scheduleNode.attributes();
+
+        Playlist *playlist = findPlaylistById(scheduleAttributes.namedItem("playlist-id").nodeValue().toInt());
+
+        if (!playlist)
+            continue;
+
+        Schedule *schedule = new Schedule(playlist, QDateTime::fromString(scheduleAttributes.namedItem("launchAt").nodeValue(), "dd/MM/yyyy hh:mm:ss"));
+
+        if (scheduleAttributes.namedItem("wasTriggered").nodeValue().toInt())
+            schedule->cancel();
+
+        _scheduleListModel->addSchedule(schedule);
+    }
 }
+
+void DataStorage::clear()
+{
+    _scheduleListModel->removeAll();
+
+    foreach(PlaylistModel *model, _playlistModelList)
+        model->removeAll();
+
+    _mediaListModel->removeAll();
+
+    _projectTitle.clear();
+    _projectNotes.clear();
+}
+
+Playlist* DataStorage::findPlaylistById(int id) const
+{
+    foreach(PlaylistModel *m, _playlistModelList) {
+        if (m->playlist()->id() == id)
+            return m->playlist();
+    }
+    return 0;
+}
+
+Media* DataStorage::findMediaById(int id) const
+{
+    foreach(Media *m, _mediaListModel->mediaList()) {
+        if (m->id() == id)
+            return m;
+    }
+    return 0;
+}
+

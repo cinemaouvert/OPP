@@ -52,9 +52,7 @@ class MediaSettings : public QObject
     Q_OBJECT
 public:
     explicit MediaSettings(QObject *parent = 0);
-    MediaSettings(MediaSettings &mediasettings);
-    MediaSettings& operator =(const MediaSettings &mediasettings);
-    
+
     void initDefault();
 
     inline Ratio ratio() const { return _ratio; }
@@ -67,9 +65,9 @@ public:
     inline float saturation() const { return _saturation; }
     inline int hue() const { return _hue; }
     inline double audioSync() const { return _audioSync; }
-    inline const AudioTrack & audioTrack() const { return _audioTrack; }
-    inline const VideoTrack & videoTrack() const { return _videoTrack; }
-    inline const Track & subtitlesTrack() const { return _subtitlesTrack; }
+    inline const int & audioTrack() const { return _audioTrack; }
+    inline const int & videoTrack() const { return _videoTrack; }
+    inline const int & subtitlesTrack() const { return _subtitlesTrack; }
     inline bool testPattern() const {return _testPattern;}
     inline int inMark() const {return _inMark;}
     inline int outMark() const {return _outMark;}
@@ -87,9 +85,9 @@ public:
     void setAudioSync(double sync);
     void setGain(float gain);
 
-    void setAudioTrack(const AudioTrack &track);
-    void setVideoTrack(const VideoTrack &track);
-    void setSubtitlesTrack(const Track &track);
+    void setAudioTrack(const int &track);
+    void setVideoTrack(const int &track);
+    void setSubtitlesTrack(const int &track);
 
     void setTestPattern(bool testpattern);
     void setInMark (int mark);
@@ -112,9 +110,9 @@ signals:
     void hueChanged(int);
     void audioSyncChanged(double sync);
 
-    void audioTrackChanged(AudioTrack);
-    void videoTrackChanged(VideoTrack);
-    void subtitlesTrackChanged(Track);
+    void audioTrackChanged(int);
+    void videoTrackChanged(int);
+    void subtitlesTrackChanged(int);
 
     void testPatternChanged(bool);
     void inMarkChanged(int);
@@ -134,9 +132,9 @@ private:
     int _hue;
     double _audioSync;
 
-    AudioTrack _audioTrack;
-    VideoTrack _videoTrack;
-    Track _subtitlesTrack;
+    int _audioTrack;
+    int _videoTrack;
+    int _subtitlesTrack;
 
     bool _testPattern;
     int _inMark;

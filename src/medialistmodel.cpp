@@ -189,12 +189,3 @@ void MediaListModel::removeAll()
         removeMedia(i);
     }
 }
-
-Media* MediaListModel::findById(int id) const
-{
-    foreach(Media *m, _mediaList) {
-        if (m->id() == id)
-            return m;
-    }
-    return 0;
-}

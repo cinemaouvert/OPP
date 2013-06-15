@@ -40,6 +40,8 @@ public:
     Media & operator=(const Media &media);
     bool operator==(const Media &media) const;
 
+    void setId(int id);
+
     inline const QString & location() const { return _location; }
     inline libvlc_media_t* core() const { return _vlcMedia; }
     inline int id() const { return _id; }

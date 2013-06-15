@@ -70,11 +70,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->scheduleTableView->setModel(_scheduleListModel);
     ui->seekWidget->setMediaPlayer(_playlistPlayer->mediaPlayer());
 
+    /**
+     * @author Hamza Haddar
+     */
     // ###########################################################################################
-    //ui->progEdit->setText(tr("Listing name: "));
     ui->nbrfilmlabel->setText(tr("Number of movies:  ")+QString::number(0)+tr("                   Number of pictures:   ")+QString::number(0));
     ui->durelabel_2->setText(tr("Total duration: ")+msecToQTime(0).toString("hh:mm:ss"));
-    //ui->noteEdit->setText(tr("Notes:     "));
 
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)),this, SLOT(setSummary(int)));
 
@@ -84,7 +85,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->formatlabel->setText(tr("Picture formats: "));
 
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)),this, SLOT(setDetails(int)));
-   //##############################################################################################
+    //##############################################################################################
+
     _statusWidget = new StatusWidget;
     ui->statusBar->addWidget(_statusWidget);
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)), _statusWidget, SLOT(setMediaCount(int)));
@@ -97,9 +99,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->statusBarAction, SIGNAL(toggled(bool)), ui->statusBar, SLOT(setVisible(bool)));
 
     connect(ui->newPlaylistAction, SIGNAL(triggered()), this, SLOT(createPlaylistTab()));
-
-//    DEBUG : this code add a media into the bin on launch
-    //_mediaListModel->addMedia(new Media("/Users/floomoon/Movies/3ours-OCPM.mkv", _app->vlcInstance()));
 
     // set video mode actions data
     ui->actionProjection->setData(QVariant(VideoWindow::PROJECTION));
@@ -127,8 +126,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     currentPlaylistTableView()->setDragDropMode(QAbstractItemView::InternalMove);
     currentPlaylistTableView()->setDragEnabled(true);
-
-    _dataStorage->load(QFile(""));
 }
 
 MainWindow::~MainWindow()
@@ -142,6 +139,17 @@ MainWindow::~MainWindow()
     delete _app;
 }
 
+// FIX : ref 0000001
+QTabWidget* MainWindow::playlistTabWidget() const { return ui->playlistsTabWidget; }
+
+
+/***********************************************************************************************\
+                                          Project Details/Summary
+\***********************************************************************************************/
+
+/**
+ * @author Hamza Haddar
+ */
 void MainWindow::setSummary(int count)
 {
     ui->nbrfilmlabel->setText("Number of movies: "+QString::number(_mediaListModel->filmsNumber())+
@@ -149,13 +157,24 @@ void MainWindow::setSummary(int count)
     ui->durelabel_2->setText("Total duration: "+_mediaListModel->summaryTotalDuration().toString("hh:mm:ss"));
 }
 
+/**
+ * @author Hamza Haddar
+ */
 void MainWindow::setDetails(int count)
 {
 
 
 }
 
+void MainWindow::on_notesEdit_textChanged()
+{
+    _dataStorage->setProjectNotes(ui->notesEdit->document()->toPlainText());
+}
 
+
+/***********************************************************************************************\
+                                          Media List Management
+\***********************************************************************************************/
 
 void MainWindow::on_binAddMediaButton_clicked()
 {
@@ -197,7 +216,7 @@ void MainWindow::on_binDeleteMediaButton_clicked()
 }
 
 /***********************************************************************************************\
-                                          Playback Settings
+                                     Playback Settings Management
 \***********************************************************************************************/
 
 void MainWindow::on_advancedSettingsButton_clicked()
@@ -239,11 +258,7 @@ void MainWindow::on_audioTrackComboBox_currentIndexChanged(int index)
     Playback *playback = selectedPlayback();
 
     if (playback) {
-        if (index == 0) {
-            playback->mediaSettings()->setAudioTrack( AudioTrack() );
-        } else {
-            playback->mediaSettings()->setAudioTrack(playback->media()->audioTracks().at(index - 1));
-        }
+        playback->mediaSettings()->setAudioTrack(index);
     }
 
     currentPlaylistModel()->updateLayout();
@@ -257,11 +272,7 @@ void MainWindow::on_videoTrackComboBox_currentIndexChanged(int index)
     Playback *playback = selectedPlayback();
 
     if (playback) {
-        if (index == 0) {
-            playback->mediaSettings()->setVideoTrack( VideoTrack() );
-        } else {
-            playback->mediaSettings()->setVideoTrack(playback->media()->videoTracks().at(index - 1));
-        }
+        playback->mediaSettings()->setVideoTrack(index == 0 ? -1 : index-1);
     }
 
     currentPlaylistModel()->updateLayout();
@@ -275,11 +286,7 @@ void MainWindow::on_subtitlesTrackComboBox_currentIndexChanged(int index)
     Playback *playback = selectedPlayback();
 
     if (playback) {
-        if (index == 0) {
-            playback->mediaSettings()->setSubtitlesTrack( Track() );
-        } else {
-            playback->mediaSettings()->setSubtitlesTrack(playback->media()->subtitlesTracks().at(index - 1));
-        }
+        playback->mediaSettings()->setSubtitlesTrack(index);
     }
 
     currentPlaylistModel()->updateLayout();
@@ -394,16 +401,11 @@ void MainWindow::updateSettings()
     ui->hueSpinBox->setValue(playback->mediaSettings()->hue());
     ui->audioGainDoubleSpinBox->setValue(playback->mediaSettings()->gain());
 
-    int index;
+    const int track = playback->mediaSettings()->videoTrack();
+    ui->videoTrackComboBox->setCurrentIndex( track == -1 ? 0 : track+1);
 
-    index = playback->media()->audioTracks().indexOf( playback->mediaSettings()->audioTrack() );
-    ui->audioTrackComboBox->setCurrentIndex( index == -1 ? 0 : index + 1 );
-
-    index = playback->media()->videoTracks().indexOf( playback->mediaSettings()->videoTrack() );
-    ui->videoTrackComboBox->setCurrentIndex( index == -1 ? 0 : index + 1);
-
-    index = playback->media()->subtitlesTracks().indexOf( playback->mediaSettings()->subtitlesTrack() );
-    ui->subtitlesTrackComboBox->setCurrentIndex( index == -1 ? 0 : index + 1);
+    ui->audioTrackComboBox->setCurrentIndex( playback->mediaSettings()->audioTrack() );
+    ui->subtitlesTrackComboBox->setCurrentIndex( playback->mediaSettings()->subtitlesTrack() );
 
     ui->ratioComboBox->setCurrentIndex( playback->mediaSettings()->ratio() );
 
@@ -412,20 +414,11 @@ void MainWindow::updateSettings()
     ui->subtitlesTrackComboBox->blockSignals(false);
 }
 
-/*Returns a track index in a combo box*/
-int MainWindow::getTrackIndex(QList<int> list, int track)
-{
-    for(int i=0;i<list.count();i++)
-    {
-        if(list.at(i)==track)
-            return i;
-    }
-    return 0;
-}
 
 /***********************************************************************************************\
                                           Player
 \***********************************************************************************************/
+
 
 void MainWindow::on_playerPlayButton_clicked(bool checked)
 {
@@ -465,14 +458,16 @@ void MainWindow::on_menuVideoMode_triggered(QAction *action)
     }
 }
 
+// TODO : play test pattern
 void MainWindow::on_testPatternAction_triggered()
 {
-//    _mediaPlayer->play(Media(QFileDialog::getOpenFileName(this, tr("Open test pattern"), QDir::homePath(), tr("Media (*.avi *.mkv *.jpg *.png)")), _app->vlcInstance()));
 }
+
 
 /***********************************************************************************************\
                                           Playlist
 \***********************************************************************************************/
+
 
 void MainWindow::createPlaylistTab()
 {
@@ -489,7 +484,6 @@ void MainWindow::createPlaylistTab()
     ui->playlistsTabWidget->addTab(newTab, playlist->title());
     ui->playlistsTabWidget->setCurrentWidget(newTab);
 
-    _dataStorage->addPlaylistModel(newModel);
     updatePlaylistListCombox();
 }
 
@@ -497,7 +491,6 @@ void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
 {
     Playlist *playlist = playlistAt(index);
 
-    // delete schedule which use the playlist
     if (_scheduleListModel->isScheduled(playlist)) {
         if (0 == QMessageBox::warning(this, "remove playlist", "This playlist was scheduled. All schedules which use this playlist will be deleted too.\n Are you sure to remove this playlist ?" ,"No", "Yes"))
             return;
@@ -578,69 +571,77 @@ void MainWindow::restorePlaylistTab(PlaylistModel *model)
     ui->playlistsTabWidget->addTab(newTab, model->playlist()->title());
     ui->playlistsTabWidget->setCurrentWidget(newTab);
 
-    _dataStorage->addPlaylistModel(model);
     updatePlaylistListCombox();
 }
+
 
 /***********************************************************************************************\
                                           Project import/export
 \***********************************************************************************************/
 
+
 void MainWindow::on_saveAsAction_triggered()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Project"), "", tr("OPP (*.opp);;All Files (*)"));
-    if (fileName.isEmpty())
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Project"), "", tr("OPP file (*.opp)"));
+
+    if (fileName.isEmpty()) {
          return;
-     else
-    {
+    } else {
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly)) {
             QMessageBox::information(this, tr("Unable to open file"),file.errorString());
         }
+
+        for (int i = 0; i < ui->playlistsTabWidget->count(); i++)
+            _dataStorage->addPlaylistModel((PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(i) )->model());
+
         _dataStorage->save(file);
+        file.close();
     }
-    /* Bin save */
-/******
-    //on sauvegarde le fichier où on veut
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Project"), "", tr("OPP (*.opp);;All Files (*)"));
-    if (fileName.isEmpty())
-         return;
-     else {
-         QFile file(fileName);
-         if (!file.open(QIODevice::WriteOnly)) {
-             QMessageBox::information(this, tr("Unable to open file"),file.errorString());
-         }
-         //save data into the file
-         QDataStream out(&file);
-         out << _mediaListModel->mediaList();
-    }******/
 }
+
 
 void MainWindow::on_openListingAction_triggered()
 {
-//    QString fileName = QFileDialog::getSaveFileName(this, tr("Open Project"), "", tr("OPP (*.opp);;All Files (*)"));
-//    if (fileName.isEmpty())
-//         return;
-//     else
-//    {
-//        QFile file(fileName);
-//        if (!file.open(QIODevice::WriteOnly)) {
-//            QMessageBox::information(this, tr("Unable to open file"),file.errorString());
-//        }
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Project"), "", tr("OPP file (*.opp)"));
 
-        // FIX : delete all playlist tabs before loading a new project
-        // TODO : It should be done by the DataStorage instance, but we need something that manage the list of playlist
-        createPlaylistTab();
-        while (ui->playlistsTabWidget->count() > 1)
-            ui->playlistsTabWidget->removeTab(0);
+    if (fileName.isEmpty()) {
+         return;
+    } else {
+        QFile file(fileName);
+        if (!file.open(QIODevice::ReadWrite)) {
+            QMessageBox::information(this, tr("Unable to open file"),file.errorString());
+        }
 
-        _dataStorage->load(QFile(""));
-//    }
+        _dataStorage->load(file);
+
+        file.close();
+
+        ui->progEdit->setText(_dataStorage->projectTitle());
+        ui->notesEdit->setText(_dataStorage->projectNotes());
+    }
 }
+
+
+void MainWindow::on_newListingAction_triggered()
+{
+    _dataStorage->clear();
+
+    // FIX : ref 0000001
+    // add empty tab and remove all other one (init state)
+    createPlaylistTab();
+    while (ui->playlistsTabWidget->count() > 1)
+        ui->playlistsTabWidget->removeTab(0);
+
+    ui->progEdit->clear();
+    ui->notesEdit->clear();
+}
+
 
 /***********************************************************************************************\
                                           Automation
 \***********************************************************************************************/
+
 
 void MainWindow::updatePlaylistListCombox()
 {
@@ -699,16 +700,16 @@ void MainWindow::on_scheduleToggleEnabledButton_toggled(bool checked)
 {
     if (checked) {
         ui->scheduleToggleEnabledButton->setText("Stop automation");
-       // ui->scheduleTableView->setEnabled(true);
     } else {
         ui->scheduleToggleEnabledButton->setText("Start automation");
-        //ui->scheduleTableView->setEnabled(false);
     }
 }
+
 
 /***********************************************************************************************\
                                           Helpers
 \***********************************************************************************************/
+
 
 Playback* MainWindow::selectedPlayback() const {
     QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
@@ -752,9 +753,4 @@ void MainWindow::on_playlistDownButton_clicked()
         return;
     if(currentPlaylistModel()->moveDown(indexes.first()))
         currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() + 1, indexes.first().column()));
-}
-
-void MainWindow::on_notesEdit_textChanged()
-{
-    _dataStorage->setProjectNotes(ui->notesEdit->document()->toPlainText());
 }

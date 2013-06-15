@@ -41,6 +41,7 @@ public:
 
     // FIX : ref 0000001
     void restorePlaylistTab(PlaylistModel *model);
+    QTabWidget * playlistTabWidget() const;
 
 private slots:
     void on_ratioComboBox_currentIndexChanged(int index);
@@ -80,6 +81,7 @@ private slots:
 
     void on_saveAsAction_triggered();
     void on_openListingAction_triggered();
+    void on_newListingAction_triggered();
 
     void updateSettings();
 
@@ -93,8 +95,6 @@ private slots:
     void on_subtitlesTrackComboBox_currentIndexChanged(int index);
 
     void updatePlaylistListCombox();
-
-    int getTrackIndex(QList<int> list, int track);
 
     void on_scheduleAddButton_clicked();
     void on_scheduleDeleteButton_clicked();

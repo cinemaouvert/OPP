@@ -10,8 +10,6 @@ class Playback : public QObject
     Q_OBJECT
 public:
     explicit Playback(Media *media, QObject *parent = 0);
-    Playback(const Playback &playback);
-    Playback& operator =(const Playback &playback);
 
 
     virtual ~Playback();
