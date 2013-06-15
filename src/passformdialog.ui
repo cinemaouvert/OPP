@@ -28,8 +28,11 @@
      <height>16</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>Entrez le mot de passe :</string>
+    <string>Enter password : </string>
    </property>
   </widget>
   <widget class="QLineEdit" name="enterPass">

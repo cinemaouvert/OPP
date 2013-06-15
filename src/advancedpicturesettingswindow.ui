@@ -150,6 +150,9 @@
     </item>
     <item>
      <widget class="QDialogButtonBox" name="buttonBox_OKCancel">
+      <property name="statusTip">
+       <string/>
+      </property>
       <property name="standardButtons">
        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
       </property>

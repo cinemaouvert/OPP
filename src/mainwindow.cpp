@@ -74,7 +74,7 @@ MainWindow::MainWindow(QWidget *parent) :
      * @author Hamza Haddar
      */
     // ###########################################################################################
-    ui->nbrfilmlabel->setText(tr("Number of movies:  ")+QString::number(0)+tr("                   Number of pictures:   ")+QString::number(0));
+    ui->nbrfilmlabel->setText(tr("Number of movies : ")+QString::number(0)+tr(" - Number of pictures : ")+QString::number(0));
     ui->durelabel_2->setText(tr("Total duration: ")+msecToQTime(0).toString("hh:mm:ss"));
 
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)),this, SLOT(setSummary(int)));
@@ -152,9 +152,9 @@ QTabWidget* MainWindow::playlistTabWidget() const { return ui->playlistsTabWidge
  */
 void MainWindow::setSummary(int count)
 {
-    ui->nbrfilmlabel->setText("Number of movies: "+QString::number(_mediaListModel->filmsNumber())+
-                              "Number of pictures: "+QString::number( _mediaListModel->imageNumber()));
-    ui->durelabel_2->setText("Total duration: "+_mediaListModel->summaryTotalDuration().toString("hh:mm:ss"));
+    ui->nbrfilmlabel->setText(tr("Number of movies : ")+QString::number(_mediaListModel->filmsNumber())+
+                              tr(" - Number of pictures : ")+QString::number( _mediaListModel->imageNumber()));
+    ui->durelabel_2->setText(tr("Total duration : ")+_mediaListModel->summaryTotalDuration().toString("hh:mm:ss"));
 }
 
 /**
@@ -183,10 +183,10 @@ void MainWindow::on_binAddMediaButton_clicked()
     foreach (QString fileName, fileNames) {
         Media *media = new Media(fileName, _app->vlcInstance());
         if (media->exists() == false) {
-            QMessageBox::warning(this, "Import media", QString("The file %1 does not exist. Maybe it was deleted.").arg(media->location()));
+            QMessageBox::warning(this, tr("Import media"), QString(tr("The file %1 does not exist. Maybe it was deleted.")).arg(media->location()));
             delete media;
         } else if (_mediaListModel->addMedia(media) == false) {
-            QMessageBox::warning(this, "Import media", QString("The file %1 was already imported.").arg(media->location()));
+            QMessageBox::warning(this, tr("Import media"), QString(tr("The file %1 was already imported.")).arg(media->location()));
             delete media;
         }
     }
@@ -201,7 +201,7 @@ void MainWindow::on_binDeleteMediaButton_clicked()
         Media *media = _mediaListModel->mediaList().at(index.row());
 
         if (media->isUsed()) {
-            if (1 == QMessageBox::warning(this, "remove media", "This media is used. All references of this media into playlists will be deleted too.\n Are you sure to remove this media ?" ,"No", "Yes"))
+            if (1 == QMessageBox::warning(this, tr("Remove media"), tr("This media is used. All references of this media into playlists will be deleted too.\n Are you sure to remove this media ?") ,tr("No"), tr("Yes")))
             {
                 int countPlaylists = ui->playlistsTabWidget->count();
                 for (int i = 0; i < countPlaylists; i++) {
@@ -381,15 +381,15 @@ void MainWindow::updateSettings()
     ui->playerControlsWidget->setEnabled(true);
 
     ui->audioTrackComboBox->clear();
-    ui->audioTrackComboBox->addItem("Disabled");
+    ui->audioTrackComboBox->addItem(tr("Disabled"));
     ui->audioTrackComboBox->addItems(playback->media()->audioTracksName());
 
     ui->videoTrackComboBox->clear();
-    ui->videoTrackComboBox->addItem("Disabled");
+    ui->videoTrackComboBox->addItem(tr("Disabled"));
     ui->videoTrackComboBox->addItems(playback->media()->videoTracksName());
 
     ui->subtitlesTrackComboBox->clear();
-    ui->subtitlesTrackComboBox->addItem("Disabled");
+    ui->subtitlesTrackComboBox->addItem(tr("Disabled"));
     ui->subtitlesTrackComboBox->addItems(playback->media()->subtitlesTracksName());
 
     ui->subtitlesSyncSpinBox->setValue(playback->mediaSettings()->subtitlesSync());
@@ -472,7 +472,7 @@ void MainWindow::on_testPatternAction_triggered()
 void MainWindow::createPlaylistTab()
 {
     PlaylistTableView *newTab = new PlaylistTableView;
-    Playlist *playlist = new Playlist(_app->vlcInstance(), "new playlist");
+    Playlist *playlist = new Playlist(_app->vlcInstance(), tr("New playlist"));
     PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
 
     connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
@@ -492,7 +492,7 @@ void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
     Playlist *playlist = playlistAt(index);
 
     if (_scheduleListModel->isScheduled(playlist)) {
-        if (0 == QMessageBox::warning(this, "remove playlist", "This playlist was scheduled. All schedules which use this playlist will be deleted too.\n Are you sure to remove this playlist ?" ,"No", "Yes"))
+        if (0 == QMessageBox::warning(this, tr("Remove playlist"), tr("This playlist was scheduled. All schedules which use this playlist will be deleted too.\n Are you sure to remove this playlist ?") ,tr("No"), tr("Yes")))
             return;
         _scheduleListModel->removeScheduleWithDeps(playlist);
     }
@@ -532,7 +532,7 @@ void MainWindow::on_renamePlaylistAction_triggered()
 
     QString text = QInputDialog::getText(this,
         tr("Rename playlist"),
-        tr("Playlist title :"),
+        tr("Playlist title : "),
         QLineEdit::Normal,
         ui->playlistsTabWidget->tabText(tabIndex),
         &ok
@@ -670,7 +670,7 @@ void MainWindow::on_scheduleAddButton_clicked()
     const int playlistIndex = ui->schedulePlaylistListComboBox->currentIndex();
 
     if (launchAt <= QDateTime::currentDateTime()) {
-        QMessageBox::critical(this, "Schedule validation", QString("The schedule launch date must be later than the current date."));
+        QMessageBox::critical(this, tr("Schedule validation"), QString(tr("The schedule launch date must be later than the current date.")));
         return;
     }
 
@@ -681,7 +681,7 @@ void MainWindow::on_scheduleAddButton_clicked()
         connect(schedule, SIGNAL(triggered(Playlist*)), _playlistPlayer, SLOT(playPlaylist(Playlist*)));
         _scheduleListModel->addSchedule(schedule);
     } else {
-        QMessageBox::critical(this, "Schedule validation", QString("A playlist was already scheduled between the %1 and %2, \nPlease choose an other launch date.")
+        QMessageBox::critical(this, tr("Schedule validation"), QString(tr("A playlist was already scheduled between the %1 and %2, \nPlease choose an other launch date."))
                                 .arg(schedule->launchAt().toString())
                                 .arg(schedule->finishAt().toString())
                               );
@@ -699,9 +699,9 @@ void MainWindow::on_scheduleDelayButton_clicked()
 void MainWindow::on_scheduleToggleEnabledButton_toggled(bool checked)
 {
     if (checked) {
-        ui->scheduleToggleEnabledButton->setText("Stop automation");
+        ui->scheduleToggleEnabledButton->setText(tr("Stop automation"));
     } else {
-        ui->scheduleToggleEnabledButton->setText("Start automation");
+        ui->scheduleToggleEnabledButton->setText(tr("Start automation"));
     }
 }
 
