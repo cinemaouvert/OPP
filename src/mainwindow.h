@@ -50,10 +50,7 @@ private slots:
     void on_binAddMediaButton_clicked();
     void on_binDeleteMediaButton_clicked();
 
-    /*projecttabwidget */
-    void setSummary(int count);
-    void setDetails(int count);
-    //void setMediaCount();
+    void updateProjectSummary();
 
     /* action bar events */
     void on_settingsAction_triggered();

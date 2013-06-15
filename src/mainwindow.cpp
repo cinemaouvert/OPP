@@ -94,22 +94,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->scheduleTableView->setModel(_scheduleListModel);
     ui->seekWidget->setMediaPlayer(_playlistPlayer->mediaPlayer());
 
-    /**
-     * @author Hamza Haddar
-     */
-    // ###########################################################################################
-    ui->nbrfilmlabel->setText(tr("Number of movies : ")+QString::number(0)+tr(" - Number of pictures : ")+QString::number(0));
-    ui->durelabel_2->setText(tr("Total duration: ")+msecToQTime(0).toString("hh:mm:ss"));
-
-    connect(_mediaListModel, SIGNAL(mediaListChanged(int)),this, SLOT(setSummary(int)));
-
-    ui->audiolabel->setText(tr("Audio codecs: "));
-    ui->videolabel->setText(tr("Video codecs: "));
-    ui->canauxaudiolabel->setText(tr("Audio channels: "));
-    ui->formatlabel->setText(tr("Picture formats: "));
-
-    connect(_mediaListModel, SIGNAL(mediaListChanged(int)),this, SLOT(setDetails(int)));
-    //##############################################################################################
+    connect(_mediaListModel, SIGNAL(mediaListChanged(int)),this, SLOT(updateProjectSummary()));
 
     _statusWidget = new StatusWidget;
     ui->statusBar->addWidget(_statusWidget);
@@ -171,23 +156,11 @@ QTabWidget* MainWindow::playlistTabWidget() const { return ui->playlistsTabWidge
                                           Project Details/Summary
 \***********************************************************************************************/
 
-/**
- * @author Hamza Haddar
- */
-void MainWindow::setSummary(int count)
+void MainWindow::updateProjectSummary()
 {
-    ui->nbrfilmlabel->setText(tr("Number of movies : ")+QString::number(_mediaListModel->filmsNumber())+
-                              tr(" - Number of pictures : ")+QString::number( _mediaListModel->imageNumber()));
-    ui->durelabel_2->setText(tr("Total duration : ")+_mediaListModel->summaryTotalDuration().toString("hh:mm:ss"));
-}
-
-/**
- * @author Hamza Haddar
- */
-void MainWindow::setDetails(int count)
-{
-
-
+    ui->countMoviesLabel->setText( QString::number(_mediaListModel->countMovies()) );
+    ui->countPicturesLabel->setText( QString::number(_mediaListModel->countPictures()) );
+    ui->totalDurationLabel->setText( _mediaListModel->totalDuration().toString("hh:mm:ss") );
 }
 
 void MainWindow::on_notesEdit_textChanged()
@@ -598,6 +571,26 @@ void MainWindow::restorePlaylistTab(PlaylistModel *model)
     updatePlaylistListCombox();
 }
 
+void MainWindow::on_playlistUpButton_clicked()
+{
+    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+    if(indexes.count()==0)
+        return;
+
+    if(currentPlaylistModel()->moveUp(indexes.first()))
+        currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() - 1, indexes.first().column()));
+}
+
+void MainWindow::on_playlistDownButton_clicked()
+{
+    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+
+    if(indexes.count()==0)
+        return;
+    if(currentPlaylistModel()->moveDown(indexes.first()))
+        currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() + 1, indexes.first().column()));
+}
+
 
 /***********************************************************************************************\
                                           Project import/export
@@ -757,24 +750,4 @@ PlaylistModel* MainWindow::currentPlaylistModel() const
 Playlist* MainWindow::playlistAt(int index) const
 {
     return ( (PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(index) )->model() )->playlist();
-}
-
-void MainWindow::on_playlistUpButton_clicked()
-{
-    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
-    if(indexes.count()==0)
-        return;
-
-    if(currentPlaylistModel()->moveUp(indexes.first()))
-        currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() - 1, indexes.first().column()));
-}
-
-void MainWindow::on_playlistDownButton_clicked()
-{
-    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
-
-    if(indexes.count()==0)
-        return;
-    if(currentPlaylistModel()->moveDown(indexes.first()))
-        currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() + 1, indexes.first().column()));
 }

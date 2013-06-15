@@ -148,7 +148,7 @@ QDataStream & operator >> (QDataStream & in, QList<Media> &list)
     return in;
 }
 
-QTime MediaListModel::summaryTotalDuration()
+QTime MediaListModel::totalDuration()
 {
     int duration = 0;
 
@@ -156,31 +156,27 @@ QTime MediaListModel::summaryTotalDuration()
          duration += media->duration();
     }
 
-    return  msecToQTime(duration);
+    return msecToQTime(duration);
 }
 
-int MediaListModel::imageNumber()
+int MediaListModel::countPictures()
 {
-    int numberImage = 0 ;
+    int count = 0;
 
-    foreach (Media* media, _mediaList) {
-        if (media->isImage())
-            numberImage += 1;
-    }
+    foreach (Media* media, _mediaList)
+        if (media->isImage()) count++;
 
-    return numberImage;
+    return count;
 }
 
-int MediaListModel::filmsNumber()
+int MediaListModel::countMovies()
 {
-    int numberFilms = 0;
+    int count = 0;
 
-    foreach (Media* media, _mediaList) {
-        if (!media->isImage())
-            numberFilms += 1;
-    }
+    foreach (Media* media, _mediaList)
+        if (!media->isImage()) count++;
 
-    return numberFilms;
+    return count;
 }
 
 void MediaListModel::removeAll()

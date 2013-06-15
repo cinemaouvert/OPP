@@ -21,11 +21,11 @@ public:
 
     int columnCount(const QModelIndex &parent) const;
 
-    QTime summaryTotalDuration() ;
+    QTime totalDuration();
 
-    int imageNumber();
+    int countPictures();
 
-    int filmsNumber();
+    int countMovies();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
