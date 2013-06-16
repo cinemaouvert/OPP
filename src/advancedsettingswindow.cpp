@@ -10,11 +10,6 @@ AdvancedSettingsWindow::AdvancedSettingsWindow(QWidget *parent) :
     _playback(0)
 {
     ui->setupUi(this);
-
-    int row = ui->tableWidget_information->rowCount();
-    ui->tableWidget_information->insertRow(row);
-    QTableWidgetItem* itemTitle = new QTableWidgetItem( tr("Title") );
-    ui->tableWidget_information->setItem( 0, 0, itemTitle );
 }
 
 AdvancedSettingsWindow::~AdvancedSettingsWindow()
@@ -43,7 +38,14 @@ void AdvancedSettingsWindow::setPlayback(Playback* playback)
 
 
     /*Fill table*/
-    QTableWidgetItem* itemTitle = new QTableWidgetItem(_playback->media()->name());
+    while (ui->tableWidget_information->rowCount() > 0)
+    {
+        ui->tableWidget_information->removeRow(0);
+    }
+    ui->tableWidget_information->insertRow(0);
+    QTableWidgetItem* itemTitle = new QTableWidgetItem( tr("Title") );
+    ui->tableWidget_information->setItem( 0, 0, itemTitle );
+    itemTitle = new QTableWidgetItem(_playback->media()->name());
     ui->tableWidget_information->setItem( 0, 1, itemTitle);
     int line=1;
     QTableWidgetItem* itemTrack;
