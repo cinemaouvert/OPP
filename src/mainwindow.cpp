@@ -523,34 +523,12 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
 
 void MainWindow::on_renamePlaylistAction_triggered()
 {
-    int tabIndex = ui->playlistsTabWidget->currentIndex();
-    bool ok;
-
-    QString text = QInputDialog::getText(this,
-        tr("Rename playlist"),
-        tr("Playlist title : "),
-        QLineEdit::Normal,
-        ui->playlistsTabWidget->tabText(tabIndex),
-        &ok
-    );
-
-    if (ok && !text.isEmpty()) {
-        ui->playlistsTabWidget->setTabText(tabIndex, text);
-        currentPlaylistModel()->playlist()->setTitle(text);
-        updatePlaylistListCombox();
-    }
+    editPlaylistName();
 }
 
 void MainWindow::on_removePlaylistItemAction_triggered()
 {
-    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
-
-    if (indexes.count() == 0)
-        return;
-
-   currentPlaylistModel()->removePlayback(indexes.first().row());
-   updateSettings();
-   _scheduleListModel->updateLayout();
+    deletePlaylistItem();
 }
 
 // FIX : ref 0000001
@@ -590,6 +568,52 @@ void MainWindow::on_playlistDownButton_clicked()
         currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() + 1, indexes.first().column()));
 }
 
+void MainWindow::on_addPlaylistButton_clicked()
+{
+    createPlaylistTab();
+}
+
+void MainWindow::on_editNamePlaylistButton_clicked()
+{
+    editPlaylistName();
+}
+
+void MainWindow::on_deletePlaylistItemButton_clicked()
+{
+    deletePlaylistItem();
+}
+
+void MainWindow::editPlaylistName()
+{
+    int tabIndex = ui->playlistsTabWidget->currentIndex();
+    bool ok;
+
+    QString text = QInputDialog::getText(this,
+        tr("Rename playlist"),
+        tr("Playlist title : "),
+        QLineEdit::Normal,
+        ui->playlistsTabWidget->tabText(tabIndex),
+        &ok
+    );
+
+    if (ok && !text.isEmpty()) {
+        ui->playlistsTabWidget->setTabText(tabIndex, text);
+        currentPlaylistModel()->playlist()->setTitle(text);
+        updatePlaylistListCombox();
+    }
+}
+
+void MainWindow::deletePlaylistItem()
+{
+    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+
+    if (indexes.count() == 0)
+        return;
+
+   currentPlaylistModel()->removePlayback(indexes.first().row());
+   updateSettings();
+   _scheduleListModel->updateLayout();
+}
 
 /***********************************************************************************************\
                                           Project import/export

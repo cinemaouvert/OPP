@@ -43,6 +43,9 @@ public:
     void restorePlaylistTab(PlaylistModel *model);
     QTabWidget * playlistTabWidget() const;
 
+    void editPlaylistName();
+    void deletePlaylistItem();
+
 private slots:
     void on_ratioComboBox_currentIndexChanged(int index);
 
@@ -103,6 +106,12 @@ private slots:
     void on_playlistDownButton_clicked();
 
     void on_notesEdit_textChanged();
+
+    void on_addPlaylistButton_clicked();
+
+    void on_editNamePlaylistButton_clicked();
+
+    void on_deletePlaylistItemButton_clicked();
 
 protected:
     Playback* selectedPlayback() const;
