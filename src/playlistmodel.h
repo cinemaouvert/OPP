@@ -44,11 +44,16 @@ public:
     /**
      * @enum Columns
      * @brief The Columns enum
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     enum Columns { Title = 0, Duration = 1, Video = 2, Audio = 3, Subtitles = 4, TestPattern = 5, Status = 6 };
+
     /**
      * @enum PlaybackState
      * @brief The PlaybackState enum
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     enum PlaybackState { Playing = 0, Paused = 1, Idle = 2 };
 
@@ -59,24 +64,32 @@ public:
     /**
      * @brief Returns the playlist
      * @return The playlist
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline Playlist* playlist() const { return _playlist; }
 
     /**
      * @brief Returns the index of active item
      * @return The index of active item
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     int activeItemIndex() const { return _activeItem.first; }
 
     /**
      * @brief Returns the number of columns
      * @return The number of columns
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     int columnCount(const QModelIndex &parent) const;
 
     /**
      * @brief Returns the number of rows
      * @return The number of rows
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
@@ -84,6 +97,8 @@ public:
      * @brief Returns the flags applied to the model
      * @param index
      * @return The flags applied to the model
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
@@ -93,6 +108,8 @@ public:
      * @param orientation
      * @param role
      * @return The headers data
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
@@ -100,6 +117,8 @@ public:
      * @brief Fill the playlist table
      * @param index
      * @param role
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     QVariant data(const QModelIndex &index, int role) const;
 
@@ -107,46 +126,62 @@ public:
      * @brief Add a playback to the playlist
      * @param playback
      * @return True if the playback has been added, false otherwise
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     bool addPlayback(Playback *playback);
 
     /**
      * @brief Remove playback matching to the media
      * @param media
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void removePlaybackWithDeps(Media *media);
 
     /**
      * @brief Remove a playback
      * @param index
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void removePlayback(int index);
 
     /**
      * @brief Drop mime data
      * @return True if data has been dropped, false otherwise
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     bool dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent );
 
     /**
      * @brief Update the layout
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void updateLayout();
 
     /**
      * @brief Move an item up
      * @return True if the item has been moved, false otherwise
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     bool moveUp(const QModelIndex &index);
 
     /**
      * @brief Move an item down
      * @return True if the item has been moved, false otherwise
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     bool moveDown(const QModelIndex &index);
 
     /**
      * @brief Remove all items in the playlist
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void removeAll();
 
@@ -154,22 +189,30 @@ public slots:
 
     /**
      * @brief Play the current item
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void playItem();
 
     /**
      * @brief Pause the playback of the current item
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void pauseItem();
 
     /**
      * @brief Stop the playback of the current item
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void stopItem();
 
     /**
      * @brief Change the item to play
      * @param index
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setPlayingItem(int index);
 

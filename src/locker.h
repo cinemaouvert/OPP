@@ -147,19 +147,23 @@ private:
 public slots:
 
     /**
-     * @brief lock
+     * @brief Lock
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void lock();
 
     /**
-     * @brief unlock
+     * @brief Unlock
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void unlock();
 
     /**
-     * Toggle lock state.
-     * If the locker is locked, then it is unlocked and if it is unlocked, it is locked.
-     * @brief toggle
+     * @brief Toggle lock state. If the locker is locked, then it is unlocked and if it is unlocked, it is locked.
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void toggle(bool checked = false);
 

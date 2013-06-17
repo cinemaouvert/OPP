@@ -37,6 +37,8 @@ public:
     /**
      * @enum Columns
      * @brief The Columns enum
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     enum Columns { LaunchAt = 0, FinishAt = 1, PlaylistId = 2, State = 3 };
 
@@ -44,31 +46,41 @@ public:
 
     /**
      * @brief Indicates if the automation is enabled
-     * @returnTrue if automation is enabled, false otherwise
+     * @return True if automation is enabled, false otherwise
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline bool isAutomationEnabled() const { return _automationEnabled; }
 
     /**
      * @brief Returns the schedule list
      * @return The schedule list
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline const QList<Schedule*>& scheduleList() { return _scheduleList; }
 
     /**
      * @brief Returns the number of columns
      * @return The number of columns
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     int columnCount(const QModelIndex &parent) const;
 
     /**
      * @brief Returns the number of rows
      * @return The number of rows
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
     /**
      * @brief Returns the flags applied to the model
      * @return The flags applied to the model
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
@@ -78,6 +90,8 @@ public:
      * @param orientation
      * @param role
      * @return The headers data
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
@@ -85,24 +99,32 @@ public:
      * @brief Fill the schedule list table
      * @param index
      * @param role
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     QVariant data(const QModelIndex &index, int role) const;
 
     /**
      * @brief Remove schedule matching with a playlist
      * @param playlist
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void removeScheduleWithDeps(Playlist *playlist);
 
     /**
      * @brief Remove a schedule
      * @param index The index of the schedule to remove
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void removeSchedule(int index);
 
     /**
      * @brief Add schedule to the schedule list
      * @param schedule The schedule to add
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void addSchedule(Schedule *schedule);
 
@@ -110,39 +132,53 @@ public:
      * @brief Indicates if a schedule is schedulable
      * @param schedule The schedule
      * @return True if the schedule is schedulable, false otherwise
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     bool isSchedulable(Schedule *schedule) const;
 
     /**
      * @brief Indicates if a playlist is schedules
      * @param playlist The playlist
-     * @returnTrue if the playlist is scheduled, false otherwise
+     * @return True if the playlist is scheduled, false otherwise
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     bool isScheduled(Playlist *playlist) const;
 
     /**
      * @brief Delay all the schedules
      * @param ms The delay
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void delayAll(int ms);
 
     /**
      * @brief Launch the automation
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void startAutomation();
 
     /**
      * @brief Stop the automation
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void stopAutomation();
 
     /**
      * @brief Update the layout
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void updateLayout();
 
     /**
      * @brief Remove all the schedules
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void removeAll();
 
@@ -150,6 +186,8 @@ public slots:
     /**
      * @brief Enable or disable automation
      * @param checked True to enable automation, false to disable
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void toggleAutomation(bool checked);
 

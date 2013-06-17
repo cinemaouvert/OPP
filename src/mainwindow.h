@@ -72,10 +72,15 @@ public:
     /**
      * @brief Restore playlist tab
      * @param model
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void restorePlaylistTab(PlaylistModel *model);
+
     /**
      * @brief Returns the playlists tab widget
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     QTabWidget * playlistTabWidget() const;
 
@@ -83,6 +88,7 @@ public:
      * @brief Edit the name of the current playlist
      */
     void editPlaylistName();
+
     /**
      * @brief Delete the selected item on the playlist
      */
@@ -92,49 +98,60 @@ private slots:
     /**
      * @brief Change the value of Ratio settings
      * @param index Index of the new Ratio
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_ratioComboBox_currentIndexChanged(int index);
 
-    /* bin events */
     /**
      * @brief Add a media in the bin
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_binAddMediaButton_clicked();
+
     /**
      * @brief Remove a media from the bin
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_binDeleteMediaButton_clicked();
 
     /**
      * @brief Update project summary
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void updateProjectSummary();
 
-    /* action bar events */
     /**
      * @brief Open the settings window
      *
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_settingsAction_triggered();
+
     /**
      * @brief Open the lock settings window
      *
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_lockSettingsAction_triggered();
+
     /**
      * @brief Change the video mode
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_menuVideoMode_triggered(QAction *action);
 
-    /*parameters events*/
     /**
      * @brief Open the advanced settings window
      *
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_advancedSettingsButton_clicked();
+
     /**
      * @brief Open the advanced picture settings window
      *
@@ -142,14 +159,17 @@ private slots:
      */
     void on_advancedPictureSettingsButton_clicked();
 
-    /* player controls */
     /**
      * @brief Launch the playback of the playlist
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_playerPlayButton_clicked(bool checked);
 
     /**
      * @brief Load the selected playlist
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_playlistsTabWidget_currentChanged(int index);
 
@@ -160,6 +180,7 @@ private slots:
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_subtitlesSyncSpinBox_valueChanged(double arg1);
+
     /**
      * @brief Change the value of gamma setting
      * @param arg1 The new value for gamma
@@ -167,6 +188,7 @@ private slots:
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_gammaSpinBox_valueChanged(double arg1);
+
     /**
      * @brief Change the value of contrast setting
      * @param arg1 The new value for contrast
@@ -174,6 +196,7 @@ private slots:
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_contrastSpinBox_valueChanged(double arg1);
+
     /**
      * @brief Change the value of brightness setting
      * @param arg1 The new value for brightness
@@ -181,6 +204,7 @@ private slots:
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_brightnessSpinBox_valueChanged(double arg1);
+
     /**
      * @brief Change the value of saturation setting
      * @param arg1 The new value for saturation
@@ -188,6 +212,7 @@ private slots:
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_saturationSpinBox_valueChanged(double arg1);
+
     /**
      * @brief Change the value of hue setting
      * @param arg1 The new value for hue
@@ -195,6 +220,7 @@ private slots:
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_hueSpinBox_valueChanged(int arg1);
+
     /**
      * @brief Change the value of audio sync setting
      * @param arg1 The new value for audio sync
@@ -202,6 +228,7 @@ private slots:
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_audioSyncDoubleSpinBox_valueChanged(double arg1);
+
     /**
      * @brief Change the value of audio gain setting
      * @param arg1 The new value for audio gain
@@ -212,6 +239,8 @@ private slots:
 
     /**
      * @brief Play a test pattern
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_testPatternAction_triggered();
 
@@ -219,12 +248,18 @@ private slots:
      * @brief Save the current project
      */
     void on_saveAsAction_triggered();
+
     /**
      * @brief Open a saved project
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_openListingAction_triggered();
+
     /**
      * @brief Create a new project
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>z
      */
     void on_newListingAction_triggered();
 
@@ -237,19 +272,30 @@ private slots:
 
     /**
      * @brief Create a new playlist and its tab
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void createPlaylistTab();
+
     /**
      * @brief Delete a playlist and close its tab
      * @param index The index of the playlist to delete
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_playlistsTabWidget_tabCloseRequested(int index);
+
     /**
      * @brief Open a window to rename the current playlist
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_renamePlaylistAction_triggered();
+
     /**
      * @brief Delete the selected item
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_removePlaylistItemAction_triggered();
 
@@ -258,43 +304,61 @@ private slots:
      * @param index Index of the new audio track
      *
      * @author Cyril Naud <futuramath@gmail.com>
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_audioTrackComboBox_currentIndexChanged(int index);
+
     /**
      * @brief Change the value of the video track setting
      * @param index Index of the new video track
      *
      * @author Cyril Naud <futuramath@gmail.com>
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_videoTrackComboBox_currentIndexChanged(int index);
+
     /**
      * @brief Change the value of the subtitles track setting
      * @param index Index of the new subtitles track
      *
      * @author Cyril Naud <futuramath@gmail.com>
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_subtitlesTrackComboBox_currentIndexChanged(int index);
 
     /**
      * @brief Update the list of playlists
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void updatePlaylistListCombox();
 
     /**
      * @brief Create a new schedule
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_scheduleAddButton_clicked();
+
     /**
      * @brief Delete the selected schedule
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_scheduleDeleteButton_clicked();
+
     /**
      * @brief Delay the schedules
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_scheduleDelayButton_clicked();
+
     /**
      * @brief Enable or disable automation
      * @param checked True to enable automation, false to disable
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_scheduleToggleEnabledButton_toggled(bool checked);
 
@@ -313,6 +377,8 @@ private slots:
 
     /**
      * @brief Change the notes
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_notesEdit_textChanged();
 
@@ -347,21 +413,32 @@ protected:
     /**
      * @brief Returns the selected playback
      * @return The selected playback
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     Playback* selectedPlayback() const;
+
     /**
      * @brief Returns the current playlist table view
      * @return The current playlist table view
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     PlaylistTableView* currentPlaylistTableView() const;
+
     /**
      * @brief Returns the current playlist model
      * @return The current playlist model
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     PlaylistModel* currentPlaylistModel() const;
+
     /**
      * @brief Returns the playlist at the position index
      * @return The playlist at the position index
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     Playlist* playlistAt(int index) const;
 

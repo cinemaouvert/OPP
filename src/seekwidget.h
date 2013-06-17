@@ -46,60 +46,111 @@ public:
     /**
      * @brief Returns the value of autoHide
      * @return The value of autoHide
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     bool autoHide() const { return _autoHide; }
 
     /**
      * @brief Set the value of autoHide
      * @param autoHide The new value of autoHide
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setAutoHide(const bool &autoHide);
 
     /**
      * @brief Set a media player
      * @param player The new media player
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setMediaPlayer(MediaPlayer *player);
 
 protected:
+    /**
+     * @brief mouseMoveEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void mouseMoveEvent(QMouseEvent *event);
+
+    /**
+     * @brief mousePressEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void mousePressEvent(QMouseEvent *event);
+
+    /**
+     * @brief mouseReleaseEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void mouseReleaseEvent(QMouseEvent *event);
+
+    /**
+     * @brief wheelEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void wheelEvent(QWheelEvent *event);
 
 private slots:
     /**
      * @brief Reset the widget
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void end();
+
     /**
      * @brief Update the elapsed time value
      * @param time The new elapsed time value
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void updateCurrentTime(const int &time);
+
     /**
      * @brief Update the full time value
      * @param time The new full time value
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void updateFullTime(const int &time);
 
 private:
     /**
      * @brief Initialize the widget
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void initSeekWidget();
+
     /**
      * @brief Update the widget
      * @param pos
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void updateEvent(const QPoint &pos);
 
     /**
      * @brief Lock the widget
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void lock();
+
     /**
      * @brief Unlock the widget
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void unlock();
 

@@ -28,10 +28,9 @@
 
 #include <QObject>
 
-// TODO : not yet implemented
 /**
- * @class PlaylistListManager
  * @brief Manage playlist list and display into a QTabWidget
+ * @todo not yet implemented
  */
 class PlaylistListManager : public QObject
 {

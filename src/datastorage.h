@@ -48,46 +48,70 @@ public:
     explicit DataStorage(Application *app, MainWindow *win/*FIX : ref 0000001*/, QObject *parent = 0);
 
     /**
-     * @brief projectTitle
+     * @brief Get project title
+     * @return The project title
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     inline const QString& projectTitle() const { return _projectTitle; }
 
     /**
-     * @brief projectNotes
+     * @brief Get project notes
+     * @return The project notes
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     inline const QString& projectNotes() const { return _projectNotes; }
 
     /**
-     * @brief setMediaListModel
+     * @brief Set media list model
+     * @param model The model
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setMediaListModel(MediaListModel* model);
 
     /**
-     * @brief addPlaylistModel
+     * @brief Add playlist model
+     * @param model The model
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void addPlaylistModel(PlaylistModel* model);
 
     /**
-     * @brief setScheduleListModel
+     * @brief Set schedule list model
+     * @param model The model
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setScheduleListModel(ScheduleListModel *model);
 
     /**
-     * @brief save
-     * @param file
+     * @brief Save into file
+     * @param file The file to save the project into. It must be a file named *.opp
      *
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void save(QFile &file);
 
     /**
-     * @brief load
-     * @param file
+     * @brief Load a project from file
+     * @param file The file to load. It must be a file named *.opp
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void load(QFile &file);
 
     /**
-     * @brief clear
+     * @brief Clear all model
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void clear();
     
@@ -106,62 +130,72 @@ signals:
 public slots:
 
     /**
-     * @brief setProjectTitle
-     * @param title
+     * @brief Set project title
+     * @param title The new project title
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setProjectTitle(const QString &title);
 
     /**
-     * @brief setProjectNotes
-     * @param notes
+     * @brief Set project notes
+     * @param notes The new project notes
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setProjectNotes(const QString &notes);
 
 protected:
 
     /**
-     * @brief findPlaylistById
-     * @param id
-     * @return
+     * @brief Find playlist by id
+     * @param id The playlist identifier to search
+     * @return The Playlist if found, NULL otherwise
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     Playlist* findPlaylistById(int id) const;
 
     /**
-     * @brief findMediaById
-     * @param id
-     * @return
+     * @brief Find Media by id
+     * @param id The media identifier to search
+     * @return The Media if found, NULL otherwise
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     Media* findMediaById(int id) const;
 
 private:
 
     /**
-     * @brief _mediaListModel
+     * @brief The media list model
      */
     MediaListModel* _mediaListModel;
 
     /**
-     * @brief _playlistModelList
+     * @brief List of playlist model
      */
     QList<PlaylistModel*> _playlistModelList;
 
     /**
-     * @brief _scheduleListModel
+     * @brief The schedule list model
      */
     ScheduleListModel* _scheduleListModel;
 
     /**
-     * @brief _projectTitle
+     * @brief The project title
      */
     QString _projectTitle;
 
     /**
-     * @brief _projectNotes
+     * @brief The project notes
      */
     QString _projectNotes;
 
     /**
-     * @brief _app
+     * @brief The application
      */
     Application *_app;
 

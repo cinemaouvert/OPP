@@ -48,13 +48,31 @@ public:
 
     ~VideoWidget();
 
+    /**
+     * @overload
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     WId request();
 
+    /**
+     * @overload
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void release();
 
 private:
+    /**
+     * @brief Initialize video widget
+     */
     void init();
 
+    /**
+     * @brief sync
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void sync();
 
 #if !defined(Q_OS_MAC)

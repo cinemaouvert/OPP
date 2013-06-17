@@ -45,6 +45,8 @@ public slots:
     /**
      * @brief Set the value of media counter
      * @param count The new value of media counter
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setMediaCount(int count);
 
@@ -52,6 +54,8 @@ protected:
     /**
      * @brief Update the time
      * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void timerEvent(QTimerEvent *event);
 

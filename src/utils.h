@@ -32,6 +32,8 @@
  * @brief Convert milliseconds to QTime
  * @param msecs Milliseconds to convert
  * @return QTime corresponding to the milliseconds
+ *
+ * @author Florian Mhun <florian.mhun@gmail.com>
  */
 QTime msecToQTime(uint msecs);
 

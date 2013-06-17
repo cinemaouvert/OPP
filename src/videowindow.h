@@ -35,6 +35,11 @@ class VideoWindow : public QMainWindow
     Q_OBJECT
 public:
 
+    /**
+     * @brief Contains display mode values
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     enum DisplayMode {
         /**
          * Video onto a classical window
@@ -49,7 +54,6 @@ public:
 
     explicit VideoWindow(QWidget *parent = 0);
     ~VideoWindow();
-
 
     /**
      * @brief Returns the video widget
@@ -80,6 +84,7 @@ private:
      * @brief _videoWidget The video widget
      */
     VideoWidget *_videoWidget;
+
     /**
      * @brief _mode The display mode
      */
