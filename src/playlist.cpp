@@ -63,25 +63,17 @@ Playback* Playlist::at(const int &index) const
 
 void Playlist::append(Playback *playback)
 {
-    lock();
-
     playback->media()->usageCountAdd();
 
     _playbackList.append(playback);
-
-    unlock();
 }
 
 void Playlist::removeAt(int index)
 {
-    lock();
-
     _playbackList[index]->media()->usageCountAdd(-1);
 
     delete _playbackList[index];
     _playbackList.removeAt(index);
-
-    unlock();
 }
 
 int Playlist::indexOf(Playback *playback) const
