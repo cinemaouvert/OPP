@@ -154,7 +154,7 @@ void DataStorage::save(QFile &file)
                 schedule.setAttribute("playlist-id", i);
         }
         schedule.setAttribute("launchAt", scheduleElement->launchAt().toString("dd/MM/yyyy hh:mm:ss"));
-        schedule.setAttribute("wasTriggered", scheduleElement->wasTriggered());
+        schedule.setAttribute("canceled", scheduleElement->canceled());
         schedules.appendChild(schedule);
     }
 
@@ -275,7 +275,7 @@ void DataStorage::load(QFile &file)
 
         Schedule *schedule = new Schedule(playlist, QDateTime::fromString(scheduleAttributes.namedItem("launchAt").nodeValue(), "dd/MM/yyyy hh:mm:ss"));
 
-        if (scheduleAttributes.namedItem("wasTriggered").nodeValue().toInt())
+        if (scheduleAttributes.namedItem("canceled").nodeValue().toInt())
             schedule->cancel();
 
         _scheduleListModel->addSchedule(schedule);
