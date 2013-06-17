@@ -49,14 +49,16 @@ SOURCES += src/media.cpp \
 
 # vlc library and headers
 mac:LIBS += -L"/Applications/VLC.app/Contents/MacOS/lib"
-unix:LIBS += -lvlc -lvlccore
-unix:INCLUDEPATH += /usr/include/vlc/plugins
-windows:LIBS += -L"C:\Program Files (x86)\VideoLAN\VLC\sdk\lib" -llibvlc -llibvlccore
-
 mac:INCLUDEPATH += ./include
 mac:INCLUDEPATH += "/Applications/VLC.app/Contents/MacOS/include"
 
+unix:LIBS += -lvlc -lvlccore
+
+unix:!macx:INCLUDEPATH += /usr/include/vlc/plugins
+
+windows:LIBS += -L"C:\Program Files\VideoLAN\VLC\sdk\lib" -llibvlc -llibvlccore
+windows:INCLUDEPATH += "C:\Program Files\VideoLAN\VLC\sdk\include"
+windows:INCLUDEPATH += "C:\Program Files\VideoLAN\VLC\sdk\include\vlc\plugins"
+
 mac:LIBS += -framework Cocoa
 mac:QMAKE_CXXFLAGS+=-x objective-c++
-
-# install deps dll on windows
