@@ -99,48 +99,6 @@ void PlaylistPlayer::playPlaylist(Playlist *playlist)
     playItemAt(0);
 }
 
-void PlaylistPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
-{
-    PlaylistPlayer *core = (PlaylistPlayer *)data;
-    Playback *currentPlayback;
-    switch(event->type)
-    {
-    case libvlc_MediaListPlayerNextItemSet:
-        core->_currentIndex++;
-
-        currentPlayback = core->_playlist->at(core->_currentIndex);
-        core->_mediaPlayer->open(currentPlayback);
-
-        emit core->itemChanged(core->_currentIndex);
-
-//        QTimer::singleShot(1000, core, SLOT(applyCurrentPlaybackSettings()));
-
-        break;
-    default:
-        break;
-    }
-}
-
-void PlaylistPlayer::createCoreConnections()
-{
-    QList<libvlc_event_e> list;
-    list << libvlc_MediaListPlayerNextItemSet;
-
-    foreach(const libvlc_event_e &event, list) {
-        libvlc_event_attach(_vlcEvents, event, libvlc_callback, this);
-    }
-}
-
-void PlaylistPlayer::removeCoreConnections()
-{
-    QList<libvlc_event_e> list;
-    list << libvlc_MediaListPlayerNextItemSet;
-
-    foreach(const libvlc_event_e &event, list) {
-        libvlc_event_detach(_vlcEvents, event, libvlc_callback, this);
-    }
-}
-
 void PlaylistPlayer::handlePlayerEnd()
 {
     if (_currentIndex == _playlist->count() - 1) {
@@ -148,9 +106,4 @@ void PlaylistPlayer::handlePlayerEnd()
     } else {
         next(); // auto next
     }
-}
-
-void PlaylistPlayer::applyCurrentPlaybackSettings()
-{
-//    _mediaPlayer->applyMediaSettings(_playlist->at(_currentIndex)->mediaSettings());
 }

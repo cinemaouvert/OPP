@@ -187,11 +187,6 @@ void MediaPlayer::setPosition(const float &position)
     libvlc_media_player_set_position(_vlcMediaPlayer, position);
 }
 
-void MediaPlayer::setPosition(const int &position)
-{
-    setPosition( ((float) position) / 100.f);
-}
-
 void MediaPlayer::applyCurrentPlaybackSettings()
 {
     setCurrentGain(_currentPlayback->mediaSettings()->gain());

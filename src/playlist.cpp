@@ -35,7 +35,6 @@ Playlist::Playlist(libvlc_instance_t *vlcInstance, const QString &title, QObject
     _title(title)
 {
     _id = Playlist::s_instanceCount++;
-    _vlcMediaList = libvlc_media_list_new(vlcInstance);
 }
 
 Playlist::~Playlist()
@@ -44,8 +43,6 @@ Playlist::~Playlist()
         playback->media()->usageCountAdd(-1);
         delete playback;
     }
-
-    libvlc_media_list_release(_vlcMediaList);
 }
 
 void Playlist::setId(int id)
@@ -70,7 +67,6 @@ void Playlist::append(Playback *playback)
 
     playback->media()->usageCountAdd();
 
-    libvlc_media_list_add_media(_vlcMediaList, playback->media()->core());
     _playbackList.append(playback);
 
     unlock();
@@ -82,7 +78,6 @@ void Playlist::removeAt(int index)
 
     _playbackList[index]->media()->usageCountAdd(-1);
 
-    libvlc_media_list_remove_index(_vlcMediaList, index);
     delete _playbackList[index];
     _playbackList.removeAt(index);
 
@@ -114,14 +109,4 @@ uint Playlist::totalDuration() const
     }
 
     return duration;
-}
-
-void Playlist::lock()
-{
-    libvlc_media_list_lock(_vlcMediaList);
-}
-
-void Playlist::unlock()
-{
-    libvlc_media_list_unlock(_vlcMediaList);
 }

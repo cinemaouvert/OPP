@@ -36,26 +36,30 @@ public:
     virtual ~Playback();
 
     /**
-     * @brief media
-     * @return
+     * @brief Get media
+     * @return The associated media
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
-    inline Media* media() const {return _media;}
+    inline Media* media() const { return _media; }
 
     /**
-     * @brief mediaSettings
-     * @return
+     * @brief Get media settings
+     * @return The current media settings
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
-    inline MediaSettings* mediaSettings() const {return _mediaSettings;}
+    inline MediaSettings* mediaSettings() const { return _mediaSettings; }
     
 private:
 
     /**
-     * @brief _media
+     * @brief The associated media
      */
     Media *_media;
 
     /**
-     * @brief _mediaSettings
+     * @brief The media settings
      */
     MediaSettings *_mediaSettings;
     

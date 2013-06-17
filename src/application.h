@@ -26,6 +26,10 @@
 
 struct libvlc_instance_t;
 
+/**
+ * @class Application
+ * @brief Manage global application settings
+ */
 class Application
 {
 public:
@@ -41,9 +45,8 @@ public:
     void initVlcInstanceFromArgs(const QStringList &args);
 
     /**
-     * @brief vlcInstance
-     * @param arg1 zofhzo
-     * @return Description de ce que ca retourne si necessaire
+     * @brief Get libvlc instance
+     * @return The libvlc instance
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
@@ -52,7 +55,7 @@ public:
 private:
 
     /**
-     * @brief _vlcInstance The vlc instance
+     * @brief _vlcInstance The libvlc instance
      */
     libvlc_instance_t *_vlcInstance;
 };

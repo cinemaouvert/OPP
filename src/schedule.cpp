@@ -27,7 +27,7 @@ Schedule::Schedule(Playlist *playlist, const QDateTime &launchAt, QObject *paren
     QObject(parent),
     _playlist(playlist),
     _launchAt(launchAt),
-    _wasTriggered(false)
+    _canceled(false)
 {
 }
 
@@ -55,7 +55,7 @@ void Schedule::stop()
 
 void Schedule::cancel()
 {
-    _wasTriggered = true;
+    _canceled = true;
 }
 
 bool Schedule::isExpired() const
@@ -68,9 +68,9 @@ bool Schedule::isActive() const
     return _timer.isActive();
 }
 
-bool Schedule::wasTriggered() const
+bool Schedule::canceled() const
 {
-    return _wasTriggered;
+    return _canceled;
 }
 
 void Schedule::delay(int ms)
@@ -86,7 +86,7 @@ void Schedule::delay(int ms)
 
 void Schedule::timeout()
 {
-    _wasTriggered = true;
+    _canceled = true;
 
     emit triggered(_playlist);
 }

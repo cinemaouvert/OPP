@@ -34,7 +34,7 @@
 
 /**
  * @enum Ratio
- * @brief The Ratio enum
+ * @brief Contains available video ratio values
  */
 enum Ratio {
     Original = 0,
@@ -52,7 +52,7 @@ enum Ratio {
 
 /**
  * @enum Scale
- * @brief The Scale enum
+ * @brief Contains available video scale values
  */
 enum Scale {
     NoScale = 0,
@@ -71,7 +71,7 @@ enum Scale {
 
 /**
  * @enum Deinterlacing
- * @brief The Deinterlacing enum
+ * @brief Contains available deinterlacing modes
  */
 enum Deinterlacing {
     Discard = 0,
@@ -83,7 +83,7 @@ enum Deinterlacing {
 
 /**
  * @class MediaSettings
- * @brief The MediaSettings class
+ * @brief Manage media settings data
  */
 class MediaSettings : public QObject
 {
@@ -92,215 +92,281 @@ public:
     explicit MediaSettings(QObject *parent = 0);
 
     /**
-     * @brief initDefault
+     * @brief initialize default settings values
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void initDefault();
 
     /**
-     * @brief ratio
-     * @return
+     * @brief Get video ratio
+     * @return The video ratio
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline Ratio ratio() const { return _ratio; }
 
     /**
-     * @brief scale
-     * @return
+     * @brief Get video scale
+     * @return The video scale
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline Scale scale() const { return _scale; }
 
     /**
-     * @brief deinterlacing
-     * @return
+     * @brief Get video deinterlacing
+     * @return The video ratio
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline Deinterlacing deinterlacing() const { return _deinterlacing; }
 
     /**
-     * @brief subtitlesSync
-     * @return
+     * @brief Get subtitles synchronization
+     * @return The subtitles synchronization
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     inline double subtitlesSync() const { return _subtitlesSync; }
 
     /**
-     * @brief gamma
-     * @return
+     * @brief Get current gamma value
+     * @return The gamme value
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     inline float gamma() const { return _gamma; }
 
     /**
-     * @brief contrast
-     * @return
+     * @brief Get current contrast value
+     * @return The contrast value
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     inline float contrast() const { return _contrast; }
 
     /**
-     * @brief brightness
-     * @return
+     * @brief Get current brightness value
+     * @return The brightness value
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     inline float brightness() const { return _brightness; }
 
     /**
-     * @brief saturation
-     * @return
+     * @brief Get current saturation value
+     * @return The current saturation value
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     inline float saturation() const { return _saturation; }
 
     /**
-     * @brief hue
-     * @return
+     * @brief Get current hue value
+     * @return The hue value
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     inline int hue() const { return _hue; }
 
     /**
-     * @brief audioSync
-     * @return
+     * @brief Get current audio synchronization value
+     * @return The audio synchronization value
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     inline double audioSync() const { return _audioSync; }
 
     /**
-     * @brief audioTrack
-     * @return
+     * @brief Get current audio track value
+     * @return The audio track value
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline const int & audioTrack() const { return _audioTrack; }
 
     /**
-     * @brief videoTrack
-     * @return
+     * @brief Get current video track value
+     * @return The video track value
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline const int & videoTrack() const { return _videoTrack; }
 
     /**
-     * @brief subtitlesTrack
-     * @return
+     * @brief Get current subtitles track value
+     * @return The subtitles track value
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline const int & subtitlesTrack() const { return _subtitlesTrack; }
 
     /**
-     * @brief testPattern
-     * @return
+     * @brief Is test pattern enabled
+     * @return True if test pattern is enabled, false otherwise
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     inline bool testPattern() const {return _testPattern;}
 
     /**
-     * @brief inMark
-     * @return
+     * @brief Get in mark position
+     * @return The in mark position in ms
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     inline int inMark() const {return _inMark;}
 
     /**
-     * @brief outMark
-     * @return
+     * @brief Get out mark position
+     * @return The out mark position in ms
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     inline int outMark() const {return _outMark;}
 
     /**
-     * @brief gain
-     * @return
+     * @brief Get current audio gain
+     * @return The audio gain
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     inline float gain() const {return _gain;}
 
     /**
      * @brief setRatio
      * @param ratio
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setRatio(Ratio ratio);
 
     /**
      * @brief setScale
      * @param scale
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setScale(Scale scale);
 
     /**
      * @brief setDeinterlacing
      * @param deinterlacing
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setDeinterlacing(Deinterlacing deinterlacing);
 
     /**
      * @brief setSubtitlesSync
      * @param sync
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setSubtitlesSync(double sync);
 
     /**
      * @brief setGamma
      * @param gamma
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setGamma(float gamma);
 
     /**
      * @brief setContrast
      * @param contrast
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setContrast(float contrast);
 
     /**
      * @brief setBrightness
      * @param brightness
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setBrightness(float brightness);
 
     /**
      * @brief setSaturation
      * @param saturation
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setSaturation(float saturation);
 
     /**
      * @brief setHue
      * @param hue
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setHue(int hue);
 
     /**
      * @brief setAudioSync
      * @param sync
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setAudioSync(double sync);
 
     /**
      * @brief setGain
      * @param gain
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setGain(float gain);
 
     /**
      * @brief setAudioTrack
      * @param track
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setAudioTrack(const int &track);
 
     /**
      * @brief setVideoTrack
      * @param track
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setVideoTrack(const int &track);
 
     /**
      * @brief setSubtitlesTrack
      * @param track
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setSubtitlesTrack(const int &track);
 
     /**
      * @brief setTestPattern
      * @param testpattern
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setTestPattern(bool testpattern);
 
     /**
      * @brief setInMark
      * @param mark
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setInMark (int mark);
 
     /**
      * @brief setOutMark
      * @param mark
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setOutMark(int mark);
 
@@ -313,12 +379,16 @@ public:
     /**
      * @brief deinterlacingValues
      * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     static QStringList deinterlacingValues();
 
     /**
      * @brief scaleValues
      * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     static QList<float> scaleValues();
 

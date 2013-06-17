@@ -34,57 +34,56 @@ public:
     explicit Track(libvlc_media_track_info_t *vlcTrackInfo, QObject *parent = 0);
 
     explicit Track(QObject *parent = 0);
-
     virtual ~Track();
-
-    /**
-     * @brief Track
-     * @param track
-     */
     Track(const Track &track);
-
-    /**
-     * @brief operator =
-     * @param track
-     * @return
-     */
     Track & operator=(const Track &track);
 
     /**
-     * @brief operator ==
-     * @param track
-     * @return
+     * @brief Overload the operator ==
+     * @param track The track to be compared with
+     * @return True if both equals, false otherwise
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     bool operator==(const Track &track);
 
     /**
-     * @brief trackId
-     * @return
+     * @brief Get libvlc track id
+     * @warning Liblvc seems to not consider this identifier but the index of the track.
+     * @return The liblvc track id
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline int trackId() const { return _vlcTrackInfo.i_id; }
 
     /**
-     * @brief codec
-     * @return
+     * @brief Get libvlc codec identifier
+     * @return The libvlc code identifier
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline uint codec() const { return _vlcTrackInfo.i_codec; }
 
     /**
-     * @brief trackType
-     * @return
+     * @brief Get liblvc track type
+     * @return The libvlc track type
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline libvlc_track_type_t trackType() const { return _vlcTrackInfo.i_type; }
 
     /**
-     * @brief codecDescription
-     * @return
+     * @brief Get codec description
+     * @return The codec description
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     QString codecDescription() const;
 
 protected:
 
     /**
-     * @brief _vlcTrackInfo
+     * @brief The libvlc structure where track informations are stored
      */
     libvlc_media_track_info_t _vlcTrackInfo;
 };

@@ -27,11 +27,6 @@
 class MediaPlayer;
 class Playlist;
 
-struct libvlc_media_list_player_t;
-struct libvlc_media_list_t;
-struct libvlc_media_t;
-struct libvlc_event_t;
-struct libvlc_event_manager_t;
 struct libvlc_instance_t;
 
 class PlaylistPlayer : public QObject
@@ -44,73 +39,84 @@ public:
     ~PlaylistPlayer();
 
     /**
-     * @brief core
-     * @return
-     */
-    inline libvlc_media_list_player_t* core() const { return _vlcMediaListPlayer; }
-
-    /**
-     * @brief mediaPlayer
-     * @return
+     * @brief Get media player
+     * @return The media player
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline MediaPlayer* mediaPlayer() const { return _mediaPlayer; }
 
     /**
-     * @brief currentPlaylist
-     * @return
+     * @brief The current used playlist
+     * @return The current playlist
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     Playlist* currentPlaylist() const { return _playlist; }
 
     /**
-     * @brief setPlaylist
-     * @param list
+     * @brief Set current playlist
+     * @param list The new playlist
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setPlaylist(Playlist *list);
 
     /**
-     * @brief isPlaying
-     * @return
+     * @brief Is the media player is playing ?
+     * @return True if the media player is playing, false otherwise
+     *
+     * @see MediaPlayer.isPlaying()
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     bool isPlaying() const;
 
 public slots:
 
     /**
-     * @brief playItemAt
-     * @param index
+     * @brief Play item at `index`
+     * @param index The index of item in current playlist to start playback from
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void playItemAt(const int &index);
 
     /**
-     * @brief next
+     * @brief Play next playback in current playlist
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void next();
 
     /**
-     * @brief previous
+     * @brief Play previous playback in current playlist
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void previous();
 
     /**
-     * @brief stop
+     * @brief Stop the player
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void stop();
 
     /**
-     * @brief playPlaylist
-     * @param playlist
+     * @brief Set and play a playlist.
+     * @param playlist The playlist to play
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void playPlaylist(Playlist *playlist);
-
-    /**
-     * @brief applyCurrentPlaybackSettings
-     */
-    void applyCurrentPlaybackSettings();
 
 private slots:
 
     /**
-     * @brief handlePlayerEnd
+     * @brief Handle player end state.
+     * @todo Use different playback mode (loop mode for example)
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void handlePlayerEnd();
 
@@ -134,44 +140,17 @@ signals:
 private:
 
     /**
-     * @brief libvlc_callback
-     * @param event
-     * @param data
-     */
-    static void libvlc_callback(const libvlc_event_t *event, void *data);
-
-    /**
-     * @brief createCoreConnections
-     */
-    void createCoreConnections();
-
-    /**
-     * @brief removeCoreConnections
-     */
-    void removeCoreConnections();
-
-    /**
-     * @brief _vlcMediaListPlayer
-     */
-    libvlc_media_list_player_t *_vlcMediaListPlayer;
-
-    /**
-     * @brief _vlcEvents
-     */
-    libvlc_event_manager_t *_vlcEvents;
-
-    /**
-     * @brief _playlist
+     * @brief The current playlist
      */
     Playlist *_playlist;
 
     /**
-     * @brief _mediaPlayer
+     * @brief The media player used to play playlist item
      */
     MediaPlayer *_mediaPlayer;
 
     /**
-     * @brief _currentIndex
+     * @brief Current index in `_playlist`
      */
     int _currentIndex;
 };

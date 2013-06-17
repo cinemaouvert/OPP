@@ -53,78 +53,81 @@ public:
     virtual ~MediaPlayer();
 
     /**
-     * @brief currentPlayback
-     * @return
+     * @brief Get current played Playback instance
+     * @return The Playback instance
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline Playback *currentPlayback() const { return _currentPlayback; }
 
     /**
-     * @brief core
-     * @return
+     * @brief Get libvlc media player core
+     * @return The libvlc media player core
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline libvlc_media_player_t *core() const { return _vlcMediaPlayer; }
 
     /**
-     * @brief isPaused
-     * @return
+     * @brief Media player is paused
+     * @return True if media player is paused, false otherwise.
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline bool isPaused() const { return _isPaused; }
 
     /**
-     * @brief isPlaying
-     * @return
+     * @brief Media player is playing
+     * @return True if media player is playing, false otherwise
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     bool isPlaying() const;
 
     /**
-     * @brief currentTime
-     * @return
+     * @brief Get current time
+     * @return The current time in ms
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     int currentTime() const;
 
     /**
-     * @brief currentLength
-     * @return
+     * @brief Get current length
+     * @return The current length in ms
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     int currentLength() const;
 
     /**
-     * @brief position
-     * @return
+     * @brief Get the current movie length
+     * @return The current movie length in ms
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     float position() const;
 
     /**
-     * @brief get current software volume
-     * @return
+     * @brief Get current software volume
+     * @return The current sofware volume between 0 (min) and 200 (max).
+     *         The value 100 corresponds to the nominal volume (0dB).
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     int volume() const;
 
     /**
-     * @brief setVideoView
-     * @param videoView
+     * @brief Set video view in which the media player will render the video
+     * @param The video view
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setVideoView(VideoView *videoView);
 
     /**
-     * @brief open
-     * @param playback
+     * @brief Open a playback in media player. It will not play the media
+     * @param playback The playback to open.
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
@@ -132,107 +135,109 @@ public:
 
 public slots:
     /**
-     * @brief play
+     * @brief Play the media player with the opened Playback
+     * @see open()
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void play();
 
     /**
-     * @brief pause
+     * @brief Pause media player
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void pause();
 
     /**
-     * @brief resume
+     * @brief Resume playback to the current movie position after the media player was paused.
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void resume();
 
     /**
-     * @brief stop
+     * @brief Stop the media player.
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void stop();
 
     /**
-     * @brief setCurrentTime
-     * @param time
+     * @brief Set current time
+     * @param time The new current time in ms
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setCurrentTime(int time);
 
     /**
-     * @brief setVolume
-     * @param volume
+     * @brief Set volume
+     * @param volume The new volume between 0 (mute) and 100 (0dB).
      *
+     * @see setCurrentGain()
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setVolume(int volume);
 
     /**
-     * @brief setCurrentGain
-     * @param gain
+     * @brief Set current audio gain.
+     * @param gain The new gain between 0.0(dB) and 3.01(dB)
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setCurrentGain(float gain);
 
     /**
-     * @brief setPosition
+     * @brief Set media player position
      * @param position Value between .0 and .99
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setPosition(const float &position);
 
     /**
-     * @brief setPosition
-     * @param position Value between 0 and 99.
-     */
-    void setPosition(const int &position);
-
-    /**
-     * @brief setCurrentRatio
-     * @param ratio
+     * @brief Set current video ratio
+     * @param ratio The new ratio
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setCurrentRatio(Ratio ratio);
 
     /**
-     * @brief setCurrentDeinterlacing
-     * @param deinterlacing
+     * @brief Set current deinterlacing
+     * @param deinterlacing The new deinterlacing mode
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setCurrentDeinterlacing(Deinterlacing deinterlacing);
 
     /**
-     * @brief setCurrentSubtitlesSync
-     * @param sync
+     * @brief set current subtitles synchronization
+     * @param sync The new synchronization between 0.0 to 3.0
      *
-     * @author Florian Mhun <florian.mhun@gmail.com>
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setCurrentSubtitlesSync(double sync);
 
     /**
-     * @brief setCurrentAudioTrack
+     * @brief Set current audio track
      * @param track Set 0 to disable audio track, 1 to use the first track...
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setCurrentAudioTrack(const int &track);
 
     /**
-     * @brief setCurrentVideoTrack
+     * @brief Set current video track
      * @param track Set -1 to disable video track, 0 to use the first track...
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setCurrentVideoTrack(const int &track);
 
     /**
-     * @brief setCurrentSubtitlesTrack
+     * @brief Set current subtitles track
      * @param track Set 0 to disable subtitles track, 1 to use the first track...
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
@@ -240,57 +245,63 @@ public slots:
     void setCurrentSubtitlesTrack(const int &track);
 
     /**
-     * @brief setCurrentGamma
-     * @param gamma
+     * @brief Set current gamma
+     * @param gamma The new gamma value between 0.0 to 10.0
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
+	 * @author Cyril Naud <futuramath@gmail.com>
      */
     void setCurrentGamma(float gamma);
 
     /**
-     * @brief setCurrentContrast
-     * @param contrast
+     * @brief Set current contrast
+     * @param contrast The new contrast value between 0.0 to 2.0
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
+	 * @author Cyril Naud <futuramath@gmail.com>
      */
     void setCurrentContrast(float contrast);
 
     /**
-     * @brief setCurrentBrightness
-     * @param brightness
+     * @brief Set current brightness
+     * @param brightness The new brightness value between 0.0 to 2.0
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
+	 * @author Cyril Naud <futuramath@gmail.com>
      */
     void setCurrentBrightness(float brightness);
 
     /**
-     * @brief setCurrentSaturation
-     * @param saturation
+     * @brief set current saturation
+     * @param saturation The new saturation value between 0.0 to 3.0
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
+	 * @author Cyril Naud <futuramath@gmail.com>
      */
     void setCurrentSaturation(float saturation);
 
     /**
-     * @brief setCurrentHue
-     * @param hue
+     * @brief Set current hue
+     * @param hue The new hue value between 0 to 20
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
+	 * @author Cyril Naud <futuramath@gmail.com>
      */
     void setCurrentHue(int hue);
 
     /**
-     * @brief setCurrentAudioSync
-     * @param sync
+     * @brief set current audio synchronization
+     * @param sync The new audio synchronization
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
+	 * @author Cyril Naud <futuramath@gmail.com>
      */
     void setCurrentAudioSync(double sync);
 
 private slots:
 
     /**
-     * @brief applyCurrentPlaybackSettings
+     * @brief Apply current playback settings to media player. Automatically called when play()
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
@@ -399,65 +410,69 @@ signals:
 
 private:
     /**
-     * @brief createCoreConnections
+     * @brief Create libvlc event connections
+     * @see libvlc_callback()
+     * @see removeCoreConnections()
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void createCoreConnections();
 
     /**
-     * @brief removeCoreConnections
+     * @brief Remove libvlc event connections
+     * @see libvlc_callback()
+     * @see createCoreConnections()
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void removeCoreConnections();
 
     /**
-     * @brief libvlc_callback
-     * @param event
-     * @param data
+     * @brief Libvlc callback. Called every time vlc send an event
+     * @param event The libvlc event
+     * @param data The media player passed through libvlc_event_manager_t
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     static void libvlc_callback(const libvlc_event_t *event, void *data);
 
     /**
-     * @brief _vlcMediaPlayer
+     * @brief The libvlc media player core
      */
     libvlc_media_player_t *_vlcMediaPlayer;
 
     /**
-     * @brief _vlcEvents
+     * @brief The libvlc event manager core
      */
     libvlc_event_manager_t *_vlcEvents;
 
     /**
-     * @brief _currentPlayback
+     * @brief The current playback
      */
     Playback *_currentPlayback;
 
     /**
-     * @brief _videoView
+     * @brief The video view which the video will be rendered into
      */
     VideoView *_videoView;
 
     /**
-     * @brief _currentWId
+     * @brief The current window id
      */
     WId _currentWId;
 
     /**
-     * @brief _currentVolume
+     * @brief The current volume
      */
     int _currentVolume;
 
     /**
-     * @brief _currentGain
+     * @brief The current audio gain
      */
     int _currentGain;
 
     /**
-     * @brief _isPaused
+     * @brief The current media player pause status. Set to true if paused, false otherwise.
      */
     bool _isPaused;
 };

@@ -27,7 +27,7 @@
 
 /**
  * @interface VideoView
- * @brief The VideoView class
+ * @brief The video view interface
  */
 class VideoView
 {
@@ -36,13 +36,17 @@ public:
     virtual ~VideoView() {}
 
     /**
-     * @brief request
-     * @return
+     * @brief Get the window identifier in which the video should be rendered
+     * @return The window identifier
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     virtual WId request() = 0;
 
     /**
-     * @brief release
+     * @brief Release the video rendered into the window
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     virtual void release() = 0;
 };

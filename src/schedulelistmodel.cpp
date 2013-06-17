@@ -81,7 +81,7 @@ QVariant ScheduleListModel::data(const QModelIndex &index, int role) const
     case Qt::DecorationRole:
         if (index.column() == State) {
             if (_scheduleList[index.row()]->isExpired()) {
-                if (_scheduleList[index.row()]->wasTriggered())
+                if (_scheduleList[index.row()]->canceled())
                     return QIcon(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_206_ok_2.png"));
                 else
                     return QIcon(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_207_remove_2.png"));
@@ -119,7 +119,7 @@ QVariant ScheduleListModel::data(const QModelIndex &index, int role) const
         case State:
             if (index.column() == State) {
                 if (_scheduleList[index.row()]->isExpired()) {
-                    if (_scheduleList[index.row()]->wasTriggered())
+                    if (_scheduleList[index.row()]->canceled())
                         return tr("Played");
                     else
                         return tr("Ignored");

@@ -34,20 +34,26 @@ public:
     explicit VideoTrack(QObject *parent = 0);
 
     /**
-     * @brief size
-     * @return
+     * @brief Get the video size
+     * @return The video size (width and height)
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     QSize size() const;
 
     /**
-     * @brief width
-     * @return
+     * @brief Get the video width
+     * @return The video width
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     uint width() const;
 
     /**
-     * @brief height
-     * @return
+     * @brief Get the video height
+     * @return The video height
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     uint height() const;
 };

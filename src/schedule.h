@@ -35,96 +35,124 @@ public:
     explicit Schedule(Playlist *playlist, const QDateTime &launchAt, QObject *parent = 0);
     virtual ~Schedule();
 
+    /**
+     * @brief Get sheduled playlist
+     * @return The scheduled playlist
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     inline Playlist* playlist() const { return _playlist; }
 
-
     /**
-     * @brief start
+     * @brief Start the schedule timer. It will timeout at `_launchAt`
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void start();
 
     /**
-     * @brief stop
+     * @brief Stop the schedule timer.
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void stop();
 
     /**
-     * @brief cancel
+     * @brief Cancel the timer manually.
+     * @warning You could not re-activate the schedule after calling this cancel()
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void cancel();
 
     /**
-     * @brief isExpired
-     * @return
+     * @brief Is the schedule launch date is expired ?
+     * @return True if the schedule is expirated, false otherwise
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     bool isExpired() const;
 
     /**
-     * @brief isActive
-     * @return
+     * @brief Is the schedule activated ?
+     * @return True if the schedule timer is activated, false otherwise
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     bool isActive() const;
 
     /**
-     * @brief wasTriggered
+     * @brief Is the schedule canceled ?
      * @return
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
-    bool wasTriggered() const;
+    bool canceled() const;
 
     /**
-     * @brief launchAt
-     * @return
+     * @brief Get the date the associated playlist will be launched at
+     * @return The date the associated playlist will be launched at
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     inline const QDateTime & launchAt() const { return _launchAt; }
 
     /**
-     * @brief finishAt
-     * @return
+     * @brief Get the date the associated playlist will finish at. It depends of the playlist duration
+     * @return The date the associated playlist will finish at
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     QDateTime finishAt() const;
 
     /**
-     * @brief delay
-     * @param ms
+     * @brief Delay the schedule of `msecs` ms
+     * @param msecs The duration in ms to delay. Negative delay are accepted.
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
-    void delay(int ms);
+    void delay(int msecs);
 
 signals:
 
     /**
-     * @brief triggered
-     * @param playlist
+     * @brief Emitted when the schedule timer timeout
+     * @param playlist The scheduled playlist to play
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void triggered(Playlist *playlist);
 
 private slots:
 
     /**
-     * @brief timeout
+     * @brief Perform timeout action to the schedule. It is called when the timer timeout to manage specific behavior.
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void timeout();
 
 private:
 
     /**
-     * @brief _timer
+     * @brief The schedule timer
      */
     QTimer _timer;
 
     /**
-     * @brief _launchAt
+     * @brief The date the associated playlist will be launched at
      */
     QDateTime _launchAt;
 
     /**
-     * @brief _playlist
+     * @brief The scheduled playlist
      */
     Playlist *_playlist;
 
     /**
-     * @brief _wasTriggered
+     * @brief Tell the schedule is canceled or not.
      */
-    bool _wasTriggered;
+    bool _canceled;
 };
 
 #endif // SCHEDULE_H
