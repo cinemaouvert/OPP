@@ -6,6 +6,9 @@
  * Authors: Cyril Naud <futuramath@gmail.com>
  *          Florian Mhun <florian.mhun@gmail.com>
  *
+ * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
+ * The software was developed by four students of University of Poitiers
+ * as school project.
  *
  * Open Projection Program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

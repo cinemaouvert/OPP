@@ -8,6 +8,10 @@
 # Authors: Florian Mhun <florian.mhun@gmail.com>
 #          Cyril Naud <futuramath@gmail.com>
 #
+# Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
+# The software was developed by four students of University of Poitiers
+# as school project.
+#
 # Open Projection Program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -59,6 +63,7 @@ unix:!macx:INCLUDEPATH += /usr/include/vlc/plugins
 windows:LIBS += -L"C:\Program Files\VideoLAN\VLC\sdk\lib" -llibvlc -llibvlccore
 windows:INCLUDEPATH += "C:\Program Files\VideoLAN\VLC\sdk\include"
 windows:INCLUDEPATH += "C:\Program Files\VideoLAN\VLC\sdk\include\vlc\plugins"
+windows:INCLUDEPATH += ./windows/include
 
 mac:LIBS += -framework Cocoa
 mac:QMAKE_CXXFLAGS+=-x objective-c++
