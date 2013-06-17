@@ -41,30 +41,31 @@ public:
     /**
      * @brief Apply a playback to the window
      * @param playback The playback to apply
-     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void setPlayback(Playback* playback);
 
 public slots:
     /**
      * @brief Update the value of the label Modified length
-     * @param
-     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void updateLength();
     
 private slots:
     /**
      * @brief Save modified settings and close the window
-     * @param
-     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_buttonBox_OKCancel_accepted();
 
     /**
      * @brief Close the window
-     * @param
-     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_buttonBox_OKCancel_rejected();
 

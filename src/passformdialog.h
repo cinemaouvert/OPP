@@ -43,7 +43,6 @@ public:
 
     /**
      * @brief Returns the password
-     * @param
      * @return The password
      */
     QString getPass();

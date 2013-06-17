@@ -30,10 +30,13 @@
  * @return QTime corresponding to the milliseconds
  */
 QTime msecToQTime(uint msecs);
+
 /**
  * @brief Convert C to milliseconds
  * @param time V to convert
  * @return Number of milliseconds corresponding to the value of the QTime
+ *
+ * @author Cyril Naud <futuramath@gmail.com>
  */
 int qTimeToMsec(QTime time);
 

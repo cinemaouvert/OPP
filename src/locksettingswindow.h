@@ -40,8 +40,6 @@ public:
 
     /**
      * @brief Load locker parameters into the window
-     * @param
-     * @return
      *
      * @author Cyril Naud <futuramath@gmail.com>
      */
@@ -49,43 +47,47 @@ public:
 private slots:
     /**
      * @brief Enable password edition
-     * @param
-     * @return
+     *
+     * @author Baptiste Rozière <bapt.roziere@gmail.com>
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_radioButton_passwordOn_clicked();
 
     /**
      * @brief Disable password edition
-     * @param
-     * @return
+     *
+     * @author Baptiste Rozière <bapt.roziere@gmail.com>
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_radioButton_passwordOff_clicked();
 
     /**
      * @brief Enable lock delay edition
-     * @param
-     * @return
+     *
+     * @author Baptiste Rozière <bapt.roziere@gmail.com>
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_radioButton_autoLockOn_clicked();
 
     /**
      * @brief Disable lock delay edition
-     * @param
-     * @return
+     *
+     * @author Baptiste Rozière <bapt.roziere@gmail.com>
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_radioButton_autoLockOff_clicked();
 
     /**
      * @brief Save modified settings and close the window
-     * @param
-     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_buttonBox_accepted();
 
     /**
      * @brief Close the window
-     * @param
-     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_buttonBox_rejected();
 

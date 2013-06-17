@@ -38,50 +38,68 @@ public:
      * @brief Locker
      * @param widgets The widgets to lock and unlock
      * @param parent
+     *
+     * @author Baptiste Rozière <bapt.roziere@gmail.com>
      */
     explicit Locker(QList<QWidget*> widgets, QObject *parent = 0);
 
     /**
      * @brief getAutoLock
-     * @return
+     * @return True if auto lock is enabled, false otherwise
+     *
+     * @author Baptiste Rozière <bapt.roziere@gmail.com>
      */
     bool getAutoLock();
 
     /**
      * @brief setAutoLock
+     *
+     * @author Baptiste Rozière <bapt.roziere@gmail.com>
      */
     void setAutoLock(bool);
 
     /**
      * @brief passwordEnable
-     * @return
+     * @return True if password is enabled, false otherwise
+     *
+     * @author Baptiste Rozière <bapt.roziere@gmail.com>
      */
     bool passwordEnable();
 
     /**
      * @brief setPasswordEnable
+     *
+     * @author Baptiste Rozière <bapt.roziere@gmail.com>
      */
     void setPasswordEnable(bool);
 
     /**
      * @brief getPassword
-     * @return
+     * @return The password
+     *
+     * @author Baptiste Rozière <bapt.roziere@gmail.com>
      */
     QString getPassword();
 
     /**
      * @brief setPassword
+     *
+     * @author Baptiste Rozière <bapt.roziere@gmail.com>
      */
     void setPassword(QString);
 
     /**
      * @brief setAutoLockDelay
+     *
+     * @author Baptiste Rozière <bapt.roziere@gmail.com>
      */
     void setAutoLockDelay(int);
 
     /**
      * @brief getWidgets
-     * @return
+     * @return The list of lockable widgets
+     *
+     * @author Baptiste Rozière <bapt.roziere@gmail.com>
      */
     QList<QWidget*> getWidgets();
 

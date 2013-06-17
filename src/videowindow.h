@@ -46,14 +46,39 @@ public:
     explicit VideoWindow(QWidget *parent = 0);
     ~VideoWindow();
 
+
+    /**
+     * @brief Returns the video widget
+     * @return The video widget
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     inline VideoWidget* videoWidget() const { return _videoWidget; }
 
+    /**
+     * @brief Change the display mode
+     * @param mode The display mode to apply
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void setDisplayMode(const DisplayMode &mode);
 
+    /**
+     * @brief Move the video window
+     * @param display
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void moveToDisplay(const int &display);
 
 private:
+    /**
+     * @brief _videoWidget The video widget
+     */
     VideoWidget *_videoWidget;
+    /**
+     * @brief _mode The display mode
+     */
     DisplayMode _mode;
 };
 

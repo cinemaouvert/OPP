@@ -43,7 +43,6 @@ public:
     /**
      * @brief Set a playback to the window
      * @param playback The playback to use
-     * @return
      *
      * @author Cyril Naud <futuramath@gmail.com>
      */
@@ -53,7 +52,6 @@ private slots:
     /**
      * @brief Set a new value for Deinterlacing
      * @param index The new value for Deinterlacing
-     * @return
      *
      * @author Cyril Naud <futuramath@gmail.com>
      */
@@ -61,8 +59,6 @@ private slots:
 
     /**
      * @brief Validate and apply changes
-     * @param
-     * @return
      *
      * @author Cyril Naud <futuramath@gmail.com>
      */
@@ -70,8 +66,6 @@ private slots:
 
     /**
      * @brief Cancel changes
-     * @param
-     * @return
      *
      * @author Cyril Naud <futuramath@gmail.com>
      */

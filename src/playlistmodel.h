@@ -54,28 +54,24 @@ public:
 
     /**
      * @brief Returns the playlist
-     * @param
      * @return The playlist
      */
     inline Playlist* playlist() const { return _playlist; }
 
     /**
      * @brief Returns the index of active item
-     * @param
      * @return The index of active item
      */
     int activeItemIndex() const { return _activeItem.first; }
 
     /**
      * @brief Returns the number of columns
-     * @param
      * @return The number of columns
      */
     int columnCount(const QModelIndex &parent) const;
 
     /**
      * @brief Returns the number of rows
-     * @param
      * @return The number of rows
      */
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -100,7 +96,6 @@ public:
      * @brief Fill the playlist table
      * @param index
      * @param role
-     * @return
      */
     QVariant data(const QModelIndex &index, int role) const;
 
@@ -114,49 +109,40 @@ public:
     /**
      * @brief Remove playback matching to the media
      * @param media
-     * @return
      */
     void removePlaybackWithDeps(Media *media);
 
     /**
      * @brief Remove a playback
      * @param index
-     * @return
      */
     void removePlayback(int index);
 
     /**
      * @brief Drop mime data
-     * @param
      * @return True if data has been dropped, false otherwise
      */
     bool dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent );
 
     /**
      * @brief Update the layout
-     * @param
-     * @return
      */
     void updateLayout();
 
     /**
      * @brief Move an item up
-     * @param
      * @return True if the item has been moved, false otherwise
      */
     bool moveUp(const QModelIndex &index);
 
     /**
      * @brief Move an item down
-     * @param
      * @return True if the item has been moved, false otherwise
      */
     bool moveDown(const QModelIndex &index);
 
     /**
      * @brief Remove all items in the playlist
-     * @param
-     * @return
      */
     void removeAll();
 
@@ -164,29 +150,22 @@ public slots:
 
     /**
      * @brief Play the current item
-     * @param
-     * @return
      */
     void playItem();
 
     /**
      * @brief Pause the playback of the current item
-     * @param
-     * @return
      */
     void pauseItem();
 
     /**
      * @brief Stop the playback of the current item
-     * @param
-     * @return
      */
     void stopItem();
 
     /**
      * @brief Change the item to play
      * @param index
-     * @return
      */
     void setPlayingItem(int index);
 

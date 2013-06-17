@@ -45,37 +45,34 @@ public:
 
     /**
      * @brief projectTitle
-     * @return
      */
     inline const QString& projectTitle() const { return _projectTitle; }
 
     /**
      * @brief projectNotes
-     * @return
      */
     inline const QString& projectNotes() const { return _projectNotes; }
 
     /**
      * @brief setMediaListModel
-     * @param model
      */
     void setMediaListModel(MediaListModel* model);
 
     /**
      * @brief addPlaylistModel
-     * @param model
      */
     void addPlaylistModel(PlaylistModel* model);
 
     /**
      * @brief setScheduleListModel
-     * @param model
      */
     void setScheduleListModel(ScheduleListModel *model);
 
     /**
      * @brief save
      * @param file
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void save(QFile &file);
 

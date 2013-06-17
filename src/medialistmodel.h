@@ -47,49 +47,42 @@ public:
 
     /**
      * @brief Returns the media list
-     * @param
      * @return The media list
      */
     inline const QList<Media*>& mediaList() { return _mediaList; }
 
     /**
      * @brief Returns the number of columns
-     * @param
      * @return The number of columns
      */
     int columnCount(const QModelIndex &parent) const;
 
     /**
      * @brief Returns the total duration of the medias
-     * @param
      * @return The total duration of the medias
      */
     QTime totalDuration();
 
     /**
      * @brief Returns the number of pictures in the media list
-     * @param
      * @return The number of pictures in the media list
      */
     int countPictures();
 
     /**
      * @brief Returns the number of movies in the media list
-     * @param
      * @return The number of movies in the media list
      */
     int countMovies();
 
     /**
      * @brief Returns the number of rows
-     * @param
      * @return The number of rows
      */
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
     /**
      * @brief Returns the flags applied to the model
-     * @param index
      * @return The flags applied to the model
      */
     Qt::ItemFlags flags(const QModelIndex &index) const;
@@ -107,7 +100,6 @@ public:
      * @brief Fill the media list table
      * @param index
      * @param role
-     * @return
      */
     QVariant data(const QModelIndex &index, int role) const;
 
@@ -127,8 +119,6 @@ public:
 
     /**
      * @brief Remove all the medias from the media list
-     * @param
-     * @return
      */
     void removeAll();
 

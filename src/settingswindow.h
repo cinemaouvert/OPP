@@ -40,55 +40,59 @@ public:
      * @brief Get the index of a language
      * @param lang The language
      * @return The index of the language
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     int getIndex(QString lang);
     /**
      * @brief Get the language associed to an index
      * @param index The index
      * @return The language associed to the index
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     QString getLang(int index);
     
 private slots:
     /**
      * @brief Save modified settings and close the window
-     * @param
-     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_buttonBox_accepted();
 
     /**
      * @brief Close the window
-     * @param
-     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_buttonBox_rejected();
 
     /**
      * @brief Change the value of the VLC path field
-     * @param
-     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_pushButton_VLCPath_clicked();
 
     /**
      * @brief Change the value of the test pattern path field
-     * @param
-     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_pushButton_testPatternPath_clicked();
 
     /**
      * @brief Change the value of the intertitle path field
-     * @param
-     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_pushButton_intertitlePath_clicked();
 
     /**
      * @brief Change the value of the movies path field
-     * @param
-     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_pushButton_moviesPath_clicked();
 
