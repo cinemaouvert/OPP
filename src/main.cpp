@@ -26,6 +26,8 @@
 #include <QTranslator>
 #include <QSettings>
 #include <QLibraryInfo>
+#include <QDir>
+#include <QCoreApplication>
 
 #include "mainwindow.h"
 #include "media.h"
@@ -44,39 +46,35 @@ int main(int argc, char *argv[])
 
     if(!settings.contains("vlcPath"))
     #if defined(Q_OS_WIN)
-        settings.setValue("vlcPath", "path/to/VLC/for/Windows");
+        settings.setValue("vlcPath", "C:\Program Files (x86)\VideoLAN\VLC\vlc.exe");
     #elif defined(Q_OS_MAC)
-        settings.setValue("vlcPath", "path/to/VLC/for/Mac");
+        settings.setValue("vlcPath", "/Applications/VLC.app");
     #elif defined(Q_OS_UNIX)
-        settings.setValue("vlcPath", "path/to/VLC/for/Unix");
+        settings.setValue("vlcPath", "/usr/bin/vlc");
     #endif
+
+    QString currentDir = QCoreApplication::applicationDirPath();
 
     if(!settings.contains("testPatternPath"))
     #if defined(Q_OS_WIN)
-        settings.setValue("testPatternPath", "path/to/test/pattern/for/Windows");
+        settings.setValue("testPatternPath", currentDir+"\test_pattern.jpg");
     #elif defined(Q_OS_MAC)
-        settings.setValue("testPatternPath", "path/to/test/pattern/for/Mac");
+        settings.setValue("testPatternPath", currentDir+"/test_pattern.jpg");
     #elif defined(Q_OS_UNIX)
-        settings.setValue("testPatternPath", "path/to/test/pattern/for/Unix");
+        settings.setValue("testPatternPath", currentDir+"/test_pattern.jpg");
     #endif
 
     if(!settings.contains("intertitlePath"))
     #if defined(Q_OS_WIN)
-        settings.setValue("intertitlePath", "path/to/intertitle/for/Windows");
+        settings.setValue("intertitlePath", currentDir+"\intertitle.jpg");
     #elif defined(Q_OS_MAC)
-        settings.setValue("intertitlePath", "path/to/intertitle/for/Mac");
+        settings.setValue("intertitlePath", currentDir+"/intertitle.jpg");
     #elif defined(Q_OS_UNIX)
-        settings.setValue("intertitlePath", "path/to/intertitle/for/Unix");
+        settings.setValue("intertitlePath", currentDir+"/intertitle.jpg");
     #endif
 
     if(!settings.contains("moviesPath"))
-    #if defined(Q_OS_WIN)
-        settings.setValue("moviesPath", "path/to/movies/for/Windows");
-    #elif defined(Q_OS_MAC)
-        settings.setValue("moviesPath", "path/to/movies/for/Mac");
-    #elif defined(Q_OS_UNIX)
-        settings.setValue("moviesPath", "path/to/movies/for/Unix");
-    #endif
+        settings.setValue("moviesPath", QDir::homePath ());
 
     if(!settings.contains("lang"))
     {

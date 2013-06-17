@@ -49,6 +49,9 @@
         </property>
         <item row="0" column="0">
          <widget class="QLabel" name="label_testPattern">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>Test pattern</string>
           </property>
@@ -56,6 +59,9 @@
         </item>
         <item row="0" column="1">
          <widget class="QComboBox" name="comboBox_testPattern">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <item>
            <property name="text">
             <string>Activated</string>
@@ -70,6 +76,9 @@
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_inMark">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>In mark</string>
           </property>
@@ -77,6 +86,9 @@
         </item>
         <item row="1" column="1">
          <widget class="QTimeEdit" name="timeEdit_inMark">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="displayFormat">
            <string>HH:mm:ss</string>
           </property>
@@ -84,6 +96,9 @@
         </item>
         <item row="2" column="0">
          <widget class="QLabel" name="label_outMark">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>Out mark</string>
           </property>
@@ -91,6 +106,9 @@
         </item>
         <item row="2" column="1">
          <widget class="QTimeEdit" name="timeEdit_outMark">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="displayFormat">
            <string>HH:mm:ss</string>
           </property>
@@ -166,6 +184,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_attachment">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Download attachment files</string>
         </property>

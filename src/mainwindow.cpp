@@ -52,6 +52,7 @@
 #include "playback.h"
 #include "utils.h"
 #include "datastorage.h"
+#include "about.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -134,6 +135,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     currentPlaylistTableView()->setDragDropMode(QAbstractItemView::InternalMove);
     currentPlaylistTableView()->setDragEnabled(true);
+
+    _about = new About();
 }
 
 MainWindow::~MainWindow()
@@ -775,4 +778,12 @@ PlaylistModel* MainWindow::currentPlaylistModel() const
 Playlist* MainWindow::playlistAt(int index) const
 {
     return ( (PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(index) )->model() )->playlist();
+}
+
+void MainWindow::on_aboutAction_triggered()
+{
+    _about->show();
+    _about->raise();
+    _about->activateWindow();
+
 }

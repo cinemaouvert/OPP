@@ -41,6 +41,7 @@ class SettingsWindow;
 class LockSettingsWindow;
 class AdvancedSettingsWindow;
 class AdvancedPictureSettingsWindow;
+class About;
 class PlaylistTableView;
 class StatusWidget;
 
@@ -331,6 +332,12 @@ private slots:
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_deletePlaylistItemButton_clicked();
+    /**
+     * @brief Open About window
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
+     */
+    void on_aboutAction_triggered();
 
 protected:
     /**
@@ -380,6 +387,10 @@ private:
      * @brief _advancedPictureSettingsWindow The advanced picture settings window
      */
     AdvancedPictureSettingsWindow *_advancedPictureSettingsWindow;
+    /**
+     * @brief _about The About window
+     */
+    About *_about;
     /**
      * @brief _statusWidget The status widget
      */

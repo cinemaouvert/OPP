@@ -432,5 +432,7 @@
         <file>resources/icons/icon_settings.png</file>
         <file>resources/icons/icon_en.png</file>
         <file>resources/icons/icon_fr.png</file>
+        <file>resources/images/logo_opp.png</file>
+        <file>resources/images/universite_poitiers.png</file>
     </qresource>
 </RCC>

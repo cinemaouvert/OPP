@@ -33,13 +33,20 @@
       </property>
       <item row="0" column="0">
        <widget class="QLabel" name="label_trim">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Crop</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="comboBox_trim"/>
+       <widget class="QComboBox" name="comboBox_trim">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_deinterlace">
@@ -53,18 +60,28 @@
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_rotation">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Rotation</string>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QComboBox" name="comboBox_rotation"/>
+       <widget class="QComboBox" name="comboBox_rotation">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
     <item>
      <widget class="QGroupBox" name="gridGroupBox">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="locale">
        <locale language="English" country="UnitedStates"/>
       </property>
@@ -136,6 +153,9 @@
     </item>
     <item>
      <widget class="QCheckBox" name="checkBox_upDownSync">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="text">
        <string>Synchronize up and down</string>
       </property>
@@ -143,6 +163,9 @@
     </item>
     <item>
      <widget class="QCheckBox" name="checkBox_leftRightSync">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="text">
        <string>Synchronize left and right</string>
       </property>

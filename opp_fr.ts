@@ -2,6 +2,34 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="fr_FR">
 <context>
+    <name>About</name>
+    <message>
+        <location filename="src/about.ui" line="14"/>
+        <source>About</source>
+        <translation>À propos</translation>
+    </message>
+    <message>
+        <location filename="src/about.ui" line="33"/>
+        <source>Version 0.9.1</source>
+        <translation>Version 0.9.1</translation>
+    </message>
+    <message utf8="true">
+        <location filename="src/about.ui" line="43"/>
+        <source>This software has been developed by students from the Université de Poitiers as a project of Master of Computer Sciences</source>
+        <translation>Ce logiciel a été développé par des étudiants de l&apos;Université de Poitiers en tant que projet de Master Informatique</translation>
+    </message>
+    <message>
+        <location filename="src/about.ui" line="56"/>
+        <source>Developers : Baptiste Roziere, Cyril Naud, Florian Mhun, Hamza Haddar</source>
+        <translation>Développeurs : Baptiste Roziere, Cyril Naud, Florian Mhun, Hamza Haddar</translation>
+    </message>
+    <message>
+        <location filename="src/about.ui" line="99"/>
+        <source>Close</source>
+        <translation>Fermer</translation>
+    </message>
+</context>
+<context>
     <name>AdvancedPictureSettingsWindow</name>
     <message>
         <location filename="src/advancedpicturesettingswindow.ui" line="14"/>
@@ -25,7 +53,7 @@
         <translation type="obsolete">Rogner</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="47"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="54"/>
         <source>Deinterlace</source>
         <translation>Désentrelacer</translation>
     </message>
@@ -46,7 +74,7 @@
         <translation type="obsolete">Post-traitement</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="57"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="67"/>
         <source>Rotation</source>
         <translation>Rotation</translation>
     </message>
@@ -71,50 +99,50 @@
         <translation type="obsolete">Rognage avancé</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="37"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="40"/>
         <source>Crop</source>
         <translation>Rognage</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="72"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="89"/>
         <source>Advanced crop</source>
         <translation>Rognage avancé</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="78"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="95"/>
         <source>Left</source>
         <translation>Gauche</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="85"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="102"/>
         <source>Up</source>
         <translation>Haut</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="92"/>
-        <location filename="src/advancedpicturesettingswindow.ui" line="99"/>
-        <location filename="src/advancedpicturesettingswindow.ui" line="106"/>
-        <location filename="src/advancedpicturesettingswindow.ui" line="120"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="109"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="116"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="123"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="137"/>
         <source> px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="113"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="130"/>
         <source>Right</source>
         <translation>Droite</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="130"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="147"/>
         <source>Down</source>
         <translation>Bas</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="140"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="160"/>
         <source>Synchronize up and down</source>
         <translation>Synchroniser haut et bas</translation>
     </message>
     <message>
-        <location filename="src/advancedpicturesettingswindow.ui" line="147"/>
+        <location filename="src/advancedpicturesettingswindow.ui" line="170"/>
         <source>Synchronize left and right</source>
         <translation>Synchroniser gauche et droite</translation>
     </message>
@@ -135,38 +163,38 @@
         <translation type="obsolete">Image</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.ui" line="53"/>
+        <location filename="src/advancedsettingswindow.ui" line="56"/>
         <source>Test pattern</source>
         <translation>Mire</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.ui" line="61"/>
+        <location filename="src/advancedsettingswindow.ui" line="67"/>
         <source>Activated</source>
         <translation>Activée</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.ui" line="66"/>
+        <location filename="src/advancedsettingswindow.ui" line="72"/>
         <source>Inactive</source>
         <translation>Désactivée</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.ui" line="74"/>
+        <location filename="src/advancedsettingswindow.ui" line="83"/>
         <source>In mark</source>
         <translation>Point d&apos;entrée</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.ui" line="81"/>
-        <location filename="src/advancedsettingswindow.ui" line="95"/>
+        <location filename="src/advancedsettingswindow.ui" line="93"/>
+        <location filename="src/advancedsettingswindow.ui" line="113"/>
         <source>HH:mm:ss</source>
         <translation>HH:mm:ss</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.ui" line="88"/>
+        <location filename="src/advancedsettingswindow.ui" line="103"/>
         <source>Out mark</source>
         <translation>Point de sortie</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.ui" line="102"/>
+        <location filename="src/advancedsettingswindow.ui" line="120"/>
         <source>Original length</source>
         <translation>Durée originale</translation>
     </message>
@@ -175,7 +203,7 @@
         <translation type="obsolete">00:25:36</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.ui" line="116"/>
+        <location filename="src/advancedsettingswindow.ui" line="134"/>
         <source>Modified length</source>
         <translation>Durée recoupée</translation>
     </message>
@@ -184,27 +212,27 @@
         <translation type="obsolete">Nouvelle ligne</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.ui" line="170"/>
+        <location filename="src/advancedsettingswindow.ui" line="191"/>
         <source>Download attachment files</source>
         <translation>Télécharger les fichiers joints</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.cpp" line="16"/>
+        <location filename="src/advancedsettingswindow.cpp" line="72"/>
         <source>Title</source>
         <translation>Titre</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.cpp" line="54"/>
+        <location filename="src/advancedsettingswindow.cpp" line="82"/>
         <source>Track %1 (Video)</source>
         <translation>Piste %1 (Vidéo)</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.cpp" line="65"/>
+        <location filename="src/advancedsettingswindow.cpp" line="93"/>
         <source>Track %1 (Audio)</source>
         <translation>Piste %1 (Audio)</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.cpp" line="76"/>
+        <location filename="src/advancedsettingswindow.cpp" line="104"/>
         <source>Track %1 (Subtitles)</source>
         <translation>Piste %1 (Sous-titres)</translation>
     </message>
@@ -439,7 +467,7 @@
     </message>
     <message>
         <location filename="src/mainwindow.ui" line="327"/>
-        <location filename="src/mainwindow.cpp" line="744"/>
+        <location filename="src/mainwindow.cpp" line="749"/>
         <source>Start automation</source>
         <translation>Démarrer l&apos;automatisation</translation>
     </message>
@@ -595,7 +623,7 @@
     </message>
     <message>
         <location filename="src/mainwindow.ui" line="1178"/>
-        <location filename="src/mainwindow.ui" line="1316"/>
+        <location filename="src/mainwindow.ui" line="1328"/>
         <source>Help</source>
         <translation>Aide</translation>
     </message>
@@ -640,90 +668,90 @@
         <translation>Coller</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1236"/>
+        <location filename="src/mainwindow.ui" line="1239"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1241"/>
+        <location filename="src/mainwindow.ui" line="1247"/>
         <source>Import</source>
         <translation>Importer</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1246"/>
+        <location filename="src/mainwindow.ui" line="1255"/>
         <source>Play a test pattern</source>
         <translation>Lire une mire</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1340"/>
+        <location filename="src/mainwindow.ui" line="1355"/>
         <source>Projection</source>
         <translation>Projection</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1354"/>
+        <location filename="src/mainwindow.ui" line="1369"/>
         <source>Window</source>
         <translation>Fenêtre</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1359"/>
+        <location filename="src/mainwindow.ui" line="1374"/>
         <source>Add new playlist</source>
         <translation>Ajouter une nouvelle séance</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1364"/>
-        <location filename="src/mainwindow.cpp" line="592"/>
+        <location filename="src/mainwindow.ui" line="1379"/>
+        <location filename="src/mainwindow.cpp" line="595"/>
         <source>Rename playlist</source>
         <translation>Renommer une séance</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1369"/>
+        <location filename="src/mainwindow.ui" line="1384"/>
         <source>Remove playlist item</source>
         <translation>Retirer un élément de la séance</translation>
     </message>
     <message>
         <location filename="src/mainwindow.ui" line="224"/>
-        <location filename="src/mainwindow.ui" line="1257"/>
+        <location filename="src/mainwindow.ui" line="1266"/>
         <source>Automation</source>
         <translation>Automatisation</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1268"/>
+        <location filename="src/mainwindow.ui" line="1277"/>
         <source>Output</source>
         <translation>Sortie</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1279"/>
+        <location filename="src/mainwindow.ui" line="1288"/>
         <source>Summary/Details</source>
         <translation>Résumé/Détails</translation>
     </message>
     <message>
         <location filename="src/mainwindow.ui" line="343"/>
-        <location filename="src/mainwindow.ui" line="1290"/>
+        <location filename="src/mainwindow.ui" line="1299"/>
         <source>Bin</source>
         <translation>Répertoire de programmation</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1301"/>
+        <location filename="src/mainwindow.ui" line="1310"/>
         <source>Status bar</source>
         <translation>Barre de status</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1306"/>
+        <location filename="src/mainwindow.ui" line="1315"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1311"/>
+        <location filename="src/mainwindow.ui" line="1320"/>
         <source>Lock settings</source>
         <translation>Paramètres du verrouillage</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1321"/>
+        <location filename="src/mainwindow.ui" line="1336"/>
         <source>Update</source>
         <translation>Mise à jour</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1326"/>
+        <location filename="src/mainwindow.ui" line="1341"/>
         <source>About</source>
         <translation>À propos</translation>
     </message>
@@ -762,91 +790,91 @@
         <translation type="obsolete">Durée totale : </translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="177"/>
+        <location filename="src/mainwindow.cpp" line="180"/>
         <source>New media</source>
         <translation>Nouveu média</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="177"/>
+        <location filename="src/mainwindow.cpp" line="180"/>
         <source>Media (%1)</source>
         <translation>Média (%1)</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="182"/>
         <location filename="src/mainwindow.cpp" line="185"/>
+        <location filename="src/mainwindow.cpp" line="188"/>
         <source>Import media</source>
         <translation>Importer un média</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="182"/>
+        <location filename="src/mainwindow.cpp" line="185"/>
         <source>The file %1 does not exist. Maybe it was deleted.</source>
         <translation>Le fichier %1 n&apos;existe pas. Il a peut-être été effacé.</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="185"/>
+        <location filename="src/mainwindow.cpp" line="188"/>
         <source>The file %1 was already imported.</source>
         <translation>Le fichier %1 a déjà été importé.</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="200"/>
+        <location filename="src/mainwindow.cpp" line="203"/>
         <source>Remove media</source>
         <translation>Retirer un média</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="200"/>
+        <location filename="src/mainwindow.cpp" line="203"/>
         <source>This media is used. All references of this media into playlists will be deleted too.
  Are you sure to remove this media ?</source>
         <translation>Ce média est utilisé. Toutes les références à ce média dans les séances serontégalement supprimées. Voulez-vous vraiment retirer ce média ?</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="200"/>
-        <location filename="src/mainwindow.cpp" line="491"/>
+        <location filename="src/mainwindow.cpp" line="203"/>
+        <location filename="src/mainwindow.cpp" line="494"/>
         <source>No</source>
         <translation>Non</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="200"/>
-        <location filename="src/mainwindow.cpp" line="491"/>
+        <location filename="src/mainwindow.cpp" line="203"/>
+        <location filename="src/mainwindow.cpp" line="494"/>
         <source>Yes</source>
         <translation>Oui</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="380"/>
-        <location filename="src/mainwindow.cpp" line="384"/>
-        <location filename="src/mainwindow.cpp" line="388"/>
+        <location filename="src/mainwindow.cpp" line="383"/>
+        <location filename="src/mainwindow.cpp" line="387"/>
+        <location filename="src/mainwindow.cpp" line="391"/>
         <source>Disabled</source>
         <translation>Désactivé</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="471"/>
+        <location filename="src/mainwindow.cpp" line="474"/>
         <source>New playlist</source>
         <translation>Nouvelle séance</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="491"/>
+        <location filename="src/mainwindow.cpp" line="494"/>
         <source>Remove playlist</source>
         <translation>Supprimer une séance</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="491"/>
+        <location filename="src/mainwindow.cpp" line="494"/>
         <source>This playlist was scheduled. All schedules which use this playlist will be deleted too.
  Are you sure to remove this playlist ?</source>
         <translation>Cette playlist a été automatisée. Toutes les automatisations de cette séance seront également supprimées. Voulez-vous vraiment supprimer cette séance ?</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="593"/>
+        <location filename="src/mainwindow.cpp" line="596"/>
         <source>Playlist title : </source>
         <oldsource>Playlist title :</oldsource>
         <translation>Nom de la séance : </translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="625"/>
+        <location filename="src/mainwindow.cpp" line="628"/>
         <source>Save Project</source>
         <translation>Sauvegarder le projet</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="625"/>
-        <location filename="src/mainwindow.cpp" line="646"/>
+        <location filename="src/mainwindow.cpp" line="628"/>
+        <location filename="src/mainwindow.cpp" line="651"/>
         <source>OPP file (*.opp)</source>
         <translation>Fichier OPP (*.opp)</translation>
     </message>
@@ -855,35 +883,35 @@
         <translation type="obsolete">OPP (*.opp);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="632"/>
-        <location filename="src/mainwindow.cpp" line="653"/>
+        <location filename="src/mainwindow.cpp" line="637"/>
+        <location filename="src/mainwindow.cpp" line="658"/>
         <source>Unable to open file</source>
         <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="646"/>
+        <location filename="src/mainwindow.cpp" line="651"/>
         <source>Open Project</source>
         <translation>Ouvrir un projet</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="713"/>
-        <location filename="src/mainwindow.cpp" line="724"/>
+        <location filename="src/mainwindow.cpp" line="718"/>
+        <location filename="src/mainwindow.cpp" line="729"/>
         <source>Schedule validation</source>
         <translation>Création d&apos;une automatisation</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="713"/>
+        <location filename="src/mainwindow.cpp" line="718"/>
         <source>The schedule launch date must be later than the current date.</source>
         <translation>La date de début d&apos;une automatisation doit être postérieure à la date courante.</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="724"/>
+        <location filename="src/mainwindow.cpp" line="729"/>
         <source>A playlist was already scheduled between the %1 and %2, 
 Please choose an other launch date.</source>
         <translation>Une séance a déjà été planifiée entre %1 et %2. Choisissez une autre date de début.</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="742"/>
+        <location filename="src/mainwindow.cpp" line="747"/>
         <source>Stop automation</source>
         <translation>Arrêter l&apos;automatisation</translation>
     </message>
@@ -891,22 +919,22 @@ Please choose an other launch date.</source>
 <context>
     <name>MediaListModel</name>
     <message>
-        <location filename="src/medialistmodel.cpp" line="36"/>
+        <location filename="src/medialistmodel.cpp" line="59"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="src/medialistmodel.cpp" line="39"/>
+        <location filename="src/medialistmodel.cpp" line="62"/>
         <source>Duration</source>
         <translation>Durée</translation>
     </message>
     <message>
-        <location filename="src/medialistmodel.cpp" line="42"/>
+        <location filename="src/medialistmodel.cpp" line="65"/>
         <source>Used</source>
         <translation>Utilisé</translation>
     </message>
     <message>
-        <location filename="src/medialistmodel.cpp" line="45"/>
+        <location filename="src/medialistmodel.cpp" line="68"/>
         <source>Location</source>
         <translation>Localisation</translation>
     </message>
@@ -1020,37 +1048,37 @@ Please choose an other launch date.</source>
 <context>
     <name>PlaylistModel</name>
     <message>
-        <location filename="src/playlistmodel.cpp" line="51"/>
+        <location filename="src/playlistmodel.cpp" line="73"/>
         <source>Title</source>
         <translation>Titre</translation>
     </message>
     <message>
-        <location filename="src/playlistmodel.cpp" line="54"/>
+        <location filename="src/playlistmodel.cpp" line="76"/>
         <source>Duration</source>
         <translation>Durée</translation>
     </message>
     <message>
-        <location filename="src/playlistmodel.cpp" line="57"/>
+        <location filename="src/playlistmodel.cpp" line="79"/>
         <source>Video</source>
         <translation>Vidéo</translation>
     </message>
     <message>
-        <location filename="src/playlistmodel.cpp" line="60"/>
+        <location filename="src/playlistmodel.cpp" line="82"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location filename="src/playlistmodel.cpp" line="63"/>
+        <location filename="src/playlistmodel.cpp" line="85"/>
         <source>Subtitles</source>
         <translation>Sous titres</translation>
     </message>
     <message>
-        <location filename="src/playlistmodel.cpp" line="66"/>
+        <location filename="src/playlistmodel.cpp" line="88"/>
         <source>Test pattern</source>
         <translation>Mire</translation>
     </message>
     <message>
-        <location filename="src/playlistmodel.cpp" line="69"/>
+        <location filename="src/playlistmodel.cpp" line="91"/>
         <source>Status</source>
         <translation>État</translation>
     </message>
@@ -1146,42 +1174,42 @@ Please choose an other launch date.</source>
 <context>
     <name>ScheduleListModel</name>
     <message>
-        <location filename="src/schedulelistmodel.cpp" line="35"/>
+        <location filename="src/schedulelistmodel.cpp" line="56"/>
         <source>Launch at</source>
         <translation>Début à</translation>
     </message>
     <message>
-        <location filename="src/schedulelistmodel.cpp" line="38"/>
+        <location filename="src/schedulelistmodel.cpp" line="59"/>
         <source>Finish at</source>
         <translation>Fin à</translation>
     </message>
     <message>
-        <location filename="src/schedulelistmodel.cpp" line="41"/>
+        <location filename="src/schedulelistmodel.cpp" line="62"/>
         <source>Playlist</source>
         <translation>Séance</translation>
     </message>
     <message>
-        <location filename="src/schedulelistmodel.cpp" line="44"/>
+        <location filename="src/schedulelistmodel.cpp" line="65"/>
         <source>State</source>
         <translation>État</translation>
     </message>
     <message>
-        <location filename="src/schedulelistmodel.cpp" line="102"/>
+        <location filename="src/schedulelistmodel.cpp" line="123"/>
         <source>Played</source>
         <translation>Joué</translation>
     </message>
     <message>
-        <location filename="src/schedulelistmodel.cpp" line="104"/>
+        <location filename="src/schedulelistmodel.cpp" line="125"/>
         <source>Ignored</source>
         <translation>Ignoré</translation>
     </message>
     <message>
-        <location filename="src/schedulelistmodel.cpp" line="106"/>
+        <location filename="src/schedulelistmodel.cpp" line="127"/>
         <source>Pending...</source>
         <translation>En attente...</translation>
     </message>
     <message>
-        <location filename="src/schedulelistmodel.cpp" line="109"/>
+        <location filename="src/schedulelistmodel.cpp" line="130"/>
         <source>Sleeping...</source>
         <translation>Non actif...</translation>
     </message>
@@ -1242,7 +1270,7 @@ Please choose an other launch date.</source>
         <translation>Vous devez redémarrer le logiciel pour appliquer la nouvelle langue.</translation>
     </message>
     <message>
-        <location filename="src/settingswindow.cpp" line="92"/>
+        <location filename="src/settingswindow.cpp" line="113"/>
         <source>Open Directory</source>
         <translation>Ouvrir un dossier</translation>
     </message>
@@ -1264,7 +1292,7 @@ Please choose an other launch date.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/statuswidget.cpp" line="34"/>
+        <location filename="src/statuswidget.cpp" line="55"/>
         <source>files loaded</source>
         <translation>fichiers chargés</translation>
     </message>

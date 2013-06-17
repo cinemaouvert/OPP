@@ -1232,16 +1232,25 @@
    </property>
   </action>
   <action name="cancelAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Cancel</string>
    </property>
   </action>
   <action name="importAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Import</string>
    </property>
   </action>
   <action name="testPatternAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Play a test pattern</string>
    </property>
@@ -1312,11 +1321,17 @@
    </property>
   </action>
   <action name="helpAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Help</string>
    </property>
   </action>
   <action name="updateAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Update</string>
    </property>
