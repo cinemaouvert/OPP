@@ -35,6 +35,54 @@ void AdvancedSettingsWindow::setPlayback(Playback* playback)
 
     /*Modified length*/
     updateLength();
+
+
+    /*Fill table*/
+    while (ui->tableWidget_information->rowCount() > 0)
+    {
+        ui->tableWidget_information->removeRow(0);
+    }
+    ui->tableWidget_information->insertRow(0);
+    QTableWidgetItem* itemTitle = new QTableWidgetItem( tr("Title") );
+    ui->tableWidget_information->setItem( 0, 0, itemTitle );
+    itemTitle = new QTableWidgetItem(_playback->media()->name());
+    ui->tableWidget_information->setItem( 0, 1, itemTitle);
+    int line=1;
+    QTableWidgetItem* itemTrack;
+    foreach(VideoTrack videoTrack, _playback->media()->videoTracks())
+    {
+        int row = ui->tableWidget_information->rowCount();
+        ui->tableWidget_information->insertRow(row);
+        itemTrack = new QTableWidgetItem(QString(tr("Track %1 (Video)")).arg(QString::number(videoTrack.trackId())));
+        ui->tableWidget_information->setItem(line, 0, itemTrack);
+        itemTrack = new QTableWidgetItem(videoTrack.codecDescription());
+        ui->tableWidget_information->setItem(line, 1, itemTrack);
+
+        line++;
+    }
+    foreach(AudioTrack audioTrack, _playback->media()->audioTracks())
+    {
+        int row = ui->tableWidget_information->rowCount();
+        ui->tableWidget_information->insertRow(row);
+        itemTrack = new QTableWidgetItem(QString(tr("Track %1 (Audio)")).arg(QString::number(audioTrack.trackId())));
+        ui->tableWidget_information->setItem(line, 0, itemTrack);
+        itemTrack = new QTableWidgetItem(audioTrack.codecDescription());
+        ui->tableWidget_information->setItem(line, 1, itemTrack);
+
+        line++;
+    }
+    foreach(Track subtitlesTrack, _playback->media()->subtitlesTracks())
+    {
+        int row = ui->tableWidget_information->rowCount();
+        ui->tableWidget_information->insertRow(row);
+        itemTrack = new QTableWidgetItem(QString(tr("Track %1 (Subtitles)")).arg(QString::number(subtitlesTrack.trackId())));
+        ui->tableWidget_information->setItem(line, 0, itemTrack);
+        itemTrack = new QTableWidgetItem(subtitlesTrack.codecDescription());
+        ui->tableWidget_information->setItem(line, 1, itemTrack);
+
+        line++;
+    }
+
 }
 
 void AdvancedSettingsWindow::on_buttonBox_OKCancel_accepted()

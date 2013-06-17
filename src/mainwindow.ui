@@ -34,16 +34,7 @@
         </size>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
-        <property name="leftMargin">
-         <number>1</number>
-        </property>
-        <property name="topMargin">
-         <number>1</number>
-        </property>
-        <property name="rightMargin">
-         <number>1</number>
-        </property>
-        <property name="bottomMargin">
+        <property name="margin">
          <number>1</number>
         </property>
         <item>
@@ -56,16 +47,7 @@
             <string>Summary</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_6">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
+            <property name="margin">
              <number>0</number>
             </property>
             <item>
@@ -184,16 +166,7 @@
             <string>Details</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_7">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
+            <property name="margin">
              <number>0</number>
             </property>
             <item>
@@ -231,16 +204,7 @@
             <string>Log</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_8">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
+            <property name="margin">
              <number>0</number>
             </property>
             <item>
@@ -263,16 +227,7 @@
            <property name="spacing">
             <number>1</number>
            </property>
-           <property name="leftMargin">
-            <number>1</number>
-           </property>
-           <property name="topMargin">
-            <number>1</number>
-           </property>
-           <property name="rightMargin">
-            <number>1</number>
-           </property>
-           <property name="bottomMargin">
+           <property name="margin">
             <number>1</number>
            </property>
            <item>
@@ -388,16 +343,7 @@
            <string>Bin</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
-           <property name="leftMargin">
-            <number>1</number>
-           </property>
-           <property name="topMargin">
-            <number>1</number>
-           </property>
-           <property name="rightMargin">
-            <number>1</number>
-           </property>
-           <property name="bottomMargin">
+           <property name="margin">
             <number>1</number>
            </property>
            <item>
@@ -467,46 +413,19 @@
         </size>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
-        <property name="leftMargin">
-         <number>1</number>
-        </property>
-        <property name="topMargin">
-         <number>1</number>
-        </property>
-        <property name="rightMargin">
-         <number>1</number>
-        </property>
-        <property name="bottomMargin">
+        <property name="margin">
          <number>1</number>
         </property>
         <item>
          <widget class="QFrame" name="horizontalFrame">
           <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <property name="leftMargin">
-            <number>1</number>
-           </property>
-           <property name="topMargin">
-            <number>1</number>
-           </property>
-           <property name="rightMargin">
-            <number>1</number>
-           </property>
-           <property name="bottomMargin">
+           <property name="margin">
             <number>1</number>
            </property>
            <item>
             <widget class="QFrame" name="verticalFrame_3">
              <layout class="QVBoxLayout" name="verticalLayout_2">
-              <property name="leftMargin">
-               <number>1</number>
-              </property>
-              <property name="topMargin">
-               <number>1</number>
-              </property>
-              <property name="rightMargin">
-               <number>1</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>1</number>
               </property>
               <item>
@@ -526,16 +445,7 @@
                     <enum>QFrame::Raised</enum>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_10">
-                    <property name="leftMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="bottomMargin">
+                    <property name="margin">
                      <number>0</number>
                     </property>
                     <item>
@@ -641,16 +551,7 @@
                     <enum>QFrame::Raised</enum>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_12">
-                    <property name="leftMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="bottomMargin">
+                    <property name="margin">
                      <number>0</number>
                     </property>
                     <item>
@@ -807,16 +708,7 @@
                     <enum>QFrame::Raised</enum>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_14">
-                    <property name="leftMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="bottomMargin">
+                    <property name="margin">
                      <number>0</number>
                     </property>
                     <item>
@@ -911,6 +803,68 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_9">
             <item>
+             <widget class="QPushButton" name="addPlaylistButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>30</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Add a new playlist</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../images.qrc">
+                <normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="editNamePlaylistButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>30</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Rename current playlist</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../images.qrc">
+                <normaloff>:/icons/resources/glyphicons/glyphicons_030_pencil.png</normaloff>:/icons/resources/glyphicons/glyphicons_030_pencil.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="separatorFrame">
+              <property name="frameShape">
+               <enum>QFrame::HLine</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QPushButton" name="playlistUpButton">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -924,12 +878,41 @@
                 <height>16777215</height>
                </size>
               </property>
+              <property name="toolTip">
+               <string>Move selected item up</string>
+              </property>
               <property name="text">
                <string/>
               </property>
               <property name="icon">
                <iconset resource="../images.qrc">
                 <normaloff>:/icons/resources/glyphicons/glyphicons_213_up_arrow.png</normaloff>:/icons/resources/glyphicons/glyphicons_213_up_arrow.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="deletePlaylistItemButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>30</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Remove selected item</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../images.qrc">
+                <normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</iconset>
               </property>
              </widget>
             </item>
@@ -946,6 +929,9 @@
                 <width>30</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="toolTip">
+               <string>Move selected item down</string>
               </property>
               <property name="text">
                <string/>
@@ -969,16 +955,7 @@
            </sizepolicy>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_6">
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
+           <property name="margin">
             <number>0</number>
            </property>
            <item>
@@ -1141,7 +1118,7 @@
      <x>0</x>
      <y>0</y>
      <width>1287</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
