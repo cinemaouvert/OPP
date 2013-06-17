@@ -59,6 +59,7 @@ unix:!macx:INCLUDEPATH += /usr/include/vlc/plugins
 windows:LIBS += -L"C:\Program Files\VideoLAN\VLC\sdk\lib" -llibvlc -llibvlccore
 windows:INCLUDEPATH += "C:\Program Files\VideoLAN\VLC\sdk\include"
 windows:INCLUDEPATH += "C:\Program Files\VideoLAN\VLC\sdk\include\vlc\plugins"
+windows:INCLUDEPATH += ./windows/include
 
 mac:LIBS += -framework Cocoa
 mac:QMAKE_CXXFLAGS+=-x objective-c++
