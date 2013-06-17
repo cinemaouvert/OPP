@@ -48,18 +48,8 @@ void passformdialog::on_pushButton_clicked()
     //enable or disable widgets
     if(this->getPass() == _locker->getPassword())
     {
-        foreach(QWidget *widget,_locker->getWidgets())
-        {
-            widget->setEnabled(true);
-        }
+        _locker->unlock();
         this->close();
-        //change button lock name
-        /*if(_locker->getWidgets().first()->isEnabled())
-        {
-           // ui->lockButton->setText("Lock");
-        }else{
-           // ui->lockButton->setText("Unlock");
-        }*/
     }
 
 }
