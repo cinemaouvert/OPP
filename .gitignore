@@ -27,6 +27,7 @@ mobility.prf
 mobilityconfig.prf
 install/*
 *.app
+doc/
 
 .qmake.cache
 
