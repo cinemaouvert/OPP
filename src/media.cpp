@@ -22,7 +22,6 @@
 
 #include "media.h"
 
-#include <unistd.h>
 #include <string.h>
 
 #include <QStringList>
