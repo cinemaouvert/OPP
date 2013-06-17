@@ -627,6 +627,8 @@ void MainWindow::on_saveAsAction_triggered()
     if (fileName.isEmpty()) {
          return;
     } else {
+        if(fileName.right(4)!=".opp")
+            fileName+=".opp";
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly)) {
             QMessageBox::information(this, tr("Unable to open file"),file.errorString());
