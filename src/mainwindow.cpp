@@ -52,7 +52,7 @@
 #include "playback.h"
 #include "utils.h"
 #include "datastorage.h"
-#include "about.h"
+#include "aboutdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -136,7 +136,7 @@ MainWindow::MainWindow(QWidget *parent) :
     currentPlaylistTableView()->setDragDropMode(QAbstractItemView::InternalMove);
     currentPlaylistTableView()->setDragEnabled(true);
 
-    _about = new About();
+    _aboutdialog = new AboutDialog();
 }
 
 MainWindow::~MainWindow()
@@ -782,8 +782,8 @@ Playlist* MainWindow::playlistAt(int index) const
 
 void MainWindow::on_aboutAction_triggered()
 {
-    _about->show();
-    _about->raise();
-    _about->activateWindow();
+    _aboutdialog->show();
+    _aboutdialog->raise();
+    _aboutdialog->activateWindow();
 
 }

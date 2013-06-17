@@ -18,24 +18,34 @@
  * You should have received a copy of the GNU General Public License
  * along with Open Projection Program. If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************************/
+#ifndef ABOUTDIALOG_H
+#define ABOUTDIALOG_H
+#include <QDialog>
 
-#include "about.h"
-#include "ui_about.h"
-
-About::About(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::About)
-{
-    ui->setupUi(this);
-
+namespace Ui {
+class AboutDialog;
 }
 
-About::~About()
+class AboutDialog : public QDialog
 {
-    delete ui;
-}
+    Q_OBJECT
 
-void About::on_pushButton_close_clicked()
-{
-    this->hide();
-}
+public:
+    explicit AboutDialog(QWidget *parent = 0);
+    ~AboutDialog();
+
+private slots:
+    /**
+     * @brief Close the window
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
+     */
+    void on_pushButton_close_clicked();
+
+private:
+    /**
+     * @brief ui The UI
+     */
+    Ui::AboutDialog *ui;
+};
+#endif // ABOUTDIALOG_H

@@ -41,7 +41,7 @@ class SettingsWindow;
 class LockSettingsWindow;
 class AdvancedSettingsWindow;
 class AdvancedPictureSettingsWindow;
-class About;
+class AboutDialog;
 class PlaylistTableView;
 class StatusWidget;
 
@@ -390,7 +390,7 @@ private:
     /**
      * @brief _about The About window
      */
-    About *_about;
+    AboutDialog *_aboutdialog;
     /**
      * @brief _statusWidget The status widget
      */
