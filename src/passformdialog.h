@@ -41,6 +41,11 @@ class passformdialog : public QDialog
 public:
     explicit passformdialog(Locker *locker,QWidget *parent = 0);
 
+    /**
+     * @brief Returns the password
+     * @param
+     * @return The password
+     */
     QString getPass();
 
     ~passformdialog();
@@ -52,10 +57,18 @@ private slots:
 
 
 private:
+    /**
+     * @brief ui The UI
+     */
     Ui::passformdialog *ui;
+    /**
+     * @brief _lePass The password
+     */
     QString _lePass;
+    /**
+     * @brief _locker The locker
+     */
     Locker *_locker;
-   // QList<QWidget*> _widgets;
 };
 
 #endif // PASSFORMDIALOG_H

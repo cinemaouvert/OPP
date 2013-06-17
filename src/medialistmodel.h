@@ -36,32 +36,100 @@ class MediaListModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
+
+    /**
+     * @enum Columns
+     * @brief The Columns enum
+     */
     enum Columns { Name = 0, Duration = 1, Used = 2, Location = 3 };
 
     MediaListModel(QObject *parent = 0);
 
+    /**
+     * @brief Returns the media list
+     * @param
+     * @return The media list
+     */
     inline const QList<Media*>& mediaList() { return _mediaList; }
 
+    /**
+     * @brief Returns the number of columns
+     * @param
+     * @return The number of columns
+     */
     int columnCount(const QModelIndex &parent) const;
 
+    /**
+     * @brief Returns the total duration of the medias
+     * @param
+     * @return The total duration of the medias
+     */
     QTime totalDuration();
 
+    /**
+     * @brief Returns the number of pictures in the media list
+     * @param
+     * @return The number of pictures in the media list
+     */
     int countPictures();
 
+    /**
+     * @brief Returns the number of movies in the media list
+     * @param
+     * @return The number of movies in the media list
+     */
     int countMovies();
 
+    /**
+     * @brief Returns the number of rows
+     * @param
+     * @return The number of rows
+     */
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
+    /**
+     * @brief Returns the flags applied to the model
+     * @param index
+     * @return The flags applied to the model
+     */
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
+    /**
+     * @brief Returns the headers data
+     * @param section
+     * @param orientation
+     * @param role
+     * @return The headers data
+     */
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
+    /**
+     * @brief Fill the media list table
+     * @param index
+     * @param role
+     * @return
+     */
     QVariant data(const QModelIndex &index, int role) const;
 
+    /**
+     * @brief Remove the media at specified index from the media list
+     * @param index
+     * @return True if the media has been removed, false otherwise
+     */
     bool removeMedia(int index);
 
+    /**
+     * @brief Add a media to the media list
+     * @param media
+     * @return True if the media has been added, false otherwise
+     */
     bool addMedia(Media *media);
 
+    /**
+     * @brief Remove all the medias from the media list
+     * @param
+     * @return
+     */
     void removeAll();
 
 signals:
@@ -72,8 +140,14 @@ signals:
     void mediaListChanged(int);
 
 private:
+    /**
+     * @brief _mediaList The media list
+     */
     QList<Media*> _mediaList;
 
+    /**
+     * @brief _mediaFileList
+     */
     QStringList _mediaFileList;
 
     friend QDataStream & operator << (QDataStream &, const QList<Media> &);
