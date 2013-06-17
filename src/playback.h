@@ -27,6 +27,9 @@
 #include "media.h"
 #include "mediasettings.h"
 
+/**
+ * @brief Manage playback by associating a MediaSettings and a Media instance
+ */
 class Playback : public QObject
 {
     Q_OBJECT

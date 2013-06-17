@@ -45,6 +45,9 @@ struct libvlc_event_manager_t;
 struct libvlc_event_t;
 struct libvlc_media_t;
 
+/**
+ * @brief Manage media playback (through Playback)
+ */
 class MediaPlayer : public QObject
 {
     Q_OBJECT

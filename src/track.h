@@ -26,6 +26,9 @@
 
 #include <vlc/vlc.h>
 
+/**
+ * @brief Base class for track information
+ */
 class Track : public QObject
 {
     Q_OBJECT            

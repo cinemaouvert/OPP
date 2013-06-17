@@ -82,8 +82,7 @@ enum Deinterlacing {
 };
 
 /**
- * @class MediaSettings
- * @brief Manage media settings data
+ * @brief Manage media settings
  */
 class MediaSettings : public QObject
 {

@@ -50,7 +50,6 @@ struct libvlc_media_t;
 struct libvlc_instance_t;
 
 /**
- * @class Media
  * @brief Manage media informations
  */
 class Media : public QObject

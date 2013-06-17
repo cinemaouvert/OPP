@@ -27,7 +27,6 @@
 struct libvlc_instance_t;
 
 /**
- * @class Application
  * @brief Manage global application settings
  */
 class Application

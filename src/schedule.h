@@ -28,6 +28,9 @@
 
 #include "playlist.h"
 
+/**
+ * @brief Manage Playlist playback scheduling
+ */
 class Schedule : public QObject
 {
     Q_OBJECT

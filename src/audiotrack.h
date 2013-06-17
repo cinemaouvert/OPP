@@ -24,6 +24,9 @@
 
 #include "track.h"
 
+/**
+ * @brief Manage audio track informations
+ */
 class AudioTrack : public Track
 {
     Q_OBJECT

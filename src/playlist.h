@@ -29,6 +29,9 @@
 
 struct libvlc_instance_t;
 
+/**
+ * @brief Manage list of Playback
+ */
 class Playlist : public QObject
 {
     Q_OBJECT

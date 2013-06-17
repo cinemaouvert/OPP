@@ -26,8 +26,8 @@
 #include <QtGui/qwindowdefs.h>
 
 /**
- * @interface VideoView
  * @brief The video view interface
+ * @interface
  */
 class VideoView
 {

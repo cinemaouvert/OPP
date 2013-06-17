@@ -26,6 +26,9 @@
 
 #include "track.h"
 
+/**
+ * @brief Manage video track information
+ */
 class VideoTrack : public Track
 {
     Q_OBJECT
