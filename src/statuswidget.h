@@ -37,14 +37,31 @@ public:
     ~StatusWidget();
     
 public slots:
+
+    /**
+     * @brief Set the value of media counter
+     * @param count The new value of media counter
+     * @return
+     */
     void setMediaCount(int count);
 
 protected:
+    /**
+     * @brief Update the time
+     * @param event
+     * @return
+     */
     void timerEvent(QTimerEvent *event);
 
 private:
+    /**
+     * @brief ui The UI
+     */
     Ui::StatusWidget *ui;
 
+    /**
+     * @brief ui The timer identifiant
+     */
     int _timerId;
 };
 

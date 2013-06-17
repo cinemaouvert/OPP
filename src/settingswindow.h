@@ -36,23 +36,66 @@ public:
     explicit SettingsWindow(QWidget *parent = 0);
     ~SettingsWindow();
 
+    /**
+     * @brief Get the index of a language
+     * @param lang The language
+     * @return The index of the language
+     */
     int getIndex(QString lang);
+    /**
+     * @brief Get the language associed to an index
+     * @param index The index
+     * @return The language associed to the index
+     */
     QString getLang(int index);
     
 private slots:
+    /**
+     * @brief Save modified settings and close the window
+     * @param
+     * @return
+     */
     void on_buttonBox_accepted();
 
+    /**
+     * @brief Close the window
+     * @param
+     * @return
+     */
     void on_buttonBox_rejected();
 
+    /**
+     * @brief Change the value of the VLC path field
+     * @param
+     * @return
+     */
     void on_pushButton_VLCPath_clicked();
 
+    /**
+     * @brief Change the value of the test pattern path field
+     * @param
+     * @return
+     */
     void on_pushButton_testPatternPath_clicked();
 
+    /**
+     * @brief Change the value of the intertitle path field
+     * @param
+     * @return
+     */
     void on_pushButton_intertitlePath_clicked();
 
+    /**
+     * @brief Change the value of the movies path field
+     * @param
+     * @return
+     */
     void on_pushButton_moviesPath_clicked();
 
 private:
+    /**
+     * @brief ui The UI
+     */
     Ui::SettingsWindow *ui;
 };
 

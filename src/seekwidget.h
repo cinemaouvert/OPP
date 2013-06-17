@@ -39,10 +39,25 @@ public:
 
     ~SeekWidget();
 
+    /**
+     * @brief Returns the value of autoHide
+     * @param
+     * @return The value of autoHide
+     */
     bool autoHide() const { return _autoHide; }
 
+    /**
+     * @brief Set the value of autoHide
+     * @param autoHide The new value of autoHide
+     * @return
+     */
     void setAutoHide(const bool &autoHide);
 
+    /**
+     * @brief Set a media player
+     * @param player The new media player
+     * @return
+     */
     void setMediaPlayer(MediaPlayer *player);
 
 protected:
@@ -52,24 +67,77 @@ protected:
     void wheelEvent(QWheelEvent *event);
 
 private slots:
+    /**
+     * @brief Reset the widget
+     * @param
+     * @return
+     */
     void end();
+    /**
+     * @brief Update the elapsed time value
+     * @param time The new elapsed time value
+     * @return
+     */
     void updateCurrentTime(const int &time);
+    /**
+     * @brief Update the full time value
+     * @param time The new full time value
+     * @return
+     */
     void updateFullTime(const int &time);
 
 private:
+    /**
+     * @brief Initialize the widget
+     * @param
+     * @return
+     */
     void initSeekWidget();
+    /**
+     * @brief Update the widget
+     * @param pos
+     * @return
+     */
     void updateEvent(const QPoint &pos);
 
+    /**
+     * @brief Lock the widget
+     * @param
+     * @return
+     */
     void lock();
+    /**
+     * @brief Unlock the widget
+     * @param
+     * @return
+     */
     void unlock();
 
+    /**
+     * @brief _lock Indicates if the widget is locked
+     */
     bool _lock;
 
+    /**
+     * @brief _vlcMediaPlayer The media player
+     */
     MediaPlayer *_vlcMediaPlayer;
 
+    /**
+     * @brief _autoHide
+     */
     bool _autoHide;
+    /**
+     * @brief _seek The progress bar
+     */
     QProgressBar *_seek;
+    /**
+     * @brief _labelElapsed Label for elapsed time
+     */
     QLabel *_labelElapsed;
+    /**
+     * @brief _labelFull Label for total time
+     */
     QLabel *_labelFull;
 };
 

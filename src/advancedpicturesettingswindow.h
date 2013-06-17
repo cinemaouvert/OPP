@@ -39,17 +39,53 @@ class AdvancedPictureSettingsWindow : public QDialog
 public:
     explicit AdvancedPictureSettingsWindow(QWidget *parent = 0);
     ~AdvancedPictureSettingsWindow();
+
+    /**
+     * @brief Set a playback to the window
+     * @param playback The playback to use
+     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
+     */
     void setPlayback(Playback* playback);
     
 private slots:
+    /**
+     * @brief Set a new value for Deinterlacing
+     * @param index The new value for Deinterlacing
+     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
+     */
     void on_comboBox_deinterlace_currentIndexChanged(int index);
 
+    /**
+     * @brief Validate and apply changes
+     * @param
+     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
+     */
     void on_buttonBox_OKCancel_accepted();
 
+    /**
+     * @brief Cancel changes
+     * @param
+     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
+     */
     void on_buttonBox_OKCancel_rejected();
 
 private:
+    /**
+     * @brief ui The UI
+     */
     Ui::AdvancedPictureSettingsWindow *ui;
+
+    /**
+     * @brief _playback The playback modified by the window
+     */
     Playback* _playback;
 };
 

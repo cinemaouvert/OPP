@@ -34,6 +34,8 @@ AdvancedSettingsWindow::AdvancedSettingsWindow(QWidget *parent) :
     _playback(0)
 {
     ui->setupUi(this);
+    connect(ui->timeEdit_inMark, SIGNAL(timeChanged(QTime)), this, SLOT(updateLength()));
+    connect(ui->timeEdit_outMark, SIGNAL(timeChanged(QTime)), this, SLOT(updateLength()));
 }
 
 AdvancedSettingsWindow::~AdvancedSettingsWindow()
@@ -136,14 +138,4 @@ void AdvancedSettingsWindow::updateLength()
     int diff = 1000*(secOut-secIn);
     QTime modified =  msecToQTime(diff);
     ui->label_modifiedLengthValue->setText(modified.toString("hh:mm:ss"));
-}
-
-void AdvancedSettingsWindow::on_timeEdit_inMark_timeChanged(const QTime &date)
-{
-    updateLength();
-}
-
-void AdvancedSettingsWindow::on_timeEdit_outMark_timeChanged(const QTime &date)
-{
-    updateLength();
 }

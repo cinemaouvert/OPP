@@ -37,24 +37,66 @@ class LockSettingsWindow : public QDialog
 public:
     explicit LockSettingsWindow(Locker *locker, QWidget *parent = 0);
     ~LockSettingsWindow();
+
+    /**
+     * @brief Load locker parameters into the window
+     * @param
+     * @return
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
+     */
     void setLocker();
 private slots:
+    /**
+     * @brief Enable password edition
+     * @param
+     * @return
+     */
     void on_radioButton_passwordOn_clicked();
 
+    /**
+     * @brief Disable password edition
+     * @param
+     * @return
+     */
     void on_radioButton_passwordOff_clicked();
 
+    /**
+     * @brief Enable lock delay edition
+     * @param
+     * @return
+     */
     void on_radioButton_autoLockOn_clicked();
 
+    /**
+     * @brief Disable lock delay edition
+     * @param
+     * @return
+     */
     void on_radioButton_autoLockOff_clicked();
 
-    void on_lineEdit_password_editingFinished();
-
+    /**
+     * @brief Save modified settings and close the window
+     * @param
+     * @return
+     */
     void on_buttonBox_accepted();
 
+    /**
+     * @brief Close the window
+     * @param
+     * @return
+     */
     void on_buttonBox_rejected();
 
 private:
+    /**
+     * @brief ui The UI
+     */
     Ui::LockSettingsWindow *ui;
+    /**
+     * @brief _locker The locker to modify
+     */
     Locker *_locker;
 };
 

@@ -31,7 +31,6 @@ LockSettingsWindow::LockSettingsWindow(Locker *locker, QWidget *parent) :
     _locker(locker)
 {
     ui->setupUi(this);
-    //_locker->setPasswordEnable(false);
 }
 
 LockSettingsWindow::~LockSettingsWindow()
@@ -41,29 +40,22 @@ LockSettingsWindow::~LockSettingsWindow()
 
 void LockSettingsWindow::on_radioButton_passwordOn_clicked()
 {
-    //_locker->setPasswordEnable(true);
      ui->lineEdit_password->setEnabled(true);
 }
 
 void LockSettingsWindow::on_radioButton_passwordOff_clicked()
 {
-    //_locker->setPasswordEnable(false);
     ui->lineEdit_password->setEnabled(false);
 }
 
 void LockSettingsWindow::on_radioButton_autoLockOn_clicked()
 {
-    //_locker->setAutoLock(true);
+    ui->spinBox_delay->setEnabled(true);
 }
 
 void LockSettingsWindow::on_radioButton_autoLockOff_clicked()
 {
-   // _locker->setAutoLock(false);
-}
-
-void LockSettingsWindow::on_lineEdit_password_editingFinished()
-{
-    //_locker->setPassword(ui->lineEdit_password->text());
+    ui->spinBox_delay->setEnabled(false);
 }
 
 void LockSettingsWindow::on_buttonBox_accepted()
@@ -101,6 +93,7 @@ void LockSettingsWindow::setLocker()
         ui->lineEdit_password->setEnabled(false);
     }
     ui->lineEdit_password->setText(_locker->getPassword());
+
     /*Automatic lock*/
     if(_locker->getAutoLock())
     {

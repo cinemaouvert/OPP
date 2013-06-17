@@ -37,57 +37,175 @@ class PlaylistModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
+    /**
+     * @enum Columns
+     * @brief The Columns enum
+     */
     enum Columns { Title = 0, Duration = 1, Video = 2, Audio = 3, Subtitles = 4, TestPattern = 5, Status = 6 };
+    /**
+     * @enum PlaybackState
+     * @brief The PlaybackState enum
+     */
     enum PlaybackState { Playing = 0, Paused = 1, Idle = 2 };
 
     PlaylistModel(Playlist *playlist, MediaListModel *mediaListModel, ScheduleListModel *scheduleListModel, QObject *parent = 0);
 
     virtual ~PlaylistModel();
 
+    /**
+     * @brief Returns the playlist
+     * @param
+     * @return The playlist
+     */
     inline Playlist* playlist() const { return _playlist; }
 
+    /**
+     * @brief Returns the index of active item
+     * @param
+     * @return The index of active item
+     */
     int activeItemIndex() const { return _activeItem.first; }
 
+    /**
+     * @brief Returns the number of columns
+     * @param
+     * @return The number of columns
+     */
     int columnCount(const QModelIndex &parent) const;
 
+    /**
+     * @brief Returns the number of rows
+     * @param
+     * @return The number of rows
+     */
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
+    /**
+     * @brief Returns the flags applied to the model
+     * @param index
+     * @return The flags applied to the model
+     */
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
+    /**
+     * @brief Returns the headers data
+     * @param section
+     * @param orientation
+     * @param role
+     * @return The headers data
+     */
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
+    /**
+     * @brief Fill the playlist table
+     * @param index
+     * @param role
+     * @return
+     */
     QVariant data(const QModelIndex &index, int role) const;
 
+    /**
+     * @brief Add a playback to the playlist
+     * @param playback
+     * @return True if the playback has been added, false otherwise
+     */
     bool addPlayback(Playback *playback);
 
+    /**
+     * @brief Remove playback matching to the media
+     * @param media
+     * @return
+     */
     void removePlaybackWithDeps(Media *media);
 
+    /**
+     * @brief Remove a playback
+     * @param index
+     * @return
+     */
     void removePlayback(int index);
 
+    /**
+     * @brief Drop mime data
+     * @param
+     * @return True if data has been dropped, false otherwise
+     */
     bool dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent );
 
+    /**
+     * @brief Update the layout
+     * @param
+     * @return
+     */
     void updateLayout();
 
+    /**
+     * @brief Move an item up
+     * @param
+     * @return True if the item has been moved, false otherwise
+     */
     bool moveUp(const QModelIndex &index);
 
+    /**
+     * @brief Move an item down
+     * @param
+     * @return True if the item has been moved, false otherwise
+     */
     bool moveDown(const QModelIndex &index);
 
+    /**
+     * @brief Remove all items in the playlist
+     * @param
+     * @return
+     */
     void removeAll();
 
 public slots:
 
+    /**
+     * @brief Play the current item
+     * @param
+     * @return
+     */
     void playItem();
 
+    /**
+     * @brief Pause the playback of the current item
+     * @param
+     * @return
+     */
     void pauseItem();
 
+    /**
+     * @brief Stop the playback of the current item
+     * @param
+     * @return
+     */
     void stopItem();
 
+    /**
+     * @brief Change the item to play
+     * @param index
+     * @return
+     */
     void setPlayingItem(int index);
 
 private:
+    /**
+     * @brief _playlist The playlist
+     */
     Playlist *_playlist;
+    /**
+     * @brief _mediaListModel The media list model
+     */
     MediaListModel *_mediaListModel;
+    /**
+     * @brief _activeItem The active item
+     */
     QPair<int, PlaybackState> _activeItem;
+    /**
+     * @brief _scheduleListModel The schedule list model
+     */
     ScheduleListModel *_scheduleListModel;
 };
 
