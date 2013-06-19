@@ -33,10 +33,10 @@ Playback::Playback(Media *media, QObject *parent) :
     _mediaSettings = new MediaSettings();
 
     if (_media->videoTracks().count() > 0)
-        _mediaSettings->setVideoTrack(0);
+        _mediaSettings->setVideoTrack(0); /* set video first track */
 
     if (_media->audioTracks().count() > 0)
-        _mediaSettings->setAudioTrack(1);
+        _mediaSettings->setAudioTrack(1); /* set first audio track */
 
     _mediaSettings->setOutMark(_media->duration());
 }

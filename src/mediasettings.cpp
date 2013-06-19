@@ -124,9 +124,9 @@ void MediaSettings::setGain(float gain)
 
 void MediaSettings::initDefault()
 {
-    _audioTrack = 0;
-    _videoTrack = 0;
-    _subtitlesTrack = 0;
+    _audioTrack = 0; /* audio disabled */
+    _videoTrack = 0; /* video disabled */
+    _subtitlesTrack = 0; /* subtitles disabled */
     _ratio = Original;
     _scale = NoScale;
     _deinterlacing = Discard;

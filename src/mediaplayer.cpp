@@ -217,17 +217,21 @@ void MediaPlayer::setCurrentGain(float gain)
 
 void MediaPlayer::setCurrentAudioTrack(const int &track)
 {
-    libvlc_audio_set_track(_vlcMediaPlayer, track);
+    // call libvlc_video_set_audio() when media does not contains any audio track cause trouble
+    if (_currentPlayback->media()->audioTracks().size() > 0)
+        libvlc_audio_set_track(_vlcMediaPlayer, track);
 }
 
 void MediaPlayer::setCurrentVideoTrack(const int &track)
 {
-    libvlc_video_set_track(_vlcMediaPlayer, track);
+        libvlc_video_set_track(_vlcMediaPlayer, track);
 }
 
 void MediaPlayer::setCurrentSubtitlesTrack(const int &track)
 {
-    libvlc_video_set_spu(_vlcMediaPlayer, track);
+    // call libvlc_video_set_spu() when media does not contains any subtitles track cause trouble
+    if (_currentPlayback->media()->subtitlesTracks().size() > 0)
+        libvlc_video_set_spu(_vlcMediaPlayer, track);
 }
 
 void MediaPlayer::setCurrentRatio(Ratio ratio)
