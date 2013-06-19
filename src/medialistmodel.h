@@ -173,3 +173,5 @@ private:
      */
     QStringList _mediaFileList;
 };
+
+#endif // MEDIALISTMODEL_H
