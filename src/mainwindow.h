@@ -409,6 +409,8 @@ private slots:
      */
     void on_aboutAction_triggered();
 
+    void on_scheduleLaunchAtTimeEdit_timeChanged(const QTime &time);
+
 protected:
     /**
      * @brief Returns the selected playback

@@ -93,28 +93,28 @@ void SettingsWindow::on_buttonBox_rejected()
 void SettingsWindow::on_pushButton_VLCPath_clicked()
 {
 
-    QString pathVlc = QFileDialog::getOpenFileName(this,"", QDir::homePath(),"");
+    QString pathVlc = QFileDialog::getOpenFileName(this,"", ui->lineEdit_VLCPath->text(),"");
     if(pathVlc!="")
         ui->lineEdit_VLCPath->setText(pathVlc);
 }
 
 void SettingsWindow::on_pushButton_testPatternPath_clicked()
 {
-    QString pathTestPattern = QFileDialog::getOpenFileName(this,"", QDir::homePath(),"");
+    QString pathTestPattern = QFileDialog::getOpenFileName(this,"", ui->lineEdit_testPatternPath->text(),"");
     if(pathTestPattern!="")
         ui->lineEdit_testPatternPath->setText(pathTestPattern);
 }
 
 void SettingsWindow::on_pushButton_intertitlePath_clicked()
 {
-    QString pathIntertitle = QFileDialog::getOpenFileName(this,"", QDir::homePath(),"");
+    QString pathIntertitle = QFileDialog::getOpenFileName(this,"", ui->lineEdit_intertitlePath->text(),"");
     if(pathIntertitle!="")
         ui->lineEdit_intertitlePath->setText(pathIntertitle);
 }
 
 void SettingsWindow::on_pushButton_moviesPath_clicked()
 {
-    QString pathMovies = QFileDialog::getExistingDirectory(this, tr("Open Directory"), QDir::homePath(),QFileDialog::ShowDirsOnly);
+    QString pathMovies = QFileDialog::getExistingDirectory(this, tr("Open Directory"), ui->lineEdit_moviesPath->text(),QFileDialog::ShowDirsOnly);
     if(pathMovies!="")
         ui->lineEdit_moviesPath->setText(pathMovies);
 }

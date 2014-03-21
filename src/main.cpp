@@ -90,9 +90,11 @@ int main(int argc, char *argv[])
             settings.setValue("lang","en");
     }
 
+    //TODO TEST TRANSLATION FILES
     /*Translation file*/
     QString translationFile = "opp_";
     translationFile+=settings.value("lang").toString();
+    //translationFile+="fr";
 
     QTranslator translator;
     translator.load(translationFile);
@@ -100,6 +102,8 @@ int main(int argc, char *argv[])
 
     QTranslator translator2;
     translator2.load(QString("qt_") + settings.value("lang").toString(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    //translator2.load(QString("qt_fr"), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+
     a.installTranslator(&translator2);
 
     MainWindow win;

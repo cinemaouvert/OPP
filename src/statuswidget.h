@@ -59,6 +59,9 @@ protected:
      */
     void timerEvent(QTimerEvent *event);
 
+private slots:
+    void on_timeLabel_linkActivated(const QString &link);
+
 private:
     /**
      * @brief ui The UI

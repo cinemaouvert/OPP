@@ -56,7 +56,7 @@ mac:LIBS += -L"/Applications/VLC.app/Contents/MacOS/lib"
 mac:INCLUDEPATH += ./include
 mac:INCLUDEPATH += "/Applications/VLC.app/Contents/MacOS/include"
 
-unix:LIBS += -lvlc -lvlccore
+unix:LIBS += -lvlc -lvlccore -lX11
 
 unix:!macx:INCLUDEPATH += /usr/include/vlc/plugins
 

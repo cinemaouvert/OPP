@@ -35,6 +35,7 @@
 #include <QHeaderView>
 #include <QContextMenuEvent>
 #include <QInputDialog>
+#include <QSettings>
 
 #include "videowindow.h"
 #include "settingswindow.h"
@@ -181,7 +182,9 @@ void MainWindow::on_notesEdit_textChanged()
 
 void MainWindow::on_binAddMediaButton_clicked()
 {
-    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("New media"), QDir::homePath(), tr("Media (%1)").arg(Media::mediaExtensions().join(" ")));
+    QSettings settings("opp", "opp");
+
+    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("New media"), settings.value("moviesPath").toString(), tr("Media (%1)").arg(Media::mediaExtensions().join(" ")));
 
     foreach (QString fileName, fileNames) {
         Media *media = new Media(fileName, _app->vlcInstance());
@@ -198,23 +201,36 @@ void MainWindow::on_binAddMediaButton_clicked()
 void MainWindow::on_binDeleteMediaButton_clicked()
 {
     QItemSelectionModel *selectionModel = ui->binTableView->selectionModel();
+    //TODO check if working well
+    int nbMedia = selectionModel->selectedRows().length();
+    for(int i=0;i<nbMedia;i++){
+        bool toDel = false;
 
-    while (selectionModel->selectedRows().count() != 0) {
-        QModelIndex index = selectionModel->selectedRows().first();
+        QModelIndex index = selectionModel->selectedRows().at(i);
+        printf("\n Index => %d \n",i);
         Media *media = _mediaListModel->mediaList().at(index.row());
 
         if (media->isUsed()) {
-            if (1 == QMessageBox::warning(this, tr("Remove media"), tr("This media is used. All references of this media into playlists will be deleted too.\n Are you sure to remove this media ?") ,tr("No"), tr("Yes")))
+            //If user answer Yes
+            if (1 == QMessageBox::warning(this, media->name(), tr("This media is used. All references of this media into playlists will be deleted too.\n Are you sure to remove this media ?") ,tr("No"), tr("Yes")))
             {
                 int countPlaylists = ui->playlistsTabWidget->count();
+                printf("\n count => %d \n",countPlaylists);
                 for (int i = 0; i < countPlaylists; i++) {
                     PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(i))->model();
                     model->removePlaybackWithDeps(media);
                 }
+                toDel=true;
             }
+        }else{
+            toDel=true;
         }
-
-        _mediaListModel->removeMedia(index.row());
+        if(toDel){
+            _mediaListModel->removeMedia(index.row());
+            // We removed a line so we need to update nbLine
+            nbMedia--;
+            i--;
+        }
     }
 }
 
@@ -789,5 +805,10 @@ void MainWindow::on_aboutAction_triggered()
     _aboutdialog->show();
     _aboutdialog->raise();
     _aboutdialog->activateWindow();
+
+}
+
+void MainWindow::on_scheduleLaunchAtTimeEdit_timeChanged(const QTime &time)
+{
 
 }
