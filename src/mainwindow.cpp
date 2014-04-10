@@ -219,6 +219,7 @@ void MainWindow::on_binDeleteMediaButton_clicked()
                 for (int i = 0; i < countPlaylists; i++) {
                     PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(i))->model();
                     model->removePlaybackWithDeps(media);
+                    updateSettings();
                 }
                 toDel=true;
             }
