@@ -680,7 +680,7 @@ void MainWindow::on_openListingAction_triggered()
         }
 
         _dataStorage->load(file);
-
+        updatePlaylistListCombox();
         file.close();
 
         ui->progEdit->setText(_dataStorage->projectTitle());
@@ -696,11 +696,17 @@ void MainWindow::on_newListingAction_triggered()
     // FIX : ref 0000001
     // add empty tab and remove all other one (init state)
     createPlaylistTab();
+    int size = ui->schedulePlaylistListComboBox->count();
+
     while (ui->playlistsTabWidget->count() > 1)
         ui->playlistsTabWidget->removeTab(0);
 
     ui->progEdit->clear();
     ui->notesEdit->clear();
+    for(int i = 0; i < size; i++){
+        ui->schedulePlaylistListComboBox->removeItem(i);
+    }
+    updatePlaylistListCombox();
 }
 
 
