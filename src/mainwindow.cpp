@@ -445,7 +445,7 @@ void MainWindow::updateSettings()
 
 void MainWindow::on_playerPlayButton_clicked(bool checked)
 {
-    PlaylistModel *playlistModel = currentPlaylistModel();
+   //UNUSED PlaylistModel *playlistModel = currentPlaylistModel();
     if (checked) {
         if (_playlistPlayer->mediaPlayer()->isPaused()) {
             _playlistPlayer->mediaPlayer()->resume();
@@ -831,5 +831,5 @@ void MainWindow::on_aboutAction_triggered()
 
 void MainWindow::on_scheduleLaunchAtTimeEdit_timeChanged(const QTime &time)
 {
-
+//UNUSED
 }
