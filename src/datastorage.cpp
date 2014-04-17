@@ -257,7 +257,9 @@ void DataStorage::load(QFile &file)
             settings->setGain( playbackAttributes.namedItem("gain").nodeValue().toFloat() );
 
             model->addPlayback(playback);
+            this->_playlistModelList.push_back(model);
         }
+
     }
 
     // FIX : ref 0000001
@@ -274,7 +276,7 @@ void DataStorage::load(QFile &file)
 
         Playlist *playlist = findPlaylistById(scheduleAttributes.namedItem("playlist-id").nodeValue().toInt());
 
-        if (!playlist)
+        if (playlist == NULL)
             continue;
 
         Schedule *schedule = new Schedule(playlist, QDateTime::fromString(scheduleAttributes.namedItem("launchAt").nodeValue(), "dd/MM/yyyy hh:mm:ss"));
@@ -284,6 +286,7 @@ void DataStorage::load(QFile &file)
 
         _scheduleListModel->addSchedule(schedule);
     }
+
 }
 
 void DataStorage::clear()
