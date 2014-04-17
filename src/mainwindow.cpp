@@ -37,6 +37,8 @@
 #include <QInputDialog>
 #include <QSettings>
 
+#include <iostream>
+
 #include "videowindow.h"
 #include "settingswindow.h"
 #include "advancedsettingswindow.h"
@@ -73,19 +75,20 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->lockButton, SIGNAL(clicked(bool)), _locker, SLOT(toggle(bool)));
 
     _lockSettingsWindow = new LockSettingsWindow(_locker, this);
-    _videoWindow = new VideoWindow(this);
 
     // internal core initalization
     _app = new Application();
     _playlistPlayer = new PlaylistPlayer(_app->vlcInstance());
+
+    _videoWindow = new VideoWindow(this);
+
 
     _playlistPlayer->mediaPlayer()->setVideoView( (VideoView*) _videoWindow->videoWidget() );
     _playlistPlayer->mediaPlayer()->setVolume(ui->playerVolumeSlider->value());
 
     connect(ui->playerVolumeSlider, SIGNAL(valueChanged(int)), _playlistPlayer->mediaPlayer(), SLOT(setVolume(int)));
     connect(_playlistPlayer->mediaPlayer(), SIGNAL(playing(bool)), ui->playerPlayButton, SLOT(setChecked(bool)));
-    connect(ui->playerStopButton, SIGNAL(clicked()), _playlistPlayer, SLOT(stop()));
-    connect(ui->playerStopButton, SIGNAL(clicked(bool)), ui->playerPlayButton, SLOT(setChecked(bool)));
+    connect(ui->playerStopButton, SIGNAL(clicked()), this, SLOT(stop()));
     connect(ui->playerPreviousButton, SIGNAL(clicked()), _playlistPlayer, SLOT(previous()));
     connect(ui->playerNextButton, SIGNAL(clicked()), _playlistPlayer, SLOT(next()));
     connect(_playlistPlayer, SIGNAL(end()), ui->playerPlayButton, SLOT(toggle()));
@@ -447,6 +450,12 @@ void MainWindow::on_playerPlayButton_clicked(bool checked)
         if (_playlistPlayer->mediaPlayer()->isPaused()) {
             _playlistPlayer->mediaPlayer()->resume();
         } else {
+            //Creation de la window elle n'existe pas
+            if(!_videoWindow->isVisible()){
+                _videoWindow = new VideoWindow(this);
+                _playlistPlayer->mediaPlayer()->setVideoView( (VideoView*) _videoWindow->videoWidget() );
+            }
+
             // play or resume playback
             QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
 
@@ -481,6 +490,11 @@ void MainWindow::on_menuVideoMode_triggered(QAction *action)
 // TODO : play test pattern
 void MainWindow::on_testPatternAction_triggered()
 {
+}
+
+void MainWindow::stop(){
+    _playlistPlayer->stop();
+    ui->playerPlayButton->setChecked(false);
 }
 
 

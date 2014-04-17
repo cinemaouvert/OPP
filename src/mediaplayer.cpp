@@ -157,8 +157,8 @@ void MediaPlayer::stop()
     if (!_vlcMediaPlayer)
         return;
 
-    if (_videoView)
-        _videoView->release();
+    /*if (_videoView)
+        _videoView->release();*/
     _currentWId = 0;
 
     libvlc_media_player_stop(_vlcMediaPlayer);

@@ -94,7 +94,17 @@ public:
      */
     void deletePlaylistItem();
 
+public slots:
+    /**
+      *@brief Method to stop the player
+      *
+      * @author Thibaud Lamarche <lamarchethibaud@hotmail.com>
+      */
+    void stop();
+
 private slots:
+
+
     /**
      * @brief Change the value of Ratio settings
      * @param index Index of the new Ratio
