@@ -205,10 +205,9 @@ void MainWindow::on_binDeleteMediaButton_clicked()
     //TODO check if working well
     int nbMedia = selectionModel->selectedRows().length();
     for(int i=0;i<nbMedia;i++){
-        bool toDel = false;
+        bool toDel = true;
 
         QModelIndex index = selectionModel->selectedRows().at(i);
-        printf("\n Index => %d \n",i);
         Media *media = _mediaListModel->mediaList().at(index.row());
 
         if (media->isUsed()) {
@@ -216,16 +215,17 @@ void MainWindow::on_binDeleteMediaButton_clicked()
             if (1 == QMessageBox::warning(this, media->name(), tr("This media is used. All references of this media into playlists will be deleted too.\n Are you sure to remove this media ?") ,tr("No"), tr("Yes")))
             {
                 int countPlaylists = ui->playlistsTabWidget->count();
-                printf("\n count => %d \n",countPlaylists);
                 for (int i = 0; i < countPlaylists; i++) {
                     PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(i))->model();
-                    model->removePlaybackWithDeps(media);
-                    updateSettings();
+                    if(!model->isRunning()){
+                        model->removePlaybackWithDeps(media);
+                        updateSettings();
+                    }else{
+                        toDel=false;
+                        QMessageBox::warning(this, media->name(), tr("The media wasn't removed because it is used in a running playlist.") ,tr("Yes"));
+                    }
                 }
-                toDel=true;
             }
-        }else{
-            toDel=true;
         }
         if(toDel){
             _mediaListModel->removeMedia(index.row());
