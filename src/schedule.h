@@ -144,7 +144,7 @@ private:
     /**
      * @brief The schedule timer
      */
-    QTimer _timer;
+    QTimer *_timer;
 
     /**
      * @brief The date the associated playlist will be launched at
