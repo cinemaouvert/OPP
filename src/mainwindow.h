@@ -419,6 +419,13 @@ private slots:
      */
     void on_aboutAction_triggered();
 
+    /**
+     * @brief Get Locked Widget
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    QList<QWidget*> getLockedWidget();
+
     void on_scheduleLaunchAtTimeEdit_timeChanged(const QTime &time);
 
 protected:

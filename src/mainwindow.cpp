@@ -67,9 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QList<QWidget*> lockedWidget;
-    lockedWidget << ui->playlistsTabWidget;
-    _locker = new Locker(lockedWidget, this);
+    _locker = new Locker(getLockedWidget(), this);
 
     connect(_locker, SIGNAL(toggled(bool)), ui->lockButton, SLOT(setChecked(bool)));
     connect(ui->lockButton, SIGNAL(clicked(bool)), _locker, SLOT(toggle(bool)));
@@ -827,6 +825,42 @@ void MainWindow::on_aboutAction_triggered()
     _aboutdialog->raise();
     _aboutdialog->activateWindow();
 
+}
+
+QList<QWidget*> MainWindow::getLockedWidget()
+{
+    QList<QWidget*> lockedWidget;
+    lockedWidget << ui->seekWidget;
+
+    lockedWidget << ui->audioTrackComboBox;
+    lockedWidget << ui->videoTrackComboBox;
+    lockedWidget << ui->subtitlesTrackComboBox;
+    lockedWidget << ui->subtitlesSyncSpinBox;
+    lockedWidget << ui->ratioComboBox;
+
+    lockedWidget << ui->gammaSpinBox;
+    lockedWidget << ui->contrastSpinBox;
+    lockedWidget << ui->brightnessSpinBox;
+    lockedWidget << ui->saturationSpinBox;
+    lockedWidget << ui->hueSpinBox;
+
+    lockedWidget << ui->audioSyncDoubleSpinBox;
+    lockedWidget << ui->audioGainDoubleSpinBox;
+
+    lockedWidget << ui->advancedSettingsButton;
+    lockedWidget << ui->advancedPictureSettingsButton;
+
+    lockedWidget << ui->playlistsTabWidget;
+
+    lockedWidget << ui->addPlaylistButton;
+    lockedWidget << ui->editNamePlaylistButton;
+    lockedWidget << ui->playlistUpButton;
+    lockedWidget << ui->deletePlaylistItemButton;
+    lockedWidget << ui->playlistDownButton;
+
+    lockedWidget << ui->playerControlsWidget;
+
+    return lockedWidget;
 }
 
 void MainWindow::on_scheduleLaunchAtTimeEdit_timeChanged(const QTime &time)
