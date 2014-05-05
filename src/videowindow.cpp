@@ -28,6 +28,9 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
+#include <iostream>
+#include "mainwindow.h"
+#include "playlistplayer.h"
 #include "videowidget.h"
 
 VideoWindow::VideoWindow(QWidget *parent) :
@@ -68,4 +71,9 @@ void VideoWindow::moveToDisplay(const int &display)
     QRect secondDisplayRes = QApplication::desktop()->screenGeometry(display);
 
     move(QPoint(secondDisplayRes.x(), secondDisplayRes.y()));
+}
+
+void VideoWindow::closeEvent (QCloseEvent *event)
+{
+    ((MainWindow * )this->parentWidget())->stop();
 }

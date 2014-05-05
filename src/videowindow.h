@@ -53,6 +53,7 @@ public:
     };
 
     explicit VideoWindow(QWidget *parent = 0);
+
     ~VideoWindow();
 
     /**
@@ -78,6 +79,15 @@ public:
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void moveToDisplay(const int &display);
+
+    /**
+     * @brief Shut down the video when closing the window
+     * @param event
+     *
+     * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    void closeEvent (QCloseEvent *event);
+
 
 private:
     /**
