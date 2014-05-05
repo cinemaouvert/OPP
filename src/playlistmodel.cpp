@@ -219,18 +219,21 @@ void PlaylistModel::removePlayback(int index)
 
 void PlaylistModel::playItem()
 {
+    _running = true;
     _activeItem.second = Playing;
     emit layoutChanged();
 }
 
 void PlaylistModel::pauseItem()
 {
+    _running = true;
     _activeItem.second = Paused;
     emit layoutChanged();
 }
 
 void PlaylistModel::stopItem()
 {
+    _running = false;
     _activeItem.second = Idle;
     emit layoutChanged();
 }
