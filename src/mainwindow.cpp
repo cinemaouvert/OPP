@@ -224,6 +224,7 @@ void MainWindow::on_binDeleteMediaButton_clicked()
                         updateSettings();
                     }else{
                         toDel=false;
+                        QMessageBox::warning(this, media->name(), tr("The media wasn't removed because it is used in a running playlist.") ,tr("Yes"));
                     }
                 }
             }
