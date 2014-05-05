@@ -185,6 +185,15 @@ public:
      */
     void removeAll();
 
+    /**
+     * @brief Getif the playlist is running or not
+     *
+     * @author Thibaud Lamarche <thibaud.lamarche@gmail.com>
+    */
+    bool isRunning(){
+        return _running;
+    }
+
 public slots:
 
     /**
@@ -233,6 +242,11 @@ private:
      * @brief _scheduleListModel The schedule list model
      */
     ScheduleListModel *_scheduleListModel;
+
+    /**
+     * @brief _running get if the playlist is running or not
+     */
+    bool _running;
 };
 
 
