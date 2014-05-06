@@ -753,44 +753,50 @@ void MainWindow::on_saveAsAction_triggered()
 
 void MainWindow::on_openListingAction_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Project"), "", tr("OPP file (*.opp)"));
+    if(_playlistPlayer->mediaPlayer()->isPlaying() || _playlistPlayer->mediaPlayer()->isPaused()){
+         QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before open a listing."));
+    }else{
+        QString fileName = QFileDialog::getOpenFileName(this, tr("Open Project"), "", tr("OPP file (*.opp)"));
+        if (fileName.isEmpty()) {
+             return;
+        } else {
+            QFile file(fileName);
+            if (!file.open(QIODevice::ReadWrite)) {
+                QMessageBox::information(this, tr("Unable to open file"),file.errorString());
+            }
 
-    if (fileName.isEmpty()) {
-         return;
-    } else {
-        QFile file(fileName);
-        if (!file.open(QIODevice::ReadWrite)) {
-            QMessageBox::information(this, tr("Unable to open file"),file.errorString());
+            _dataStorage->load(file);
+            updatePlaylistListCombox();
+            file.close();
+
+            ui->progEdit->setText(_dataStorage->projectTitle());
+            ui->notesEdit->setText(_dataStorage->projectNotes());
         }
-
-        _dataStorage->load(file);
-        updatePlaylistListCombox();
-        file.close();
-
-        ui->progEdit->setText(_dataStorage->projectTitle());
-        ui->notesEdit->setText(_dataStorage->projectNotes());
     }
 }
 
 
 void MainWindow::on_newListingAction_triggered()
 {
-    _dataStorage->clear();
+    if(_playlistPlayer->mediaPlayer()->isPlaying() || _playlistPlayer->mediaPlayer()->isPaused()){
+         QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before new listing."));
+    }else{
+        _dataStorage->clear();
+        // FIX : ref 0000001
+        // add empty tab and remove all other one (init state)
+        createPlaylistTab();
+        int size = ui->schedulePlaylistListComboBox->count();
 
-    // FIX : ref 0000001
-    // add empty tab and remove all other one (init state)
-    createPlaylistTab();
-    int size = ui->schedulePlaylistListComboBox->count();
+        while (ui->playlistsTabWidget->count() > 1)
+            ui->playlistsTabWidget->removeTab(0);
 
-    while (ui->playlistsTabWidget->count() > 1)
-        ui->playlistsTabWidget->removeTab(0);
-
-    ui->progEdit->clear();
-    ui->notesEdit->clear();
-    for(int i = 0; i < size; i++){
-        ui->schedulePlaylistListComboBox->removeItem(i);
+        ui->progEdit->clear();
+        ui->notesEdit->clear();
+        for(int i = 0; i < size; i++){
+            ui->schedulePlaylistListComboBox->removeItem(i);
+        }
+        updatePlaylistListCombox();
     }
-    updatePlaylistListCombox();
 }
 
 
