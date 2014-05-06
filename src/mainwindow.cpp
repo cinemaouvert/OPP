@@ -567,11 +567,15 @@ void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
 
 void MainWindow::on_playlistsTabWidget_currentChanged(int index)
 {
+
     if(_lastSelectedTab != -1){
         PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->widget(_lastSelectedTab);
         if(view != NULL){
             PlaylistModel *model = (PlaylistModel*) view->model();
             if(model != NULL){
+                if(model->isRunning()){
+                    return;
+                }
                 disconnect(_playlistPlayer->mediaPlayer(), SIGNAL(playing()), model, SLOT(playItem()));
                 disconnect(_playlistPlayer->mediaPlayer(), SIGNAL(paused()), model, SLOT(pauseItem()));
                 disconnect(_playlistPlayer->mediaPlayer(), SIGNAL(stopped()), model, SLOT(stopItem()));
@@ -582,8 +586,6 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
 
     PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->widget(index);
     PlaylistModel *model = (PlaylistModel*) view->model();
-
-
 
     connect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(updateSettings()));
 
