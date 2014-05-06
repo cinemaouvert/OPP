@@ -616,7 +616,6 @@ void MainWindow::on_removePlaylistItemAction_triggered()
 void MainWindow::restorePlaylistTab(PlaylistModel *model)
 {
     PlaylistTableView *newTab = new PlaylistTableView;
-
     connect(model->playlist(), SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
 
     newTab->setModel(model);

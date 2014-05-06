@@ -98,8 +98,7 @@ void PlaylistTableView::dragMoveEvent(QDragMoveEvent *event)
 
 void PlaylistTableView::dropEvent(QDropEvent *event)
 {
-    model()->dropMimeData(event->mimeData(), event->dropAction(), 0, 0, indexAt(event->pos()));
-    event->acceptProposedAction();
-
-    QTableView::dropEvent(event);
+        model()->dropMimeData(event->mimeData(), event->dropAction(), 0, 0, indexAt(event->pos()));
+        event->acceptProposedAction();
+        QTableView::dropEvent(event);
 }

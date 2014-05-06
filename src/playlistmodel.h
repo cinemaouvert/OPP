@@ -29,8 +29,19 @@
 
 #include <QAbstractTableModel>
 #include <QList>
+#include <QMessageBox>
+#include <QTranslator>
+#include <QDebug>
+#include <QIcon>
+#include <QMimeData>
 
 #include "playlist.h"
+#include "utils.h"
+#include "playlistmodel.h"
+#include "medialistmodel.h"
+#include "mediasettings.h"
+#include "playlistplayer.h"
+#include "schedulelistmodel.h"
 
 class PlaylistPlayer;
 class Playback;
@@ -194,6 +205,13 @@ public:
         return _running;
     }
 
+    /**
+     * @brief Fix delay for no more overlapping
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+    */
+    void repareDelay(QList<Schedule*> scheduleList, uint duration);
+
 public slots:
 
     /**
@@ -224,6 +242,13 @@ public slots:
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setPlayingItem(int index);
+
+    /**
+     * @brief Attach ScheduleListModel to PlaylistTableView
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    void setScheduleListModel(ScheduleListModel *slm);
 
 private:
     /**

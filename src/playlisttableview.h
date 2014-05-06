@@ -28,6 +28,7 @@
 #define PLAYLISTTABLEVIEW_H
 
 #include <QTableView>
+#include "schedulelistmodel.h"
 
 class PlaylistTableView : public QTableView
 {
@@ -45,7 +46,7 @@ protected:
 
 private:
     QPoint startPos;
-
+    ScheduleListModel *_scheduleListModel;
 };
 
 #endif // PLAYLISTTABLEVIEW_H
