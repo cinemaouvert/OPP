@@ -190,16 +190,34 @@ bool ScheduleListModel::isScheduled(Playlist *playlist) const {
     return false;
 }
 
-void ScheduleListModel::delayAll(int ms)
+int ScheduleListModel::delayAll(int ms)
 {
-    if (ms == 0) return;
+    if (ms == 0) return 0;
+
+    if(ms < 0) {
+        Schedule* scheduleRun = NULL;
+        foreach(Schedule *schedule, _scheduleList) {
+            if(schedule->isExpired() && (schedule->finishAt() > QDateTime::currentDateTime())){
+                scheduleRun = schedule;
+            }
+        }
+        if(scheduleRun != NULL){
+            foreach(Schedule *schedule, _scheduleList) {
+                if(schedule != scheduleRun) {
+                    if(schedule->launchAt().addMSecs(ms) < scheduleRun->finishAt())
+                        return 1;
+                }
+            }
+        }
+    }
 
     foreach(Schedule *schedule, _scheduleList) {
-        if(!schedule->isExpired())
-            schedule->delay(ms);
+            if(!schedule->isExpired())
+                schedule->delay(ms);
     }
 
     emit layoutChanged();
+    return 0;
 }
 
 void ScheduleListModel::toggleAutomation(bool checked) {

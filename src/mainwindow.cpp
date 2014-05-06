@@ -790,7 +790,9 @@ void MainWindow::on_scheduleDelayButton_clicked()
 {
     int delay = ui->scheduleDelaySpinBox->value() /*min*/;
 
-    _scheduleListModel->delayAll(delay * 60 * 1000 /*ms*/);
+    int err = _scheduleListModel->delayAll(delay * 60 * 1000 /*ms*/);
+    if(err == 1)
+        QMessageBox::critical(this, tr("Delay validation"), tr("With this delay a playlist starts before the end of the current playlist. \nPlease choose an other delay."));
 }
 
 void MainWindow::on_scheduleToggleEnabledButton_toggled(bool checked)
