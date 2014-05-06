@@ -121,6 +121,27 @@ public slots:
      */
     void playPlaylist(Playlist *playlist);
 
+    /**
+     * @brief Get currentIndex
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    int getCurrentIndex();
+
+    /**
+     * @brief Current index ++
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void currentIndexUp();
+
+    /**
+     * @brief Current index --
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void currentIndexDown();
+
 private slots:
 
     /**

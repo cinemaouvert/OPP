@@ -24,7 +24,8 @@
  **********************************************************************************/
 
 #include "schedule.h"
-
+#include <iostream>
+#include <cstdlib>
 #include "playlist.h"
 
 Schedule::Schedule(Playlist *playlist, const QDateTime &launchAt, QObject *parent) :
@@ -33,6 +34,7 @@ Schedule::Schedule(Playlist *playlist, const QDateTime &launchAt, QObject *paren
     _launchAt(launchAt),
     _canceled(false)
 {
+    _timer = new QTimer();
 }
 
 Schedule::~Schedule()
@@ -49,12 +51,13 @@ void Schedule::start()
     if (isExpired() || isActive())
         return;
 
-    _timer.singleShot(QDateTime::currentDateTime().msecsTo(_launchAt), this, SLOT(timeout()));
+    _timer->connect(_timer, SIGNAL(timeout()), this, SLOT(timeout()));
+    _timer->start(QDateTime::currentDateTime().msecsTo(_launchAt));
 }
 
 void Schedule::stop()
 {
-    _timer.stop();
+    _timer->stop();
 }
 
 void Schedule::cancel()
@@ -69,7 +72,7 @@ bool Schedule::isExpired() const
 
 bool Schedule::isActive() const
 {
-    return _timer.isActive();
+    return _timer->isActive();
 }
 
 bool Schedule::canceled() const
@@ -90,6 +93,7 @@ void Schedule::delay(int ms)
 
 void Schedule::timeout()
 {
+    stop();
     _canceled = true;
 
     emit triggered(_playlist);

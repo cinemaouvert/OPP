@@ -27,6 +27,8 @@
 #define SCHEDULELISTMODEL_H
 
 #include <QAbstractTableModel>
+#include <QMessageBox>
+#include <cstdlib>
 
 #include "schedule.h"
 
@@ -152,7 +154,7 @@ public:
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
-    void delayAll(int ms);
+    int delayAll(int ms);
 
     /**
      * @brief Launch the automation

@@ -456,7 +456,9 @@ void MainWindow::on_playerPlayButton_clicked(bool checked)
             }
 
             // play or resume playback
+
             QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+
 
             // if no selected item play current playlist from first item
             if (indexes.count() == 0) {
@@ -501,12 +503,34 @@ void MainWindow::stop(){
                                           Playlist
 \***********************************************************************************************/
 
-
 void MainWindow::createPlaylistTab()
 {
     PlaylistTableView *newTab = new PlaylistTableView;
+<<<<<<< HEAD
     Playlist *playlist = new Playlist(_app->vlcInstance(), tr("New playlist"));
     PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel,newTab);
+=======
+    Playlist *playlist = new Playlist(_app->vlcInstance(), "New playlist");
+    PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
+
+    connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
+
+    newTab->setModel(newModel);
+    newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
+    newTab->horizontalHeader()->setStretchLastSection(true);
+
+    ui->playlistsTabWidget->addTab(newTab, playlist->title());
+    ui->playlistsTabWidget->setCurrentWidget(newTab);
+
+    updatePlaylistListCombox();
+}
+
+void MainWindow::createPlaylistTab(QString name)
+{
+    PlaylistTableView *newTab = new PlaylistTableView;
+    Playlist *playlist = new Playlist(_app->vlcInstance(), name);
+    PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
+>>>>>>> 3512755092ddee08dbc5ba91de0bc321d4925fc3
 
     connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
 
@@ -615,8 +639,18 @@ void MainWindow::on_playlistUpButton_clicked()
     QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
     if(indexes.count()==0)
         return;
+<<<<<<< HEAD
     if(currentPlaylistModel()->moveUp(indexes.first()))
+=======
+
+    if(currentPlaylistModel()->moveUp(indexes.first())){
+>>>>>>> 3512755092ddee08dbc5ba91de0bc321d4925fc3
         currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() - 1, indexes.first().column()));
+        if( _playlistPlayer->getCurrentIndex() == ((QModelIndex)indexes.first()).row())
+            _playlistPlayer->currentIndexDown();
+        else if (_playlistPlayer->getCurrentIndex() == ((QModelIndex)indexes.first()).row()-1)
+            _playlistPlayer->currentIndexUp();
+    }
 }
 
 void MainWindow::on_playlistDownButton_clicked()
@@ -625,13 +659,30 @@ void MainWindow::on_playlistDownButton_clicked()
 
     if(indexes.count()==0)
         return;
-    if(currentPlaylistModel()->moveDown(indexes.first()))
+
+    if(currentPlaylistModel()->moveDown(indexes.first())){
         currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() + 1, indexes.first().column()));
+        if( _playlistPlayer->getCurrentIndex() == ((QModelIndex)indexes.first()).row())
+            _playlistPlayer->currentIndexUp();
+        else if (_playlistPlayer->getCurrentIndex() == ((QModelIndex)indexes.first()).row()+1)
+            _playlistPlayer->currentIndexDown();
+    }
 }
 
 void MainWindow::on_addPlaylistButton_clicked()
 {
-    createPlaylistTab();
+    bool ok;
+
+    QString text = QInputDialog::getText(this,
+        tr("New playlist"),
+        tr("Playlist title : "),
+        QLineEdit::Normal,
+        tr("New playlist"),
+        &ok
+    );
+    if(ok) {
+        createPlaylistTab(text);
+    }
 }
 
 void MainWindow::on_editNamePlaylistButton_clicked()
@@ -805,7 +856,9 @@ void MainWindow::on_scheduleDelayButton_clicked()
 {
     int delay = ui->scheduleDelaySpinBox->value() /*min*/;
 
-    _scheduleListModel->delayAll(delay * 60 * 1000 /*ms*/);
+    int err = _scheduleListModel->delayAll(delay * 60 * 1000 /*ms*/);
+    if(err == 1)
+        QMessageBox::critical(this, tr("Delay validation"), tr("With this delay a playlist starts before the end of the current playlist. \nPlease choose an other delay."));
 }
 
 void MainWindow::on_scheduleToggleEnabledButton_toggled(bool checked)

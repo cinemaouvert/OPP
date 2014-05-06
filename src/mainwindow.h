@@ -282,11 +282,18 @@ math@gmail.com>
     void updateSettings();
 
     /**
-     * @brief Create a new playlist and its tab
+     * @brief Create a new playlist and its tab with a default name
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void createPlaylistTab();
+
+    /**
+     * @brief Create a new playlist and its tab with a name given by the user
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    void createPlaylistTab(QString name);
 
     /**
      * @brief Delete a playlist and close its tab
