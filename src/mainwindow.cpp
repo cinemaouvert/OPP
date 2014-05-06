@@ -500,11 +500,28 @@ void MainWindow::stop(){
                                           Playlist
 \***********************************************************************************************/
 
-
 void MainWindow::createPlaylistTab()
 {
     PlaylistTableView *newTab = new PlaylistTableView;
-    Playlist *playlist = new Playlist(_app->vlcInstance(), tr("New playlist"));
+    Playlist *playlist = new Playlist(_app->vlcInstance(), "New playlist");
+    PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
+
+    connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
+
+    newTab->setModel(newModel);
+    newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
+    newTab->horizontalHeader()->setStretchLastSection(true);
+
+    ui->playlistsTabWidget->addTab(newTab, playlist->title());
+    ui->playlistsTabWidget->setCurrentWidget(newTab);
+
+    updatePlaylistListCombox();
+}
+
+void MainWindow::createPlaylistTab(QString name)
+{
+    PlaylistTableView *newTab = new PlaylistTableView;
+    Playlist *playlist = new Playlist(_app->vlcInstance(), name);
     PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
 
     connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
@@ -606,7 +623,18 @@ void MainWindow::on_playlistDownButton_clicked()
 
 void MainWindow::on_addPlaylistButton_clicked()
 {
-    createPlaylistTab();
+    bool ok;
+
+    QString text = QInputDialog::getText(this,
+        tr("New playlist"),
+        tr("Playlist title : "),
+        QLineEdit::Normal,
+        tr("New playlist"),
+        &ok
+    );
+    if(ok) {
+        createPlaylistTab(text);
+    }
 }
 
 void MainWindow::on_editNamePlaylistButton_clicked()
