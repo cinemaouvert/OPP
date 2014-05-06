@@ -140,6 +140,14 @@ public:
      */
     void open(Playback *playback);
 
+    /**
+     * @brief Close a playback in media player.
+     * @param playback The playback to close.
+     *
+     * @author Thibaud Lamarche <thibaud.lamarche@gmail.com>
+     */
+    void close(Playback *playback);
+
 public slots:
     /**
      * @brief Play the media player with the opened Playback

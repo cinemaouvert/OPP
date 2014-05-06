@@ -45,6 +45,7 @@ PlaylistModel::PlaylistModel(Playlist *playlist, MediaListModel *mediaListModel,
 {
     _activeItem.first = -1;
     _activeItem.second = Idle;
+    _running = false;
 }
 
 PlaylistModel::~PlaylistModel()
@@ -240,6 +241,7 @@ void PlaylistModel::stopItem()
 
 void PlaylistModel::setPlayingItem(int index)
 {
+    _running = true;
     _activeItem.first = index;
     emit layoutChanged();
 }

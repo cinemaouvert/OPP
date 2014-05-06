@@ -95,6 +95,7 @@ void PlaylistPlayer::stop()
 {
     _currentIndex = 0;
     _mediaPlayer->stop();
+    _mediaPlayer->close(_playlist->at(_currentIndex));
 }
 
 void PlaylistPlayer::playPlaylist(Playlist *playlist)

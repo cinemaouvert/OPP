@@ -137,7 +137,8 @@ private slots:
     /**
      * @brief Open the settings window
      *
-     * @author Cyril Naud <futuramath@gmail.com>
+     * @author Cyril Naud <futuraprivate slots:
+math@gmail.com>
      */
     void on_settingsAction_triggered();
 
@@ -428,6 +429,8 @@ private slots:
 
     void on_scheduleLaunchAtTimeEdit_timeChanged(const QTime &time);
 
+    void on_quitAction_triggered();
+
 protected:
     /**
      * @brief Returns the selected playback
@@ -523,6 +526,11 @@ private:
      * @brief _dataStorage
      */
     DataStorage* _dataStorage;
+
+    /**
+     * @brief used to disconnect signals
+     */
+    int _lastSelectedTab;
 };
 
 #endif // MAINWINDOW_H

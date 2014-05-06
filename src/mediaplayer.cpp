@@ -98,8 +98,7 @@ void MediaPlayer::setVideoView(VideoView *videoView)
     }
 }
 
-void MediaPlayer::open(Playback *playback)
-{
+void MediaPlayer::close(Playback *playback){
     if (_currentPlayback) {
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(gainChanged(float)), this, SLOT(setCurrentGain(float)));
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
@@ -115,6 +114,12 @@ void MediaPlayer::open(Playback *playback)
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
         disconnect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
     }
+
+}
+
+void MediaPlayer::open(Playback *playback)
+{
+    close(playback);
 
     _currentPlayback = playback;
     libvlc_media_player_set_media(_vlcMediaPlayer, playback->media()->core());

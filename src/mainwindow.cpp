@@ -67,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    _lastSelectedTab=-1;
     _locker = new Locker(getLockedWidget(), this);
 
     connect(_locker, SIGNAL(toggled(bool)), ui->lockButton, SLOT(setChecked(bool)));
@@ -505,7 +506,7 @@ void MainWindow::createPlaylistTab()
 {
     PlaylistTableView *newTab = new PlaylistTableView;
     Playlist *playlist = new Playlist(_app->vlcInstance(), tr("New playlist"));
-    PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
+    PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel,newTab);
 
     connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
 
@@ -523,27 +524,49 @@ void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
 {
     Playlist *playlist = playlistAt(index);
 
-    if (_scheduleListModel->isScheduled(playlist)) {
-        if (0 == QMessageBox::warning(this, tr("Remove playlist"), tr("This playlist was scheduled. All schedules which use this playlist will be deleted too.\n Are you sure to remove this playlist ?") ,tr("No"), tr("Yes")))
-            return;
-        _scheduleListModel->removeScheduleWithDeps(playlist);
+    PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(index))->model();
+    //if(_playlistPlayer->isPlaying()){
+    //if(_playlistPlayer->currentPlaylist() == model->playlist() && _playlistPlayer->isPlaying()){
+    if(model->isRunning()){
+        QMessageBox::warning(this, tr("Remove playlist"), tr("This playlist is currently running, you can't delete it.") , tr("Yes"));
+    }else{
+        if (_scheduleListModel->isScheduled(playlist)) {
+            if (0 == QMessageBox::warning(this, tr("Remove playlist"), tr("This playlist was scheduled. All schedules which use this playlist will be deleted too.\n Are you sure to remove this playlist ?") ,tr("No"), tr("Yes")))
+                return;
+            _scheduleListModel->removeScheduleWithDeps(playlist);
+        }
+
+        if (ui->playlistsTabWidget->count() == 1) {
+            createPlaylistTab();
+        }
+
+        delete (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(index))->model();
+        ui->playlistsTabWidget->removeTab(index);
+
+        updateSettings();
+        updatePlaylistListCombox();
     }
-
-    if (ui->playlistsTabWidget->count() == 1) {
-        createPlaylistTab();
-    }
-
-    delete (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(index))->model();
-    ui->playlistsTabWidget->removeTab(index);
-
-    updateSettings();
-    updatePlaylistListCombox();
 }
 
 void MainWindow::on_playlistsTabWidget_currentChanged(int index)
 {
+    if(_lastSelectedTab != -1){
+        PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->widget(_lastSelectedTab);
+        if(view != NULL){
+            PlaylistModel *model = (PlaylistModel*) view->model();
+            if(model != NULL){
+                disconnect(_playlistPlayer->mediaPlayer(), SIGNAL(playing()), model, SLOT(playItem()));
+                disconnect(_playlistPlayer->mediaPlayer(), SIGNAL(paused()), model, SLOT(pauseItem()));
+                disconnect(_playlistPlayer->mediaPlayer(), SIGNAL(stopped()), model, SLOT(stopItem()));
+                disconnect(_playlistPlayer, SIGNAL(itemChanged(int)), model, SLOT(setPlayingItem(int)));
+            }
+        }
+    }
+
     PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->widget(index);
     PlaylistModel *model = (PlaylistModel*) view->model();
+
+
 
     connect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(updateSettings()));
 
@@ -552,9 +575,12 @@ void MainWindow::on_playlistsTabWidget_currentChanged(int index)
     connect(_playlistPlayer->mediaPlayer(), SIGNAL(stopped()), model, SLOT(stopItem()));
     connect(_playlistPlayer, SIGNAL(itemChanged(int)), model, SLOT(setPlayingItem(int)));
 
+
+
     updateSettings();
 
     _playlistPlayer->setPlaylist(model->playlist());
+    _lastSelectedTab = index;
 }
 
 void MainWindow::on_renamePlaylistAction_triggered()
@@ -589,7 +615,6 @@ void MainWindow::on_playlistUpButton_clicked()
     QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
     if(indexes.count()==0)
         return;
-
     if(currentPlaylistModel()->moveUp(indexes.first()))
         currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() - 1, indexes.first().column()));
 }
@@ -641,14 +666,17 @@ void MainWindow::editPlaylistName()
 
 void MainWindow::deletePlaylistItem()
 {
-    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+    if(!currentPlaylistModel()->isRunning()){
+        QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
 
-    if (indexes.count() == 0)
-        return;
-
-   currentPlaylistModel()->removePlayback(indexes.first().row());
-   updateSettings();
-   _scheduleListModel->updateLayout();
+        if (indexes.count() == 0)
+            return;
+         currentPlaylistModel()->removePlayback(indexes.first().row());
+        updateSettings();
+        _scheduleListModel->updateLayout();
+    }else{
+        QMessageBox::warning(this, tr("Remove item"), tr("This playlist is currently running, you delete files from it.") , tr("Yes"));
+    }
 }
 
 /***********************************************************************************************\
@@ -867,3 +895,4 @@ void MainWindow::on_scheduleLaunchAtTimeEdit_timeChanged(const QTime &time)
 {
 //UNUSED
 }
+

@@ -798,6 +798,9 @@
             <property name="tabsClosable">
              <bool>true</bool>
             </property>
+            <property name="movable">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item>
@@ -1118,7 +1121,7 @@
      <x>0</x>
      <y>0</y>
      <width>1287</width>
-     <height>25</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1214,7 +1217,13 @@
    </property>
   </action>
   <action name="quitAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="toolTip">
     <string>Quit</string>
    </property>
    <property name="menuRole">
