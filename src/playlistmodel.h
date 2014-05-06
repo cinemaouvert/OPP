@@ -194,6 +194,29 @@ public:
         return _running;
     }
 
+    /**
+     * @brief Getif the media is running or not
+     *
+     * @author Thibaud Lamarche <thibaud.lamarche@gmail.com>
+     */
+    bool isRunningMedia(Media *media){
+        for (int i = _playlist->count() - 1; i >= 0; i--) {
+            if (_playlist->at(i)->media() == media) {
+                return isRunningMedia(i);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @brief Getif the media is running or not
+     *
+     * @author Thibaud Lamarche <thibaud.lamarche@gmail.com>
+     */
+    bool isRunningMedia(int index){
+        return _running && _activeItem.first >= index;
+    }
+
 public slots:
 
     /**

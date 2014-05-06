@@ -218,12 +218,12 @@ void MainWindow::on_binDeleteMediaButton_clicked()
                 int countPlaylists = ui->playlistsTabWidget->count();
                 for (int i = 0; i < countPlaylists; i++) {
                     PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(i))->model();
-                    if(!model->isRunning()){
+                    if(!model->isRunningMedia(media)){
                         model->removePlaybackWithDeps(media);
                         updateSettings();
                     }else{
                         toDel=false;
-                        QMessageBox::warning(this, media->name(), tr("The media wasn't removed because it is used in a running playlist.") ,tr("Yes"));
+                        QMessageBox::critical(this, media->name(), tr("The media wasn't removed because you can not delete files that have been or are  being used.") ,tr("Ok"));
                     }
                 }
             }else{
@@ -547,7 +547,7 @@ void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
 
     PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(index))->model();
     if(model->isRunning()){
-        QMessageBox::warning(this, tr("Remove playlist"), tr("This playlist is currently running, you can't delete it.") , tr("Yes"));
+        QMessageBox::critical(this, tr("Remove playlist"), tr("This playlist is currently running, you can't delete it.") , tr("Ok"));
     }else{
         if (_scheduleListModel->isScheduled(playlist)) {
             if (0 == QMessageBox::warning(this, tr("Remove playlist"), tr("This playlist was scheduled. All schedules which use this playlist will be deleted too.\n Are you sure to remove this playlist ?") ,tr("No"), tr("Yes")))
@@ -710,17 +710,17 @@ void MainWindow::editPlaylistName()
 
 void MainWindow::deletePlaylistItem()
 {
-    if(!currentPlaylistModel()->isRunning()){
         QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
 
         if (indexes.count() == 0)
             return;
-         currentPlaylistModel()->removePlayback(indexes.first().row());
-        updateSettings();
-        _scheduleListModel->updateLayout();
-    }else{
-        QMessageBox::warning(this, tr("Remove item"), tr("This playlist is currently running, you delete files from it.") , tr("Yes"));
-    }
+        if(!currentPlaylistModel()->isRunningMedia(indexes.first().row())){
+             currentPlaylistModel()->removePlayback(indexes.first().row());
+            updateSettings();
+            _scheduleListModel->updateLayout();
+        }else{
+            QMessageBox::critical(this, tr("Remove item"), tr("This playlist is currently running, you can not delete media that have been or are being displayed.") , tr("Ok"));
+        }
 }
 
 /***********************************************************************************************\
