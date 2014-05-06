@@ -209,6 +209,12 @@ int ScheduleListModel::delayAll(int ms)
                 }
             }
         }
+        else {
+            foreach(Schedule *schedule, _scheduleList) {
+                if(schedule->launchAt().addMSecs(ms) < QDateTime::currentDateTime())
+                    return 2;
+            }
+        }
     }
 
     foreach(Schedule *schedule, _scheduleList) {
