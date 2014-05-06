@@ -249,7 +249,6 @@ void PlaylistModel::updateLayout()
     emit layoutChanged();
 }
 
-//Problème quand on déplace un média en lecture
 bool PlaylistModel::moveUp(const QModelIndex &index)
 {
     if(index.row()>0)

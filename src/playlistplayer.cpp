@@ -32,7 +32,6 @@
 #include "playlist.h"
 #include "media.h"
 #include "mediaplayer.h"
-#include <iostream>
 
 
 PlaylistPlayer::PlaylistPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
@@ -76,8 +75,6 @@ void PlaylistPlayer::playItemAt(const int &index)
 
 void PlaylistPlayer::next()
 {
-    std::cout<<_currentIndex<<std::endl;
-
     if (_currentIndex >= _playlist->count() - 1) {
         playItemAt(0);
     } else {
