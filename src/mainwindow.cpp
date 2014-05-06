@@ -506,12 +506,8 @@ void MainWindow::stop(){
 void MainWindow::createPlaylistTab()
 {
     PlaylistTableView *newTab = new PlaylistTableView;
-<<<<<<< HEAD
     Playlist *playlist = new Playlist(_app->vlcInstance(), tr("New playlist"));
     PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel,newTab);
-=======
-    Playlist *playlist = new Playlist(_app->vlcInstance(), "New playlist");
-    PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
 
     connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
 
@@ -530,7 +526,6 @@ void MainWindow::createPlaylistTab(QString name)
     PlaylistTableView *newTab = new PlaylistTableView;
     Playlist *playlist = new Playlist(_app->vlcInstance(), name);
     PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
->>>>>>> 3512755092ddee08dbc5ba91de0bc321d4925fc3
 
     connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
 
@@ -549,8 +544,6 @@ void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
     Playlist *playlist = playlistAt(index);
 
     PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(index))->model();
-    //if(_playlistPlayer->isPlaying()){
-    //if(_playlistPlayer->currentPlaylist() == model->playlist() && _playlistPlayer->isPlaying()){
     if(model->isRunning()){
         QMessageBox::warning(this, tr("Remove playlist"), tr("This playlist is currently running, you can't delete it.") , tr("Yes"));
     }else{
@@ -639,12 +632,8 @@ void MainWindow::on_playlistUpButton_clicked()
     QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
     if(indexes.count()==0)
         return;
-<<<<<<< HEAD
-    if(currentPlaylistModel()->moveUp(indexes.first()))
-=======
 
     if(currentPlaylistModel()->moveUp(indexes.first())){
->>>>>>> 3512755092ddee08dbc5ba91de0bc321d4925fc3
         currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() - 1, indexes.first().column()));
         if( _playlistPlayer->getCurrentIndex() == ((QModelIndex)indexes.first()).row())
             _playlistPlayer->currentIndexDown();
