@@ -455,7 +455,9 @@ void MainWindow::on_playerPlayButton_clicked(bool checked)
             }
 
             // play or resume playback
+
             QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+
 
             // if no selected item play current playlist from first item
             if (indexes.count() == 0) {
@@ -607,8 +609,13 @@ void MainWindow::on_playlistUpButton_clicked()
     if(indexes.count()==0)
         return;
 
-    if(currentPlaylistModel()->moveUp(indexes.first()))
+    if(currentPlaylistModel()->moveUp(indexes.first())){
         currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() - 1, indexes.first().column()));
+        if( _playlistPlayer->getCurrentIndex() == ((QModelIndex)indexes.first()).row())
+            _playlistPlayer->currentIndexDown();
+        else if (_playlistPlayer->getCurrentIndex() == ((QModelIndex)indexes.first()).row()-1)
+            _playlistPlayer->currentIndexUp();
+    }
 }
 
 void MainWindow::on_playlistDownButton_clicked()
@@ -617,8 +624,14 @@ void MainWindow::on_playlistDownButton_clicked()
 
     if(indexes.count()==0)
         return;
-    if(currentPlaylistModel()->moveDown(indexes.first()))
+
+    if(currentPlaylistModel()->moveDown(indexes.first())){
         currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() + 1, indexes.first().column()));
+        if( _playlistPlayer->getCurrentIndex() == ((QModelIndex)indexes.first()).row())
+            _playlistPlayer->currentIndexUp();
+        else if (_playlistPlayer->getCurrentIndex() == ((QModelIndex)indexes.first()).row()+1)
+            _playlistPlayer->currentIndexDown();
+    }
 }
 
 void MainWindow::on_addPlaylistButton_clicked()

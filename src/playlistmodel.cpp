@@ -253,8 +253,31 @@ bool PlaylistModel::moveUp(const QModelIndex &index)
 {
     if(index.row()>0)
     {
+        int tmpSecond = _activeItem.second;
+        if(_activeItem.first == index.row()){
         _playlist->move(index.row(),index.row()-1);
+        _activeItem.first = index.row();
+        _activeItem.second = Idle;
         updateLayout();
+
+        _activeItem.first = index.row()-1;
+        _activeItem.second = (PlaybackState)tmpSecond;
+        }else{
+            if(_activeItem.first == index.row()-1){
+                _playlist->move(index.row(),index.row()-1);
+                _activeItem.first = index.row()-1;
+                _activeItem.second = Idle;
+                updateLayout();
+
+                _activeItem.first = index.row();
+                _activeItem.second = (PlaybackState)tmpSecond;
+            }else{
+                _playlist->move(index.row(),index.row()-1);
+                updateLayout();
+                _activeItem.second = (PlaybackState)tmpSecond;
+            }
+
+        }
         return true;
     }
     return false;
@@ -264,8 +287,31 @@ bool PlaylistModel::moveDown(const QModelIndex &index)
 {
     if(index.row()<_playlist->count()-1)
     {
+        int tmpSecond = _activeItem.second;
+        if(_activeItem.first == index.row()){
         _playlist->move(index.row(),index.row()+1);
+        _activeItem.first = index.row();
+        _activeItem.second = Idle;
         updateLayout();
+
+        _activeItem.first = index.row()+1;
+        _activeItem.second = (PlaybackState)tmpSecond;
+        }else{
+            if(_activeItem.first == index.row()+1){
+                _playlist->move(index.row(),index.row()+1);
+                _activeItem.first = index.row()+1;
+                _activeItem.second = Idle;
+                updateLayout();
+
+                 _activeItem.first = index.row();
+                 _activeItem.second = (PlaybackState)tmpSecond;
+            }else{
+                _playlist->move(index.row(),index.row()+1);
+                updateLayout();
+                _activeItem.second = (PlaybackState)tmpSecond;
+            }
+
+        }
         return true;
     }
     return false;
