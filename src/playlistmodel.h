@@ -266,12 +266,6 @@ public slots:
      */
     void setPlayingItem(int index);
 
-    /**
-     * @brief Attach ScheduleListModel to PlaylistTableView
-     *
-     * @author Thomas Berthome <thoberthome@laposte.net>
-     */
-    void setScheduleListModel(ScheduleListModel *slm);
 
 private:
     /**
