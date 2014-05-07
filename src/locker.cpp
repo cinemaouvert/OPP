@@ -26,17 +26,23 @@
  **********************************************************************************/
 
 #include "locker.h"
-#include "passformdialog.h"
 
 #include <QWidget>
 #include <QDebug>
+#include <QInputDialog>
 
 Locker::Locker(QList<QWidget*> widgets, QObject *parent) :
     QObject(parent),
-    _widgets(widgets)
+    _widgets(widgets),
+    _autoLock(false)
 {
-    _passDialog = new passformdialog(this);
     this->setPasswordEnable(false);
+    _timer = new QTimer();
+}
+
+Locker::~Locker()
+{
+    delete _timer;
 }
 
 bool Locker::getAutoLock(){
@@ -46,7 +52,7 @@ bool Locker::getAutoLock(){
 void Locker::setAutoLock(bool lock){
     _autoLock = lock;
     if (lock == false){
-        _timer.stop();
+        _timer->stop();
     }
 }
 
@@ -70,12 +76,14 @@ void Locker::setPassword(QString newPass){
 
 void Locker::setAutoLockDelay(int time){
     if (getAutoLock() == true) {
-        _timer.start(time);
+        _timer->connect(_timer, SIGNAL(timeout()), this, SLOT(lock()));
+        _timer->start(time);
     }
 }
 
 void Locker::lock()
 {
+    _timer->stop();
     foreach(QWidget *widget, _widgets) {
         widget->setEnabled(false);
     }
@@ -84,9 +92,21 @@ void Locker::lock()
 void Locker::unlock()
 {
     if (this->passwordEnable()) {
-        _passDialog->show();
-        _passDialog->raise();
-        _passDialog->activateWindow();
+        bool ok;
+        QString text = QInputDialog::getText(NULL,
+            tr("Enter password"),
+            tr("Password : "),
+            QLineEdit::Password,
+            tr(""),
+            &ok
+        );
+        if(ok) {
+            if(text.compare(_thePass)==0) {
+                foreach(QWidget *widget, _widgets) {
+                    widget->setEnabled(true);
+                }
+            }
+        }
     } else {
         foreach(QWidget *widget, _widgets) {
             widget->setEnabled(true);

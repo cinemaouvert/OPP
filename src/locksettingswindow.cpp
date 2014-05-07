@@ -24,6 +24,9 @@
  * along with Open Projection Program. If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************************/
 
+
+#include <QInputDialog>
+
 #include "locksettingswindow.h"
 #include "ui_locksettingswindow.h"
 
@@ -49,7 +52,15 @@ void LockSettingsWindow::on_radioButton_passwordOn_clicked()
 
 void LockSettingsWindow::on_radioButton_passwordOff_clicked()
 {
-    ui->lineEdit_password->setEnabled(false);
+    if(askPassword())
+    {
+        ui->lineEdit_password->setEnabled(false);
+    }
+    else
+    {
+        ui->radioButton_passwordOn->setChecked(true);
+        ui->radioButton_passwordOff->setChecked(false);
+    }
 }
 
 void LockSettingsWindow::on_radioButton_autoLockOn_clicked()
@@ -65,13 +76,32 @@ void LockSettingsWindow::on_radioButton_autoLockOff_clicked()
 void LockSettingsWindow::on_buttonBox_accepted()
 {
     /*Password*/
-    _locker->setPasswordEnable(ui->radioButton_passwordOn->isChecked());
     if(ui->radioButton_passwordOn->isChecked())
-        _locker->setPassword(ui->lineEdit_password->text());
+    {
+        if(_locker->passwordEnable())
+        {
+            if(ui->lineEdit_password->text().compare(_locker->getPassword())!=0)
+            {
+                    if(askPassword())
+                    {
+                        _locker->setPassword(ui->lineEdit_password->text());
+                    }
+            }
+        }
+        else
+        {
+            _locker->setPasswordEnable(ui->radioButton_passwordOn->isChecked());
+            _locker->setPassword(ui->lineEdit_password->text());
+        }
+    }
+    else
+    {
+         _locker->setPasswordEnable(ui->radioButton_passwordOn->isChecked());
+    }
 
     /*Automatic lock*/
     _locker->setAutoLock(ui->radioButton_autoLockOn->isChecked());
-    _locker->setAutoLockDelay(ui->spinBox_delay->value());
+    _locker->setAutoLockDelay(ui->spinBox_delay->value()*1000);  /*s -> ms*/
 
     this->hide();
 }
@@ -103,12 +133,30 @@ void LockSettingsWindow::setLocker()
     {
         ui->radioButton_autoLockOn->setChecked(true);
         ui->radioButton_autoLockOff->setChecked(false);
+        ui->spinBox_delay->setEnabled(true);
     }
     else
     {
         ui->radioButton_autoLockOn->setChecked(false);
         ui->radioButton_autoLockOff->setChecked(true);
+        ui->spinBox_delay->setEnabled(false);
     }
     ui->spinBox_delay->setValue(0);
 
+}
+
+bool LockSettingsWindow::askPassword() {
+    bool ok, res = false;
+    QString text = QInputDialog::getText(NULL,
+        tr("Enter password"),
+        tr("Password : "),
+        QLineEdit::Password,
+        tr(""),
+        &ok
+    );
+    if(ok) {
+        if(text.compare(_locker->getPassword())==0) {
+            res = true;
+        }
+    }
 }

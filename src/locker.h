@@ -32,8 +32,6 @@
 #include <QTimer>
 #include <QDialog>
 
-class passformdialog;
-
 class Locker : public QObject
 {
     Q_OBJECT
@@ -46,6 +44,7 @@ public:
      * @author Baptiste Rozière <bapt.roziere@gmail.com>
      */
     explicit Locker(QList<QWidget*> widgets, QObject *parent = 0);
+    virtual ~Locker();
 
     /**
      * @brief getAutoLock
@@ -127,17 +126,12 @@ private:
     /**
      * @brief _timer
      */
-    QTimer _timer;
+   QTimer *_timer;
 
     /**
      * @brief _widgets
      */
     QList<QWidget*> _widgets;
-
-    /**
-     * @brief _passDialog
-     */
-    passformdialog *_passDialog;
 
     /**
      * @brief delay in ms

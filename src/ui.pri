@@ -44,7 +44,6 @@ HEADERS += src/mainwindow.h \
     src/utils.h \
     src/locker.h \
     src/statuswidget.h \
-    src/passformdialog.h \
     src/datastorage.h \
     src/playlistlistmanager.h \
     src/aboutdialog.h
@@ -67,7 +66,6 @@ SOURCES += src/main.cpp \
     src/utils.cpp \
     src/locker.cpp \
     src/statuswidget.cpp \
-    src/passformdialog.cpp \
     src/datastorage.cpp \
     src/playlistlistmanager.cpp \
     src/aboutdialog.cpp
@@ -79,7 +77,6 @@ FORMS += src/mainwindow.ui \
     src/settingswindow.ui \
     src/locksettingswindow.ui \
     src/statuswidget.ui \
-    src/passformdialog.ui \
     src/aboutdialog.ui
 
 TRANSLATIONS = opp_fr.ts
