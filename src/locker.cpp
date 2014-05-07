@@ -87,6 +87,7 @@ void Locker::lock()
     foreach(QWidget *widget, _widgets) {
         widget->setEnabled(false);
     }
+    emit toggled(true);
 }
 
 void Locker::unlock()
@@ -100,25 +101,26 @@ void Locker::unlock()
             tr(""),
             &ok
         );
-        if(ok) {
-            if(text.compare(_thePass)==0) {
+        if(ok && text.compare(_thePass)==0) {
                 foreach(QWidget *widget, _widgets) {
                     widget->setEnabled(true);
                 }
-            }
+        }
+        else {
+            emit toggled(true);
         }
     } else {
         foreach(QWidget *widget, _widgets) {
             widget->setEnabled(true);
         }
     }
+
 }
 
 void Locker::toggle(bool checked)
 {
-    checked ? lock() : unlock();
-
     emit toggled(checked);
+    checked ? lock() : unlock();
 }
 
 QList<QWidget*> Locker::getWidgets()
