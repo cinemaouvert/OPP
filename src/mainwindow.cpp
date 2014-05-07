@@ -114,7 +114,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->automationAction, SIGNAL(toggled(bool)), ui->scheduleGroupBox, SLOT(setVisible(bool)));
     connect(ui->statusBarAction, SIGNAL(toggled(bool)), ui->statusBar, SLOT(setVisible(bool)));
 
-    connect(ui->newPlaylistAction, SIGNAL(triggered()), this, SLOT(createPlaylistTab()));
+    connect(ui->newPlaylistAction, SIGNAL(triggered()), this, SLOT(on_addPlaylistButton_clicked()));
 
     // set video mode actions data
     ui->actionProjection->setData(QVariant(VideoWindow::PROJECTION));
@@ -671,18 +671,22 @@ void MainWindow::on_playlistDownButton_clicked()
 
 void MainWindow::on_addPlaylistButton_clicked()
 {
-    bool ok;
+    if(!_locker->getLock()) {
+        bool ok;
 
-    QString text = QInputDialog::getText(this,
-        tr("New playlist"),
-        tr("Playlist title : "),
-        QLineEdit::Normal,
-        tr("New playlist"),
-        &ok
-    );
-    if(ok) {
-        createPlaylistTab(text);
+        QString text = QInputDialog::getText(this,
+            tr("New playlist"),
+            tr("Playlist title : "),
+            QLineEdit::Normal,
+            tr("New playlist"),
+            &ok
+        );
+        if(ok) {
+            createPlaylistTab(text);
+        }
     }
+    else
+        QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently lock, you can not add a new playlist.") , tr("OK"));
 }
 
 void MainWindow::on_editNamePlaylistButton_clicked()
