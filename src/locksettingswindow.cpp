@@ -159,4 +159,5 @@ bool LockSettingsWindow::askPassword() {
             res = true;
         }
     }
+    return res;
 }
