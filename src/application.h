@@ -61,6 +61,13 @@ private:
      * @brief _vlcInstance The libvlc instance
      */
     libvlc_instance_t *_vlcInstance;
+
+    /**
+     * @brief Free libvlc instance
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void closeLibvlc();
 };
 
 #endif // APPLICATION_H
