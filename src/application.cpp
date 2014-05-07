@@ -53,7 +53,7 @@ Application::Application()
 
 Application::~Application()
 {
-    libvlc_release(_vlcInstance);
+    this->closeLibvlc();
 }
 
 void Application::initVlcInstanceFromArgs(const QStringList &args)
@@ -69,6 +69,12 @@ void Application::initVlcInstanceFromArgs(const QStringList &args)
         qDebug() << "Using libvlc version:" << QString(libvlc_get_version());
     } else {
         qDebug() << "opp error: libvlc failed to load!";
+        this->closeLibvlc();
         abort();
     }
+}
+
+void Application::closeLibvlc()
+{
+    libvlc_release(_vlcInstance);
 }
