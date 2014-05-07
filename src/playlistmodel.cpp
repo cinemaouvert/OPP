@@ -26,16 +26,6 @@
 
 #include "playlistmodel.h"
 
-#include <QDebug>
-#include <QIcon>
-#include <QMimeData>
-
-#include "utils.h"
-#include "medialistmodel.h"
-#include "mediasettings.h"
-#include "playlistplayer.h"
-#include "schedulelistmodel.h"
-
 PlaylistModel::PlaylistModel(Playlist *playlist, MediaListModel *mediaListModel, ScheduleListModel *scheduleListModel, QObject *parent) :
     QAbstractTableModel(parent),
     _mediaListModel(mediaListModel),
@@ -184,6 +174,7 @@ bool PlaylistModel::addPlayback(Playback *playback)
 
 bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent )
 {
+
     QString indexes = data->html();
     int countIndexes = indexes.count(":");
 
@@ -193,7 +184,36 @@ bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action
         if (!media)
             return false;
 
-        addPlayback(new Playback(media));
+    QList<Schedule*> scheduleList = _scheduleListModel->scheduleList();
+
+    foreach(Schedule *schedule, scheduleList)
+    {
+        if(this->playlist() == schedule->playlist())
+        {
+            foreach(Schedule *schedule2, scheduleList)
+            {
+                if(schedule->launchAt() < schedule2->launchAt())
+                {
+                    if(schedule->finishAt().addMSecs(media->duration()) > schedule2->launchAt())
+                    {
+                        int delay = QMessageBox::warning(NULL, tr("Add track into playlist"), tr("This new track create a overlapping") , tr("Delay automation"), tr("Do not add track"));
+
+                        if(delay == 0)
+                        {
+                            uint t = media->duration();
+                            schedule2->delay(media->duration());
+                            repareDelay(scheduleList, media->duration());
+                        }
+                        if(delay == 1)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+     addPlayback(new Playback(media));
     }
     return true;
 }
@@ -326,3 +346,20 @@ void PlaylistModel::removeAll()
     }
 }
 
+void PlaylistModel::repareDelay(QList<Schedule *> scheduleList, uint duration)
+{
+    foreach(Schedule *schedule1, scheduleList)
+    {
+        foreach(Schedule *schedule2, scheduleList)
+        {
+            if(schedule1 != schedule2)
+            {
+                if(schedule1->finishAt() > schedule2->launchAt() && schedule1->launchAt() < schedule2->launchAt())
+                {
+                    schedule2->delay(duration);
+                    repareDelay(scheduleList, duration);
+                }
+            }
+        }
+    }
+}
