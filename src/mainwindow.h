@@ -436,8 +436,6 @@ math@gmail.com>
 
     void on_scheduleLaunchAtTimeEdit_timeChanged(const QTime &time);
 
-    void on_quitAction_triggered();
-
 protected:
     /**
      * @brief Returns the selected playback
