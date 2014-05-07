@@ -507,38 +507,46 @@ void MainWindow::stop(){
 
 void MainWindow::createPlaylistTab()
 {
-    PlaylistTableView *newTab = new PlaylistTableView;
-    Playlist *playlist = new Playlist(_app->vlcInstance(), tr("New playlist"));
-    PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel,newTab);
+    if(_locker->getLock())
+        QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently lock, you can not add a new playlist.") , tr("OK"));
+    else {
+        PlaylistTableView *newTab = new PlaylistTableView;
+        Playlist *playlist = new Playlist(_app->vlcInstance(), tr("New playlist"));
+        PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel,newTab);
 
-    connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
+        connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
 
-    newTab->setModel(newModel);
-    newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
-    newTab->horizontalHeader()->setStretchLastSection(true);
+        newTab->setModel(newModel);
+        newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
+        newTab->horizontalHeader()->setStretchLastSection(true);
 
-    ui->playlistsTabWidget->addTab(newTab, playlist->title());
-    ui->playlistsTabWidget->setCurrentWidget(newTab);
+        ui->playlistsTabWidget->addTab(newTab, playlist->title());
+        ui->playlistsTabWidget->setCurrentWidget(newTab);
 
-    updatePlaylistListCombox();
+        updatePlaylistListCombox();
+    }
 }
 
 void MainWindow::createPlaylistTab(QString name)
 {
-    PlaylistTableView *newTab = new PlaylistTableView;
-    Playlist *playlist = new Playlist(_app->vlcInstance(), name);
-    PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
+    if(_locker->getLock())
+        QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently lock, you can not add a new playlist.") , tr("OK"));
+    else {
+        PlaylistTableView *newTab = new PlaylistTableView;
+        Playlist *playlist = new Playlist(_app->vlcInstance(), name);
+        PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
 
-    connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
+        connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
 
-    newTab->setModel(newModel);
-    newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
-    newTab->horizontalHeader()->setStretchLastSection(true);
+        newTab->setModel(newModel);
+        newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
+        newTab->horizontalHeader()->setStretchLastSection(true);
 
-    ui->playlistsTabWidget->addTab(newTab, playlist->title());
-    ui->playlistsTabWidget->setCurrentWidget(newTab);
+        ui->playlistsTabWidget->addTab(newTab, playlist->title());
+        ui->playlistsTabWidget->setCurrentWidget(newTab);
 
-    updatePlaylistListCombox();
+        updatePlaylistListCombox();
+    }
 }
 
 void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
@@ -689,26 +697,33 @@ void MainWindow::on_deletePlaylistItemButton_clicked()
 
 void MainWindow::editPlaylistName()
 {
-    int tabIndex = ui->playlistsTabWidget->currentIndex();
-    bool ok;
+    if(_locker->getLock())
+        QMessageBox::critical(this, tr("Edit playlist name"), tr("This playlist is currently lock, you can not edit the name of the playlist.") , tr("OK"));
+    else {
+        int tabIndex = ui->playlistsTabWidget->currentIndex();
+        bool ok;
 
-    QString text = QInputDialog::getText(this,
-        tr("Rename playlist"),
-        tr("Playlist title : "),
-        QLineEdit::Normal,
-        ui->playlistsTabWidget->tabText(tabIndex),
-        &ok
-    );
+        QString text = QInputDialog::getText(this,
+            tr("Rename playlist"),
+            tr("Playlist title : "),
+            QLineEdit::Normal,
+            ui->playlistsTabWidget->tabText(tabIndex),
+            &ok
+        );
 
-    if (ok && !text.isEmpty()) {
-        ui->playlistsTabWidget->setTabText(tabIndex, text);
-        currentPlaylistModel()->playlist()->setTitle(text);
-        updatePlaylistListCombox();
+        if (ok && !text.isEmpty()) {
+            ui->playlistsTabWidget->setTabText(tabIndex, text);
+            currentPlaylistModel()->playlist()->setTitle(text);
+            updatePlaylistListCombox();
+        }
     }
 }
 
 void MainWindow::deletePlaylistItem()
 {
+    if(_locker->getLock())
+        QMessageBox::critical(this, tr("Delete playlist item"), tr("This playlist is currently lock, you can not delete an item.") , tr("OK"));
+    else {
         QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
 
         if (indexes.count() == 0)
@@ -718,8 +733,9 @@ void MainWindow::deletePlaylistItem()
             updateSettings();
             _scheduleListModel->updateLayout();
         }else{
-            QMessageBox::critical(this, tr("Remove item"), tr("This playlist is currently running, you can not delete media that have been or are being displayed.") , tr("Ok"));
+            QMessageBox::critical(this, tr("Remove item"), tr("This playlist is currently running, you can not delete media that have been or are being displayed.") , tr("OK"));
         }
+    }
 }
 
 /***********************************************************************************************\

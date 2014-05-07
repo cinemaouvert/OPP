@@ -38,6 +38,7 @@ Locker::Locker(QList<QWidget*> widgets, QObject *parent) :
 {
     this->setPasswordEnable(false);
     _timer = new QTimer();
+    _lock = false;
 }
 
 Locker::~Locker()
@@ -87,6 +88,7 @@ void Locker::lock()
     foreach(QWidget *widget, _widgets) {
         widget->setEnabled(false);
     }
+    _lock = true;
     emit toggled(true);
 }
 
@@ -105,6 +107,7 @@ void Locker::unlock()
                 foreach(QWidget *widget, _widgets) {
                     widget->setEnabled(true);
                 }
+                _lock = false;
         }
         else {
             emit toggled(true);
@@ -113,6 +116,7 @@ void Locker::unlock()
         foreach(QWidget *widget, _widgets) {
             widget->setEnabled(true);
         }
+        _lock = false;
     }
 
 }
@@ -126,4 +130,8 @@ void Locker::toggle(bool checked)
 QList<QWidget*> Locker::getWidgets()
 {
     return _widgets;
+}
+
+bool Locker::getLock(){
+    return _lock;
 }

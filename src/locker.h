@@ -106,6 +106,14 @@ public:
      */
     QList<QWidget*> getWidgets();
 
+    /**
+     * @brief getLock
+     * @return true if the playlist is lock, false otherwise
+     *
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
+     */
+    bool getLock();
+
 private:
 
     /**
@@ -126,7 +134,7 @@ private:
     /**
      * @brief _timer
      */
-   QTimer *_timer;
+    QTimer *_timer;
 
     /**
      * @brief _widgets
@@ -137,6 +145,11 @@ private:
      * @brief delay in ms
      */
     int delay;
+
+    /**
+     * @brief _lock
+     */
+    int _lock;
 
 public slots:
 
