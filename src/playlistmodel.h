@@ -266,6 +266,10 @@ public slots:
      */
     void setPlayingItem(int index);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2b1beeed1aac2c9d3a7e60525709ae3c882f56ab
 private:
     /**
      * @brief _playlist The playlist

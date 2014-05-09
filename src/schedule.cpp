@@ -39,6 +39,7 @@ Schedule::Schedule(Playlist *playlist, const QDateTime &launchAt, QObject *paren
 
 Schedule::~Schedule()
 {
+    delete _timer;
 }
 
 QDateTime Schedule::finishAt() const

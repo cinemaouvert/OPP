@@ -95,6 +95,13 @@ private slots:
      */
     void on_buttonBox_rejected();
 
+    /**
+     * @brief Ask password
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    bool askPassword();
+
 private:
     /**
      * @brief ui The UI
