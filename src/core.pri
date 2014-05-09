@@ -53,12 +53,15 @@ SOURCES += src/media.cpp \
 
 # vlc library and headers
 mac:LIBS += -L"/Applications/VLC.app/Contents/MacOS/lib"
-mac:INCLUDEPATH += ./include
+mac:INCLUDEPATH += "./include"
+mac:INCLUDEPATH += "./include/vlc/plugins"
 mac:INCLUDEPATH += "/Applications/VLC.app/Contents/MacOS/include"
 
-unix:LIBS += -lvlc -lvlccore -lX11
 
+unix:LIBS += -lvlc -lvlccore
+unix:!macx:LIBS += -lX11
 unix:!macx:INCLUDEPATH += /usr/include/vlc/plugins
+
 
 windows:LIBS += -L"C:\Program Files\VideoLAN\VLC\sdk\lib" -llibvlc -llibvlccore
 windows:INCLUDEPATH += "C:\Program Files\VideoLAN\VLC\sdk\include"

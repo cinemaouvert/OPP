@@ -99,6 +99,7 @@ void MediaPlayer::setVideoView(VideoView *videoView)
 }
 
 void MediaPlayer::close(Playback *playback){
+    if(playback){
         disconnect(playback->mediaSettings(), SIGNAL(gainChanged(float)), this, SLOT(setCurrentGain(float)));
         disconnect(playback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
         disconnect(playback->mediaSettings(), SIGNAL(gammaChanged(float)), this, SLOT(setCurrentGamma(float)));
@@ -112,6 +113,7 @@ void MediaPlayer::close(Playback *playback){
         disconnect(playback->mediaSettings(), SIGNAL(audioTrackChanged(int)), this, SLOT(setCurrentAudioTrack(int)));
         disconnect(playback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
         disconnect(playback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
+    }
 }
 
 void MediaPlayer::open(Playback *playback)
@@ -403,7 +405,8 @@ void MediaPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
         emit player->lengthChanged(event->u.media_player_length_changed.new_length);
         break;
     case libvlc_MediaPlayerVout:
-        qDebug() << "<<<<<<<<<<<<<< vout >>>>>>>>>>>>>";
+        //TODO Write to the log file
+        qDebug() <<  "<<<<<<<<<<<<<<vout >>>>>>>>>>>>>";
         emit player->vout(event->u.media_player_vout.new_count);
         break;
     default:
