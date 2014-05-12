@@ -63,8 +63,13 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow), _locker(NULL) , _lockSettingsWindow(NULL),
+    _app(NULL), _playlistPlayer(NULL), _videoWindow(NULL), _mediaListModel(NULL),
+    _scheduleListModel(NULL), _statusWidget(NULL), _dataStorage(NULL), _advancedSettingsWindow(NULL),
+    _advancedPictureSettingsWindow(NULL), _settingsWindow(NULL),  _aboutdialog(NULL)
 {
+    //setAttribute(Qt::WA_DeleteOnClose);
+
     ui->setupUi(this);
 
     _lastSelectedTab=-1;
@@ -148,20 +153,34 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    delete ui;
-    delete _lockSettingsWindow;
-    delete _mediaListModel;
-    delete _scheduleListModel;
-    delete _videoWindow;
-    delete _playlistPlayer;
-    delete _dataStorage;
-    delete _app;
-    delete _advancedSettingsWindow;
-    delete _advancedPictureSettingsWindow;
-    delete _settingsWindow;
-    delete _aboutdialog;
-    delete _statusWidget;
-    delete _locker;
+    if(ui != NULL)
+        delete ui;
+    if(_lockSettingsWindow != NULL)
+        delete _lockSettingsWindow;
+    if(_mediaListModel != NULL)
+        delete _mediaListModel;
+    if(_scheduleListModel != NULL)
+        delete _scheduleListModel;
+    if(_videoWindow != NULL)
+        delete _videoWindow;
+    if(_playlistPlayer != NULL)
+        delete _playlistPlayer;
+    if(_dataStorage != NULL)
+        delete _dataStorage;
+    if(_app != NULL)
+        delete _app;
+    if(_advancedSettingsWindow != NULL)
+        delete _advancedSettingsWindow;
+    if(_advancedPictureSettingsWindow != NULL)
+        delete _advancedPictureSettingsWindow;
+    if(_settingsWindow != NULL)
+        delete _settingsWindow;
+    if(_aboutdialog != NULL)
+        delete _aboutdialog;
+    if(_statusWidget != NULL)
+        delete _statusWidget;
+    if(_locker != NULL)
+        delete _locker;
 }
 
 // FIX : ref 0000001
