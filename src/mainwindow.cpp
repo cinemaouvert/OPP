@@ -151,10 +151,17 @@ MainWindow::~MainWindow()
     delete ui;
     delete _lockSettingsWindow;
     delete _mediaListModel;
+    delete _scheduleListModel;
     delete _videoWindow;
     delete _playlistPlayer;
     delete _dataStorage;
     delete _app;
+    delete _advancedSettingsWindow;
+    delete _advancedPictureSettingsWindow;
+    delete _settingsWindow;
+    delete _aboutdialog;
+    delete _statusWidget;
+    delete _locker;
 }
 
 // FIX : ref 0000001
