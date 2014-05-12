@@ -113,7 +113,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)), _statusWidget, SLOT(setMediaCount(int)));
 
     // show/hide pannel actions
-    connect(ui->quitAction, SIGNAL(triggered()), this, SLOT(close()));
+    //connect(ui->quitAction, SIGNAL(triggered()), this, SLOT(close()));
     connect(ui->resumeDetailsAction, SIGNAL(toggled(bool)), ui->projectTabWidget, SLOT(setVisible(bool)));
     connect(ui->binAction, SIGNAL(toggled(bool)), ui->binGroupBox, SLOT(setVisible(bool)));
     connect(ui->automationAction, SIGNAL(toggled(bool)), ui->scheduleGroupBox, SLOT(setVisible(bool)));
@@ -821,6 +821,7 @@ void MainWindow::on_openListingAction_triggered()
     if(_playlistPlayer->mediaPlayer()->isPlaying() || _playlistPlayer->mediaPlayer()->isPaused()){
          QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before open a listing."));
     }else{
+        //TODO Mettre test si modification de la programamtion actuelle à la place
         if(_mediaListModel->rowCount()!=0)
             if (1 == QMessageBox::warning(this, "Save", tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
                 on_saveAction_triggered();
@@ -851,6 +852,7 @@ void MainWindow::on_newListingAction_triggered()
     if(_playlistPlayer->mediaPlayer()->isPlaying() || _playlistPlayer->mediaPlayer()->isPaused()){
          QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before new listing."));
     }else{
+        //TODO Mettre test si modification de la programamtion actuelle à la place
         if(_mediaListModel->rowCount()!=0)
             if (1 == QMessageBox::warning(this, "Save", tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
                 on_saveAction_triggered();
@@ -874,6 +876,14 @@ void MainWindow::on_newListingAction_triggered()
     }
 }
 
+void MainWindow::on_quitAction_triggered()
+{
+    //TODO Mettre test si modification de la programamtion actuelle à la place
+    if(_mediaListModel->rowCount()!=0)
+        if (1 == QMessageBox::warning(this, "Save", tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
+            on_saveAction_triggered();
+    close();
+}
 
 /***********************************************************************************************\
                                           Automation

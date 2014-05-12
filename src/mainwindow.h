@@ -267,6 +267,12 @@ math@gmail.com>
     void on_saveAction_triggered();
 
     /**
+     * @brief Quit the software
+     */
+    void on_quitAction_triggered();
+
+
+    /**
      * @brief Open a saved project
      *
      * @author Florian Mhun <florian.mhun@gmail.com>

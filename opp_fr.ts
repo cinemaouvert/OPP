@@ -762,7 +762,7 @@
     <message>
         <location filename="src/mainwindow.ui" line="1399"/>
         <source>Save</source>
-        <translation>Sauvegarder</translation>
+        <translation type="unfinished">Enregistrer</translation>
     </message>
     <message>
         <location filename="src/mainwindow.ui" line="1402"/>
