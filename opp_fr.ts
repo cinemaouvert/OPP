@@ -514,7 +514,7 @@
     </message>
     <message>
         <location filename="src/mainwindow.ui" line="327"/>
-        <location filename="src/mainwindow.cpp" line="945"/>
+        <location filename="src/mainwindow.cpp" line="955"/>
         <source>Start automation</source>
         <translation>Démarrer l&apos;automatisation</translation>
     </message>
@@ -670,7 +670,7 @@
     </message>
     <message>
         <location filename="src/mainwindow.ui" line="1182"/>
-        <location filename="src/mainwindow.ui" line="1338"/>
+        <location filename="src/mainwindow.ui" line="1350"/>
         <source>Help</source>
         <translation>Aide</translation>
     </message>
@@ -680,68 +680,88 @@
         <translation>Nouvelle programmation</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1202"/>
+        <location filename="src/mainwindow.ui" line="1200"/>
+        <source>Ctrl+N</source>
+        <translation>Ctrl+N</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.ui" line="1205"/>
         <source>Open a listing</source>
         <translation>Ouvrir une programmation</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1207"/>
+        <location filename="src/mainwindow.ui" line="1208"/>
+        <source>Ctrl+O</source>
+        <translation>Ctrl+O</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.ui" line="1213"/>
         <source>Save as</source>
         <translation>Enregistrer sous</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1212"/>
+        <location filename="src/mainwindow.ui" line="1216"/>
+        <source>Ctrl+Shift+S</source>
+        <translation>Ctrl+Shift+S</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.ui" line="1221"/>
         <source>Print conduct</source>
         <translation>Imprimer conduite</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1217"/>
+        <location filename="src/mainwindow.ui" line="1226"/>
         <source>Layout</source>
         <translation>Mie en page</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1225"/>
-        <location filename="src/mainwindow.ui" line="1228"/>
+        <location filename="src/mainwindow.ui" line="1234"/>
+        <location filename="src/mainwindow.ui" line="1237"/>
         <source>Quit</source>
         <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1236"/>
+        <location filename="src/mainwindow.ui" line="1240"/>
+        <source>Ctrl+Q</source>
+        <translation>Ctrl+Q</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.ui" line="1248"/>
         <source>Copy</source>
         <translation>Copier</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1241"/>
+        <location filename="src/mainwindow.ui" line="1253"/>
         <source>Paste</source>
         <translation>Coller</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1249"/>
+        <location filename="src/mainwindow.ui" line="1261"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1257"/>
+        <location filename="src/mainwindow.ui" line="1269"/>
         <source>Import</source>
         <translation>Importer</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1265"/>
+        <location filename="src/mainwindow.ui" line="1277"/>
         <source>Play a test pattern</source>
         <translation>Lire une mire</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1365"/>
+        <location filename="src/mainwindow.ui" line="1377"/>
         <source>Projection</source>
         <translation>Projection</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1379"/>
+        <location filename="src/mainwindow.ui" line="1391"/>
         <source>Window</source>
         <translation>Fenêtre</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1384"/>
+        <location filename="src/mainwindow.ui" line="1396"/>
         <location filename="src/mainwindow.cpp" line="538"/>
         <location filename="src/mainwindow.cpp" line="560"/>
         <location filename="src/mainwindow.cpp" line="716"/>
@@ -749,70 +769,70 @@
         <translation>Ajouter une nouvelle séance</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1389"/>
+        <location filename="src/mainwindow.ui" line="1401"/>
         <location filename="src/mainwindow.cpp" line="738"/>
         <source>Rename playlist</source>
         <translation>Renommer une séance</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1394"/>
+        <location filename="src/mainwindow.ui" line="1406"/>
         <source>Remove playlist item</source>
         <translation>Retirer un élément de la séance</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1399"/>
+        <location filename="src/mainwindow.ui" line="1411"/>
         <source>Save</source>
-        <translation type="unfinished">Enregistrer</translation>
+        <translation>Enregistrer</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1402"/>
+        <location filename="src/mainwindow.ui" line="1414"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="src/mainwindow.ui" line="224"/>
-        <location filename="src/mainwindow.ui" line="1276"/>
+        <location filename="src/mainwindow.ui" line="1288"/>
         <source>Automation</source>
         <translation>Automatisation</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1287"/>
+        <location filename="src/mainwindow.ui" line="1299"/>
         <source>Output</source>
         <translation>Sortie</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1298"/>
+        <location filename="src/mainwindow.ui" line="1310"/>
         <source>Summary/Details</source>
         <translation>Résumé/Détails</translation>
     </message>
     <message>
         <location filename="src/mainwindow.ui" line="343"/>
-        <location filename="src/mainwindow.ui" line="1309"/>
+        <location filename="src/mainwindow.ui" line="1321"/>
         <source>Bin</source>
         <translation>Répertoire de programmation</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1320"/>
+        <location filename="src/mainwindow.ui" line="1332"/>
         <source>Status bar</source>
         <translation>Barre de status</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1325"/>
+        <location filename="src/mainwindow.ui" line="1337"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1330"/>
+        <location filename="src/mainwindow.ui" line="1342"/>
         <source>Lock settings</source>
         <translation>Paramètres du verrouillage</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1346"/>
+        <location filename="src/mainwindow.ui" line="1358"/>
         <source>Update</source>
         <translation>Mise à jour</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1351"/>
+        <location filename="src/mainwindow.ui" line="1363"/>
         <source>About</source>
         <translation>À propos</translation>
     </message>
@@ -889,16 +909,18 @@
     <message>
         <location filename="src/mainwindow.cpp" line="242"/>
         <location filename="src/mainwindow.cpp" line="588"/>
-        <location filename="src/mainwindow.cpp" line="825"/>
-        <location filename="src/mainwindow.cpp" line="855"/>
+        <location filename="src/mainwindow.cpp" line="826"/>
+        <location filename="src/mainwindow.cpp" line="857"/>
+        <location filename="src/mainwindow.cpp" line="883"/>
         <source>No</source>
         <translation>Non</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="242"/>
         <location filename="src/mainwindow.cpp" line="588"/>
-        <location filename="src/mainwindow.cpp" line="825"/>
-        <location filename="src/mainwindow.cpp" line="855"/>
+        <location filename="src/mainwindow.cpp" line="826"/>
+        <location filename="src/mainwindow.cpp" line="857"/>
+        <location filename="src/mainwindow.cpp" line="883"/>
         <source>Yes</source>
         <translation>Oui</translation>
     </message>
@@ -1006,20 +1028,21 @@
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="797"/>
-        <location filename="src/mainwindow.cpp" line="827"/>
+        <location filename="src/mainwindow.cpp" line="828"/>
         <source>OPP file (*.opp)</source>
         <translation>Fichier OPP (*.opp)</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="825"/>
-        <location filename="src/mainwindow.cpp" line="855"/>
+        <location filename="src/mainwindow.cpp" line="826"/>
+        <location filename="src/mainwindow.cpp" line="857"/>
+        <location filename="src/mainwindow.cpp" line="883"/>
         <source>Do you want to save the current listing ? 
 Otherwise unsaved data will be lost</source>
         <translation>Souhaitez-vous sauvegarder la programmation actuelle ? 
 Sinon, les données non sauvegardées seront perdues</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="827"/>
+        <location filename="src/mainwindow.cpp" line="828"/>
         <source>Open listing</source>
         <translation>Ouverture d&apos;une programmation</translation>
     </message>
@@ -1040,13 +1063,13 @@ Sinon, les données non sauvegardées seront perdues</translation>
     <message>
         <location filename="src/mainwindow.cpp" line="783"/>
         <location filename="src/mainwindow.cpp" line="806"/>
-        <location filename="src/mainwindow.cpp" line="833"/>
+        <location filename="src/mainwindow.cpp" line="834"/>
         <source>Unable to open file</source>
         <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="822"/>
-        <location filename="src/mainwindow.cpp" line="852"/>
+        <location filename="src/mainwindow.cpp" line="853"/>
         <source>Playlist is running</source>
         <translation>Séance en cours de lecture</translation>
     </message>
@@ -1062,51 +1085,51 @@ Veuillez arrétez la lecture avant d&apos;ouvrir une programmation.</translation
         <translation type="obsolete">Ouvrir un projet</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="852"/>
+        <location filename="src/mainwindow.cpp" line="853"/>
         <source>Playlist is running. 
 Please stop playlist before new listing.</source>
         <translation>Séance en cous de lecture.
 Veuillez arrétez la lecture avant de créer une nouvelle programmation.</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="910"/>
-        <location filename="src/mainwindow.cpp" line="921"/>
+        <location filename="src/mainwindow.cpp" line="920"/>
+        <location filename="src/mainwindow.cpp" line="931"/>
         <source>Schedule validation</source>
         <translation>Création d&apos;une automatisation</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="910"/>
+        <location filename="src/mainwindow.cpp" line="920"/>
         <source>The schedule launch date must be later than the current date.</source>
         <translation>La date de début d&apos;une automatisation doit être postérieure à la date courante.</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="921"/>
+        <location filename="src/mainwindow.cpp" line="931"/>
         <source>A playlist was already scheduled between the %1 and %2, 
 Please choose an other launch date.</source>
         <translation>Une séance a déjà été planifiée entre %1 et %2. Choisissez une autre date de début.</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="935"/>
-        <location filename="src/mainwindow.cpp" line="937"/>
+        <location filename="src/mainwindow.cpp" line="945"/>
+        <location filename="src/mainwindow.cpp" line="947"/>
         <source>Delay validation</source>
         <translation>Validation du retardement</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="935"/>
+        <location filename="src/mainwindow.cpp" line="945"/>
         <source>With this delay a playlist starts before the end of the current playlist. 
 Please choose an other delay.</source>
         <translation>Avec ce retardement une séance commence avant la fin de la séance actuelle. 
 Veuillez choisir un autre retardement.</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="937"/>
+        <location filename="src/mainwindow.cpp" line="947"/>
         <source>With this delay a playlist starts before the current date. 
 Please choose an other delay.</source>
         <translation>Avec ce retardement une séance commence avant la date actuelle. 
 Veuillez choisir un autre retardement.</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="943"/>
+        <location filename="src/mainwindow.cpp" line="953"/>
         <source>Stop automation</source>
         <translation>Arrêter l&apos;automatisation</translation>
     </message>
