@@ -783,6 +783,9 @@ void MainWindow::on_openListingAction_triggered()
     if(_playlistPlayer->mediaPlayer()->isPlaying() || _playlistPlayer->mediaPlayer()->isPaused()){
          QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before open a listing."));
     }else{
+        if(_mediaListModel->rowCount()!=0)
+            if (1 == QMessageBox::warning(this, "Save", tr("Do you want to save the current project ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
+                on_saveAsAction_triggered();
         QString fileName = QFileDialog::getOpenFileName(this, tr("Open Project"), "", tr("OPP file (*.opp)"));
         if (fileName.isEmpty()) {
              return;
@@ -808,6 +811,9 @@ void MainWindow::on_newListingAction_triggered()
     if(_playlistPlayer->mediaPlayer()->isPlaying() || _playlistPlayer->mediaPlayer()->isPaused()){
          QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before new listing."));
     }else{
+        if(_mediaListModel->rowCount()!=0)
+            if (1 == QMessageBox::warning(this, "Save", tr("Do you want to save the current project ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
+                on_saveAsAction_triggered();
         _dataStorage->clear();
         // FIX : ref 0000001
         // add empty tab and remove all other one (init state)
