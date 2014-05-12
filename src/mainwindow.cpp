@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow), _locker(NULL) , _lockSettingsWindow(NULL),
     _app(NULL), _playlistPlayer(NULL), _videoWindow(NULL), _mediaListModel(NULL),
     _scheduleListModel(NULL), _statusWidget(NULL), _dataStorage(NULL), _advancedSettingsWindow(NULL),
-    _advancedPictureSettingsWindow(NULL), _settingsWindow(NULL),  _aboutdialog(NULL)
+    _advancedPictureSettingsWindow(NULL), _settingsWindow(NULL),  _aboutdialog(NULL), _fileName("")
 {
     //setAttribute(Qt::WA_DeleteOnClose);
 
@@ -773,6 +773,24 @@ void MainWindow::deletePlaylistItem()
                                           Project import/export
 \***********************************************************************************************/
 
+void MainWindow::on_saveAction_triggered()
+{
+    if(_fileName.compare("")==0)
+        on_saveAsAction_triggered();
+    else {
+        QFile file(_fileName);
+        if (!file.open(QIODevice::WriteOnly)) {
+            QMessageBox::information(this, tr("Unable to open file"),file.errorString());
+        }
+
+        for (int i = 0; i < ui->playlistsTabWidget->count(); i++)
+         _dataStorage->addPlaylistModel((PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(i) )->model());
+
+        _dataStorage->save(file);
+        file.close();
+        QMessageBox::information(this, tr("Saved"),tr("Project saved"));
+    }
+}
 
 void MainWindow::on_saveAsAction_triggered()
 {
@@ -787,12 +805,13 @@ void MainWindow::on_saveAsAction_triggered()
         if (!file.open(QIODevice::WriteOnly)) {
             QMessageBox::information(this, tr("Unable to open file"),file.errorString());
         }
-
+        _fileName = fileName;
         for (int i = 0; i < ui->playlistsTabWidget->count(); i++)
             _dataStorage->addPlaylistModel((PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(i) )->model());
 
         _dataStorage->save(file);
         file.close();
+        QMessageBox::information(this, tr("Saved"),tr("Project saved"));
     }
 }
 
@@ -804,7 +823,7 @@ void MainWindow::on_openListingAction_triggered()
     }else{
         if(_mediaListModel->rowCount()!=0)
             if (1 == QMessageBox::warning(this, "Save", tr("Do you want to save the current project ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
-                on_saveAsAction_triggered();
+                on_saveAction_triggered();
         QString fileName = QFileDialog::getOpenFileName(this, tr("Open Project"), "", tr("OPP file (*.opp)"));
         if (fileName.isEmpty()) {
              return;
@@ -813,6 +832,8 @@ void MainWindow::on_openListingAction_triggered()
             if (!file.open(QIODevice::ReadWrite)) {
                 QMessageBox::information(this, tr("Unable to open file"),file.errorString());
             }
+
+            _fileName = fileName;
 
             _dataStorage->load(file);
             updatePlaylistListCombox();
@@ -832,7 +853,7 @@ void MainWindow::on_newListingAction_triggered()
     }else{
         if(_mediaListModel->rowCount()!=0)
             if (1 == QMessageBox::warning(this, "Save", tr("Do you want to save the current project ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
-                on_saveAsAction_triggered();
+                on_saveAction_triggered();
         _dataStorage->clear();
         // FIX : ref 0000001
         // add empty tab and remove all other one (init state)
@@ -848,6 +869,8 @@ void MainWindow::on_newListingAction_triggered()
             ui->schedulePlaylistListComboBox->removeItem(i);
         }
         updatePlaylistListCombox();
+
+        _fileName = "";
     }
 }
 

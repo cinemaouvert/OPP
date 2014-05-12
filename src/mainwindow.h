@@ -33,8 +33,9 @@
 
 #include <QDataWidgetMapper>
 #include <QLabel>
-#include<QModelIndexList>
-#include<QTime>
+#include <QModelIndexList>
+#include <QTime>
+
 
 namespace Ui {
 class MainWindow;
@@ -259,6 +260,11 @@ math@gmail.com>
      * @brief Save the current project
      */
     void on_saveAsAction_triggered();
+
+    /**
+     * @brief Save the current project
+     */
+    void on_saveAction_triggered();
 
     /**
      * @brief Open a saved project
@@ -536,6 +542,11 @@ private:
      * @brief used to disconnect signals
      */
     int _lastSelectedTab;
+
+    /**
+     * @brief _fileName
+     */
+    QString _fileName;
 };
 
 #endif // MAINWINDOW_H

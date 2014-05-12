@@ -1121,7 +1121,7 @@
      <x>0</x>
      <y>0</y>
      <width>1287</width>
-     <height>29</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1130,6 +1130,7 @@
     </property>
     <addaction name="newListingAction"/>
     <addaction name="openListingAction"/>
+    <addaction name="saveAction"/>
     <addaction name="saveAsAction"/>
     <addaction name="separator"/>
     <addaction name="quitAction"/>
@@ -1391,6 +1392,14 @@
   <action name="removePlaylistItemAction">
    <property name="text">
     <string>Remove playlist item</string>
+   </property>
+  </action>
+  <action name="saveAction">
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
  </widget>
