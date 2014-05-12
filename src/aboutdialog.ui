@@ -53,7 +53,7 @@
    <item>
     <widget class="QLabel" name="label_developers">
      <property name="text">
-      <string>Developers : Baptiste Roziere, Cyril Naud, Florian Mhun, Hamza Haddar</string>
+      <string>Developers : Baptiste Roziere, Cyril Naud, Florian Mhun, Hamza Haddar, Thomas Berthomé, Denis Saunier, Thibaud Lamarche, Geoffrey Bergé.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

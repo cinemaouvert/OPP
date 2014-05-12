@@ -249,7 +249,7 @@ void MainWindow::on_binDeleteMediaButton_clicked()
                         updateSettings();
                     }else{
                         toDel=false;
-                        QMessageBox::critical(this, media->name(), tr("The media wasn't removed because you can not delete files that have been or are  being used.") ,tr("Ok"));
+                        QMessageBox::critical(this, media->name(), tr("The media wasn't removed because you can not delete files that have been or are  being used.") ,tr("OK"));
                     }
                 }
             }else{
@@ -535,7 +535,7 @@ void MainWindow::stop(){
 void MainWindow::createPlaylistTab()
 {
     if(_locker->getLock())
-        QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently lock, you can not add a new playlist.") , tr("OK"));
+        QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently locked, you can not add a new playlist.") , tr("OK"));
     else {
         PlaylistTableView *newTab = new PlaylistTableView;
         Playlist *playlist = new Playlist(_app->vlcInstance(), tr("New playlist"));
@@ -557,7 +557,7 @@ void MainWindow::createPlaylistTab()
 void MainWindow::createPlaylistTab(QString name)
 {
     if(_locker->getLock())
-        QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently lock, you can not add a new playlist.") , tr("OK"));
+        QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently locked, you can not add a new playlist.") , tr("OK"));
     else {
         PlaylistTableView *newTab = new PlaylistTableView;
         Playlist *playlist = new Playlist(_app->vlcInstance(), name);
@@ -582,7 +582,7 @@ void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
 
     PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(index))->model();
     if(model->isRunning()){
-        QMessageBox::critical(this, tr("Remove playlist"), tr("This playlist is currently running, you can't delete it.") , tr("Ok"));
+        QMessageBox::critical(this, tr("Remove playlist"), tr("This playlist is currently running, you can't delete it.") , tr("OK"));
     }else{
         if (_scheduleListModel->isScheduled(playlist)) {
             if (0 == QMessageBox::warning(this, tr("Remove playlist"), tr("This playlist was scheduled. All schedules which use this playlist will be deleted too.\n Are you sure to remove this playlist ?") ,tr("No"), tr("Yes")))
@@ -713,7 +713,7 @@ void MainWindow::on_addPlaylistButton_clicked()
         }
     }
     else
-        QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently lock, you can not add a new playlist.") , tr("OK"));
+        QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently locked, you can not add a new playlist.") , tr("OK"));
 }
 
 void MainWindow::on_editNamePlaylistButton_clicked()
@@ -729,7 +729,7 @@ void MainWindow::on_deletePlaylistItemButton_clicked()
 void MainWindow::editPlaylistName()
 {
     if(_locker->getLock())
-        QMessageBox::critical(this, tr("Edit playlist name"), tr("This playlist is currently lock, you can not edit the name of the playlist.") , tr("OK"));
+        QMessageBox::critical(this, tr("Edit playlist name"), tr("This playlist is currently locked, you can not edit the name of the playlist.") , tr("OK"));
     else {
         int tabIndex = ui->playlistsTabWidget->currentIndex();
         bool ok;
@@ -753,7 +753,7 @@ void MainWindow::editPlaylistName()
 void MainWindow::deletePlaylistItem()
 {
     if(_locker->getLock())
-        QMessageBox::critical(this, tr("Delete playlist item"), tr("This playlist is currently lock, you can not delete an item.") , tr("OK"));
+        QMessageBox::critical(this, tr("Delete playlist item"), tr("This playlist is currently locked, you can not delete an item.") , tr("OK"));
     else {
         QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
 
@@ -811,7 +811,7 @@ void MainWindow::on_saveAsAction_triggered()
 
         _dataStorage->save(file);
         file.close();
-        QMessageBox::information(this, tr("Saved"),tr("Project saved"));
+        QMessageBox::information(this, tr("Saved"),tr("Listing saved"));
     }
 }
 
@@ -822,9 +822,9 @@ void MainWindow::on_openListingAction_triggered()
          QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before open a listing."));
     }else{
         if(_mediaListModel->rowCount()!=0)
-            if (1 == QMessageBox::warning(this, "Save", tr("Do you want to save the current project ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
+            if (1 == QMessageBox::warning(this, "Save", tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
                 on_saveAction_triggered();
-        QString fileName = QFileDialog::getOpenFileName(this, tr("Open Project"), "", tr("OPP file (*.opp)"));
+        QString fileName = QFileDialog::getOpenFileName(this, tr("Open listing"), "", tr("OPP file (*.opp)"));
         if (fileName.isEmpty()) {
              return;
         } else {
@@ -852,7 +852,7 @@ void MainWindow::on_newListingAction_triggered()
          QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before new listing."));
     }else{
         if(_mediaListModel->rowCount()!=0)
-            if (1 == QMessageBox::warning(this, "Save", tr("Do you want to save the current project ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
+            if (1 == QMessageBox::warning(this, "Save", tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
                 on_saveAction_triggered();
         _dataStorage->clear();
         // FIX : ref 0000001

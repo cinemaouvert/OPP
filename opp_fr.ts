@@ -4,27 +4,51 @@
 <context>
     <name>About</name>
     <message>
-        <location filename="src/about.ui" line="14"/>
+        <source>About</source>
+        <translation type="obsolete">À propos</translation>
+    </message>
+    <message>
+        <source>Version 0.9.1</source>
+        <translation type="obsolete">Version 0.9.1</translation>
+    </message>
+    <message utf8="true">
+        <source>This software has been developed by students from the Université de Poitiers as a project of Master of Computer Sciences</source>
+        <translation type="obsolete">Ce logiciel a été développé par des étudiants de l&apos;Université de Poitiers en tant que projet de Master Informatique</translation>
+    </message>
+    <message>
+        <source>Developers : Baptiste Roziere, Cyril Naud, Florian Mhun, Hamza Haddar</source>
+        <translation type="obsolete">Développeurs : Baptiste Roziere, Cyril Naud, Florian Mhun, Hamza Haddar</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="obsolete">Fermer</translation>
+    </message>
+</context>
+<context>
+    <name>AboutDialog</name>
+    <message>
+        <location filename="src/aboutdialog.ui" line="14"/>
         <source>About</source>
         <translation>À propos</translation>
     </message>
     <message>
-        <location filename="src/about.ui" line="33"/>
+        <location filename="src/aboutdialog.ui" line="33"/>
         <source>Version 0.9.1</source>
         <translation>Version 0.9.1</translation>
     </message>
     <message utf8="true">
-        <location filename="src/about.ui" line="43"/>
+        <location filename="src/aboutdialog.ui" line="43"/>
         <source>This software has been developed by students from the Université de Poitiers as a project of Master of Computer Sciences</source>
         <translation>Ce logiciel a été développé par des étudiants de l&apos;Université de Poitiers en tant que projet de Master Informatique</translation>
     </message>
-    <message>
-        <location filename="src/about.ui" line="56"/>
-        <source>Developers : Baptiste Roziere, Cyril Naud, Florian Mhun, Hamza Haddar</source>
-        <translation>Développeurs : Baptiste Roziere, Cyril Naud, Florian Mhun, Hamza Haddar</translation>
+    <message utf8="true">
+        <location filename="src/aboutdialog.ui" line="56"/>
+        <source>Developers : Baptiste Roziere, Cyril Naud, Florian Mhun, Hamza Haddar, Thomas Berthomé, Denis Saunier, Thibaud Lamarche, Geoffrey Bergé.</source>
+        <oldsource>Developers : Baptiste Roziere, Cyril Naud, Florian Mhun, Hamza Haddar</oldsource>
+        <translation>Développeurs : Baptiste Roziere, Cyril Naud, Florian Mhun, Hamza Haddar, Thomas Berthomé, Denis Saunier, Thibaud Lamarche, Geoffrey Bergé.</translation>
     </message>
     <message>
-        <location filename="src/about.ui" line="99"/>
+        <location filename="src/aboutdialog.ui" line="99"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
@@ -217,22 +241,22 @@
         <translation>Télécharger les fichiers joints</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.cpp" line="72"/>
+        <location filename="src/advancedsettingswindow.cpp" line="76"/>
         <source>Title</source>
         <translation>Titre</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.cpp" line="82"/>
+        <location filename="src/advancedsettingswindow.cpp" line="86"/>
         <source>Track %1 (Video)</source>
         <translation>Piste %1 (Vidéo)</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.cpp" line="93"/>
+        <location filename="src/advancedsettingswindow.cpp" line="97"/>
         <source>Track %1 (Audio)</source>
         <translation>Piste %1 (Audio)</translation>
     </message>
     <message>
-        <location filename="src/advancedsettingswindow.cpp" line="104"/>
+        <location filename="src/advancedsettingswindow.cpp" line="108"/>
         <source>Track %1 (Subtitles)</source>
         <translation>Piste %1 (Sous-titres)</translation>
     </message>
@@ -390,6 +414,29 @@
         <source>Inactive</source>
         <translation>Désactivé</translation>
     </message>
+    <message>
+        <location filename="src/locksettingswindow.cpp" line="151"/>
+        <source>Enter password</source>
+        <translation>Entrez votre mot de passe</translation>
+    </message>
+    <message>
+        <location filename="src/locksettingswindow.cpp" line="152"/>
+        <source>Password : </source>
+        <translation>Mot de passe :</translation>
+    </message>
+</context>
+<context>
+    <name>Locker</name>
+    <message>
+        <location filename="src/locker.cpp" line="100"/>
+        <source>Enter password</source>
+        <translation>Entrez votre mot de passe</translation>
+    </message>
+    <message>
+        <location filename="src/locker.cpp" line="101"/>
+        <source>Password : </source>
+        <translation>Mot de passe :</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -467,7 +514,7 @@
     </message>
     <message>
         <location filename="src/mainwindow.ui" line="327"/>
-        <location filename="src/mainwindow.cpp" line="749"/>
+        <location filename="src/mainwindow.cpp" line="945"/>
         <source>Start automation</source>
         <translation>Démarrer l&apos;automatisation</translation>
     </message>
@@ -572,186 +619,200 @@
         <translation>Verrouillage</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="820"/>
+        <location filename="src/mainwindow.ui" line="823"/>
         <source>Add a new playlist</source>
         <translation>Créer une nouvelle séance</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="846"/>
+        <location filename="src/mainwindow.ui" line="849"/>
         <source>Rename current playlist</source>
         <translation>Renommer la séance courante</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="882"/>
+        <location filename="src/mainwindow.ui" line="885"/>
         <source>Move selected item up</source>
         <translation>Déplacer l&apos;élément sélectionné vers le haut</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="908"/>
+        <location filename="src/mainwindow.ui" line="911"/>
         <source>Remove selected item</source>
         <translation>Supprimer l&apos;élément sélectionné</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="934"/>
+        <location filename="src/mainwindow.ui" line="937"/>
         <source>Move selected item down</source>
         <translation>Déplacer l&apos;élément sélectionné vers le bas</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1126"/>
+        <location filename="src/mainwindow.ui" line="1129"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1136"/>
+        <location filename="src/mainwindow.ui" line="1140"/>
         <source>Edit</source>
         <translation>Édition</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1147"/>
+        <location filename="src/mainwindow.ui" line="1151"/>
         <source>Display</source>
         <translation>Affichage</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1154"/>
+        <location filename="src/mainwindow.ui" line="1158"/>
         <source>Video mode</source>
         <translation>Mode vidéo</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1171"/>
+        <location filename="src/mainwindow.ui" line="1175"/>
         <source>Configuration</source>
         <translation>Configuration</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1178"/>
-        <location filename="src/mainwindow.ui" line="1328"/>
+        <location filename="src/mainwindow.ui" line="1182"/>
+        <location filename="src/mainwindow.ui" line="1338"/>
         <source>Help</source>
         <translation>Aide</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1193"/>
+        <location filename="src/mainwindow.ui" line="1197"/>
         <source>New listing</source>
         <translation>Nouvelle programmation</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1198"/>
+        <location filename="src/mainwindow.ui" line="1202"/>
         <source>Open a listing</source>
         <translation>Ouvrir une programmation</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1203"/>
+        <location filename="src/mainwindow.ui" line="1207"/>
         <source>Save as</source>
         <translation>Enregistrer sous</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1208"/>
+        <location filename="src/mainwindow.ui" line="1212"/>
         <source>Print conduct</source>
         <translation>Imprimer conduite</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1213"/>
+        <location filename="src/mainwindow.ui" line="1217"/>
         <source>Layout</source>
         <translation>Mie en page</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1218"/>
+        <location filename="src/mainwindow.ui" line="1225"/>
+        <location filename="src/mainwindow.ui" line="1228"/>
         <source>Quit</source>
         <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1226"/>
+        <location filename="src/mainwindow.ui" line="1236"/>
         <source>Copy</source>
         <translation>Copier</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1231"/>
+        <location filename="src/mainwindow.ui" line="1241"/>
         <source>Paste</source>
         <translation>Coller</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1239"/>
+        <location filename="src/mainwindow.ui" line="1249"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1247"/>
+        <location filename="src/mainwindow.ui" line="1257"/>
         <source>Import</source>
         <translation>Importer</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1255"/>
+        <location filename="src/mainwindow.ui" line="1265"/>
         <source>Play a test pattern</source>
         <translation>Lire une mire</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1355"/>
+        <location filename="src/mainwindow.ui" line="1365"/>
         <source>Projection</source>
         <translation>Projection</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1369"/>
+        <location filename="src/mainwindow.ui" line="1379"/>
         <source>Window</source>
         <translation>Fenêtre</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1374"/>
+        <location filename="src/mainwindow.ui" line="1384"/>
+        <location filename="src/mainwindow.cpp" line="538"/>
+        <location filename="src/mainwindow.cpp" line="560"/>
+        <location filename="src/mainwindow.cpp" line="716"/>
         <source>Add new playlist</source>
         <translation>Ajouter une nouvelle séance</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1379"/>
-        <location filename="src/mainwindow.cpp" line="595"/>
+        <location filename="src/mainwindow.ui" line="1389"/>
+        <location filename="src/mainwindow.cpp" line="738"/>
         <source>Rename playlist</source>
         <translation>Renommer une séance</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1384"/>
+        <location filename="src/mainwindow.ui" line="1394"/>
         <source>Remove playlist item</source>
         <translation>Retirer un élément de la séance</translation>
     </message>
     <message>
+        <location filename="src/mainwindow.ui" line="1399"/>
+        <source>Save</source>
+        <translation>Sauvegarder</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.ui" line="1402"/>
+        <source>Ctrl+S</source>
+        <translation>Ctrl+S</translation>
+    </message>
+    <message>
         <location filename="src/mainwindow.ui" line="224"/>
-        <location filename="src/mainwindow.ui" line="1266"/>
+        <location filename="src/mainwindow.ui" line="1276"/>
         <source>Automation</source>
         <translation>Automatisation</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1277"/>
+        <location filename="src/mainwindow.ui" line="1287"/>
         <source>Output</source>
         <translation>Sortie</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1288"/>
+        <location filename="src/mainwindow.ui" line="1298"/>
         <source>Summary/Details</source>
         <translation>Résumé/Détails</translation>
     </message>
     <message>
         <location filename="src/mainwindow.ui" line="343"/>
-        <location filename="src/mainwindow.ui" line="1299"/>
+        <location filename="src/mainwindow.ui" line="1309"/>
         <source>Bin</source>
         <translation>Répertoire de programmation</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1310"/>
+        <location filename="src/mainwindow.ui" line="1320"/>
         <source>Status bar</source>
         <translation>Barre de status</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1315"/>
+        <location filename="src/mainwindow.ui" line="1325"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1320"/>
+        <location filename="src/mainwindow.ui" line="1330"/>
         <source>Lock settings</source>
         <translation>Paramètres du verrouillage</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1336"/>
+        <location filename="src/mainwindow.ui" line="1346"/>
         <source>Update</source>
         <translation>Mise à jour</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.ui" line="1341"/>
+        <location filename="src/mainwindow.ui" line="1351"/>
         <source>About</source>
         <translation>À propos</translation>
     </message>
@@ -790,128 +851,262 @@
         <translation type="obsolete">Durée totale : </translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="180"/>
+        <location filename="src/mainwindow.cpp" line="215"/>
         <source>New media</source>
         <translation>Nouveu média</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="180"/>
+        <location filename="src/mainwindow.cpp" line="215"/>
         <source>Media (%1)</source>
         <translation>Média (%1)</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="185"/>
-        <location filename="src/mainwindow.cpp" line="188"/>
+        <location filename="src/mainwindow.cpp" line="220"/>
+        <location filename="src/mainwindow.cpp" line="223"/>
         <source>Import media</source>
         <translation>Importer un média</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="185"/>
+        <location filename="src/mainwindow.cpp" line="220"/>
         <source>The file %1 does not exist. Maybe it was deleted.</source>
         <translation>Le fichier %1 n&apos;existe pas. Il a peut-être été effacé.</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="188"/>
+        <location filename="src/mainwindow.cpp" line="223"/>
         <source>The file %1 was already imported.</source>
         <translation>Le fichier %1 a déjà été importé.</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="203"/>
         <source>Remove media</source>
-        <translation>Retirer un média</translation>
+        <translation type="obsolete">Retirer un média</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="203"/>
+        <location filename="src/mainwindow.cpp" line="242"/>
         <source>This media is used. All references of this media into playlists will be deleted too.
  Are you sure to remove this media ?</source>
         <translation>Ce média est utilisé. Toutes les références à ce média dans les séances serontégalement supprimées. Voulez-vous vraiment retirer ce média ?</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="203"/>
-        <location filename="src/mainwindow.cpp" line="494"/>
+        <location filename="src/mainwindow.cpp" line="242"/>
+        <location filename="src/mainwindow.cpp" line="588"/>
+        <location filename="src/mainwindow.cpp" line="825"/>
+        <location filename="src/mainwindow.cpp" line="855"/>
         <source>No</source>
         <translation>Non</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="203"/>
-        <location filename="src/mainwindow.cpp" line="494"/>
+        <location filename="src/mainwindow.cpp" line="242"/>
+        <location filename="src/mainwindow.cpp" line="588"/>
+        <location filename="src/mainwindow.cpp" line="825"/>
+        <location filename="src/mainwindow.cpp" line="855"/>
         <source>Yes</source>
         <translation>Oui</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="383"/>
-        <location filename="src/mainwindow.cpp" line="387"/>
-        <location filename="src/mainwindow.cpp" line="391"/>
+        <location filename="src/mainwindow.cpp" line="252"/>
+        <source>The media wasn&apos;t removed because you can not delete files that have been or are  being used.</source>
+        <translation>Le film n&apos;a pas pu être supprimé car il est utilisé dans une séance en cours de lecture.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="obsolete">OK</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="434"/>
+        <location filename="src/mainwindow.cpp" line="438"/>
+        <location filename="src/mainwindow.cpp" line="442"/>
         <source>Disabled</source>
         <translation>Désactivé</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="474"/>
+        <location filename="src/mainwindow.cpp" line="252"/>
+        <location filename="src/mainwindow.cpp" line="538"/>
+        <location filename="src/mainwindow.cpp" line="560"/>
+        <location filename="src/mainwindow.cpp" line="585"/>
+        <location filename="src/mainwindow.cpp" line="716"/>
+        <location filename="src/mainwindow.cpp" line="732"/>
+        <location filename="src/mainwindow.cpp" line="756"/>
+        <location filename="src/mainwindow.cpp" line="767"/>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="538"/>
+        <location filename="src/mainwindow.cpp" line="560"/>
+        <location filename="src/mainwindow.cpp" line="716"/>
+        <source>The playlist is currently locked, you can not add a new playlist.</source>
+        <translation>La séance est actuellement verrouillée, il est impossible d&apos;ajouter une nouvelle séance.</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="541"/>
+        <location filename="src/mainwindow.cpp" line="705"/>
+        <location filename="src/mainwindow.cpp" line="708"/>
         <source>New playlist</source>
         <translation>Nouvelle séance</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="494"/>
+        <location filename="src/mainwindow.cpp" line="585"/>
+        <location filename="src/mainwindow.cpp" line="588"/>
         <source>Remove playlist</source>
         <translation>Supprimer une séance</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="494"/>
+        <location filename="src/mainwindow.cpp" line="585"/>
+        <source>This playlist is currently running, you can&apos;t delete it.</source>
+        <translation>La séance est en cours de lecture, vous ne pouvez pas la supprimer.</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="588"/>
         <source>This playlist was scheduled. All schedules which use this playlist will be deleted too.
  Are you sure to remove this playlist ?</source>
         <translation>Cette playlist a été automatisée. Toutes les automatisations de cette séance seront également supprimées. Voulez-vous vraiment supprimer cette séance ?</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="596"/>
+        <location filename="src/mainwindow.cpp" line="706"/>
+        <location filename="src/mainwindow.cpp" line="739"/>
         <source>Playlist title : </source>
         <oldsource>Playlist title :</oldsource>
         <translation>Nom de la séance : </translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="628"/>
+        <location filename="src/mainwindow.cpp" line="732"/>
+        <source>Edit playlist name</source>
+        <translation>Renommer la séance</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="756"/>
+        <source>Delete playlist item</source>
+        <translation>Supprimer l&apos;élément de la séance</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="767"/>
+        <source>Remove item</source>
+        <translation>Supprimer l&apos;élément</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="767"/>
+        <source>This playlist is currently running, you can not delete media that have been or are being displayed.</source>
+        <translation>La playlist est actuellement en lecture, il est impossible de supprimer un élément de celle-ci.</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="791"/>
+        <location filename="src/mainwindow.cpp" line="814"/>
+        <source>Saved</source>
+        <translation>Sauvegardé</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="791"/>
+        <source>Project saved</source>
+        <translation>Projet sauvegardé</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="797"/>
         <source>Save Project</source>
         <translation>Sauvegarder le projet</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="628"/>
-        <location filename="src/mainwindow.cpp" line="651"/>
+        <location filename="src/mainwindow.cpp" line="797"/>
+        <location filename="src/mainwindow.cpp" line="827"/>
         <source>OPP file (*.opp)</source>
         <translation>Fichier OPP (*.opp)</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="825"/>
+        <location filename="src/mainwindow.cpp" line="855"/>
+        <source>Do you want to save the current listing ? 
+Otherwise unsaved data will be lost</source>
+        <translation>Souhaitez-vous sauvegarder la programmation actuelle ? 
+Sinon, les données non sauvegardées seront perdues</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="827"/>
+        <source>Open listing</source>
+        <translation>Ouverture d&apos;une programmation</translation>
     </message>
     <message>
         <source>OPP (*.opp);;All Files (*)</source>
         <translation type="obsolete">OPP (*.opp);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="637"/>
-        <location filename="src/mainwindow.cpp" line="658"/>
+        <location filename="src/mainwindow.cpp" line="732"/>
+        <source>This playlist is currently locked, you can not edit the name of the playlist.</source>
+        <translation>La séance est actuellement verrouillée, il est impossible de modifier le nom de celle-ci.</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="756"/>
+        <source>This playlist is currently locked, you can not delete an item.</source>
+        <translation>La séance est actuellement verrouillée, il est impossible de la supprimer.</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="783"/>
+        <location filename="src/mainwindow.cpp" line="806"/>
+        <location filename="src/mainwindow.cpp" line="833"/>
         <source>Unable to open file</source>
         <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="651"/>
-        <source>Open Project</source>
-        <translation>Ouvrir un projet</translation>
+        <location filename="src/mainwindow.cpp" line="822"/>
+        <location filename="src/mainwindow.cpp" line="852"/>
+        <source>Playlist is running</source>
+        <translation>Séance en cours de lecture</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="718"/>
-        <location filename="src/mainwindow.cpp" line="729"/>
+        <location filename="src/mainwindow.cpp" line="822"/>
+        <source>Playlist is running. 
+Please stop playlist before open a listing.</source>
+        <translation>Séance en cous de lecture.
+Veuillez arrétez la lecture avant d&apos;ouvrir une programmation.</translation>
+    </message>
+    <message>
+        <source>Open Project</source>
+        <translation type="obsolete">Ouvrir un projet</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="852"/>
+        <source>Playlist is running. 
+Please stop playlist before new listing.</source>
+        <translation>Séance en cous de lecture.
+Veuillez arrétez la lecture avant de créer une nouvelle programmation.</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="910"/>
+        <location filename="src/mainwindow.cpp" line="921"/>
         <source>Schedule validation</source>
         <translation>Création d&apos;une automatisation</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="718"/>
+        <location filename="src/mainwindow.cpp" line="910"/>
         <source>The schedule launch date must be later than the current date.</source>
         <translation>La date de début d&apos;une automatisation doit être postérieure à la date courante.</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="729"/>
+        <location filename="src/mainwindow.cpp" line="921"/>
         <source>A playlist was already scheduled between the %1 and %2, 
 Please choose an other launch date.</source>
         <translation>Une séance a déjà été planifiée entre %1 et %2. Choisissez une autre date de début.</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="747"/>
+        <location filename="src/mainwindow.cpp" line="935"/>
+        <location filename="src/mainwindow.cpp" line="937"/>
+        <source>Delay validation</source>
+        <translation>Validation du retardement</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="935"/>
+        <source>With this delay a playlist starts before the end of the current playlist. 
+Please choose an other delay.</source>
+        <translation>Avec ce retardement une séance commence avant la fin de la séance actuelle. 
+Veuillez choisir un autre retardement.</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="937"/>
+        <source>With this delay a playlist starts before the current date. 
+Please choose an other delay.</source>
+        <translation>Avec ce retardement une séance commence avant la date actuelle. 
+Veuillez choisir un autre retardement.</translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow.cpp" line="943"/>
         <source>Stop automation</source>
         <translation>Arrêter l&apos;automatisation</translation>
     </message>
@@ -919,22 +1114,22 @@ Please choose an other launch date.</source>
 <context>
     <name>MediaListModel</name>
     <message>
-        <location filename="src/medialistmodel.cpp" line="59"/>
+        <location filename="src/medialistmodel.cpp" line="63"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="src/medialistmodel.cpp" line="62"/>
+        <location filename="src/medialistmodel.cpp" line="66"/>
         <source>Duration</source>
         <translation>Durée</translation>
     </message>
     <message>
-        <location filename="src/medialistmodel.cpp" line="65"/>
+        <location filename="src/medialistmodel.cpp" line="69"/>
         <source>Used</source>
         <translation>Utilisé</translation>
     </message>
     <message>
-        <location filename="src/medialistmodel.cpp" line="68"/>
+        <location filename="src/medialistmodel.cpp" line="72"/>
         <source>Location</source>
         <translation>Localisation</translation>
     </message>
@@ -1048,39 +1243,59 @@ Please choose an other launch date.</source>
 <context>
     <name>PlaylistModel</name>
     <message>
-        <location filename="src/playlistmodel.cpp" line="73"/>
+        <location filename="src/playlistmodel.cpp" line="68"/>
         <source>Title</source>
         <translation>Titre</translation>
     </message>
     <message>
-        <location filename="src/playlistmodel.cpp" line="76"/>
+        <location filename="src/playlistmodel.cpp" line="71"/>
         <source>Duration</source>
         <translation>Durée</translation>
     </message>
     <message>
-        <location filename="src/playlistmodel.cpp" line="79"/>
+        <location filename="src/playlistmodel.cpp" line="74"/>
         <source>Video</source>
         <translation>Vidéo</translation>
     </message>
     <message>
-        <location filename="src/playlistmodel.cpp" line="82"/>
+        <location filename="src/playlistmodel.cpp" line="77"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location filename="src/playlistmodel.cpp" line="85"/>
+        <location filename="src/playlistmodel.cpp" line="80"/>
         <source>Subtitles</source>
         <translation>Sous titres</translation>
     </message>
     <message>
-        <location filename="src/playlistmodel.cpp" line="88"/>
+        <location filename="src/playlistmodel.cpp" line="83"/>
         <source>Test pattern</source>
         <translation>Mire</translation>
     </message>
     <message>
-        <location filename="src/playlistmodel.cpp" line="91"/>
+        <location filename="src/playlistmodel.cpp" line="86"/>
         <source>Status</source>
         <translation>État</translation>
+    </message>
+    <message>
+        <location filename="src/playlistmodel.cpp" line="199"/>
+        <source>Add track into playlist</source>
+        <translation>Ajout d&apos;une piste dans la séance</translation>
+    </message>
+    <message>
+        <location filename="src/playlistmodel.cpp" line="199"/>
+        <source>This new track create a overlapping</source>
+        <translation>Cette piste crée un chevauchement entre deux séances dans l&apos;automatisation</translation>
+    </message>
+    <message>
+        <location filename="src/playlistmodel.cpp" line="199"/>
+        <source>Delay automation</source>
+        <translation>Retarder l&apos;automatisation</translation>
+    </message>
+    <message>
+        <location filename="src/playlistmodel.cpp" line="199"/>
+        <source>Do not add track</source>
+        <translation>Ne pas ajouter</translation>
     </message>
 </context>
 <context>
@@ -1174,42 +1389,42 @@ Please choose an other launch date.</source>
 <context>
     <name>ScheduleListModel</name>
     <message>
-        <location filename="src/schedulelistmodel.cpp" line="56"/>
+        <location filename="src/schedulelistmodel.cpp" line="60"/>
         <source>Launch at</source>
         <translation>Début à</translation>
     </message>
     <message>
-        <location filename="src/schedulelistmodel.cpp" line="59"/>
+        <location filename="src/schedulelistmodel.cpp" line="63"/>
         <source>Finish at</source>
         <translation>Fin à</translation>
     </message>
     <message>
-        <location filename="src/schedulelistmodel.cpp" line="62"/>
+        <location filename="src/schedulelistmodel.cpp" line="66"/>
         <source>Playlist</source>
         <translation>Séance</translation>
     </message>
     <message>
-        <location filename="src/schedulelistmodel.cpp" line="65"/>
+        <location filename="src/schedulelistmodel.cpp" line="69"/>
         <source>State</source>
         <translation>État</translation>
     </message>
     <message>
-        <location filename="src/schedulelistmodel.cpp" line="123"/>
+        <location filename="src/schedulelistmodel.cpp" line="127"/>
         <source>Played</source>
         <translation>Joué</translation>
     </message>
     <message>
-        <location filename="src/schedulelistmodel.cpp" line="125"/>
+        <location filename="src/schedulelistmodel.cpp" line="129"/>
         <source>Ignored</source>
         <translation>Ignoré</translation>
     </message>
     <message>
-        <location filename="src/schedulelistmodel.cpp" line="127"/>
+        <location filename="src/schedulelistmodel.cpp" line="131"/>
         <source>Pending...</source>
         <translation>En attente...</translation>
     </message>
     <message>
-        <location filename="src/schedulelistmodel.cpp" line="130"/>
+        <location filename="src/schedulelistmodel.cpp" line="134"/>
         <source>Sleeping...</source>
         <translation>Non actif...</translation>
     </message>
@@ -1251,7 +1466,8 @@ Please choose an other launch date.</source>
     </message>
     <message>
         <location filename="src/settingswindow.ui" line="129"/>
-        <source>Default path to movies</source>
+        <source>Default path to media</source>
+        <oldsource>Default path to movies</oldsource>
         <translation>Chemin par défaut des films</translation>
     </message>
     <message>
@@ -1270,7 +1486,7 @@ Please choose an other launch date.</source>
         <translation>Vous devez redémarrer le logiciel pour appliquer la nouvelle langue.</translation>
     </message>
     <message>
-        <location filename="src/settingswindow.cpp" line="113"/>
+        <location filename="src/settingswindow.cpp" line="117"/>
         <source>Open Directory</source>
         <translation>Ouvrir un dossier</translation>
     </message>
@@ -1292,7 +1508,7 @@ Please choose an other launch date.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/statuswidget.cpp" line="55"/>
+        <location filename="src/statuswidget.cpp" line="59"/>
         <source>files loaded</source>
         <translation>fichiers chargés</translation>
     </message>
@@ -1300,19 +1516,8 @@ Please choose an other launch date.</source>
 <context>
     <name>passformdialog</name>
     <message>
-        <location filename="src/passformdialog.ui" line="20"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/passformdialog.ui" line="35"/>
         <source>Enter password : </source>
-        <translation>Entrer le mot de passe : </translation>
-    </message>
-    <message>
-        <location filename="src/passformdialog.ui" line="61"/>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Entrer le mot de passe : </translation>
     </message>
 </context>
 </TS>
