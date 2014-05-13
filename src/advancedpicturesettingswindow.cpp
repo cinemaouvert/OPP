@@ -51,6 +51,7 @@ AdvancedPictureSettingsWindow::~AdvancedPictureSettingsWindow()
 
 void AdvancedPictureSettingsWindow::on_comboBox_deinterlace_currentIndexChanged(int index)
 {
+
     //_mediaPlayer->setCurrentDeinterlacing((Deinterlacing) index);
 }
 
