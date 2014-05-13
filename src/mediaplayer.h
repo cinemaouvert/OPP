@@ -92,6 +92,21 @@ public:
     bool isPlaying() const;
 
     /**
+     * @brief Sample of movie is active
+     * @return True if sample of movie is active, false otherwise
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    bool isActive() const;
+
+    /**
+     * @brief Setter for _isActive
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    void setActive(bool b);
+
+    /**
      * @brief Get current time
      * @return The current time in ms
      *
@@ -133,12 +148,27 @@ public:
     void setVideoView(VideoView *videoView);
 
     /**
+     * @brief Set video view in which the media player will render the sample of the video
+     * @param The video view
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    void setVideoBackView(VideoView *videoView);
+
+    /**
      * @brief Open a playback in media player. It will not play the media
      * @param playback The playback to open.
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void open(Playback *playback);
+
+    /**
+     * @brief Stream initialisation. Add a broadcast to an instance of VLC
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    void initStream();
 
     /**
      * @brief Close a playback in media player.
@@ -156,6 +186,13 @@ public slots:
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void play();
+
+    /**
+     * @brief Play the stream and media player associed
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    void playStream();
 
     /**
      * @brief Pause media player
@@ -177,6 +214,13 @@ public slots:
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void stop();
+
+    /**
+     * @brief Stop the stream and media player associed
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    void stopStream();
 
     /**
      * @brief Set current time
@@ -452,9 +496,19 @@ private:
     static void libvlc_callback(const libvlc_event_t *event, void *data);
 
     /**
+     * @brief The libvlc instance for stream
+     */
+    libvlc_instance_t * _inst;
+
+    /**
      * @brief The libvlc media player core
      */
     libvlc_media_player_t *_vlcMediaPlayer;
+
+    /**
+     * @brief The libvlc media player core for the sample of the video
+     */
+    libvlc_media_player_t *_vlcBackMediaPlayer;
 
     /**
      * @brief The libvlc event manager core
@@ -470,6 +524,11 @@ private:
      * @brief The video view which the video will be rendered into
      */
     VideoView *_videoView;
+
+    /**
+     * @brief The video view which the sample of the video will be rendered into
+     */
+    VideoView *_videoBackView;
 
     /**
      * @brief The current window id
@@ -490,6 +549,11 @@ private:
      * @brief The current media player pause status. Set to true if paused, false otherwise.
      */
     bool _isPaused;
+
+    /**
+     * @brief The sample of movie active status. Set to true if active, false otherwise.
+     */
+    bool _isActive;
 };
 
 #endif // MEDIAPLAYER_H

@@ -158,6 +158,13 @@ math@gmail.com>
     void on_menuVideoMode_triggered(QAction *action);
 
     /**
+     * @brief Disable the small sample of video
+     *
+     * @author Thomas Berthomé <thoberthome@laposte.net>
+     */
+    void on_disableButton_clicked();
+
+    /**
      * @brief Open the advanced settings window
      *
      * @author Cyril Naud <futuramath@gmail.com>

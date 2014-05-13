@@ -88,6 +88,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     _playlistPlayer->mediaPlayer()->setVideoView( (VideoView*) _videoWindow->videoWidget() );
+    _playlistPlayer->mediaPlayer()->setVideoBackView( (VideoView*) ui->backWidget );
+    _playlistPlayer->mediaPlayer()->initStream();
     _playlistPlayer->mediaPlayer()->setVolume(ui->playerVolumeSlider->value());
 
     connect(ui->playerVolumeSlider, SIGNAL(valueChanged(int)), _playlistPlayer->mediaPlayer(), SLOT(setVolume(int)));
@@ -96,6 +98,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->playerPreviousButton, SIGNAL(clicked()), _playlistPlayer, SLOT(previous()));
     connect(ui->playerNextButton, SIGNAL(clicked()), _playlistPlayer, SLOT(next()));
     connect(_playlistPlayer, SIGNAL(end()), ui->playerPlayButton, SLOT(toggle()));
+    connect(ui->disableButton, SIGNAL(clicked()), this, SLOT(on_disableButton_clicked()));
 
     _mediaListModel = new MediaListModel();
     _scheduleListModel = new ScheduleListModel();
@@ -269,6 +272,29 @@ void MainWindow::on_binDeleteMediaButton_clicked()
                                      Playback Settings Management
 \***********************************************************************************************/
 
+void MainWindow::on_disableButton_clicked()
+{
+    if(ui->disableButton->isChecked())
+    {
+        ui->disableButton->setText("Enable");
+        _playlistPlayer->mediaPlayer()->setActive(false);
+        if(_playlistPlayer->isPlaying())
+        {
+            _playlistPlayer->mediaPlayer()->stopStream();
+        }
+    }
+    else
+    {
+        ui->disableButton->setText("Disable");
+        _playlistPlayer->mediaPlayer()->setActive(true);
+        if(_playlistPlayer->isPlaying())
+        {
+            _playlistPlayer->mediaPlayer()->playStream();
+        }
+    }
+}
+
+
 void MainWindow::on_advancedSettingsButton_clicked()
 {
     _advancedSettingsWindow->setPlayback(selectedPlayback());
@@ -419,6 +445,8 @@ void MainWindow::updateSettings()
     Playback* playback = selectedPlayback();
     if(!playback){
         ui->mediaSettingsWidget->setEnabled(false);
+        ui->advancedSettingsButton->setEnabled(false);
+        ui->advancedPictureSettingsButton->setEnabled(false);
         ui->playerControlsWidget->setEnabled(false);
         return;
     }
@@ -428,6 +456,8 @@ void MainWindow::updateSettings()
     ui->subtitlesTrackComboBox->blockSignals(true);
 
     ui->mediaSettingsWidget->setEnabled(true);
+    ui->advancedSettingsButton->setEnabled(true);
+    ui->advancedPictureSettingsButton->setEnabled(true);
     ui->playerControlsWidget->setEnabled(true);
 
     ui->audioTrackComboBox->clear();
@@ -998,6 +1028,7 @@ QList<QWidget*> MainWindow::getLockedWidget()
 {
     QList<QWidget*> lockedWidget;
     lockedWidget << ui->seekWidget;
+    lockedWidget << ui->disableButton;
 
     lockedWidget << ui->audioTrackComboBox;
     lockedWidget << ui->videoTrackComboBox;
