@@ -36,13 +36,16 @@
 
 int Media::s_instanceCount = 0;
 
-Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *parent) :
+Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *parent , bool isFile) :
     QObject(parent),
     _usageCount(0)
 {
     _id = Media::s_instanceCount++;
     initMedia(location);
-    _vlcMedia = libvlc_media_new_path(vlcInstance, location.toLocal8Bit().data());
+    if(isFile)
+        _vlcMedia = libvlc_media_new_path(vlcInstance, location.toLocal8Bit().data());
+    else
+        _vlcMedia = libvlc_media_new_location(vlcInstance, location.toLocal8Bit().data());
     parseMediaInfos();
 }
 

@@ -190,7 +190,7 @@ void MediaPlayer::initStream()
         "#transcode{vcodec=mp1v,vb=800,acodec=mpga,ab=128}:standard{access=http,mux=mpeg1,dst=127.0.0.1:8080/}",
         3, params, 1 , 0);
 
-    Media *m = new Media("http://127.0.0.1:8080/", _inst);
+    Media *m = new Media("http://127.0.0.1:8080/", _inst,0,false);
 
     libvlc_media_player_set_media(_vlcBackMediaPlayer, m->core());
 }
