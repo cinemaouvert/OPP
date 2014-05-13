@@ -33,8 +33,9 @@
 
 #include <QDataWidgetMapper>
 #include <QLabel>
-#include<QModelIndexList>
-#include<QTime>
+#include <QModelIndexList>
+#include <QTime>
+
 
 namespace Ui {
 class MainWindow;
@@ -157,6 +158,13 @@ math@gmail.com>
     void on_menuVideoMode_triggered(QAction *action);
 
     /**
+     * @brief Disable the small sample of video
+     *
+     * @author Thomas Berthomé <thoberthome@laposte.net>
+     */
+    void on_disableButton_clicked();
+
+    /**
      * @brief Open the advanced settings window
      *
      * @author Cyril Naud <futuramath@gmail.com>
@@ -259,6 +267,17 @@ math@gmail.com>
      * @brief Save the current project
      */
     void on_saveAsAction_triggered();
+
+    /**
+     * @brief Save the current project
+     */
+    void on_saveAction_triggered();
+
+    /**
+     * @brief Quit the software
+     */
+    void on_quitAction_triggered();
+
 
     /**
      * @brief Open a saved project
@@ -536,6 +555,11 @@ private:
      * @brief used to disconnect signals
      */
     int _lastSelectedTab;
+
+    /**
+     * @brief _fileName
+     */
+    QString _fileName;
 };
 
 #endif // MAINWINDOW_H

@@ -32,3 +32,4 @@ include(src/core.pri)
 include(src/ui.pri)
 
 RESOURCES += images.qrc
+TRANSLATIONS = opp_fr.ts

@@ -27,7 +27,11 @@
 #include "mediaplayer.h"
 
 #include <math.h>
+#include <string.h>
+#include <sstream>
 
+#include <QApplication>
+#include <QDesktopWidget>
 #include <QTime>
 #include <QTimer>
 
@@ -43,11 +47,16 @@ MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     QObject(parent),
     _currentPlayback(NULL),
     _videoView(NULL),
+    _videoBackView(NULL),
     _isPaused(false),
+    _isActive(true),
     _currentVolume(50),
     _currentGain(0)
 {
+    _inst = libvlc_new(0,NULL);
+
     _vlcMediaPlayer = libvlc_media_player_new(vlcInstance);
+    _vlcBackMediaPlayer = libvlc_media_player_new(_inst);
     _vlcEvents = libvlc_media_player_event_manager(_vlcMediaPlayer);
 
     libvlc_video_set_key_input(_vlcMediaPlayer, false);
@@ -64,6 +73,7 @@ MediaPlayer::~MediaPlayer()
 
     removeCoreConnections();
     libvlc_media_player_release(_vlcMediaPlayer);
+    libvlc_vlm_release(_inst);
 }
 
 int MediaPlayer::currentTime() const
@@ -81,6 +91,16 @@ bool MediaPlayer::isPlaying() const
     return libvlc_media_player_is_playing(_vlcMediaPlayer);
 }
 
+bool MediaPlayer::isActive() const
+{
+    return _isActive;
+}
+
+void MediaPlayer::setActive(bool b)
+{
+    _isActive = b;
+}
+
 void MediaPlayer::setVideoView(VideoView *videoView)
 {
     _videoView = videoView;
@@ -94,6 +114,23 @@ void MediaPlayer::setVideoView(VideoView *videoView)
         libvlc_media_player_set_nsobject(_vlcMediaPlayer, (void *)_currentWId);
 #elif defined(Q_OS_UNIX)
         libvlc_media_player_set_xwindow(_vlcMediaPlayer, _currentWId);
+#endif
+    }
+}
+
+void MediaPlayer::setVideoBackView(VideoView *videoView)
+{
+    _videoBackView = videoView;
+
+    _currentWId = _videoBackView->request();
+
+    if (_currentWId) {
+#if defined(Q_OS_WIN)
+        libvlc_media_player_set_hwnd(_vlcBackMediaPlayer, (void *)_currentWId);
+#elif defined(Q_OS_MAC)
+        libvlc_media_player_set_nsobject(_vlcBackMediaPlayer, (void *)_currentWId);
+#elif defined(Q_OS_UNIX)
+        libvlc_media_player_set_xwindow(_vlcBackMediaPlayer, _currentWId);
 #endif
     }
 }
@@ -138,20 +175,52 @@ void MediaPlayer::open(Playback *playback)
     connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
 }
 
+void MediaPlayer::initStream()
+{
+    std::stringstream ss;
+        ss << QApplication::desktop()->screenGeometry().width();
+        std::string sizeScreen ="screen-left="+ ss.str();
+
+    const char* params[] = {"screen-fragment-size=0",
+                            sizeScreen.c_str(),
+        "screen-fps=20"};
+    _inst = libvlc_new(0,NULL);
+    libvlc_vlm_add_broadcast(_inst, "mybroad",
+        "screen://",
+        "#transcode{vcodec=mp1v,vb=800,acodec=mpga,ab=128}:standard{access=http,mux=mpeg1,dst=127.0.0.1:8080/}",
+        3, params, 1 , 0);
+
+    Media *m = new Media("http://127.0.0.1:8080/", _inst);
+
+    libvlc_media_player_set_media(_vlcBackMediaPlayer, m->core());
+}
+
 void MediaPlayer::play()
 {
+    if(_isActive)
+    {
+        playStream();
+    }
     libvlc_media_player_play(_vlcMediaPlayer);
     _isPaused = false;
 }
 
+void MediaPlayer::playStream()
+{
+    libvlc_vlm_play_media(_inst, "mybroad");
+    libvlc_media_player_play(_vlcBackMediaPlayer);
+}
+
 void MediaPlayer::pause()
 {
+    stopStream();
     libvlc_media_player_set_pause(_vlcMediaPlayer, true);
     _isPaused = true;
 }
 
 void MediaPlayer::resume()
 {
+    playStream();
     libvlc_media_player_set_pause(_vlcMediaPlayer, false);
     _isPaused = false;
 }
@@ -165,8 +234,18 @@ void MediaPlayer::stop()
         _videoView->release();*/
     _currentWId = 0;
 
+    if(_isActive)
+    {
+        stopStream();
+    }
     libvlc_media_player_stop(_vlcMediaPlayer);
     _isPaused = false;
+}
+
+void MediaPlayer::stopStream()
+{
+    libvlc_media_player_stop(_vlcBackMediaPlayer);
+    libvlc_vlm_stop_media(_inst, "mybroad");
 }
 
 void MediaPlayer::setCurrentTime(int time)
