@@ -453,8 +453,6 @@ math@gmail.com>
      */
     QList<QWidget*> getLockedWidget();
 
-    void on_scheduleLaunchAtTimeEdit_timeChanged(const QTime &time);
-
 protected:
     /**
      * @brief Returns the selected playback

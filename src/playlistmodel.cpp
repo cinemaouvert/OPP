@@ -28,8 +28,8 @@
 
 PlaylistModel::PlaylistModel(Playlist *playlist, MediaListModel *mediaListModel, ScheduleListModel *scheduleListModel, QObject *parent) :
     QAbstractTableModel(parent),
-    _mediaListModel(mediaListModel),
     _playlist(playlist),
+    _mediaListModel(mediaListModel),
     _scheduleListModel(scheduleListModel)
 
 {
@@ -111,6 +111,8 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                 break;
             case Paused:
                 return QIcon(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_174_pause.png"));
+                break;
+            default :
                 break;
             }
         }
@@ -201,8 +203,8 @@ bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action
                         if(delay == 0)
                         {
                             uint t = media->duration();
-                            schedule2->delay(media->duration());
-                            repareDelay(scheduleList, media->duration());
+                            schedule2->delay(t);
+                            repareDelay(scheduleList, t);
                         }
                         if(delay == 1)
                         {

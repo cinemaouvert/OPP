@@ -30,8 +30,8 @@
 
 Schedule::Schedule(Playlist *playlist, const QDateTime &launchAt, QObject *parent) :
     QObject(parent),
-    _playlist(playlist),
     _launchAt(launchAt),
+    _playlist(playlist),
     _canceled(false)
 {
     _timer = new QTimer();

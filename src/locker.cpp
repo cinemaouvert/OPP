@@ -33,8 +33,8 @@
 
 Locker::Locker(QList<QWidget*> widgets, QObject *parent) :
     QObject(parent),
-    _widgets(widgets),
-    _autoLock(false)
+    _autoLock(false),
+    _widgets(widgets)
 {
     this->setPasswordEnable(false);
     _timer = new QTimer();

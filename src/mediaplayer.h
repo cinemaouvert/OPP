@@ -115,7 +115,7 @@ public:
     int currentTime() const;
 
     /**
-     * @brief Get current length
+     * @brief Get current length_vlcMediaPlayer
      * @return The current length in ms
      *
      * @author Florian Mhun <florian.mhun@gmail.com>

@@ -198,7 +198,7 @@ void DataStorage::load(QFile &file)
     QDomNodeList scheduleNodeList = root.elementsByTagName("schedule");
 
     // load media
-    for (int i = 0; i < mediaNodeList.length(); i++) {
+    for (uint i = 0; i < mediaNodeList.length(); i++) {
         QDomNamedNodeMap mediaAttributes = mediaNodeList.at(i).attributes();
 
         Media *media = new Media(mediaAttributes.namedItem("location").nodeValue(), _app->vlcInstance());
@@ -211,12 +211,12 @@ void DataStorage::load(QFile &file)
     }
 
     // load playlist
-    for (int i = 0; i < playlistNodeList.length(); i++) {
+    for (uint i = 0; i < playlistNodeList.length(); i++) {
         QDomNode playlistNode = playlistNodeList.at(i);
         QDomNamedNodeMap playlistAttributes = playlistNode.attributes();
         QDomNodeList playbackNodeList = playlistNode.childNodes();
 
-        Playlist *playlist = new Playlist(_app->vlcInstance(), playlistAttributes.namedItem("title").nodeValue());
+        Playlist *playlist = new Playlist(playlistAttributes.namedItem("title").nodeValue());
         playlist->setId(playlistAttributes.namedItem("id").nodeValue().toInt());
 
         PlaylistModel *model = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
@@ -270,7 +270,7 @@ void DataStorage::load(QFile &file)
     }
 
     // load schedule
-    for (int i = 0; i < scheduleNodeList.length(); i++) {
+    for (uint i = 0; i < scheduleNodeList.length(); i++) {
         QDomNode scheduleNode = scheduleNodeList.at(i);
         QDomNamedNodeMap scheduleAttributes = scheduleNode.attributes();
 

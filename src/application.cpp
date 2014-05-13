@@ -35,6 +35,7 @@ Application::Application()
     QStringList vlcargs;
         vlcargs << "--intf=dummy"
                 <<"--no-media-library"
+
     #if !defined(Q_OS_MAC)
                   <<"--no-one-instance"
     #endif

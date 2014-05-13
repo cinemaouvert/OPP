@@ -34,7 +34,7 @@
 
 int Playlist::s_instanceCount = 0;
 
-Playlist::Playlist(libvlc_instance_t *vlcInstance, const QString &title, QObject *parent) :
+Playlist::Playlist(const QString &title, QObject *parent) :
     QObject(parent),
     _title(title)
 {

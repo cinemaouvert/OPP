@@ -40,7 +40,7 @@ class Playlist : public QObject
 {
     Q_OBJECT
 public:
-    Playlist(libvlc_instance_t *vlcInstance, const QString &title, QObject *parent = 0);
+    Playlist(const QString &title, QObject *parent = 0);
     virtual ~Playlist();
 
     /**
