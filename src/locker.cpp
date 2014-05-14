@@ -31,6 +31,8 @@
 #include <QDebug>
 #include <QInputDialog>
 
+#include"mainwindow.h"
+
 Locker::Locker(QList<QWidget*> widgets, QObject *parent) :
     QObject(parent),
     _autoLock(false),
@@ -107,6 +109,7 @@ void Locker::unlock()
                 foreach(QWidget *widget, _widgets) {
                     widget->setEnabled(true);
                 }
+                ((MainWindow *)this->parent())->updateSettings();
                 _lock = false;
         }
         else {
@@ -116,9 +119,9 @@ void Locker::unlock()
         foreach(QWidget *widget, _widgets) {
             widget->setEnabled(true);
         }
+        ((MainWindow *)this->parent())->updateSettings();
         _lock = false;
     }
-
 }
 
 void Locker::toggle(bool checked)
