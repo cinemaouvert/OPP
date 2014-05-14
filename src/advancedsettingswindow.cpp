@@ -139,7 +139,6 @@ void AdvancedSettingsWindow::on_buttonBox_OKCancel_accepted()
     char* optionOut = (QString(":stop-time=") + QString::number(_playback->mediaSettings()->outMark() / 1000)).toLocal8Bit().data();
     libvlc_media_add_option(_playback->media()->core(),optionOut);
 
-    _playback->media()->parseMediaInfos();
     this->hide();
 }
 
