@@ -77,7 +77,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _scheduleListModel(NULL),
     _locker(NULL) ,
     _dataStorage(NULL),
-    _fileName("")
+    _fileName(""),
+    _projectionMode(VideoWindow::WINDOW)
 
 {
     //setAttribute(Qt::WA_DeleteOnClose);
@@ -521,7 +522,8 @@ void MainWindow::on_playerPlayButton_clicked(bool checked)
         } else {
             //Creation de la window elle n'existe pas
             if(!_videoWindow->isVisible()){
-                _videoWindow = new VideoWindow(this);
+                delete(_videoWindow);
+                _videoWindow = new VideoWindow(this, _projectionMode);
                 _playlistPlayer->mediaPlayer()->setVideoView( (VideoView*) _videoWindow->videoWidget() );
             }
 
@@ -553,7 +555,8 @@ void MainWindow::on_menuVideoMode_triggered(QAction *action)
         } else {
             action->setEnabled(false);
             action->setChecked(true);
-            _videoWindow->setDisplayMode( (VideoWindow::DisplayMode) action->data().toInt() );
+            _projectionMode =  (VideoWindow::DisplayMode) action->data().toInt() ;
+            _videoWindow->setDisplayMode(_projectionMode);
         }
     }
 }

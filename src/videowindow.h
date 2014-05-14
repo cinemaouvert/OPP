@@ -52,7 +52,7 @@ public:
         PROJECTION = 1
     };
 
-    explicit VideoWindow(QWidget *parent = 0);
+    explicit VideoWindow(QWidget *parent = 0,const DisplayMode &mode = WINDOW);
 
     ~VideoWindow();
 

@@ -36,6 +36,7 @@
 #include <QModelIndexList>
 #include <QTime>
 
+#include "videowindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -558,6 +559,11 @@ private:
      * @brief _fileName
      */
     QString _fileName;
+
+    /**
+      * @brief store the selected projection mode
+      */
+    VideoWindow::DisplayMode _projectionMode;
 };
 
 #endif // MAINWINDOW_H
