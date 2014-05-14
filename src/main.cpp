@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 
     if(!settings.contains("vlcPath"))
     #if defined(Q_OS_WIN)
-        settings.setValue("vlcPath", "C:\Program Files (x86)\VideoLAN\VLC\vlc.exe");
+        settings.setValue("vlcPath", "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe");
     #elif defined(Q_OS_MAC)
         settings.setValue("vlcPath", "/Applications/VLC.app");
     #elif defined(Q_OS_UNIX)
@@ -61,16 +61,17 @@ int main(int argc, char *argv[])
 
     if(!settings.contains("testPatternPath"))
     #if defined(Q_OS_WIN)
-        settings.setValue("testPatternPath", currentDir+"\test_pattern.jpg");
+        settings.setValue("testPatternPath", currentDir+"\\test_pattern.jpg");
     #elif defined(Q_OS_MAC)
         settings.setValue("testPatternPath", currentDir+"/test_pattern.jpg");
     #elif defined(Q_OS_UNIX)
         settings.setValue("testPatternPath", currentDir+"/test_pattern.jpg");
     #endif
 
+
     if(!settings.contains("intertitlePath"))
     #if defined(Q_OS_WIN)
-        settings.setValue("intertitlePath", currentDir+"\intertitle.jpg");
+        settings.setValue("intertitlePath", currentDir+"\\intertitle.jpg");
     #elif defined(Q_OS_MAC)
         settings.setValue("intertitlePath", currentDir+"/intertitle.jpg");
     #elif defined(Q_OS_UNIX)
