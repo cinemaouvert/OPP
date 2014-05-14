@@ -56,7 +56,7 @@ MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     _currentVolume(50),
     _currentGain(0),
     _isPaused(false),
-    _isActive(true)
+    _isActive(false)
 {
     QSettings settings("opp","opp");
     if(settings.value("locateR").toBool())
@@ -90,7 +90,15 @@ MediaPlayer::~MediaPlayer()
 
     removeCoreConnections();
     libvlc_media_player_release(_vlcMediaPlayer);
+    libvlc_media_player_release(_vlcBackMediaPlayer);
     libvlc_vlm_release(_inst);
+
+    if(_videoBackView != NULL)
+        delete _videoBackView;
+    if(_videoView != NULL)
+        delete _videoView;
+    if(_currentPlayback != NULL)
+        delete _currentPlayback;
 }
 
 int MediaPlayer::currentTime() const
@@ -225,14 +233,20 @@ void MediaPlayer::playStream()
 
 void MediaPlayer::pause()
 {
-    stopStream();
+    if(_isActive)
+    {
+        stopStream();
+    }
     libvlc_media_player_set_pause(_vlcMediaPlayer, true);
     _isPaused = true;
 }
 
 void MediaPlayer::resume()
 {
-    playStream();
+    if(_isActive)
+    {
+        playStream();
+    }
     libvlc_media_player_set_pause(_vlcMediaPlayer, false);
     _isPaused = false;
 }

@@ -111,8 +111,14 @@ public slots:
       */
     void stop();
 
-private slots:
+    /**
+     * @brief Update settings value in UI
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
+     */
+    void updateSettings();
 
+private slots:
 
     /**
      * @brief Change the value of Ratio settings
@@ -146,9 +152,9 @@ private slots:
     /**
      * @brief Open the settings window
      *
-     * @author Cyril Naud <futuraprivate slots:
-math@gmail.com>
+     * @author Cyril Naud <futuramath@gmail.com>
      */
+
     void on_settingsAction_triggered();
 
     /**
@@ -300,13 +306,6 @@ math@gmail.com>
      * @author Florian Mhun <florian.mhun@gmail.com>z
      */
     void on_newListingAction_triggered();
-
-    /**
-     * @brief Update settings value in UI
-     *
-     * @author Cyril Naud <futuramath@gmail.com>
-     */
-    void updateSettings();
 
     /**
      * @brief Create a new playlist and its tab with a default name
