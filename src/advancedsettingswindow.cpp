@@ -32,6 +32,8 @@
 #include "mainwindow.h"
 #include "utils.h"
 
+#include <QDebug>
+
 AdvancedSettingsWindow::AdvancedSettingsWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AdvancedSettingsWindow),
@@ -58,6 +60,12 @@ void AdvancedSettingsWindow::setPlayback(Playback* playback)
     ui->timeEdit_inMark->setTime(timeIn);
     QTime timeOut = msecToQTime(_playback->mediaSettings()->outMark());
     ui->timeEdit_outMark->setTime(timeOut);
+
+    ui->timeEdit_outMark->setCurrentSectionIndex(1);
+    ui->timeEdit_inMark->setCurrentSectionIndex(1);
+
+    ui->timeEdit_inMark->setMaximumTime(timeOut);
+    ui->timeEdit_outMark->setMaximumTime(timeOut);
 
     /*Original length*/
     QTime original =  msecToQTime(_playback->media()->duration());
@@ -125,8 +133,13 @@ void AdvancedSettingsWindow::on_buttonBox_OKCancel_accepted()
 
     /*In mark and out mark*/
     _playback->mediaSettings()->setInMark(qTimeToMsec(ui->timeEdit_inMark->time()));
+    char* optionIn = (QString(":start-time=") + QString::number(_playback->mediaSettings()->inMark() / 1000)).toLocal8Bit().data();
+    libvlc_media_add_option(_playback->media()->core(),optionIn);
     _playback->mediaSettings()->setOutMark(qTimeToMsec(ui->timeEdit_outMark->time()));
+    char* optionOut = (QString(":stop-time=") + QString::number(_playback->mediaSettings()->outMark() / 1000)).toLocal8Bit().data();
+    libvlc_media_add_option(_playback->media()->core(),optionOut);
 
+    _playback->media()->parseMediaInfos();
     this->hide();
 }
 

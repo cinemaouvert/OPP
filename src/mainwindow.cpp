@@ -509,6 +509,8 @@ void MainWindow::updateSettings()
     ui->audioTrackComboBox->blockSignals(false);
     ui->videoTrackComboBox->blockSignals(false);
     ui->subtitlesTrackComboBox->blockSignals(false);
+
+    ui->scheduleLaunchAtTimeEdit->setCurrentSectionIndex(1);
 }
 
 

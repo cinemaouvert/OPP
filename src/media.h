@@ -250,7 +250,17 @@ public:
      */
     static QStringList mediaExtensions();
 
+    /**
+     * @brief Method used to set the time for images
+     *
+     * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    void setImageTime(QString &time);
+
+
+
 protected:
+
     /**
      * @brief Parse media informations with libvlc. It is used to fetch tracks informations and duration.
      *
