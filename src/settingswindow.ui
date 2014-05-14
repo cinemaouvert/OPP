@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>730</width>
-    <height>358</height>
+    <height>399</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,19 +28,6 @@
    <property name="title">
     <string>Paths to external components</string>
    </property>
-   <widget class="QDialogButtonBox" name="buttonBox_OkCancel">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>180</y>
-      <width>176</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="standardButtons">
-     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-    </property>
-   </widget>
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
@@ -51,6 +38,9 @@
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
+     <property name="spacing">
+      <number>2</number>
+     </property>
      <item row="0" column="0">
       <widget class="QLabel" name="label_VLCPath">
        <property name="text">
@@ -154,7 +144,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>180</y>
+     <y>250</y>
      <width>701</width>
      <height>121</height>
     </rect>
@@ -172,8 +162,20 @@
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>2</number>
+     </property>
      <item>
       <layout class="QFormLayout" name="formLayout">
+       <property name="fieldGrowthPolicy">
+        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+       </property>
+       <property name="horizontalSpacing">
+        <number>2</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>2</number>
+       </property>
        <item row="0" column="0">
         <widget class="QLabel" name="label_language">
          <property name="text">
@@ -221,8 +223,8 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>520</x>
-     <y>310</y>
+     <x>530</x>
+     <y>360</y>
      <width>176</width>
      <height>27</height>
     </rect>
@@ -230,6 +232,56 @@
    <property name="standardButtons">
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>200</y>
+     <width>701</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Dual screen location :</string>
+   </property>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>221</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QRadioButton" name="radioButton_locateLeft">
+       <property name="text">
+        <string>Left</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../images.qrc">
+         <normaloff>:/icons/resources/icons/icon_dualscreen_gauche.png</normaloff>:/icons/resources/icons/icon_dualscreen_gauche.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="radioButton_locateRight">
+       <property name="text">
+        <string>Right</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../images.qrc">
+         <normaloff>:/icons/resources/icons/icon_dualscreen_droite.png</normaloff>:/icons/resources/icons/icon_dualscreen_droite.png</iconset>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
  </widget>
  <resources>

@@ -49,11 +49,15 @@ MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     _videoView(NULL),
     _videoBackView(NULL),
     _isPaused(false),
-    _isActive(true),
+    _isActive(false),
     _currentVolume(50),
     _currentGain(0)
 {
     _inst = libvlc_new(0,NULL);
+
+    std::stringstream ss;
+        ss << QApplication::desktop()->screenGeometry().width();
+        _sizeScreen ="screen-left="+ ss.str();
 
     _vlcMediaPlayer = libvlc_media_player_new(vlcInstance);
     _vlcBackMediaPlayer = libvlc_media_player_new(_inst);
@@ -99,6 +103,11 @@ bool MediaPlayer::isActive() const
 void MediaPlayer::setActive(bool b)
 {
     _isActive = b;
+}
+
+void MediaPlayer::setSizeScreen(std::string s)
+{
+    _sizeScreen = s;
 }
 
 void MediaPlayer::setVideoView(VideoView *videoView)
@@ -177,18 +186,14 @@ void MediaPlayer::open(Playback *playback)
 
 void MediaPlayer::initStream()
 {
-    std::stringstream ss;
-        ss << QApplication::desktop()->screenGeometry().width();
-        std::string sizeScreen ="screen-left="+ ss.str();
-
-    const char* params[] = {"screen-fragment-size=0",
-                            sizeScreen.c_str(),
-        "screen-fps=20"};
+    const char* params[] = {"screen-fragment-size=16",
+            _sizeScreen.c_str(),
+            "screen-fps=20"};
     _inst = libvlc_new(0,NULL);
     libvlc_vlm_add_broadcast(_inst, "mybroad",
-        "screen://",
-        "#transcode{vcodec=mp1v,vb=800,acodec=mpga,ab=128}:standard{access=http,mux=mpeg1,dst=127.0.0.1:8080/}",
-        3, params, 1 , 0);
+            "screen://",
+            "#transcode{vcodec=mp2v, fps=25, acodec=mpga, scale=1, ab=128}:standard{access=http,mux=ts,dst=127.0.0.1:8080/}",
+            3, params, 1 , 0);
 
     Media *m = new Media("http://127.0.0.1:8080/", _inst,0,false);
 

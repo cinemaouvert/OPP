@@ -434,5 +434,7 @@
         <file>resources/icons/icon_fr.png</file>
         <file>resources/images/logo_opp.png</file>
         <file>resources/images/universite_poitiers.png</file>
+        <file>resources/icons/icon_dualscreen_gauche.png</file>
+        <file>resources/icons/icon_dualscreen_droite.png</file>
     </qresource>
 </RCC>

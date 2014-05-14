@@ -28,6 +28,8 @@
 
 #include <QDialog>
 
+#include "mediaplayer.h"
+
 namespace Ui {
 class SettingsWindow;
 }
@@ -37,7 +39,7 @@ class SettingsWindow : public QDialog
     Q_OBJECT
     
 public:
-    explicit SettingsWindow(QWidget *parent = 0);
+    explicit SettingsWindow(QWidget *parent = 0, MediaPlayer *mp = NULL);
     ~SettingsWindow();
 
     /**
@@ -100,11 +102,29 @@ private slots:
      */
     void on_pushButton_moviesPath_clicked();
 
+    /**
+     * @brief Set locate of the dual screen to left
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    void on_radioButton_locateLeft_clicked();
+
+    /**
+     * @brief Set locate of the dual screen to right
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    void on_radioButton_locateRight_clicked();
 private:
     /**
      * @brief ui The UI
      */
     Ui::SettingsWindow *ui;
+
+    /**
+     * @brief The mediaplayer
+     */
+    MediaPlayer *_mediaPlayer;
 };
 
 #endif // SETTINGSWINDOW_H

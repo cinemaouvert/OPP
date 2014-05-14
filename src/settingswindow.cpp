@@ -25,13 +25,20 @@
 
 #include "settingswindow.h"
 #include "ui_settingswindow.h"
+
+#include <QApplication>
+#include <QDesktopWidget>
 #include <QSettings>
 #include <QString>
 #include <QFileDialog>
 #include <QDir>
 
-SettingsWindow::SettingsWindow(QWidget *parent) :
+#include <string.h>
+#include <sstream>
+
+SettingsWindow::SettingsWindow(QWidget *parent, MediaPlayer *mp) :
     QDialog(parent),
+    _mediaPlayer(mp),
     ui(new Ui::SettingsWindow)
 {
     ui->setupUi(this);
@@ -42,6 +49,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     ui->lineEdit_testPatternPath->setText(settings.value("testPatternPath").toString());
     ui->lineEdit_intertitlePath->setText(settings.value("intertitlePath").toString());
     ui->lineEdit_moviesPath->setText(settings.value("moviesPath").toString());
+    ui->radioButton_locateRight->setChecked(true);
+    ui->radioButton_locateLeft->setChecked(false);
 
     ui->comboBox_language->setCurrentIndex(getIndex(settings.value("lang").toString()));
 }
@@ -117,4 +126,27 @@ void SettingsWindow::on_pushButton_moviesPath_clicked()
     QString pathMovies = QFileDialog::getExistingDirectory(this, tr("Open Directory"), ui->lineEdit_moviesPath->text(),QFileDialog::ShowDirsOnly);
     if(pathMovies!="")
         ui->lineEdit_moviesPath->setText(pathMovies);
+}
+
+void SettingsWindow::on_radioButton_locateLeft_clicked()
+{
+    ui->radioButton_locateRight->setChecked(false);
+    ui->radioButton_locateLeft->setChecked(true);
+    std::stringstream ss;
+        ss << (QApplication::desktop()->screen()->width()-QApplication::desktop()->screenGeometry().width());
+    std::string sizeScreen ="screen-width="+ ss.str();
+    _mediaPlayer->setSizeScreen(sizeScreen);
+    _mediaPlayer->initStream();
+}
+
+void SettingsWindow::on_radioButton_locateRight_clicked()
+{
+    ui->radioButton_locateRight->setChecked(true);
+    ui->radioButton_locateLeft->setChecked(false);
+    std::stringstream ss;
+        ss << QApplication::desktop()->screenGeometry().width();
+    std::string sizeScreen ="screen-left="+ ss.str();
+    _mediaPlayer->setSizeScreen(sizeScreen);
+
+    _mediaPlayer->initStream();
 }

@@ -144,7 +144,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _advancedSettingsWindow = new AdvancedSettingsWindow(this);
     _advancedPictureSettingsWindow = new AdvancedPictureSettingsWindow(this);
-    _settingsWindow = new SettingsWindow(this);
+    _settingsWindow = new SettingsWindow(this, _playlistPlayer->mediaPlayer());
 
     ui->scheduleToggleEnabledButton->click();
 
@@ -276,20 +276,21 @@ void MainWindow::on_disableButton_clicked()
 {
     if(ui->disableButton->isChecked())
     {
-        ui->disableButton->setText("Enable");
-        _playlistPlayer->mediaPlayer()->setActive(false);
-        if(_playlistPlayer->isPlaying())
-        {
-            _playlistPlayer->mediaPlayer()->stopStream();
-        }
-    }
-    else
-    {
         ui->disableButton->setText("Disable");
         _playlistPlayer->mediaPlayer()->setActive(true);
         if(_playlistPlayer->isPlaying())
         {
             _playlistPlayer->mediaPlayer()->playStream();
+        }
+    }
+    else
+    {
+
+        ui->disableButton->setText("Enable");
+        _playlistPlayer->mediaPlayer()->setActive(false);
+        if(_playlistPlayer->isPlaying())
+        {
+            _playlistPlayer->mediaPlayer()->stopStream();
         }
     }
 }
@@ -909,9 +910,23 @@ void MainWindow::on_quitAction_triggered()
 {
     //TODO Mettre test si modification de la programamtion actuelle à la place
     if(_mediaListModel->rowCount()!=0)
-        if (1 == QMessageBox::warning(this, "Save", tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
+    {
+        //0:ne pas enregistrer ni quitter / 1:ne pas enregistrer mais quitter / 2:enregistrer puis quitter
+        int choice = QMessageBox::warning(this, "Save", tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost"), tr("Cancel"), tr("No"), tr("Yes"));
+        if(choice == 1)
+        {
+            close();
+        }
+        else if(choice == 2)
+        {
             on_saveAction_triggered();
-    close();
+            close();
+        }
+    }
+    else
+    {
+        close();
+    }
 }
 
 /***********************************************************************************************\
@@ -1026,6 +1041,7 @@ void MainWindow::on_aboutAction_triggered()
 QList<QWidget*> MainWindow::getLockedWidget()
 {
     QList<QWidget*> lockedWidget;
+
     lockedWidget << ui->seekWidget;
     lockedWidget << ui->disableButton;
 

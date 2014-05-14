@@ -525,7 +525,7 @@
                    <item>
                     <widget class="QPushButton" name="disableButton">
                      <property name="text">
-                      <string>Disable</string>
+                      <string>Enable</string>
                      </property>
                      <property name="icon">
                       <iconset resource="../images.qrc">

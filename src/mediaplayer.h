@@ -32,6 +32,8 @@
 #include <QObject>
 #include <QtGui/qwindowdefs.h>
 
+#include <string.h>
+
 #include "mediasettings.h"
 #include "playlistplayer.h"
 
@@ -105,6 +107,13 @@ public:
      * @author Thomas Berthome <thoberthome@laposte.net>
      */
     void setActive(bool b);
+
+    /**
+     * @brief Setter for _sizeScreen
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    void setSizeScreen(std::string s);
 
     /**
      * @brief Get current time
@@ -554,6 +563,11 @@ private:
      * @brief The sample of movie active status. Set to true if active, false otherwise.
      */
     bool _isActive;
+
+    /**
+     * @brief Size needed for stream. It depend of the location of the dual screen.
+     */
+    std::string _sizeScreen;
 };
 
 #endif // MEDIAPLAYER_H
