@@ -180,7 +180,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_delay"/>
+          <widget class="QSpinBox" name="spinBox_delay">
+           <property name="minimum">
+            <number>1</number>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QLabel" name="label_minutes">
