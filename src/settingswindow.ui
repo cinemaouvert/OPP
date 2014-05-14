@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>730</width>
-    <height>399</height>
+    <height>444</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>Paths to external components</string>
+    <string>Paths to external components:</string>
    </property>
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
@@ -144,13 +144,13 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>250</y>
+     <y>300</y>
      <width>701</width>
      <height>121</height>
     </rect>
    </property>
    <property name="title">
-    <string>Language</string>
+    <string>Language:</string>
    </property>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
@@ -224,7 +224,7 @@
    <property name="geometry">
     <rect>
      <x>530</x>
-     <y>360</y>
+     <y>410</y>
      <width>176</width>
      <height>27</height>
     </rect>
@@ -237,13 +237,13 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>200</y>
+     <y>250</y>
      <width>701</width>
-     <height>80</height>
+     <height>51</height>
     </rect>
    </property>
    <property name="title">
-    <string>Dual screen location :</string>
+    <string>Dual screen location:</string>
    </property>
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
@@ -277,6 +277,61 @@
        </property>
        <property name="checked">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_4">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>190</y>
+     <width>691</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Projection return:</string>
+   </property>
+   <widget class="QWidget" name="horizontalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>331</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QRadioButton" name="radioButton_Pictures">
+       <property name="text">
+        <string>Pictures</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="radioButton_Streaming">
+       <property name="text">
+        <string>Streaming</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="radioButton_None">
+       <property name="text">
+        <string>None</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
        </property>
       </widget>
      </item>

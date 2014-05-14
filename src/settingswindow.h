@@ -102,11 +102,40 @@ private slots:
      */
     void on_pushButton_moviesPath_clicked();
 
+    void on_radioButton_Streaming_clicked();
+
+    void on_radioButton_Pictures_clicked();
+
+    void on_radioButton_None_clicked();
+
 private:
     /**
      * @brief ui The UI
      */
     Ui::SettingsWindow *ui;
+
+    /**
+     * @brief set the value of the video return mode
+     *
+     * @author  Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    void setVideoReturnMode();
+
+    /**
+     * @brief set the value of the stteings video return mode
+     *
+     * @author  Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    void setSettingsVideoReturnMode();
+
+    /**
+     * @brief init the buttons
+     *
+     * @author  Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    void init();
+
+
 };
 
 #endif // SETTINGSWINDOW_H

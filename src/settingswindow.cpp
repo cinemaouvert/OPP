@@ -41,24 +41,61 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     ui(new Ui::SettingsWindow)
 {
     ui->setupUi(this);
+    init();
+}
 
+void SettingsWindow::init(){
     /*Settings*/
     QSettings settings("opp","opp");
     ui->lineEdit_VLCPath->setText(settings.value("vlcPath").toString());
     ui->lineEdit_testPatternPath->setText(settings.value("testPatternPath").toString());
     ui->lineEdit_intertitlePath->setText(settings.value("intertitlePath").toString());
     ui->lineEdit_moviesPath->setText(settings.value("moviesPath").toString());
+    ui->groupBox_3->setEnabled(false);
+    setVideoReturnMode();
 
     ui->radioButton_locateRight->setChecked(settings.value("locateR").toBool());
     ui->radioButton_locateLeft->setChecked(!settings.value("locateR").toBool());
 
     ui->comboBox_language->setCurrentIndex(getIndex(settings.value("lang").toString()));
+
 }
 
 SettingsWindow::~SettingsWindow()
 {
     delete ui;
 }
+
+void SettingsWindow::setVideoReturnMode(){
+    QSettings settings("opp","opp");
+    if(settings.value("VideoReturnMode").toString() == "none"){
+        ui->radioButton_None->setChecked(true);
+        ui->radioButton_Pictures->setChecked(false);
+        ui->radioButton_Streaming->setChecked(false);
+    }else  if(settings.value("VideoReturnMode").toString() == "pictures"){
+        ui->radioButton_Pictures->setChecked(true);
+        ui->radioButton_Streaming->setChecked(false);
+        ui->radioButton_None->setChecked(false);
+    }else {
+        ui->radioButton_Streaming->setChecked(true);
+        ui->radioButton_Pictures->setChecked(false);
+        ui->radioButton_None->setChecked(false);
+        ui->groupBox_3->setEnabled(true);
+    }
+}
+
+void SettingsWindow::setSettingsVideoReturnMode(){
+    QSettings settings("opp","opp");
+    if(ui->radioButton_Streaming->isChecked()){
+        settings.setValue("VideoReturnMode","streaming");
+    }else if(ui->radioButton_Pictures->isChecked()){
+        settings.setValue("VideoReturnMode","pictures");
+    }else{
+        settings.setValue("VideoReturnMode","none");
+    }
+
+}
+
 
 int SettingsWindow::getIndex(QString lang)
 {
@@ -94,12 +131,13 @@ void SettingsWindow::on_buttonBox_accepted()
     settings.setValue("moviesPath", ui->lineEdit_moviesPath->text());
     settings.setValue("lang", getLang(ui->comboBox_language->currentIndex()));
     settings.setValue("locateR", ui->radioButton_locateRight->isChecked());
-
+    setSettingsVideoReturnMode();
     this->close();
 }
 
 void SettingsWindow::on_buttonBox_rejected()
 {
+    init();
     this->close();
 }
 
@@ -130,4 +168,21 @@ void SettingsWindow::on_pushButton_moviesPath_clicked()
     QString pathMovies = QFileDialog::getExistingDirectory(this, tr("Open Directory"), ui->lineEdit_moviesPath->text(),QFileDialog::ShowDirsOnly);
     if(pathMovies!="")
         ui->lineEdit_moviesPath->setText(pathMovies);
+}
+
+void SettingsWindow::on_radioButton_Streaming_clicked()
+{
+    ui->groupBox_3->setEnabled(true);
+}
+
+void SettingsWindow::on_radioButton_Pictures_clicked()
+{
+    ui->groupBox_3->setEnabled(false);
+
+}
+
+void SettingsWindow::on_radioButton_None_clicked()
+{
+    ui->groupBox_3->setEnabled(false);
+
 }
