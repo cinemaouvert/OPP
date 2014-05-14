@@ -109,13 +109,6 @@ public:
     void setActive(bool b);
 
     /**
-     * @brief Setter for _sizeScreen
-     *
-     * @author Thomas Berthome <thoberthome@laposte.net>
-     */
-    void setSizeScreen(std::string s);
-
-    /**
      * @brief Get current time
      * @return The current time in ms
      *

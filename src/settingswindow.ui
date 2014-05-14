@@ -210,7 +210,7 @@
      <item>
       <widget class="QLabel" name="label_indicationRestartLanguage">
        <property name="text">
-        <string>You'll need to restart the software to apply the new language.</string>
+        <string>You'll need to restart the software to apply the new language and the new dual screen location .</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

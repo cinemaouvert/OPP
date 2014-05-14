@@ -157,7 +157,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _advancedSettingsWindow = new AdvancedSettingsWindow(this);
     _advancedPictureSettingsWindow = new AdvancedPictureSettingsWindow(this);
-    _settingsWindow = new SettingsWindow(this, _playlistPlayer->mediaPlayer());
+    _settingsWindow = new SettingsWindow(this);
 
     ui->scheduleToggleEnabledButton->click();
 

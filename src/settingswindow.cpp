@@ -36,9 +36,8 @@
 #include <string.h>
 #include <sstream>
 
-SettingsWindow::SettingsWindow(QWidget *parent, MediaPlayer *mp) :
+SettingsWindow::SettingsWindow(QWidget *parent) :
     QDialog(parent),
-    _mediaPlayer(mp),
     ui(new Ui::SettingsWindow)
 {
     ui->setupUi(this);
@@ -49,8 +48,9 @@ SettingsWindow::SettingsWindow(QWidget *parent, MediaPlayer *mp) :
     ui->lineEdit_testPatternPath->setText(settings.value("testPatternPath").toString());
     ui->lineEdit_intertitlePath->setText(settings.value("intertitlePath").toString());
     ui->lineEdit_moviesPath->setText(settings.value("moviesPath").toString());
-    ui->radioButton_locateRight->setChecked(true);
-    ui->radioButton_locateLeft->setChecked(false);
+
+    ui->radioButton_locateRight->setChecked(settings.value("locateR").toBool());
+    ui->radioButton_locateLeft->setChecked(!settings.value("locateR").toBool());
 
     ui->comboBox_language->setCurrentIndex(getIndex(settings.value("lang").toString()));
 }
@@ -93,6 +93,8 @@ void SettingsWindow::on_buttonBox_accepted()
     settings.setValue("intertitlePath", ui->lineEdit_intertitlePath->text());
     settings.setValue("moviesPath", ui->lineEdit_moviesPath->text());
     settings.setValue("lang", getLang(ui->comboBox_language->currentIndex()));
+    settings.setValue("locateR", ui->radioButton_locateRight->isChecked());
+
     this->close();
 }
 
@@ -128,27 +130,4 @@ void SettingsWindow::on_pushButton_moviesPath_clicked()
     QString pathMovies = QFileDialog::getExistingDirectory(this, tr("Open Directory"), ui->lineEdit_moviesPath->text(),QFileDialog::ShowDirsOnly);
     if(pathMovies!="")
         ui->lineEdit_moviesPath->setText(pathMovies);
-}
-
-void SettingsWindow::on_radioButton_locateLeft_clicked()
-{
-    ui->radioButton_locateRight->setChecked(false);
-    ui->radioButton_locateLeft->setChecked(true);
-    std::stringstream ss;
-        ss << (QApplication::desktop()->screen()->width()-QApplication::desktop()->screenGeometry().width());
-    std::string sizeScreen ="screen-width="+ ss.str();
-    _mediaPlayer->setSizeScreen(sizeScreen);
-    _mediaPlayer->initStream();
-}
-
-void SettingsWindow::on_radioButton_locateRight_clicked()
-{
-    ui->radioButton_locateRight->setChecked(true);
-    ui->radioButton_locateLeft->setChecked(false);
-    std::stringstream ss;
-        ss << QApplication::desktop()->screenGeometry().width();
-    std::string sizeScreen ="screen-left="+ ss.str();
-    _mediaPlayer->setSizeScreen(sizeScreen);
-
-    _mediaPlayer->initStream();
 }
