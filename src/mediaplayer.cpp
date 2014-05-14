@@ -90,7 +90,15 @@ MediaPlayer::~MediaPlayer()
 
     removeCoreConnections();
     libvlc_media_player_release(_vlcMediaPlayer);
+    libvlc_media_player_release(_vlcBackMediaPlayer);
     libvlc_vlm_release(_inst);
+
+    if(_videoBackView != NULL)
+        delete _videoBackView;
+    if(_videoView != NULL)
+        delete _videoView;
+    if(_currentPlayback != NULL)
+        delete _currentPlayback;
 }
 
 int MediaPlayer::currentTime() const
