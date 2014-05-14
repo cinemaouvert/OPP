@@ -56,7 +56,7 @@ MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     _currentVolume(50),
     _currentGain(0),
     _isPaused(false),
-    _isActive(true)
+    _isActive(false)
 {
     QSettings settings("opp","opp");
     if(settings.value("locateR").toBool())

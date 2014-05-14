@@ -298,7 +298,6 @@ void MainWindow::on_disableButton_clicked()
     }
     else
     {
-
         ui->disableButton->setText("Enable");
         _playlistPlayer->mediaPlayer()->setActive(false);
         if(_playlistPlayer->isPlaying())
