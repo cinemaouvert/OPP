@@ -36,6 +36,7 @@
 #include <QModelIndexList>
 #include <QTime>
 
+#include "videowindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -453,8 +454,6 @@ math@gmail.com>
      */
     QList<QWidget*> getLockedWidget();
 
-    void on_scheduleLaunchAtTimeEdit_timeChanged(const QTime &time);
-
 protected:
     /**
      * @brief Returns the selected playback
@@ -560,6 +559,11 @@ private:
      * @brief _fileName
      */
     QString _fileName;
+
+    /**
+      * @brief store the selected projection mode
+      */
+    VideoWindow::DisplayMode _projectionMode;
 };
 
 #endif // MAINWINDOW_H

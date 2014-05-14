@@ -68,8 +68,3 @@ void StatusWidget::timerEvent(QTimerEvent *event)
     ui->dateLabel->setText(now.date().toString("dd/MM/yy"));
 }
 
-
-void StatusWidget::on_timeLabel_linkActivated(const QString &link)
-{
-
-}

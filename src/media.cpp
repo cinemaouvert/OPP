@@ -82,6 +82,8 @@ void Media::parseMediaInfos()
             case libvlc_track_text:
                 _subtitlesTracks << Track( &tracks[track] );
                 break;
+            default:
+                break;
         }
     }
 }

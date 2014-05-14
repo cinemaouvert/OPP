@@ -33,7 +33,7 @@
 #include "playlistplayer.h"
 #include "videowidget.h"
 
-VideoWindow::VideoWindow(QWidget *parent) :
+VideoWindow::VideoWindow(QWidget *parent ,const DisplayMode &mode) :
     QMainWindow(parent)
 {
     _videoWidget = new VideoWidget(this);
@@ -42,7 +42,7 @@ VideoWindow::VideoWindow(QWidget *parent) :
     setWindowTitle("Video");
     resize(640,480);
 
-    setDisplayMode(WINDOW);
+    setDisplayMode(mode);
 }
 
 VideoWindow::~VideoWindow()

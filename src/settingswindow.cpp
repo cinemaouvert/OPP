@@ -66,6 +66,8 @@ int SettingsWindow::getIndex(QString lang)
         return 0;
     else if(lang=="fr")
         return 1;
+    else
+        return -1;
 }
 
 QString SettingsWindow::getLang(int index)

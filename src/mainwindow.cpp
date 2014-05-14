@@ -63,10 +63,23 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), _locker(NULL) , _lockSettingsWindow(NULL),
-    _app(NULL), _playlistPlayer(NULL), _videoWindow(NULL), _mediaListModel(NULL),
-    _scheduleListModel(NULL), _statusWidget(NULL), _dataStorage(NULL), _advancedSettingsWindow(NULL),
-    _advancedPictureSettingsWindow(NULL), _settingsWindow(NULL),  _aboutdialog(NULL), _fileName("")
+    ui(new Ui::MainWindow),
+    _videoWindow(NULL),
+    _settingsWindow(NULL),
+    _lockSettingsWindow(NULL),
+    _advancedSettingsWindow(NULL),
+    _advancedPictureSettingsWindow(NULL),
+    _aboutdialog(NULL),
+    _statusWidget(NULL),
+    _app(NULL),
+    _playlistPlayer(NULL),
+    _mediaListModel(NULL),
+    _scheduleListModel(NULL),
+    _locker(NULL) ,
+    _dataStorage(NULL),
+    _fileName(""),
+    _projectionMode(VideoWindow::WINDOW)
+
 {
     //setAttribute(Qt::WA_DeleteOnClose);
 
@@ -510,7 +523,8 @@ void MainWindow::on_playerPlayButton_clicked(bool checked)
         } else {
             //Creation de la window elle n'existe pas
             if(!_videoWindow->isVisible()){
-                _videoWindow = new VideoWindow(this);
+                delete(_videoWindow);
+                _videoWindow = new VideoWindow(this, _projectionMode);
                 _playlistPlayer->mediaPlayer()->setVideoView( (VideoView*) _videoWindow->videoWidget() );
             }
 
@@ -542,7 +556,8 @@ void MainWindow::on_menuVideoMode_triggered(QAction *action)
         } else {
             action->setEnabled(false);
             action->setChecked(true);
-            _videoWindow->setDisplayMode( (VideoWindow::DisplayMode) action->data().toInt() );
+            _projectionMode =  (VideoWindow::DisplayMode) action->data().toInt() ;
+            _videoWindow->setDisplayMode(_projectionMode);
         }
     }
 }
@@ -553,7 +568,8 @@ void MainWindow::on_testPatternAction_triggered()
 }
 
 void MainWindow::stop(){
-    _playlistPlayer->stop();
+    if(_playlistPlayer->mediaPlayer()->isPaused() || _playlistPlayer->mediaPlayer()->isPlaying())
+        _playlistPlayer->stop();
     ui->playerPlayButton->setChecked(false);
 }
 
@@ -568,7 +584,7 @@ void MainWindow::createPlaylistTab()
         QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently locked, you can not add a new playlist.") , tr("OK"));
     else {
         PlaylistTableView *newTab = new PlaylistTableView;
-        Playlist *playlist = new Playlist(_app->vlcInstance(), tr("New playlist"));
+        Playlist *playlist = new Playlist(tr("New playlist"));
         PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel,newTab);
 
         connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
@@ -590,7 +606,7 @@ void MainWindow::createPlaylistTab(QString name)
         QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently locked, you can not add a new playlist.") , tr("OK"));
     else {
         PlaylistTableView *newTab = new PlaylistTableView;
-        Playlist *playlist = new Playlist(_app->vlcInstance(), name);
+        Playlist *playlist = new Playlist(name);
         PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
 
         connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
@@ -1076,8 +1092,5 @@ QList<QWidget*> MainWindow::getLockedWidget()
     return lockedWidget;
 }
 
-void MainWindow::on_scheduleLaunchAtTimeEdit_timeChanged(const QTime &time)
-{
-//UNUSED
-}
+
 

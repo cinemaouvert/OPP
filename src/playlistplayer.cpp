@@ -25,7 +25,7 @@
 
 #include "playlistplayer.h"
 
-#include <QTimer>;
+#include <QTimer>
 
 #include <vlc/vlc.h>
 
