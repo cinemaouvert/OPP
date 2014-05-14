@@ -564,7 +564,8 @@ void MainWindow::on_testPatternAction_triggered()
 }
 
 void MainWindow::stop(){
-    _playlistPlayer->stop();
+    if(_playlistPlayer->mediaPlayer()->isPaused() || _playlistPlayer->mediaPlayer()->isPlaying())
+        _playlistPlayer->stop();
     ui->playerPlayButton->setChecked(false);
 }
 
