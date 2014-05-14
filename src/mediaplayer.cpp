@@ -225,14 +225,20 @@ void MediaPlayer::playStream()
 
 void MediaPlayer::pause()
 {
-    stopStream();
+    if(_isActive)
+    {
+        stopStream();
+    }
     libvlc_media_player_set_pause(_vlcMediaPlayer, true);
     _isPaused = true;
 }
 
 void MediaPlayer::resume()
 {
-    playStream();
+    if(_isActive)
+    {
+        playStream();
+    }
     libvlc_media_player_set_pause(_vlcMediaPlayer, false);
     _isPaused = false;
 }
