@@ -35,6 +35,7 @@
 
 #include "mainwindow.h"
 #include "media.h"
+#include "customeventfilter.h"
 
 /*
  * TO FIX
@@ -107,7 +108,10 @@ int main(int argc, char *argv[])
 
     a.installTranslator(&translator2);
 
+
+
     MainWindow win;
+    a.installEventFilter(new CustomEventFilter(win.getLocker(),&a));
     win.show();
 
     return a.exec();

@@ -46,7 +46,8 @@ HEADERS += src/mainwindow.h \
     src/statuswidget.h \
     src/datastorage.h \
     src/playlistlistmanager.h \
-    src/aboutdialog.h
+    src/aboutdialog.h \
+    src/customeventfilter.h
 
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
@@ -68,7 +69,8 @@ SOURCES += src/main.cpp \
     src/statuswidget.cpp \
     src/datastorage.cpp \
     src/playlistlistmanager.cpp \
-    src/aboutdialog.cpp
+    src/aboutdialog.cpp \
+    src/customeventfilter.cpp
 
 FORMS += src/mainwindow.ui \
     src/saturationwidget.ui \

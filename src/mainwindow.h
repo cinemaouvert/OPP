@@ -96,6 +96,13 @@ public:
      */
     void deletePlaylistItem();
 
+    /**
+     * @brief Get _locker
+     *
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
+     */
+    Locker* getLocker();
+
 public slots:
     /**
       *@brief Method to stop the player
@@ -452,6 +459,8 @@ private slots:
      * @author Thomas Berthome <thoberthome@laposte.net>
      */
     QList<QWidget*> getLockedWidget();
+
+
 
 protected:
     /**

@@ -39,13 +39,13 @@ Locker::Locker(QList<QWidget*> widgets, QObject *parent) :
     _widgets(widgets)
 {
     this->setPasswordEnable(false);
-    _timer = new QTimer();
     _lock = false;
+    _time = -1;
 }
 
 Locker::~Locker()
 {
-    delete _timer;
+
 }
 
 bool Locker::getAutoLock(){
@@ -54,9 +54,6 @@ bool Locker::getAutoLock(){
 
 void Locker::setAutoLock(bool lock){
     _autoLock = lock;
-    if (lock == false){
-        _timer->stop();
-    }
 }
 
 bool Locker::passwordEnable(){
@@ -79,14 +76,19 @@ void Locker::setPassword(QString newPass){
 
 void Locker::setAutoLockDelay(int time){
     if (getAutoLock() == true) {
-        _timer->connect(_timer, SIGNAL(timeout()), this, SLOT(lock()));
-        _timer->start(time);
+        _time = time;
+    }
+}
+
+void Locker::autoLock() {
+    qDebug() << "ici";
+    if (getAutoLock() == true) {
+        lock();
     }
 }
 
 void Locker::lock()
 {
-    _timer->stop();
     foreach(QWidget *widget, _widgets) {
         widget->setEnabled(false);
     }
@@ -135,6 +137,10 @@ QList<QWidget*> Locker::getWidgets()
     return _widgets;
 }
 
-bool Locker::getLock(){
+bool Locker::isLock(){
     return _lock;
+}
+
+int Locker::getTime(){
+    return _time;
 }

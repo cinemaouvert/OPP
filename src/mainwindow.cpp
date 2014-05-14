@@ -165,6 +165,7 @@ MainWindow::MainWindow(QWidget *parent) :
     currentPlaylistTableView()->setDragEnabled(true);
 
     _aboutdialog = new AboutDialog();
+
 }
 
 MainWindow::~MainWindow()
@@ -202,6 +203,9 @@ MainWindow::~MainWindow()
 // FIX : ref 0000001
 QTabWidget* MainWindow::playlistTabWidget() const { return ui->playlistsTabWidget; }
 
+Locker* MainWindow::getLocker() {
+    return _locker;
+}
 
 /***********************************************************************************************\
                                           Project Details/Summary
@@ -579,7 +583,7 @@ void MainWindow::stop(){
 
 void MainWindow::createPlaylistTab()
 {
-    if(_locker->getLock())
+    if(_locker->isLock())
         QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently locked, you can not add a new playlist.") , tr("OK"));
     else {
         PlaylistTableView *newTab = new PlaylistTableView;
@@ -601,7 +605,7 @@ void MainWindow::createPlaylistTab()
 
 void MainWindow::createPlaylistTab(QString name)
 {
-    if(_locker->getLock())
+    if(_locker->isLock())
         QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently locked, you can not add a new playlist.") , tr("OK"));
     else {
         PlaylistTableView *newTab = new PlaylistTableView;
@@ -743,7 +747,7 @@ void MainWindow::on_playlistDownButton_clicked()
 
 void MainWindow::on_addPlaylistButton_clicked()
 {
-    if(!_locker->getLock()) {
+    if(!_locker->isLock()) {
         bool ok;
 
         QString text = QInputDialog::getText(this,
@@ -773,7 +777,7 @@ void MainWindow::on_deletePlaylistItemButton_clicked()
 
 void MainWindow::editPlaylistName()
 {
-    if(_locker->getLock())
+    if(_locker->isLock())
         QMessageBox::critical(this, tr("Edit playlist name"), tr("This playlist is currently locked, you can not edit the name of the playlist.") , tr("OK"));
     else {
         int tabIndex = ui->playlistsTabWidget->currentIndex();
@@ -797,7 +801,7 @@ void MainWindow::editPlaylistName()
 
 void MainWindow::deletePlaylistItem()
 {
-    if(_locker->getLock())
+    if(_locker->isLock())
         QMessageBox::critical(this, tr("Delete playlist item"), tr("This playlist is currently locked, you can not delete an item.") , tr("OK"));
     else {
         QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();

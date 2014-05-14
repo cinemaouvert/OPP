@@ -93,10 +93,6 @@ MediaPlayer::~MediaPlayer()
     libvlc_media_player_release(_vlcBackMediaPlayer);
     libvlc_vlm_release(_inst);
 
-    if(_videoBackView != NULL)
-        delete _videoBackView;
-    if(_videoView != NULL)
-        delete _videoView;
     if(_currentPlayback != NULL)
         delete _currentPlayback;
 }
@@ -183,8 +179,11 @@ void MediaPlayer::open(Playback *playback)
     close(playback);
 
     _currentPlayback = playback;
+    if(_currentPlayback->media()->isImage()){
+        libvlc_media_player_set_time(_vlcMediaPlayer, 1);
+        qDebug() << "time image";
+    }
     libvlc_media_player_set_media(_vlcMediaPlayer, playback->media()->core());
-
     connect(_currentPlayback->mediaSettings(), SIGNAL(gainChanged(float)), this, SLOT(setCurrentGain(float)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(gammaChanged(float)), this, SLOT(setCurrentGamma(float)));

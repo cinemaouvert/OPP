@@ -112,7 +112,17 @@ public:
      *
      * @author Geoffrey Bergé <geoffrey.berge@live.fr>
      */
-    bool getLock();
+    bool isLock();
+
+    /**
+     * @brief getTime
+     * @return time time for autolock
+     *
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
+     */
+    int getTime();
+
+
 
 private:
 
@@ -132,9 +142,9 @@ private:
     QString _thePass;
 
     /**
-     * @brief _timer
+     * @brief _time
      */
-    QTimer *_timer;
+    int _time;
 
     /**
      * @brief _widgets
@@ -142,16 +152,18 @@ private:
     QList<QWidget*> _widgets;
 
     /**
-     * @brief delay in ms
-     */
-    int delay;
-
-    /**
      * @brief _lock
      */
     int _lock;
 
 public slots:
+
+    /**
+     * @brief autoLock
+     *
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
+     */
+    void autoLock();
 
     /**
      * @brief Lock
