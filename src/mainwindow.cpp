@@ -837,13 +837,13 @@ void MainWindow::on_saveAction_triggered()
 
         _dataStorage->save(file);
         file.close();
-        QMessageBox::information(this, tr("Saved"),tr("Project saved"));
+        QMessageBox::information(this, tr("Saved"),tr("Listing saved"));
     }
 }
 
 void MainWindow::on_saveAsAction_triggered()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Project"), "", tr("OPP file (*.opp)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Listing"), "", tr("OPP file (*.opp)"));
 
     if (fileName.isEmpty()) {
          return;
@@ -872,7 +872,7 @@ void MainWindow::on_openListingAction_triggered()
     }else{
         //TODO Mettre test si modification de la programamtion actuelle à la place
         if(_mediaListModel->rowCount()!=0)
-            if (1 == QMessageBox::warning(this, "Save", tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
+            if (1 == QMessageBox::warning(this, tr("Save"), tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
                 on_saveAction_triggered();
         QString fileName = QFileDialog::getOpenFileName(this, tr("Open listing"), "", tr("OPP file (*.opp)"));
         if (fileName.isEmpty()) {
@@ -903,7 +903,7 @@ void MainWindow::on_newListingAction_triggered()
     }else{
         //TODO Mettre test si modification de la programamtion actuelle à la place
         if(_mediaListModel->rowCount()!=0)
-            if (1 == QMessageBox::warning(this, "Save", tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
+            if (1 == QMessageBox::warning(this, tr("Save"), tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
                 on_saveAction_triggered();
         _dataStorage->clear();
         // FIX : ref 0000001
@@ -931,7 +931,7 @@ void MainWindow::on_quitAction_triggered()
     if(_mediaListModel->rowCount()!=0)
     {
         //0:ne pas enregistrer ni quitter / 1:ne pas enregistrer mais quitter / 2:enregistrer puis quitter
-        int choice = QMessageBox::warning(this, "Save", tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost"), tr("Cancel"), tr("No"), tr("Yes"));
+        int choice = QMessageBox::warning(this, tr("Save"), tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost"), tr("Cancel"), tr("No"), tr("Yes"));
         if(choice == 1)
         {
             close();
