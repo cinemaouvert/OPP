@@ -198,7 +198,7 @@ bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action
                 {
                     if(schedule->finishAt().addMSecs(media->duration()) > schedule2->launchAt())
                     {
-                        int delay = QMessageBox::warning(NULL, tr("Add track into playlist"), tr("This new track create a overlapping") , tr("Delay automation"), tr("Do not add track"));
+                        int delay = QMessageBox::warning(NULL, tr("Add track into playlist"), tr("This new track create a overlapping.") , tr("Delay automation"), tr("Do not add track"));
 
                         if(delay == 0)
                         {

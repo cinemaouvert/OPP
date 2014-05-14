@@ -92,9 +92,6 @@ MediaPlayer::~MediaPlayer()
     libvlc_media_player_release(_vlcMediaPlayer);
     libvlc_media_player_release(_vlcBackMediaPlayer);
     libvlc_vlm_release(_inst);
-
-    if(_currentPlayback != NULL)
-        delete _currentPlayback;
 }
 
 int MediaPlayer::currentTime() const
@@ -179,10 +176,7 @@ void MediaPlayer::open(Playback *playback)
     close(playback);
 
     _currentPlayback = playback;
-    if(_currentPlayback->media()->isImage()){
-        libvlc_media_player_set_time(_vlcMediaPlayer, 1);
-        qDebug() << "time image";
-    }
+
     libvlc_media_player_set_media(_vlcMediaPlayer, playback->media()->core());
     connect(_currentPlayback->mediaSettings(), SIGNAL(gainChanged(float)), this, SLOT(setCurrentGain(float)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
@@ -197,6 +191,11 @@ void MediaPlayer::open(Playback *playback)
     connect(_currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(int)), this, SLOT(setCurrentAudioTrack(int)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
+
+    if(_currentPlayback->media()->isImage()){
+        libvlc_media_player_set_time(_vlcMediaPlayer, 0);
+        qDebug() << "time image";
+    }
 }
 
 void MediaPlayer::initStream()

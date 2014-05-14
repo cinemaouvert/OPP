@@ -81,7 +81,6 @@ void Locker::setAutoLockDelay(int time){
 }
 
 void Locker::autoLock() {
-    qDebug() << "ici";
     if (getAutoLock() == true) {
         lock();
     }
