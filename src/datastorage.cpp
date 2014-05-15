@@ -94,12 +94,10 @@ void DataStorage::save(QFile &file)
     /*List of medias*/
     QDomElement media;
     const QList<Media*>& mediaList = _mediaListModel->mediaList();
-    int mediaId=0;
     foreach(Media* mediaElement, mediaList)
     {
         media= doc.createElement("media");
-        media.setAttribute("id",mediaId);
-        mediaId++;
+        media.setAttribute("id",mediaElement->id());
         media.setAttribute("location",mediaElement->location());
         medias.appendChild(media);
     }

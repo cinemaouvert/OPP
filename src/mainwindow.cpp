@@ -36,6 +36,7 @@
 #include <QContextMenuEvent>
 #include <QInputDialog>
 #include <QSettings>
+#include <QApplication>
 
 #include <iostream>
 
@@ -166,6 +167,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _aboutdialog = new AboutDialog();
 
+
+    if(QApplication::argc()>1) //Restart : filename en argument
+        openFile(QApplication::arguments()[1]);
 }
 
 MainWindow::~MainWindow()
@@ -205,6 +209,24 @@ QTabWidget* MainWindow::playlistTabWidget() const { return ui->playlistsTabWidge
 
 Locker* MainWindow::getLocker() {
     return _locker;
+}
+
+QString MainWindow::getFilename() {
+    return _fileName;
+}
+
+void MainWindow::openFile(QString fileName) {
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadWrite)) {
+        QMessageBox::information(this, tr("Unable to open file"),file.errorString());
+    }
+    _fileName = fileName;
+    _dataStorage->load(file);
+    updatePlaylistListCombox();
+    file.close();
+
+    ui->progEdit->setText(_dataStorage->projectTitle());
+    ui->notesEdit->setText(_dataStorage->projectNotes());
 }
 
 /***********************************************************************************************\
@@ -824,6 +846,12 @@ void MainWindow::deletePlaylistItem()
                                           Project import/export
 \***********************************************************************************************/
 
+void MainWindow::verifSave () {
+    if(_mediaListModel->rowCount()!=0)
+        if (1 == QMessageBox::warning(this, tr("Save"), tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
+            on_saveAction_triggered();
+}
+
 void MainWindow::on_saveAction_triggered()
 {
     if(_fileName.compare("")==0)
@@ -872,10 +900,8 @@ void MainWindow::on_openListingAction_triggered()
     if(_playlistPlayer->mediaPlayer()->isPlaying() || _playlistPlayer->mediaPlayer()->isPaused()){
          QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before open a listing."));
     }else{
-        //TODO Mettre test si modification de la programamtion actuelle à la place
-        if(_mediaListModel->rowCount()!=0)
-            if (1 == QMessageBox::warning(this, tr("Save"), tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
-                on_saveAction_triggered();
+        //TODO Mettre test si modification de la programmation actuelle à la place
+        verifSave();
         QString fileName = QFileDialog::getOpenFileName(this, tr("Open listing"), "", tr("OPP file (*.opp)"));
         if (fileName.isEmpty()) {
              return;
@@ -904,9 +930,7 @@ void MainWindow::on_newListingAction_triggered()
          QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before new listing."));
     }else{
         //TODO Mettre test si modification de la programamtion actuelle à la place
-        if(_mediaListModel->rowCount()!=0)
-            if (1 == QMessageBox::warning(this, tr("Save"), tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
-                on_saveAction_triggered();
+        verifSave();
         _dataStorage->clear();
         // FIX : ref 0000001
         // add empty tab and remove all other one (init state)

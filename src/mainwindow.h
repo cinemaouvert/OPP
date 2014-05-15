@@ -97,11 +97,32 @@ public:
     void deletePlaylistItem();
 
     /**
-     * @brief Get _locker
+     * @brief Getlocker
      *
      * @author Geoffrey Bergé <geoffrey.berge@live.fr>
      */
     Locker* getLocker();
+
+    /**
+     * @brief request save if needed
+     *
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
+     */
+    void verifSave();
+
+    /**
+     * @brief GetFilename
+     *
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
+     */
+    QString getFilename();
+
+    /**
+     * @brief open the listing from the fileName
+     *
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
+     */
+    void openFile(QString fileName);
 
 public slots:
     /**
@@ -117,6 +138,13 @@ public slots:
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void updateSettings();
+
+    /**
+     * @brief Save the current project
+     */
+    void on_saveAction_triggered();
+
+
 
 private slots:
 
@@ -282,10 +310,7 @@ private slots:
      */
     void on_saveAsAction_triggered();
 
-    /**
-     * @brief Save the current project
-     */
-    void on_saveAction_triggered();
+
 
     /**
      * @brief Quit the software
