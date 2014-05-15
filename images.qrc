@@ -436,5 +436,6 @@
         <file>resources/images/universite_poitiers.png</file>
         <file>resources/icons/icon_dualscreen_gauche.png</file>
         <file>resources/icons/icon_dualscreen_droite.png</file>
+        <file>resources/images/intertitle.jpg</file>
     </qresource>
 </RCC>

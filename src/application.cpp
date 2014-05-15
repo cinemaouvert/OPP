@@ -48,7 +48,8 @@ Application::Application()
                       << "--vout=macosx"
                       << "--data-path=/Applications/VLC.app/Contents/MacOS/plugins"
     #endif
-                       <<"--drop-late-frames";
+                       <<"--drop-late-frames"
+                       <<"--no-snapshot-preview";
     initVlcInstanceFromArgs(vlcargs);
 }
 

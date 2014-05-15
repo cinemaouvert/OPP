@@ -36,6 +36,8 @@
 #include <string.h>
 #include <sstream>
 
+#include"mainwindow.h"
+
 SettingsWindow::SettingsWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsWindow)
@@ -93,7 +95,6 @@ void SettingsWindow::setSettingsVideoReturnMode(){
     }else{
         settings.setValue("VideoReturnMode","none");
     }
-
 }
 
 
@@ -178,11 +179,9 @@ void SettingsWindow::on_radioButton_Streaming_clicked()
 void SettingsWindow::on_radioButton_Pictures_clicked()
 {
     ui->groupBox_3->setEnabled(false);
-
 }
 
 void SettingsWindow::on_radioButton_None_clicked()
 {
     ui->groupBox_3->setEnabled(false);
-
 }

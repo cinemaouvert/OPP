@@ -58,6 +58,28 @@ class MediaPlayer : public QObject
 {
     Q_OBJECT
 public:
+    /**
+     * @brief Contains projection return mode values
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    enum BackMode {
+        /**
+         * Projection return with screenshots
+         */
+        SCREENSHOT = 0,
+
+        /**
+         * Projection return with streaming
+         */
+        STREAMING = 1,
+
+        /**
+         * No projection return
+         */
+        NONE = 2
+    };
+
     explicit MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent = 0);
     virtual ~MediaPlayer();
 
@@ -94,19 +116,18 @@ public:
     bool isPlaying() const;
 
     /**
-     * @brief Sample of movie is active
-     * @return True if sample of movie is active, false otherwise
+     * @brief Get BackMode
      *
      * @author Thomas Berthome <thoberthome@laposte.net>
      */
-    bool isActive() const;
+    inline BackMode bMode() const{ return _bMode; }
 
     /**
-     * @brief Setter for _isActive
+     * @brief Setter for BackMode
      *
      * @author Thomas Berthome <thoberthome@laposte.net>
      */
-    void setActive(bool b);
+    void setBackMode(const BackMode &mode);
 
     /**
      * @brief Get current time
@@ -166,6 +187,20 @@ public:
     void open(Playback *playback);
 
     /**
+     * @brief Play the stream and media player associed
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    void playStream();
+
+    /**
+     * @brief Stop the stream and media player associed
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    void stopStream();
+
+    /**
      * @brief Stream initialisation. Add a broadcast to an instance of VLC
      *
      * @author Thomas Berthome <thoberthome@laposte.net>
@@ -190,13 +225,6 @@ public slots:
     void play();
 
     /**
-     * @brief Play the stream and media player associed
-     *
-     * @author Thomas Berthome <thoberthome@laposte.net>
-     */
-    void playStream();
-
-    /**
      * @brief Pause media player
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
@@ -216,13 +244,6 @@ public slots:
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void stop();
-
-    /**
-     * @brief Stop the stream and media player associed
-     *
-     * @author Thomas Berthome <thoberthome@laposte.net>
-     */
-    void stopStream();
 
     /**
      * @brief Set current time
@@ -368,6 +389,13 @@ private slots:
      */
     void applyCurrentPlaybackSettings();
 
+    /**
+     * @brief Taking screenshot.
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    void takeScreen();
+
 signals:
     /**
      * @brief backward
@@ -498,6 +526,20 @@ private:
     static void libvlc_callback(const libvlc_event_t *event, void *data);
 
     /**
+     * @brief Taking periodically screenshots.
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    void playScreen();
+
+    /**
+     * @brief Stop taking screenshots
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    void stopScreen();
+
+    /**
      * @brief The libvlc instance for stream
      */
     libvlc_instance_t * _inst;
@@ -553,14 +595,16 @@ private:
     bool _isPaused;
 
     /**
-     * @brief The sample of movie active status. Set to true if active, false otherwise.
+     * @brief The mode of projection return
      */
-    bool _isActive;
+    BackMode _bMode;
 
     /**
      * @brief Size needed for stream. It depend of the location of the dual screen.
      */
     std::string _sizeScreen;
+
+    QTimer *_timer;
 };
 
 #endif // MEDIAPLAYER_H

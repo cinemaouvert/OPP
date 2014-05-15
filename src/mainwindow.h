@@ -103,6 +103,13 @@ public:
      */
     Locker* getLocker();
 
+    /**
+     * @brief Get _playlistPlayer
+     *
+     * @author Thomas Berthomé <thoberthome@laposte.net>
+     */
+    inline PlaylistPlayer* getPlaylistPlayer() const {return _playlistPlayer;}
+
 public slots:
     /**
       *@brief Method to stop the player
@@ -110,6 +117,13 @@ public slots:
       * @author Thibaud Lamarche <lamarchethibaud@hotmail.com>
       */
     void stop();
+
+    /**
+     * @brief Set a new screenshot in the screenBack
+     *
+     * @author Thomas Berthomé <thoberthome@laposte.net>
+     */
+    void setScreenshot(QString url);
 
     /**
      * @brief Update settings value in UI

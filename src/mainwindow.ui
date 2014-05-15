@@ -518,25 +518,61 @@
                <widget class="QWidget" name="mediaSettingsWidget" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout_7">
                  <item>
-                  <layout class="QVBoxLayout" name="verticalLayout_18">
-                   <item>
-                    <widget class="VideoWidget" name="backWidget" native="true"/>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="disableButton">
+                  <widget class="QStackedWidget" name="stackedWidget">
+                   <property name="currentIndex">
+                    <number>0</number>
+                   </property>
+                   <widget class="QWidget" name="page_stream">
+                    <widget class="QWidget" name="layoutWidget">
+                     <property name="geometry">
+                      <rect>
+                       <x>0</x>
+                       <y>10</y>
+                       <width>211</width>
+                       <height>181</height>
+                      </rect>
+                     </property>
+                     <layout class="QVBoxLayout" name="verticalLayout_18">
+                      <item>
+                       <widget class="VideoWidget" name="backWidget" native="true"/>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="disableButton">
+                        <property name="text">
+                         <string>Enable</string>
+                        </property>
+                        <property name="icon">
+                         <iconset resource="../images.qrc">
+                          <normaloff>:/icons/resources/glyphicons/glyphicons_086_display.png</normaloff>:/icons/resources/glyphicons/glyphicons_086_display.png</iconset>
+                        </property>
+                        <property name="checkable">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </widget>
+                   <widget class="QWidget" name="page_screen">
+                    <widget class="QLabel" name="screenBack">
+                     <property name="geometry">
+                      <rect>
+                       <x>0</x>
+                       <y>20</y>
+                       <width>221</width>
+                       <height>181</height>
+                      </rect>
+                     </property>
                      <property name="text">
-                      <string>Enable</string>
+                      <string/>
                      </property>
-                     <property name="icon">
-                      <iconset resource="../images.qrc">
-                       <normaloff>:/icons/resources/glyphicons/glyphicons_086_display.png</normaloff>:/icons/resources/glyphicons/glyphicons_086_display.png</iconset>
-                     </property>
-                     <property name="checkable">
-                      <bool>true</bool>
+                     <property name="pixmap">
+                      <pixmap resource="../images.qrc">:/icons/resources/images/intertitle.jpg</pixmap>
                      </property>
                     </widget>
-                   </item>
-                  </layout>
+                   </widget>
+                   <widget class="QWidget" name="page_none"/>
+                  </widget>
                  </item>
                  <item>
                   <widget class="QFrame" name="frame">

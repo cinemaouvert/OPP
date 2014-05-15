@@ -35,6 +35,7 @@
 #include <QHeaderView>
 #include <QContextMenuEvent>
 #include <QInputDialog>
+#include <QPixmap>
 #include <QSettings>
 
 #include <iostream>
@@ -95,10 +96,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // internal core initalization
     _app = new Application();
-    _playlistPlayer = new PlaylistPlayer(_app->vlcInstance());
+    _playlistPlayer = new PlaylistPlayer(_app->vlcInstance(), this);
 
     _videoWindow = new VideoWindow(this);
-
 
     _playlistPlayer->mediaPlayer()->setVideoView( (VideoView*) _videoWindow->videoWidget() );
     _playlistPlayer->mediaPlayer()->setVideoBackView( (VideoView*) ui->backWidget );
@@ -158,6 +158,24 @@ MainWindow::MainWindow(QWidget *parent) :
     _advancedSettingsWindow = new AdvancedSettingsWindow(this);
     _advancedPictureSettingsWindow = new AdvancedPictureSettingsWindow(this);
     _settingsWindow = new SettingsWindow(this);
+
+    QSettings settings("opp","opp");
+    if(settings.value("VideoReturnMode").toString() == "pictures")
+    {
+        ui->stackedWidget->setCurrentIndex(1);
+        _playlistPlayer->mediaPlayer()->setBackMode(MediaPlayer::SCREENSHOT);
+        //setScreenshot();
+    }
+    else if(settings.value("VideoReturnMode").toString() == "streaming")
+    {
+        ui->stackedWidget->setCurrentIndex(0);
+        _playlistPlayer->mediaPlayer()->setBackMode(MediaPlayer::STREAMING);
+    }
+    else
+    {
+        ui->stackedWidget->setCurrentIndex(2);
+        _playlistPlayer->mediaPlayer()->setBackMode(MediaPlayer::NONE);
+    }
 
     ui->scheduleToggleEnabledButton->click();
 
@@ -294,7 +312,7 @@ void MainWindow::on_disableButton_clicked()
     if(ui->disableButton->isChecked())
     {
         ui->disableButton->setText("Disable");
-        _playlistPlayer->mediaPlayer()->setActive(true);
+        _playlistPlayer->mediaPlayer()->setBackMode(MediaPlayer::STREAMING);
         if(_playlistPlayer->isPlaying())
         {
             _playlistPlayer->mediaPlayer()->playStream();
@@ -303,7 +321,7 @@ void MainWindow::on_disableButton_clicked()
     else
     {
         ui->disableButton->setText("Enable");
-        _playlistPlayer->mediaPlayer()->setActive(false);
+        _playlistPlayer->mediaPlayer()->setBackMode(MediaPlayer::STREAMING);
         if(_playlistPlayer->isPlaying())
         {
             _playlistPlayer->mediaPlayer()->stopStream();
@@ -1093,6 +1111,12 @@ QList<QWidget*> MainWindow::getLockedWidget()
     lockedWidget << ui->playerControlsWidget;
 
     return lockedWidget;
+}
+
+void MainWindow::setScreenshot(QString url)
+{
+    QPixmap pixmap(url);
+    ui->screenBack->setPixmap(pixmap.scaled(ui->screenBack->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
 }
 
 

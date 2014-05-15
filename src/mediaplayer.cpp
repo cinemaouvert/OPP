@@ -41,6 +41,8 @@
 #include "application.h"
 #include "media.h"
 #include "videoview.h"
+#include "mainwindow.h"
+#include "playlistplayer.h"
 #include "mediasettings.h"
 #include "playback.h"
 
@@ -55,10 +57,21 @@ MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     _videoBackView(NULL),
     _currentVolume(50),
     _currentGain(0),
-    _isPaused(false),
-    _isActive(false)
+    _isPaused(false)
 {
     QSettings settings("opp","opp");
+    if(settings.value("VideoReturnMode").toString() == "none")
+    {
+        _bMode = NONE;
+    }
+    else  if(settings.value("VideoReturnMode").toString() == "pictures")
+    {
+        _bMode = SCREENSHOT;
+    }
+    else
+    {
+        _bMode = STREAMING;
+    }
     if(settings.value("locateR").toBool())
     {
         std::stringstream ss;
@@ -71,9 +84,8 @@ MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
             ss << (QApplication::desktop()->screen()->width()-QApplication::desktop()->screenGeometry().width());
         _sizeScreen ="screen-width="+ ss.str();
     }
-
-    _vlcMediaPlayer = libvlc_media_player_new(vlcInstance);
     _vlcBackMediaPlayer = libvlc_media_player_new(_inst);
+    _vlcMediaPlayer = libvlc_media_player_new(_inst);
     _vlcEvents = libvlc_media_player_event_manager(_vlcMediaPlayer);
 
     libvlc_video_set_key_input(_vlcMediaPlayer, false);
@@ -109,14 +121,9 @@ bool MediaPlayer::isPlaying() const
     return libvlc_media_player_is_playing(_vlcMediaPlayer);
 }
 
-bool MediaPlayer::isActive() const
+void MediaPlayer::setBackMode(const BackMode &mode)
 {
-    return _isActive;
-}
-
-void MediaPlayer::setActive(bool b)
-{
-    _isActive = b;
+    _bMode = mode;
 }
 
 void MediaPlayer::setVideoView(VideoView *videoView)
@@ -215,9 +222,16 @@ void MediaPlayer::initStream()
 
 void MediaPlayer::play()
 {
-    if(_isActive)
+    switch (_bMode)
     {
+    case SCREENSHOT:
+        playScreen();
+        break;
+    case STREAMING:
         playStream();
+        break;
+    default:
+        break;
     }
     libvlc_media_player_play(_vlcMediaPlayer);
     _isPaused = false;
@@ -229,11 +243,39 @@ void MediaPlayer::playStream()
     libvlc_media_player_play(_vlcBackMediaPlayer);
 }
 
+void MediaPlayer::playScreen()
+{
+    _timer = new QTimer();
+    _timer->connect(_timer, SIGNAL(timeout()), this, SLOT(takeScreen()));
+    _timer->start(40);
+}
+
+void MediaPlayer::takeScreen()
+{
+    if(isPlaying())
+    {
+        libvlc_video_take_snapshot(_vlcMediaPlayer, 0, "tmp.png", libvlc_video_get_width(_vlcMediaPlayer), libvlc_video_get_height(_vlcMediaPlayer));
+        ((MainWindow *)((PlaylistPlayer *)this->parent())->parent())->setScreenshot("tmp.png");
+    }
+}
+
+void MediaPlayer::stopScreen()
+{
+    _timer->stop();
+}
+
 void MediaPlayer::pause()
 {
-    if(_isActive)
+    switch (_bMode)
     {
+    case SCREENSHOT:
+        stopScreen();
+        break;
+    case STREAMING:
         stopStream();
+        break;
+    default:
+        break;
     }
     libvlc_media_player_set_pause(_vlcMediaPlayer, true);
     _isPaused = true;
@@ -241,9 +283,16 @@ void MediaPlayer::pause()
 
 void MediaPlayer::resume()
 {
-    if(_isActive)
+    switch (_bMode)
     {
+    case SCREENSHOT:
+        playScreen();
+        break;
+    case STREAMING:
         playStream();
+        break;
+    default:
+        break;
     }
     libvlc_media_player_set_pause(_vlcMediaPlayer, false);
     _isPaused = false;
@@ -258,9 +307,17 @@ void MediaPlayer::stop()
         _videoView->release();*/
     _currentWId = 0;
 
-    if(_isActive)
+    switch (_bMode)
     {
-        stopStream();
+    case SCREENSHOT:
+        stopScreen();
+        ((MainWindow *)((PlaylistPlayer *)this->parent())->parent())->setScreenshot(":/icons/resources/images/intertitle.jpg");
+        break;
+    case STREAMING:
+        playStream();
+        break;
+    default:
+        break;
     }
     libvlc_media_player_stop(_vlcMediaPlayer);
     _isPaused = false;
