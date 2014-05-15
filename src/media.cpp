@@ -87,7 +87,8 @@ void Media::parseMediaInfos()
                 break;
         }
     }
-    _duration = libvlc_media_get_duration(_vlcMedia);
+    _originalDuration = libvlc_media_get_duration(_vlcMedia);
+    _duration = _originalDuration;
 }
 
 void Media::setImageTime(QString &time)
@@ -129,6 +130,10 @@ uint Media::duration() const
 
 void Media::setDuration(QString &time){
     _duration = time.toInt();
+}
+
+uint Media::getOriginalDuration(){
+    return _originalDuration;
 }
 
 QString Media::name() const

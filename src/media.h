@@ -264,7 +264,12 @@ public:
      */
     void setDuration(QString &time);
 
-
+    /**
+     * @brief Method used to get the original duration of media
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    uint getOriginalDuration();
 protected:
 
     /**
@@ -332,6 +337,11 @@ private:
      * @brief Duration of media.
      */
     uint _duration;
+
+    /**
+     * @brief Original duration of media.
+     */
+    uint _originalDuration;
 };
 
 #endif // MEDIA_H

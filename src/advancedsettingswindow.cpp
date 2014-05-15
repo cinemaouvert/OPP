@@ -64,8 +64,8 @@ void AdvancedSettingsWindow::setPlayback(Playback* playback)
     ui->timeEdit_outMark->setCurrentSectionIndex(1);
     ui->timeEdit_inMark->setCurrentSectionIndex(1);
 
-    ui->timeEdit_inMark->setMaximumTime(timeOut);
-    ui->timeEdit_outMark->setMaximumTime(timeOut);
+    ui->timeEdit_inMark->setMaximumTime(msecToQTime(_playback->media()->getOriginalDuration()));
+    ui->timeEdit_outMark->setMaximumTime(msecToQTime(_playback->media()->getOriginalDuration()));
 
     /*Original length*/
     QTime original =  msecToQTime(_playback->media()->duration());
@@ -141,11 +141,15 @@ void AdvancedSettingsWindow::on_buttonBox_OKCancel_accepted()
     char* optionOut = (QString(":stop-time=") + QString::number(timeOut / 1000)).toLocal8Bit().data();
     libvlc_media_add_option(_playback->media()->core(),optionOut);
 
-    qDebug() << _playback->media()->duration();
-    qDebug() << "In" +QString::number(timeOut);
-    qDebug() << "Out" + QString::number(timeIn);
-    QString s = QString::number(timeOut - timeIn );
-    _playback->media()->setDuration(s);
+    uint diff = timeOut - timeIn;
+    QString duration;
+    if(diff != 0){
+        duration = QString::number(diff);
+        _playback->media()->setDuration(duration);
+    }else{
+        duration = QString::number(timeOut);
+        _playback->media()->setDuration(duration);
+    }
 
     this->hide();
 }
