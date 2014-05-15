@@ -25,6 +25,7 @@
 
 #include "settingswindow.h"
 #include "ui_settingswindow.h"
+#include "mainwindow.h"
 
 #include <QApplication>
 #include <QDesktopWidget>
@@ -32,6 +33,7 @@
 #include <QString>
 #include <QFileDialog>
 #include <QDir>
+#include <QProcess>
 
 #include <string.h>
 #include <sstream>
@@ -124,6 +126,11 @@ QString SettingsWindow::getLang(int index)
 
 void SettingsWindow::on_buttonBox_accepted()
 {
+    accept();
+    this->close();
+}
+
+void SettingsWindow::accept() {
     QSettings settings("opp","opp");
     settings.setValue("vlcPath", ui->lineEdit_VLCPath->text());
     settings.setValue("testPatternPath", ui->lineEdit_testPatternPath->text());
@@ -132,7 +139,6 @@ void SettingsWindow::on_buttonBox_accepted()
     settings.setValue("lang", getLang(ui->comboBox_language->currentIndex()));
     settings.setValue("locateR", ui->radioButton_locateRight->isChecked());
     setSettingsVideoReturnMode();
-    this->close();
 }
 
 void SettingsWindow::on_buttonBox_rejected()
@@ -185,4 +191,14 @@ void SettingsWindow::on_radioButton_None_clicked()
 {
     ui->groupBox_3->setEnabled(false);
 
+}
+
+void SettingsWindow::on_restart_clicked()
+{
+    accept();
+    ((MainWindow *)this->parent())->verifSave();
+    QStringList* arguments = new QStringList();
+    arguments->append(((MainWindow *)this->parent())->getFilename());
+    QProcess::startDetached(QApplication::applicationFilePath(), *arguments);
+    exit(2);
 }

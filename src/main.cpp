@@ -33,6 +33,8 @@
 #include <QDir>
 #include <QCoreApplication>
 
+#include <QMessageBox>
+
 #include "mainwindow.h"
 #include "media.h"
 #include "customeventfilter.h"
@@ -44,6 +46,7 @@
  */
 int main(int argc, char *argv[])
 {
+
     QApplication a(argc, argv);
 
     /*Settings initialization*/
@@ -112,6 +115,7 @@ int main(int argc, char *argv[])
 
     MainWindow win;
     a.installEventFilter(new CustomEventFilter(win.getLocker(),&a));
+
     win.show();
 
     return a.exec();

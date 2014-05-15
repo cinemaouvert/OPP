@@ -61,13 +61,15 @@ void AdvancedSettingsWindow::setPlayback(Playback* playback)
     QTime timeIn = msecToQTime(_playback->mediaSettings()->inMark());
     ui->timeEdit_inMark->setTime(timeIn);
     QTime timeOut = msecToQTime(_playback->mediaSettings()->outMark());
+    ui->timeEdit_inMark->setMaximumTime(msecToQTime(_playback->media()->getOriginalDuration()));
+    ui->timeEdit_outMark->setMaximumTime(msecToQTime(_playback->media()->getOriginalDuration()));
+
     ui->timeEdit_outMark->setTime(timeOut);
 
     ui->timeEdit_outMark->setCurrentSectionIndex(1);
     ui->timeEdit_inMark->setCurrentSectionIndex(1);
 
-    ui->timeEdit_inMark->setMaximumTime(timeOut);
-    ui->timeEdit_outMark->setMaximumTime(timeOut);
+
 
     /*Original length*/
     QTime original =  msecToQTime(_playback->media()->duration());
@@ -75,6 +77,8 @@ void AdvancedSettingsWindow::setPlayback(Playback* playback)
 
     /*Modified length*/
     updateLength();
+
+    ui->comboBox_testPattern->setCurrentIndex(_playback->mediaSettings()->testPattern());
 
 
     /*Fill table*/
@@ -153,18 +157,36 @@ void AdvancedSettingsWindow::on_buttonBox_OKCancel_accepted()
 
     /*In mark and out mark*/
     _playback->mediaSettings()->setInMark(qTimeToMsec(ui->timeEdit_inMark->time()));
-    char* optionIn = (QString(":start-time=") + QString::number(_playback->mediaSettings()->inMark() / 1000)).toLocal8Bit().data();
+    uint timeIn = _playback->mediaSettings()->inMark();
+    char* optionIn = (QString(":start-time=") + QString::number(timeIn / 1000)).toLocal8Bit().data();
     libvlc_media_add_option(_playback->media()->core(),optionIn);
+
     _playback->mediaSettings()->setOutMark(qTimeToMsec(ui->timeEdit_outMark->time()));
-    char* optionOut = (QString(":stop-time=") + QString::number(_playback->mediaSettings()->outMark() / 1000)).toLocal8Bit().data();
+    uint timeOut = _playback->mediaSettings()->outMark();
+    char* optionOut = (QString(":stop-time=") + QString::number(timeOut / 1000)).toLocal8Bit().data();
     libvlc_media_add_option(_playback->media()->core(),optionOut);
 
+
+    uint diff;
     if(_playback->media()->isImage()){
         int secOut = ui->imageDurationTimeEdit->time().second()+60*ui->imageDurationTimeEdit->time().minute()+3600*ui->imageDurationTimeEdit->time().hour();
-        int diff = 1000*(secOut);
+        diff = 1000*(secOut);
         _playback->media()->setImageTime(QString::number(diff/1000));
-    }
+    }else{
 
+        _playback->mediaSettings()->setInMark(timeIn);
+        _playback->mediaSettings()->setOutMark(timeOut);
+
+        diff = timeOut - timeIn;
+    }
+    QString duration;
+    if(diff != 0){
+        duration = QString::number(diff);
+        _playback->media()->setDuration(duration);
+    }else{
+        duration = QString::number(timeOut);
+        _playback->media()->setDuration(duration);
+    }
     this->hide();
 }
 

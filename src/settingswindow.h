@@ -108,6 +108,8 @@ private slots:
 
     void on_radioButton_None_clicked();
 
+    void on_restart_clicked();
+
 private:
     /**
      * @brief ui The UI
@@ -134,6 +136,14 @@ private:
      * @author  Thibaud Lamarche <lamarchethibaud@hotmail.fr>
      */
     void init();
+
+    /**
+     * @brief accept the settings
+     *
+     * @author  Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    void accept();
+
 
 
 };
