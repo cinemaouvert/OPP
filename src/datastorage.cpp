@@ -161,7 +161,6 @@ void DataStorage::save(QFile &file)
     }
 
     /*Save*/
-    file.open(QIODevice::WriteOnly);
     QTextStream ts(&file);
     int indent = 2;
     doc.save(ts, indent);
