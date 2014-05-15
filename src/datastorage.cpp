@@ -285,6 +285,9 @@ void DataStorage::load(QFile &file)
         _scheduleListModel->addSchedule(schedule);
     }
 
+    _playlistModelList.clear();
+
+
 }
 
 void DataStorage::clear()
@@ -295,6 +298,7 @@ void DataStorage::clear()
         model->removeAll();
 
     _mediaListModel->removeAll();
+    _playlistModelList.clear();
 
     _projectTitle.clear();
     _projectNotes.clear();

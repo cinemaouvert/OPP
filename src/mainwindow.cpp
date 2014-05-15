@@ -142,7 +142,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionProjection->setData(QVariant(VideoWindow::PROJECTION));
     ui->actionWindow->setData(QVariant(VideoWindow::WINDOW));
 
-    _dataStorage = new DataStorage(_app, this/*FIX : ref 0000001*/);
+    _dataStorage = new DataStorage(_app, this);
     _dataStorage->setMediaListModel(_mediaListModel);
     _dataStorage->setScheduleListModel(_scheduleListModel);
 
@@ -860,14 +860,14 @@ void MainWindow::on_saveAction_triggered()
         QFile file(_fileName);
         if (!file.open(QIODevice::WriteOnly)) {
             QMessageBox::information(this, tr("Unable to open file"),file.errorString());
+        }else{
+            for (int i = 0; i < ui->playlistsTabWidget->count(); i++)
+             _dataStorage->addPlaylistModel((PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(i) )->model());
+
+            _dataStorage->save(file);
+            file.close();
+            QMessageBox::information(this, tr("Saved"),tr("Listing saved"));
         }
-
-        for (int i = 0; i < ui->playlistsTabWidget->count(); i++)
-         _dataStorage->addPlaylistModel((PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(i) )->model());
-
-        _dataStorage->save(file);
-        file.close();
-        QMessageBox::information(this, tr("Saved"),tr("Listing saved"));
     }
 }
 
@@ -883,14 +883,15 @@ void MainWindow::on_saveAsAction_triggered()
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly)) {
             QMessageBox::information(this, tr("Unable to open file"),file.errorString());
-        }
-        _fileName = fileName;
-        for (int i = 0; i < ui->playlistsTabWidget->count(); i++)
-            _dataStorage->addPlaylistModel((PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(i) )->model());
+        }else{
+            _fileName = fileName;
+            for (int i = 0; i < ui->playlistsTabWidget->count(); i++)
+                _dataStorage->addPlaylistModel((PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(i) )->model());
 
-        _dataStorage->save(file);
-        file.close();
-        QMessageBox::information(this, tr("Saved"),tr("Listing saved"));
+            _dataStorage->save(file);
+            file.close();
+            QMessageBox::information(this, tr("Saved"),tr("Listing saved"));
+        }
     }
 }
 
