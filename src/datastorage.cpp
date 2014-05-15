@@ -94,12 +94,10 @@ void DataStorage::save(QFile &file)
     /*List of medias*/
     QDomElement media;
     const QList<Media*>& mediaList = _mediaListModel->mediaList();
-    int mediaId=0;
     foreach(Media* mediaElement, mediaList)
     {
         media= doc.createElement("media");
-        media.setAttribute("id",mediaId);
-        mediaId++;
+        media.setAttribute("id",mediaElement->id());
         media.setAttribute("location",mediaElement->location());
         medias.appendChild(media);
     }
@@ -163,7 +161,6 @@ void DataStorage::save(QFile &file)
     }
 
     /*Save*/
-    file.open(QIODevice::WriteOnly);
     QTextStream ts(&file);
     int indent = 2;
     doc.save(ts, indent);
@@ -287,6 +284,9 @@ void DataStorage::load(QFile &file)
         _scheduleListModel->addSchedule(schedule);
     }
 
+    _playlistModelList.clear();
+
+
 }
 
 void DataStorage::clear()
@@ -297,6 +297,7 @@ void DataStorage::clear()
         model->removeAll();
 
     _mediaListModel->removeAll();
+    _playlistModelList.clear();
 
     _projectTitle.clear();
     _projectNotes.clear();

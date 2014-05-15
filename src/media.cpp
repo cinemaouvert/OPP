@@ -46,6 +46,7 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
         _vlcMedia = libvlc_media_new_path(vlcInstance, location.toLocal8Bit().data());
     else
         _vlcMedia = libvlc_media_new_location(vlcInstance, location.toLocal8Bit().data());
+
     parseMediaInfos();
 }
 
@@ -86,6 +87,12 @@ void Media::parseMediaInfos()
                 break;
         }
     }
+    _originalDuration = libvlc_media_get_duration(_vlcMedia);
+    _duration = _originalDuration;
+}
+
+void Media::setImageTime(QString time){
+    libvlc_media_add_option(_vlcMedia,(QString(":image-duration=") + time).toLocal8Bit().data());
 }
 
 void Media::initMedia(const QString &location)
@@ -116,7 +123,15 @@ void Media::setId(int id)
 
 uint Media::duration() const
 {
-    return libvlc_media_get_duration(_vlcMedia);
+    return _duration;
+}
+
+void Media::setDuration(QString &time){
+    _duration = time.toInt();
+}
+
+uint Media::getOriginalDuration(){
+    return _originalDuration;
 }
 
 QString Media::name() const

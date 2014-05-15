@@ -186,36 +186,36 @@ bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action
         if (!media)
             return false;
 
-    QList<Schedule*> scheduleList = _scheduleListModel->scheduleList();
+        QList<Schedule*> scheduleList = _scheduleListModel->scheduleList();
 
-    foreach(Schedule *schedule, scheduleList)
-    {
-        if(this->playlist() == schedule->playlist())
+        foreach(Schedule *schedule, scheduleList)
         {
-            foreach(Schedule *schedule2, scheduleList)
+            if(this->playlist() == schedule->playlist())
             {
-                if(schedule->launchAt() < schedule2->launchAt())
+                foreach(Schedule *schedule2, scheduleList)
                 {
-                    if(schedule->finishAt().addMSecs(media->duration()) > schedule2->launchAt())
+                    if(schedule->launchAt() < schedule2->launchAt())
                     {
-                        int delay = QMessageBox::warning(NULL, tr("Add track into playlist"), tr("This new track create a overlapping") , tr("Delay automation"), tr("Do not add track"));
+                        if(schedule->finishAt().addMSecs(media->duration()) > schedule2->launchAt())
+                        {
+                            int delay = QMessageBox::warning(NULL, tr("Add track into playlist"), tr("This new track create a overlapping.") , tr("Delay automation"), tr("Do not add track"));
 
-                        if(delay == 0)
-                        {
-                            uint t = media->duration();
-                            schedule2->delay(t);
-                            repareDelay(scheduleList, t);
-                        }
-                        if(delay == 1)
-                        {
-                            return false;
+                            if(delay == 0)
+                            {
+                                uint t = media->duration();
+                                schedule2->delay(t);
+                                repareDelay(scheduleList, t);
+                            }
+                            if(delay == 1)
+                            {
+                                return false;
+                            }
                         }
                     }
                 }
             }
         }
-    }
-     addPlayback(new Playback(media));
+        addPlayback(new Playback(media));
     }
     return true;
 }

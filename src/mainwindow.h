@@ -97,11 +97,32 @@ public:
     void deletePlaylistItem();
 
     /**
-     * @brief Get _locker
+     * @brief Getlocker
      *
      * @author Geoffrey Bergé <geoffrey.berge@live.fr>
      */
     Locker* getLocker();
+
+    /**
+     * @brief request save if needed
+     *
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
+     */
+    void verifSave();
+
+    /**
+     * @brief GetFilename
+     *
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
+     */
+    QString getFilename();
+
+    /**
+     * @brief open the listing from the fileName
+     *
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
+     */
+    void openFile(QString fileName);
 
     /**
      * @brief Get _playlistPlayer
@@ -119,19 +140,30 @@ public slots:
     void stop();
 
     /**
-     * @brief Set a new screenshot in the screenBack
-     *
-     * @author Thomas Berthomé <thoberthome@laposte.net>
-     */
-    void setScreenshot(QString url);
-
-    /**
      * @brief Update settings value in UI
      *
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void updateSettings();
 
+    /**
+     * @brief Save the current project
+     */
+    void on_saveAction_triggered();
+
+     /**
+     * @brief Open the advanced settings window
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
+     */
+    void on_advancedSettingsButton_clicked();
+
+	/**
+     * @brief Set a new screenshot in the screenBack
+     *
+     * @author Thomas Berthomé <thoberthome@laposte.net>
+     */
+    void setScreenshot(QString url);
 private slots:
 
     /**

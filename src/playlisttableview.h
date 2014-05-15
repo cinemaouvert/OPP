@@ -29,15 +29,18 @@
 
 #include <QTableView>
 #include "schedulelistmodel.h"
+#include "mainwindow.h"
 
 class PlaylistTableView : public QTableView
 {
     Q_OBJECT
 public:
-    explicit PlaylistTableView(QWidget *parent = 0);
+    explicit PlaylistTableView(MainWindow* mainWindow,QWidget *parent = 0);
 
 protected:
     void mousePressEvent(QMouseEvent *event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
+
     void mouseMoveEvent(QMouseEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);
     void dragMoveEvent(QDragMoveEvent *event);
@@ -47,6 +50,7 @@ protected:
 private:
     QPoint startPos;
     ScheduleListModel *_scheduleListModel;
+    MainWindow *_mainWindow;
 };
 
 #endif // PLAYLISTTABLEVIEW_H

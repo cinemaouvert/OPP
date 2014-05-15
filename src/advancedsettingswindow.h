@@ -73,6 +73,8 @@ private slots:
      */
     void on_buttonBox_OKCancel_rejected();
 
+    void on_imageDurationTimeEdit_timeChanged(const QTime &date);
+
 private:
     /**
      * @brief ui The UI
