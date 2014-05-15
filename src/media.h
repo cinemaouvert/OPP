@@ -257,6 +257,12 @@ public:
      */
     void setImageTime(QString &time);
 
+    /**
+     * @brief Method used to set the duration of media
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void setDuration(QString &time);
 
 
 protected:
@@ -321,6 +327,11 @@ private:
      * @brief If the value is 0, it means the media is not used.
      */
     int _usageCount;
+
+    /**
+     * @brief Duration of media.
+     */
+    uint _duration;
 };
 
 #endif // MEDIA_H

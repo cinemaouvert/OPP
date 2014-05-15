@@ -133,11 +133,19 @@ void AdvancedSettingsWindow::on_buttonBox_OKCancel_accepted()
 
     /*In mark and out mark*/
     _playback->mediaSettings()->setInMark(qTimeToMsec(ui->timeEdit_inMark->time()));
-    char* optionIn = (QString(":start-time=") + QString::number(_playback->mediaSettings()->inMark() / 1000)).toLocal8Bit().data();
+    uint timeIn = _playback->mediaSettings()->inMark();
+    char* optionIn = (QString(":start-time=") + QString::number(timeIn / 1000)).toLocal8Bit().data();
     libvlc_media_add_option(_playback->media()->core(),optionIn);
     _playback->mediaSettings()->setOutMark(qTimeToMsec(ui->timeEdit_outMark->time()));
-    char* optionOut = (QString(":stop-time=") + QString::number(_playback->mediaSettings()->outMark() / 1000)).toLocal8Bit().data();
+    uint timeOut = _playback->mediaSettings()->outMark();
+    char* optionOut = (QString(":stop-time=") + QString::number(timeOut / 1000)).toLocal8Bit().data();
     libvlc_media_add_option(_playback->media()->core(),optionOut);
+
+    qDebug() << _playback->media()->duration();
+    qDebug() << "In" +QString::number(timeOut);
+    qDebug() << "Out" + QString::number(timeIn);
+    QString s = QString::number(timeOut - timeIn );
+    _playback->media()->setDuration(s);
 
     this->hide();
 }
