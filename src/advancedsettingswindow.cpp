@@ -42,6 +42,8 @@ AdvancedSettingsWindow::AdvancedSettingsWindow(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->timeEdit_inMark, SIGNAL(timeChanged(QTime)), this, SLOT(updateLength()));
     connect(ui->timeEdit_outMark, SIGNAL(timeChanged(QTime)), this, SLOT(updateLength()));
+
+    ui->imageDurationTimeEdit->setCurrentSectionIndex(2);
 }
 
 AdvancedSettingsWindow::~AdvancedSettingsWindow()
@@ -121,6 +123,24 @@ void AdvancedSettingsWindow::setPlayback(Playback* playback)
         line++;
     }
 
+    if(_playback->media()->isImage()){
+        ui->imageDurationLabel->setVisible(true);
+        ui->imageDurationTimeEdit->setVisible(true);
+        ui->timeEdit_inMark->setVisible(false);
+        ui->timeEdit_outMark->setVisible(false);
+        ui->label_inMark->setVisible(false);
+        ui->label_outMark->setVisible(false);
+        ui->imageDurationTimeEdit->setTime(timeOut);
+
+    }else{
+        ui->imageDurationLabel->setVisible(false);
+        ui->imageDurationTimeEdit->setVisible(false);
+        ui->timeEdit_inMark->setVisible(true);
+        ui->timeEdit_outMark->setVisible(true);
+        ui->label_inMark->setVisible(true);
+        ui->label_outMark->setVisible(true);
+    }
+
 }
 
 void AdvancedSettingsWindow::on_buttonBox_OKCancel_accepted()
@@ -139,6 +159,12 @@ void AdvancedSettingsWindow::on_buttonBox_OKCancel_accepted()
     char* optionOut = (QString(":stop-time=") + QString::number(_playback->mediaSettings()->outMark() / 1000)).toLocal8Bit().data();
     libvlc_media_add_option(_playback->media()->core(),optionOut);
 
+    if(_playback->media()->isImage()){
+        int secOut = ui->imageDurationTimeEdit->time().second()+60*ui->imageDurationTimeEdit->time().minute()+3600*ui->imageDurationTimeEdit->time().hour();
+        int diff = 1000*(secOut);
+        _playback->media()->setImageTime(QString::number(diff/1000));
+    }
+
     this->hide();
 }
 
@@ -152,6 +178,14 @@ void AdvancedSettingsWindow::updateLength()
     int secIn = ui->timeEdit_inMark->time().second()+60*ui->timeEdit_inMark->time().minute()+3600*ui->timeEdit_inMark->time().hour();
     int secOut = ui->timeEdit_outMark->time().second()+60*ui->timeEdit_outMark->time().minute()+3600*ui->timeEdit_outMark->time().hour();
     int diff = 1000*(secOut-secIn);
+    QTime modified =  msecToQTime(diff);
+    ui->label_modifiedLengthValue->setText(modified.toString("hh:mm:ss"));
+}
+
+void AdvancedSettingsWindow::on_imageDurationTimeEdit_timeChanged(const QTime &date)
+{
+    int secOut = ui->imageDurationTimeEdit->time().second()+60*ui->imageDurationTimeEdit->time().minute()+3600*ui->imageDurationTimeEdit->time().hour();
+    int diff = 1000*(secOut);
     QTime modified =  msecToQTime(diff);
     ui->label_modifiedLengthValue->setText(modified.toString("hh:mm:ss"));
 }

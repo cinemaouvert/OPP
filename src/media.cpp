@@ -89,7 +89,7 @@ void Media::parseMediaInfos()
     }
 }
 
-void Media::setImageTime(QString &time){
+void Media::setImageTime(QString time){
     libvlc_media_add_option(_vlcMedia,(QString(":image-duration=") + time).toLocal8Bit().data());
 }
 

@@ -255,7 +255,7 @@ public:
      *
      * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
      */
-    void setImageTime(QString &time);
+    void setImageTime(QString time);
 
 
 
