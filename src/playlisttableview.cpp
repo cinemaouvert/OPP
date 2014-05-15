@@ -30,9 +30,11 @@
 #include <QApplication>
 #include <QItemSelectionModel>
 #include <QDebug>
+#include "mainwindow.h"
 
-PlaylistTableView::PlaylistTableView(QWidget *parent) :
-    QTableView(parent)
+PlaylistTableView::PlaylistTableView(MainWindow* mainWindow,QWidget *parent) :
+    QTableView(parent),
+    _mainWindow(mainWindow)
 {
     setAcceptDrops(true);
 }
@@ -42,8 +44,19 @@ void PlaylistTableView::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton) {
         startPos = event->pos();
     }
+
     QTableView::mousePressEvent(event);
 }
+
+void PlaylistTableView::mouseDoubleClickEvent ( QMouseEvent * event ){
+    int distance = (event->pos() - startPos).manhattanLength();
+    if (distance < QApplication::startDragDistance()){
+        QModelIndexList indexes = selectionModel()->selectedRows();
+        if (indexes.count() > 0)
+            _mainWindow->on_advancedSettingsButton_clicked();
+    }
+}
+
 
 void PlaylistTableView::mouseMoveEvent(QMouseEvent *event)
 {
