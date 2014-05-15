@@ -610,7 +610,7 @@ void MainWindow::createPlaylistTab()
     if(_locker->isLock())
         QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently locked, you can not add a new playlist.") , tr("OK"));
     else {
-        PlaylistTableView *newTab = new PlaylistTableView;
+        PlaylistTableView *newTab = new PlaylistTableView(this);
         Playlist *playlist = new Playlist(tr("New playlist"));
         PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel,newTab);
 
@@ -632,7 +632,7 @@ void MainWindow::createPlaylistTab(QString name)
     if(_locker->isLock())
         QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently locked, you can not add a new playlist.") , tr("OK"));
     else {
-        PlaylistTableView *newTab = new PlaylistTableView;
+        PlaylistTableView *newTab = new PlaylistTableView(this);
         Playlist *playlist = new Playlist(name);
         PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
 
@@ -725,7 +725,7 @@ void MainWindow::on_removePlaylistItemAction_triggered()
 // FIX : ref 0000001
 void MainWindow::restorePlaylistTab(PlaylistModel *model)
 {
-    PlaylistTableView *newTab = new PlaylistTableView;
+    PlaylistTableView *newTab = new PlaylistTableView(this);
     connect(model->playlist(), SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
 
     newTab->setModel(model);

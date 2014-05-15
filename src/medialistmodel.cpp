@@ -141,8 +141,8 @@ bool MediaListModel::removeMedia(int index)
 
 bool MediaListModel::addMedia(Media *media)
 {   
-    if (_mediaFileList.contains(media->location()))
-        return false;
+    /*if (_mediaFileList.contains(media->location()))
+        return false;*/
 
     const int count = _mediaList.count();
 

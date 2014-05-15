@@ -140,11 +140,19 @@ public slots:
     void updateSettings();
 
     /**
+<<<<<<< HEAD
      * @brief Save the current project
      */
     void on_saveAction_triggered();
 
 
+=======
+     * @brief Open the advanced settings window
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
+     */
+    void on_advancedSettingsButton_clicked();
+>>>>>>> 67129db5b7259f34e6eb44a4b9bd5f97d40144e2
 
 private slots:
 
@@ -206,12 +214,7 @@ private slots:
      */
     void on_disableButton_clicked();
 
-    /**
-     * @brief Open the advanced settings window
-     *
-     * @author Cyril Naud <futuramath@gmail.com>
-     */
-    void on_advancedSettingsButton_clicked();
+
 
     /**
      * @brief Open the advanced picture settings window
