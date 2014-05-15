@@ -225,13 +225,6 @@ private slots:
     void on_disableButton_clicked();
 
     /**
-     * @brief Open the advanced settings window
-     *
-     * @author Cyril Naud <futuramath@gmail.com>
-     */
-    void on_advancedSettingsButton_clicked();
-
-    /**
      * @brief Open the advanced picture settings window
      *
      * @author Cyril Naud <futuramath@gmail.com>
@@ -327,11 +320,6 @@ private slots:
      * @brief Save the current project
      */
     void on_saveAsAction_triggered();
-
-    /**
-     * @brief Save the current project
-     */
-    void on_saveAction_triggered();
 
     /**
      * @brief Quit the software
