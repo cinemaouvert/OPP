@@ -343,7 +343,7 @@ void MainWindow::on_disableButton_clicked()
     else
     {
         ui->disableButton->setText(tr("Enable"));
-        _playlistPlayer->mediaPlayer()->setBackMode(MediaPlayer::STREAMING);
+        _playlistPlayer->mediaPlayer()->setBackMode(MediaPlayer::NONE);
         if(_playlistPlayer->isPlaying())
         {
             _playlistPlayer->mediaPlayer()->stopStream();
