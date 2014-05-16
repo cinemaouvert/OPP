@@ -314,7 +314,7 @@ void MediaPlayer::stop()
         ((MainWindow *)((PlaylistPlayer *)this->parent())->parent())->setScreenshot(":/icons/resources/images/intertitle.jpg");
         break;
     case STREAMING:
-        playStream();
+        stopStream();
         break;
     default:
         break;
