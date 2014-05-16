@@ -405,7 +405,7 @@
              <item>
               <widget class="QPushButton" name="binAddMediaButton">
                <property name="text">
-                <string>Add a movie</string>
+                <string>Add a media</string>
                </property>
                <property name="icon">
                 <iconset resource="../images.qrc">

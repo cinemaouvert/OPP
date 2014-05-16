@@ -146,7 +146,7 @@ void MediaSettings::initDefault()
 QStringList MediaSettings::ratioValues()
 {
     QStringList values;
-    values << "default"
+    values << tr("Default")
         << "16:9"
         << "16:10"
         << "185:100"

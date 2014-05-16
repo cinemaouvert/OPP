@@ -196,8 +196,12 @@ void SettingsWindow::on_restart_clicked()
 {
     accept();
     ((MainWindow *)this->parent())->verifSave();
-    QStringList* arguments = new QStringList();
-    arguments->append(((MainWindow *)this->parent())->getFilename());
-    QProcess::startDetached(QApplication::applicationFilePath(), *arguments);
+    if(((MainWindow *)this->parent())->getFilename().compare("")!=0) {
+        QStringList* arguments = new QStringList();
+        arguments->append(((MainWindow *)this->parent())->getFilename());
+        QProcess::startDetached(QApplication::applicationFilePath(), *arguments);
+    }
+    else
+        QProcess::startDetached(QApplication::applicationFilePath());
     exit(2);
 }
