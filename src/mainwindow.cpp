@@ -236,7 +236,7 @@ QString MainWindow::getFilename() {
 void MainWindow::openFile(QString fileName) {
     QFile file(fileName);
     if (!file.open(QIODevice::ReadWrite)) {
-        QMessageBox::information(this, tr("Unable to open file"),file.errorString());
+        QMessageBox::information(this, tr("Unable to open file."),file.errorString());
     }
     _fileName = fileName;
     _dataStorage->load(file);
@@ -333,7 +333,7 @@ void MainWindow::on_disableButton_clicked()
 {
     if(ui->disableButton->isChecked())
     {
-        ui->disableButton->setText("Disable");
+        ui->disableButton->setText(tr("Disable"));
         _playlistPlayer->mediaPlayer()->setBackMode(MediaPlayer::STREAMING);
         if(_playlistPlayer->isPlaying())
         {
@@ -342,7 +342,7 @@ void MainWindow::on_disableButton_clicked()
     }
     else
     {
-        ui->disableButton->setText("Enable");
+        ui->disableButton->setText(tr("Enable"));
         _playlistPlayer->mediaPlayer()->setBackMode(MediaPlayer::STREAMING);
         if(_playlistPlayer->isPlaying())
         {
@@ -866,7 +866,7 @@ void MainWindow::deletePlaylistItem()
 
 void MainWindow::verifSave () {
     if(_mediaListModel->rowCount()!=0)
-        if (1 == QMessageBox::warning(this, tr("Save"), tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost") ,tr("No"), tr("Yes")))
+        if (1 == QMessageBox::warning(this, tr("Save"), tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost.") ,tr("No"), tr("Yes")))
             on_saveAction_triggered();
 }
 
@@ -877,14 +877,14 @@ void MainWindow::on_saveAction_triggered()
     else {
         QFile file(_fileName);
         if (!file.open(QIODevice::WriteOnly)) {
-            QMessageBox::information(this, tr("Unable to open file"),file.errorString());
+            QMessageBox::information(this, tr("Unable to open file."),file.errorString());
         }else{
             for (int i = 0; i < ui->playlistsTabWidget->count(); i++)
              _dataStorage->addPlaylistModel((PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(i) )->model());
 
             _dataStorage->save(file);
             file.close();
-            QMessageBox::information(this, tr("Saved"),tr("Listing saved"));
+            QMessageBox::information(this, tr("Saved"),tr("Listing saved."));
         }
     }
 }
@@ -900,7 +900,7 @@ void MainWindow::on_saveAsAction_triggered()
             fileName+=".opp";
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly)) {
-            QMessageBox::information(this, tr("Unable to open file"),file.errorString());
+            QMessageBox::information(this, tr("Unable to open file."),file.errorString());
         }else{
             _fileName = fileName;
             for (int i = 0; i < ui->playlistsTabWidget->count(); i++)
@@ -908,7 +908,7 @@ void MainWindow::on_saveAsAction_triggered()
 
             _dataStorage->save(file);
             file.close();
-            QMessageBox::information(this, tr("Saved"),tr("Listing saved"));
+            QMessageBox::information(this, tr("Saved"),tr("Listing saved."));
         }
     }
 }
@@ -927,7 +927,7 @@ void MainWindow::on_openListingAction_triggered()
         } else {
             QFile file(fileName);
             if (!file.open(QIODevice::ReadWrite)) {
-                QMessageBox::information(this, tr("Unable to open file"),file.errorString());
+                QMessageBox::information(this, tr("Unable to open file."),file.errorString());
             }
 
             _fileName = fileName;
@@ -976,7 +976,7 @@ void MainWindow::on_quitAction_triggered()
     if(_mediaListModel->rowCount()!=0)
     {
         //0:ne pas enregistrer ni quitter / 1:ne pas enregistrer mais quitter / 2:enregistrer puis quitter
-        int choice = QMessageBox::warning(this, tr("Save"), tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost"), tr("Cancel"), tr("No"), tr("Yes"));
+        int choice = QMessageBox::warning(this, tr("Save"), tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost."), tr("Cancel"), tr("No"), tr("Yes"));
         if(choice == 1)
         {
             close();

@@ -351,7 +351,7 @@
              <item>
               <widget class="QPushButton" name="binAddMediaButton">
                <property name="text">
-                <string>Add a movie</string>
+                <string>Add a media</string>
                </property>
                <property name="icon">
                 <iconset resource="../images.qrc">
@@ -1221,7 +1221,7 @@
      <x>0</x>
      <y>0</y>
      <width>1287</width>
-     <height>29</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
