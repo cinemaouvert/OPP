@@ -37,7 +37,8 @@ HEADERS += src/media.h \
     src/application.h \
     src/track.h \
     src/audiotrack.h \
-    src/videotrack.h
+    src/videotrack.h \
+    src/plugins.h
 
 SOURCES += src/media.cpp \
     src/playlist.cpp \
@@ -63,10 +64,11 @@ unix:!macx:LIBS += -lX11
 unix:!macx:INCLUDEPATH += /usr/include/vlc/plugins
 
 
-windows:LIBS += -L"C:\Program Files\VideoLAN\VLC\sdk\lib" -llibvlc -llibvlccore
-windows:INCLUDEPATH += "C:\Program Files\VideoLAN\VLC\sdk\include"
-windows:INCLUDEPATH += "C:\Program Files\VideoLAN\VLC\sdk\include\vlc\plugins"
-windows:INCLUDEPATH += ./windows/include
+windows:LIBS += -L"C:\Program Files (x86)\VideoLAN\VLC\sdk\lib" -llibvlc -llibvlccore
+windows:INCLUDEPATH += "C:\Program Files (x86)\VideoLAN\VLC\sdk\include"
+windows:INCLUDEPATH += "C:\Program Files (x86)\VideoLAN\VLC\sdk\include\vlc"
+windows:INCLUDEPATH += "C:\Program Files (x86)\VideoLAN\VLC\sdk\include\vlc\plugins"
+#windows:INCLUDEPATH += ./windows/include   #USE THAT LINE WITH VISUAL STUDIO
 
 mac:LIBS += -framework Cocoa
 mac:QMAKE_CXXFLAGS+=-x objective-c++
