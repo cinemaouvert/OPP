@@ -9,12 +9,12 @@ class OCPM : public QDialog {
         virtual ~OCPM() { }
 
         virtual QString getName() = 0;
+        virtual void setFilename(QString * filename)=0;
 
     public slots:
-        virtual void launch(QString filename = "") = 0;
-
+        void launch();
     protected:
-        QString filename;
+        QString* _filename;
 };
 Q_DECLARE_INTERFACE(OCPM, "opp.OCPM")
 

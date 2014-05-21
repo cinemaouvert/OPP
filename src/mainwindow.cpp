@@ -83,7 +83,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _locker(NULL) ,
     _dataStorage(NULL),
     _fileName(""),
-    _projectionMode(VideoWindow::WINDOW)
+    _projectionMode(VideoWindow::WINDOW),
+    _selectedMediaName(NULL)
 
 {
     //setAttribute(Qt::WA_DeleteOnClose);
@@ -188,8 +189,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _aboutdialog = new AboutDialog();
 
+    //Init selectedFileName
+    _selectedMediaName = new QString("../MKVEXTRACT/OCPM/3ours.mkv");
+
     //Chargement des plugins
     loadPlugins();
+
 
 
     if(QApplication::argc()>1) //Restart : filename en argument
@@ -1156,17 +1161,20 @@ void MainWindow::setScreenshot(QString url)
 /****** CHARGEMENT DES PLUGINS ***********/
 
 void MainWindow::loadPlugins(){
+
     QDir pluginsDir = QDir(qApp->applicationDirPath());
-    pluginsDir.cd("plugins");
+    pluginsDir.cd("pluginsOPP");
     if(pluginsDir.exists()){
         foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
             QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
             QObject *plugin = loader.instance();
             if (plugin)
             {
+
                 OCPM * op = qobject_cast<OCPM *>(plugin);
                 if (op != NULL)
-                {
+                {                    
+                    op->setFilename(_selectedMediaName);
                     ui->menuPlugins->addAction(op->getName(),op,SLOT(launch()));
                 }
             }

@@ -131,6 +131,13 @@ public:
      */
     inline PlaylistPlayer* getPlaylistPlayer() const {return _playlistPlayer;}
 
+    /**
+      *@brief Method used to set the selected media name
+      *
+      * @author Thibaud Lamarche <lamarchethibaud@hotmail.com>
+      */
+    inline setSelectedMediaName(QString name){ *_selectedMediaName = name; }
+
 public slots:
     /**
       *@brief Method to stop the player
@@ -614,6 +621,11 @@ private:
       * @brief store the selected projection mode
       */
     VideoWindow::DisplayMode _projectionMode;
+
+    /**
+      * @brief store the selected Media Name
+      */
+    QString* _selectedMediaName;
 };
 
 #endif // MAINWINDOW_H
