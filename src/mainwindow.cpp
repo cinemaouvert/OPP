@@ -190,7 +190,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _aboutdialog = new AboutDialog();
 
     //Init selectedFileName
-    _selectedMediaName = new QString("../MKVEXTRACT/OCPM/3ours.mkv");
+    _selectedMediaName = new QString("");
 
     //Chargement des plugins
     loadPlugins();
