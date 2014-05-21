@@ -1303,11 +1303,17 @@
     <addaction name="updateAction"/>
     <addaction name="aboutAction"/>
    </widget>
+   <widget class="QMenu" name="menuPlugins">
+    <property name="title">
+     <string>Plugins</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuDisplay"/>
    <addaction name="menuConfiguration"/>
    <addaction name="menuHelp"/>
+   <addaction name="menuPlugins"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="newListingAction">

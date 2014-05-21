@@ -35,13 +35,13 @@ namespace Ui {
 class AdvancedSettingsWindow;
 }
 class Playback;
-class AdvancedSettingsWindow : public QDialog
+class OCPM_Plugin : public QDialog
 {
     Q_OBJECT
     
 public:
-    explicit AdvancedSettingsWindow(QWidget *parent = 0);
-    ~AdvancedSettingsWindow();
+    explicit OCPM_Plugin(QWidget *parent = 0);
+    ~OCPM_Plugin();
     /**
      * @brief Apply a playback to the window
      * @param playback The playback to apply

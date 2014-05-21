@@ -45,7 +45,7 @@ class MainWindow;
 class VideoWindow;
 class SettingsWindow;
 class LockSettingsWindow;
-class AdvancedSettingsWindow;
+class OCPM_Plugin;
 class AdvancedPictureSettingsWindow;
 class AboutDialog;
 class PlaylistTableView;
@@ -530,6 +530,14 @@ protected:
     Playlist* playlistAt(int index) const;
 
 private:
+
+    /**
+      * @brief Loads the plugins from the folder plugins
+      *
+      * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+      */
+    void loadPlugins();
+
     /**
      * @brief ui The UI
      */
@@ -550,7 +558,7 @@ private:
     /**
      * @brief _advancedSettingsWindow The advanced settings window
      */
-    AdvancedSettingsWindow *_advancedSettingsWindow;
+    OCPM_Plugin *_advancedSettingsWindow;
     /**
      * @brief _advancedPictureSettingsWindow The advanced picture settings window
      */

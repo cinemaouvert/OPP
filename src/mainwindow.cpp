@@ -63,6 +63,9 @@
 #include "datastorage.h"
 #include "aboutdialog.h"
 
+#include "plugins.h"
+#include <QPluginLoader>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -156,7 +159,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->ratioComboBox->clear();
     ui->ratioComboBox->addItems(MediaSettings::ratioValues());
 
-    _advancedSettingsWindow = new AdvancedSettingsWindow(this);
+    _advancedSettingsWindow = new OCPM_Plugin(this);
     _advancedPictureSettingsWindow = new AdvancedPictureSettingsWindow(this);
     _settingsWindow = new SettingsWindow(this);
 
@@ -184,6 +187,9 @@ MainWindow::MainWindow(QWidget *parent) :
     currentPlaylistTableView()->setDragEnabled(true);
 
     _aboutdialog = new AboutDialog();
+
+    //Chargement des plugins
+    loadPlugins();
 
 
     if(QApplication::argc()>1) //Restart : filename en argument
@@ -1147,4 +1153,24 @@ void MainWindow::setScreenshot(QString url)
 }
 
 
+/****** CHARGEMENT DES PLUGINS ***********/
 
+void MainWindow::loadPlugins(){
+    QDir pluginsDir = QDir(qApp->applicationDirPath());
+    pluginsDir.cd("plugins");
+    if(pluginsDir.exists()){
+        foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
+            QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
+            QObject *plugin = loader.instance();
+            if (plugin)
+            {
+                OCPM * op = qobject_cast<OCPM *>(plugin);
+                if (op != NULL)
+                {
+                    ui->menuPlugins->addAction(op->getName(),op,SLOT(launch()));
+                }
+            }
+        }
+    }
+
+}

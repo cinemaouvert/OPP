@@ -34,7 +34,7 @@
 
 #include <QDebug>
 
-AdvancedSettingsWindow::AdvancedSettingsWindow(QWidget *parent) :
+OCPM_Plugin::OCPM_Plugin(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AdvancedSettingsWindow),
     _playback(0)
@@ -46,12 +46,12 @@ AdvancedSettingsWindow::AdvancedSettingsWindow(QWidget *parent) :
     ui->imageDurationTimeEdit->setCurrentSectionIndex(2);
 }
 
-AdvancedSettingsWindow::~AdvancedSettingsWindow()
+OCPM_Plugin::~OCPM_Plugin()
 {
     delete ui;
 }
 
-void AdvancedSettingsWindow::setPlayback(Playback* playback)
+void OCPM_Plugin::setPlayback(Playback* playback)
 {
     _playback=playback;
     /*Movie title*/
@@ -147,7 +147,7 @@ void AdvancedSettingsWindow::setPlayback(Playback* playback)
 
 }
 
-void AdvancedSettingsWindow::on_buttonBox_OKCancel_accepted()
+void OCPM_Plugin::on_buttonBox_OKCancel_accepted()
 {
     /*Test pattern*/
     int index = ui->comboBox_testPattern->currentIndex();
@@ -190,12 +190,12 @@ void AdvancedSettingsWindow::on_buttonBox_OKCancel_accepted()
     this->hide();
 }
 
-void AdvancedSettingsWindow::on_buttonBox_OKCancel_rejected()
+void OCPM_Plugin::on_buttonBox_OKCancel_rejected()
 {
     this->hide();
 }
 
-void AdvancedSettingsWindow::updateLength()
+void OCPM_Plugin::updateLength()
 {
     int secIn = ui->timeEdit_inMark->time().second()+60*ui->timeEdit_inMark->time().minute()+3600*ui->timeEdit_inMark->time().hour();
     int secOut = ui->timeEdit_outMark->time().second()+60*ui->timeEdit_outMark->time().minute()+3600*ui->timeEdit_outMark->time().hour();
@@ -204,7 +204,7 @@ void AdvancedSettingsWindow::updateLength()
     ui->label_modifiedLengthValue->setText(modified.toString("hh:mm:ss"));
 }
 
-void AdvancedSettingsWindow::on_imageDurationTimeEdit_timeChanged(const QTime &date)
+void OCPM_Plugin::on_imageDurationTimeEdit_timeChanged(const QTime &date)
 {
     int secOut = ui->imageDurationTimeEdit->time().second()+60*ui->imageDurationTimeEdit->time().minute()+3600*ui->imageDurationTimeEdit->time().hour();
     int diff = 1000*(secOut);
