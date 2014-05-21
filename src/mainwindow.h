@@ -136,7 +136,7 @@ public:
       *
       * @author Thibaud Lamarche <lamarchethibaud@hotmail.com>
       */
-    inline setSelectedMediaName(QString name){ *_selectedMediaName = name; }
+    void setSelectedMediaNameByIndex(int idx);
 
 public slots:
     /**

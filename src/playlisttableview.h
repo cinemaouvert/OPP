@@ -47,6 +47,8 @@ protected:
     void dropEvent(QDropEvent *event);
     void startDrag(Qt::DropActions supportedActions);
 
+    void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected);
+
 private:
     QPoint startPos;
     ScheduleListModel *_scheduleListModel;

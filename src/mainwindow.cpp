@@ -1182,3 +1182,13 @@ void MainWindow::loadPlugins(){
     }
 
 }
+
+
+void MainWindow::setSelectedMediaNameByIndex(int idx){
+    if(idx == -1){
+        *_selectedMediaName = "";
+    }else{
+        Media *m = currentPlaylistModel()->playlist()->at(idx)->media();
+        *_selectedMediaName = m->getLocation();
+    }
+}

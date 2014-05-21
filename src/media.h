@@ -270,6 +270,13 @@ public:
      * @author Denis Saunier <saunier.denis.86@gmail.com>
      */
     uint getOriginalDuration();
+
+    /**
+     * @brief Method used to get the full path of the media
+     *
+     * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    QString getLocation();
 protected:
 
     /**

@@ -224,3 +224,7 @@ QStringList Media::mediaExtensions()
 {
     return Media::audioExtensions() + Media::videoExtensions() + Media::imageExtensions();
 }
+
+QString Media::getLocation(){
+    return _location;
+}
