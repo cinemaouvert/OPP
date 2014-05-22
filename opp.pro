@@ -25,6 +25,7 @@
 TEMPLATE = app
 TARGET = opp
 QT += xml
+QT += network
 DEPENDPATH += ./src
 INCLUDEPATH += ./src
 

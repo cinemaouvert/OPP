@@ -495,6 +495,13 @@ private slots:
     void on_aboutAction_triggered();
 
     /**
+     * @brief Update software OPP
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void on_updateAction_triggered();
+
+    /**
      * @brief Get Locked Widget
      *
      * @author Thomas Berthome <thoberthome@laposte.net>

@@ -53,6 +53,7 @@
 #include "schedulelistmodel.h"
 #include "locker.h"
 #include "statuswidget.h"
+#include "updater.h"
 
 #include "application.h"
 #include "media.h"
@@ -62,6 +63,7 @@
 #include "utils.h"
 #include "datastorage.h"
 #include "aboutdialog.h"
+
 
 #include "plugins.h"
 #include <QPluginLoader>
@@ -1111,6 +1113,11 @@ void MainWindow::on_aboutAction_triggered()
     _aboutdialog->raise();
     _aboutdialog->activateWindow();
 
+}
+
+void MainWindow::on_updateAction_triggered(){
+    Updater up;
+    up.checkVersion();
 }
 
 QList<QWidget*> MainWindow::getLockedWidget()

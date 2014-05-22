@@ -1239,7 +1239,7 @@
      <x>0</x>
      <y>0</y>
      <width>1287</width>
-     <height>29</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1476,7 +1476,7 @@
   </action>
   <action name="updateAction">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Update</string>
