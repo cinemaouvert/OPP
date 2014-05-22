@@ -6,8 +6,8 @@
 #include <QObject>
 
 namespace config_opp {
-    const QString URL = "http://localhost/"; //A mettre dans les settings
-    const QString VERSION = "1.0";
+    const QString URL = "http://localhost/";
+    const QString VERSION = "0.9.3";
 
     #if defined(Q_OS_MAC)
         const QString LINK_UPDATE = "macos/latest/";
