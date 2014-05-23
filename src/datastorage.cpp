@@ -232,7 +232,7 @@ void DataStorage::load(QFile &file)
             if (!media)
                 continue;
 
-            Playback *playback = new Playback(media);
+            Playback *playback = new Playback(media,0);
             MediaSettings *settings = playback->mediaSettings();
 
             settings->setRatio( (Ratio) playbackAttributes.namedItem("ratio").nodeValue().toInt() );
@@ -249,12 +249,22 @@ void DataStorage::load(QFile &file)
             settings->setVideoTrack( playbackAttributes.namedItem("videoTrack").nodeValue().toInt() );
             settings->setSubtitlesTrack( playbackAttributes.namedItem("subtitlesTrack").nodeValue().toInt() );
             settings->setTestPattern( playbackAttributes.namedItem("testPattern").nodeValue().toInt() );
-            settings->setInMark( playbackAttributes.namedItem("outMark").nodeValue().toInt() );
-            settings->setOutMark( playbackAttributes.namedItem("inMark").nodeValue().toInt() );
+            settings->setInMark( playbackAttributes.namedItem("inMark").nodeValue().toInt() );
+            settings->setOutMark( playbackAttributes.namedItem("outMark").nodeValue().toInt() );
             settings->setGain( playbackAttributes.namedItem("gain").nodeValue().toFloat() );
 
             model->addPlayback(playback);
             this->_playlistModelList.push_back(model);
+
+            QString duration =  QString::number( (settings->outMark()-settings->inMark())) ;
+            playback->media()->setDuration(duration);
+
+            char* optionIn = (QString(":start-time=") + QString::number(settings->inMark() / 1000)).toLocal8Bit().data();
+            libvlc_media_add_option(playback->media()->core(),optionIn);
+            char* optionOut = (QString(":stop-time=") + QString::number(settings->outMark() / 1000)).toLocal8Bit().data();
+            libvlc_media_add_option(playback->media()->core(),optionOut);
+
+
         }
 
     }
