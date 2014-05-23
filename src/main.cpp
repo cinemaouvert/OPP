@@ -38,6 +38,7 @@
 #include "mainwindow.h"
 #include "media.h"
 #include "customeventfilter.h"
+#include "config.h"
 
 /*
  * TO FIX
@@ -84,6 +85,9 @@ int main(int argc, char *argv[])
 
     if(!settings.contains("moviesPath"))
         settings.setValue("moviesPath", QDir::homePath ());
+
+    if(!settings.contains("updatePath"))
+        settings.setValue("updatePath", config_opp::URL);
 
     if(!settings.contains("lang"))
     {

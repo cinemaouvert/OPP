@@ -32,6 +32,7 @@ TARGET = opp
 #TARGET = GeneratedLib/opp
 
 QT += xml
+QT += network
 DEPENDPATH += ./src
 INCLUDEPATH += ./src
 

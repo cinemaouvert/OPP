@@ -55,6 +55,7 @@ void SettingsWindow::init(){
     ui->lineEdit_testPatternPath->setText(settings.value("testPatternPath").toString());
     ui->lineEdit_intertitlePath->setText(settings.value("intertitlePath").toString());
     ui->lineEdit_moviesPath->setText(settings.value("moviesPath").toString());
+    ui->lineEdit_UpdatePath->setText(settings.value("updatePath").toString());
     ui->groupBox_3->setEnabled(false);
     setVideoReturnMode();
 
@@ -139,6 +140,7 @@ void SettingsWindow::accept() {
     settings.setValue("moviesPath", ui->lineEdit_moviesPath->text());
     settings.setValue("lang", getLang(ui->comboBox_language->currentIndex()));
     settings.setValue("locateR", ui->radioButton_locateRight->isChecked());
+    settings.setValue("updatePath", ui->lineEdit_UpdatePath->text());
     setSettingsVideoReturnMode();
 }
 

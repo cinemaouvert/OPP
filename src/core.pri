@@ -38,7 +38,9 @@ HEADERS += src/media.h \
     src/track.h \
     src/audiotrack.h \
     src/videotrack.h \
-    src/plugins.h
+    src/plugins.h \
+    src/updater.h \
+    src/config.h
 
 SOURCES += src/media.cpp \
     src/playlist.cpp \
@@ -50,7 +52,8 @@ SOURCES += src/media.cpp \
     src/application.cpp \
     src/track.cpp \
     src/audiotrack.cpp \
-    src/videotrack.cpp
+    src/videotrack.cpp \
+    src/updater.cpp
 
 # vlc library and headers
 mac:LIBS += -L"/Applications/VLC.app/Contents/MacOS/lib"
