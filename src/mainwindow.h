@@ -138,6 +138,20 @@ public:
       */
     void setSelectedMediaNameByIndex(int idx);
 
+    /**
+      *@brief Method used to set the previous and following selected medium time
+      *
+      * @author Thomas Berthome <thoberthome@laposte.net>
+      */
+    void setSelectedMediaTimeByIndex(int idx);
+
+    /**
+      *@brief Method used to set the previous and following selected medium back
+      *
+      * @author Thomas Berthome <thoberthome@laposte.net>
+      */
+    void setScreenBack();
+
 public slots:
     /**
       *@brief Method to stop the player

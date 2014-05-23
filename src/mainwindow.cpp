@@ -1190,7 +1190,6 @@ void MainWindow::loadPlugins(){
 
 }
 
-
 void MainWindow::setSelectedMediaNameByIndex(int idx){
     if(idx == -1){
         *_selectedMediaName = "";
@@ -1199,3 +1198,52 @@ void MainWindow::setSelectedMediaNameByIndex(int idx){
         *_selectedMediaName = m->getLocation();
     }
 }
+
+void MainWindow::setSelectedMediaTimeByIndex(int idx)
+{
+    if(idx == -1)
+    {
+        ui->labelBefore->setText("00:00:00");
+        ui->label_screen->setText("00:00:00");
+        ui->label_stream->setText("00:00:00");
+        ui->label_none->setText("00:00:00");
+        ui->labelAfter->setText("00:00:00");
+    }
+    else
+    {
+        QString display = "hh:mm:ss";
+
+        Media *m = currentPlaylistModel()->playlist()->at(idx)->media();
+        QTime time = QTime(0,0,0,0).addMSecs(m->duration());
+        ui->label_screen->setText(time.toString(display));
+        ui->label_stream->setText(time.toString(display));
+        ui->label_none->setText(time.toString(display));
+
+        if(idx > 0)
+        {
+            Media *mB = currentPlaylistModel()->playlist()->at(idx-1)->media();
+            QTime timeB = QTime(0,0,0,0).addMSecs(mB->duration());
+            ui->labelBefore->setText(timeB.toString(display));
+        }
+        else
+        {
+            ui->labelBefore->setText("00:00:00");
+        }
+
+        if(currentPlaylistModel()->playlist()->count()-1 - idx > 0)
+        {
+            Media *mA = currentPlaylistModel()->playlist()->at(idx+1)->media();
+            QTime timeA = QTime(0,0,0,0).addMSecs(mA->duration());
+            ui->labelAfter->setText(timeA.toString(display));
+        }
+        else
+        {
+            ui->labelAfter->setText("00:00:00");
+        }
+    }
+}
+
+/*void MainWindow::setScreenBack()
+{
+
+}*/

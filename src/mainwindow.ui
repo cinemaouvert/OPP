@@ -664,12 +664,12 @@
                    </size>
                   </property>
                   <property name="currentIndex">
-                   <number>2</number>
+                   <number>0</number>
                   </property>
                   <widget class="QWidget" name="page_stream">
                    <layout class="QHBoxLayout" name="horizontalLayout_13">
                     <item>
-                     <layout class="QVBoxLayout" name="verticalLayout_Stream">
+                     <layout class="QVBoxLayout" name="verticalLayout_stream">
                       <property name="spacing">
                        <number>0</number>
                       </property>
@@ -716,7 +716,7 @@
                        </widget>
                       </item>
                       <item>
-                       <widget class="QLabel" name="label_5">
+                       <widget class="QLabel" name="label_stream">
                         <property name="text">
                          <string>00:00:00</string>
                         </property>
@@ -784,12 +784,12 @@
                   <widget class="QWidget" name="page_none">
                    <layout class="QHBoxLayout" name="horizontalLayout_15">
                     <item>
-                     <layout class="QGridLayout" name="gridLayout_2">
+                     <layout class="QGridLayout" name="gridLayout_none">
                       <property name="spacing">
                        <number>0</number>
                       </property>
                       <item row="0" column="0">
-                       <widget class="QLabel" name="screenBack_2">
+                       <widget class="QLabel" name="screen_none">
                         <property name="maximumSize">
                          <size>
                           <width>200</width>
@@ -805,7 +805,7 @@
                        </widget>
                       </item>
                       <item row="1" column="0">
-                       <widget class="QLabel" name="label_6">
+                       <widget class="QLabel" name="label_none">
                         <property name="text">
                          <string>00:00:00</string>
                         </property>

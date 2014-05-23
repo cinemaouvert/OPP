@@ -118,9 +118,17 @@ void PlaylistTableView::dropEvent(QDropEvent *event)
 
 void PlaylistTableView::selectionChanged (const QItemSelection & selected, const QItemSelection & deselected){
     if(selected.count() > 0)
+    {
         _mainWindow->setSelectedMediaNameByIndex(selected.first().top());
+        if(!_mainWindow->getPlaylistPlayer()->isPlaying())
+        {
+            _mainWindow->setSelectedMediaTimeByIndex(selected.first().top());
+        }
+    }
     else
+    {
         _mainWindow->setSelectedMediaNameByIndex(-1);
+    }
     QAbstractItemView::selectionChanged (selected,deselected);
 }
 

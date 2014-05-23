@@ -32,6 +32,7 @@
 #include "playlist.h"
 #include "media.h"
 #include "mediaplayer.h"
+#include "mainwindow.h"
 
 
 PlaylistPlayer::PlaylistPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
@@ -66,6 +67,8 @@ void PlaylistPlayer::playItemAt(const int &index)
         return;
 
     _currentIndex = index;
+
+    ((MainWindow *)this->parent())->setSelectedMediaTimeByIndex(index);
 
     _mediaPlayer->open(_playlist->at(index));
     _mediaPlayer->play();
