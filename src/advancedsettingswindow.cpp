@@ -34,6 +34,7 @@
 
 #include <QDebug>
 #include <QMessageBox>
+#include <QDir>
 
 OCPM_Plugin::OCPM_Plugin(QWidget *parent) :
     QDialog(parent),
@@ -147,6 +148,19 @@ void OCPM_Plugin::setPlayback(Playback* playback)
         ui->label_outMark->setVisible(true);
     }
 
+
+    if(!_playback->media()->isAudio() && !_playback->media()->isImage()){
+        QPixmap pixmap;
+        QString path = "./screenshot/";
+        path = path.replace("/",QDir::separator());
+        path +=  _playback->media()->getLocation().replace(QDir::separator(),"_");
+        path += ".png";
+        pixmap.load((path.toStdString().c_str()));
+
+        ui->label_picture->setPixmap(pixmap.scaled( QSize(400,400), Qt::KeepAspectRatio, Qt::FastTransformation));
+    }else{
+        ui->label_picture->clear();
+    }
 }
 
 void OCPM_Plugin::on_buttonBox_OKCancel_accepted()

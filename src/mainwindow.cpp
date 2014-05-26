@@ -300,7 +300,7 @@ void MainWindow::on_binAddMediaButton_clicked()
         QString screenPath = ("./screenshot/"+media->getLocation().replace(QString("/"),QString("_"))+".png");
 
         libvlc_video_set_scale (vlcMP, 0.5f);
-        if(!QFile(screenPath).exists() && !media->isAudio())
+        if(!QFile(screenPath).exists() && !media->isAudio() && !media->isImage())
         {
 
             libvlc_media_player_set_media(vlcMP, media->core());
@@ -1259,7 +1259,7 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
         QPixmap pixmap;
         if(m->isAudio())
         {
-            pixmap.load(":/icons/resources/images/intertitleSound.jpg");
+            pixmap.load( QString(":/icons/resources/images/intertitleSound.jpg").replace("/",QDir::separator()).toStdString().c_str() );
 
         }
         else if(m->isImage())
@@ -1268,7 +1268,13 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
         }
         else
         {
-            pixmap.load(("./screenshot/"+m->getLocation().replace(QString("/"),QString("_"))+".png").toStdString().c_str());
+            //pixmap.load(("./screenshot/"+m->getLocation().replace(QString(QDir::separator()),QString("_"))+".png").toStdString().c_str());
+            QString path = "./screenshot/";
+            path = path.replace("/",QDir::separator());
+            path +=  m->getLocation().replace(QDir::separator(),"_");
+            path += ".png";
+            pixmap.load((path.toStdString().c_str()));
+
         }
         ui->screen_none->setPixmap(pixmap.scaled(ui->screen_none->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
         ui->screenBack->setPixmap(pixmap.scaled(ui->screenBack->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
@@ -1281,7 +1287,7 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
             QPixmap pixmapB;
             if(mB->isAudio())
             {
-                pixmapB.load(":/icons/resources/images/intertitleSound.jpg");
+                pixmapB.load( QString(":/icons/resources/images/intertitleSound.jpg").replace("/",QDir::separator()).toStdString().c_str() );
 
             }
             else if(mB->isImage())
@@ -1297,9 +1303,12 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
         }
         else
         {
-            QPixmap pixmapB(":/icons/resources/images/intertitle.jpg");
-            ui->screenBefore->setPixmap(pixmapB.scaled(ui->screenBefore->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
-            ui->labelBefore->setText("00:00:00");
+            //QPixmap pixmapB(QString(":/icons/resources/glyphicons/glyphicons_207_remove_2.png").replace("/",QDir::separator()).toStdString().c_str() );
+            //ui->screenBefore->setPixmap(pixmapB.scaled(ui->screenBefore->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
+            //ui->labelBefore->setText("00:00:00");
+            ui->screenBefore->clear();
+            ui->labelBefore->setText("");
+
         }
 
         if(currentPlaylistModel()->playlist()->count()-1 - idx > 0)
@@ -1310,7 +1319,7 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
             QPixmap pixmapA;
             if(mA->isAudio())
             {
-                pixmapA.load(":/icons/resources/images/intertitleSound.jpg");
+                pixmapA.load( QString(":/icons/resources/images/intertitleSound.jpg").replace("/",QDir::separator()).toStdString().c_str() );
 
             }
             else if(mA->isImage())
@@ -1319,16 +1328,23 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
             }
             else
             {
-                pixmapA.load(("./screenshot/"+mA->getLocation().replace(QString("/"),QString("_"))+".png").toStdString().c_str());
+                QString path = "./screenshot/";
+                path = path.replace("/",QDir::separator());
+                path +=  mA->getLocation().replace(QDir::separator(),"_");
+                path += ".png";
+                pixmapA.load((path.toStdString().c_str()));
             }
             ui->screenAfter->setPixmap(pixmapA.scaled(ui->screenAfter->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
             ui->labelAfter->setText(timeA.toString(display));
         }
         else
         {
-            QPixmap pixmapA(":/icons/resources/images/intertitle.jpg");
-            ui->screenAfter->setPixmap(pixmapA.scaled(ui->screenAfter->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
-            ui->labelAfter->setText("00:00:00");
+            //QPixmap pixmapA(QString(":/icons/resources/glyphicons/glyphicons_207_remove_2.png").replace("/",QDir::separator()).toStdString().c_str());
+            //ui->screenAfter->setPixmap(pixmapA.scaled(ui->screenAfter->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
+            //ui->labelAfter->setText("00:00:00");
+            ui->screenAfter->clear();
+            ui->labelAfter->setText("");
+
         }
     }
 }

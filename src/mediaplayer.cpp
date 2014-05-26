@@ -260,22 +260,22 @@ void MediaPlayer::playScreen()
 {
     _timer = new QTimer();
     _timer->connect(_timer, SIGNAL(timeout()), this, SLOT(takeScreen()));
-    _timer->start(40);
+    _timer->start(250);
 }
 
 void MediaPlayer::takeScreen()
 {
-    if(isPlaying())
+    if(isPlaying() && !_currentPlayback->media()->isAudio() && !_currentPlayback->media()->isImage())
     {
         libvlc_video_take_snapshot(_vlcMediaPlayer, 0, "tmp.png", libvlc_video_get_width(_vlcMediaPlayer), libvlc_video_get_height(_vlcMediaPlayer));
         ((MainWindow *)((PlaylistPlayer *)this->parent())->parent())->setScreenshot("tmp.png");
+        QFile("tmp.png").remove();
     }
 }
 
 void MediaPlayer::stopScreen()
 {
     _timer->stop();
-    QFile("tmp.png").remove();
 }
 
 void MediaPlayer::pause()
