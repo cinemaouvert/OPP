@@ -121,6 +121,18 @@ bool MediaPlayer::isPlaying() const
     return libvlc_media_player_is_playing(_vlcMediaPlayer);
 }
 
+Media * MediaPlayer::media()
+{
+    if(_currentPlayback)
+    {
+        return _currentPlayback->media();
+    }
+    else
+    {
+        return NULL;
+    }
+}
+
 void MediaPlayer::setBackMode(const BackMode &mode)
 {
     _bMode = mode;
@@ -199,7 +211,7 @@ void MediaPlayer::open(Playback *playback)
     connect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
 
-    if(_currentPlayback->media()->isImage()){
+       if(_currentPlayback->media()->isImage()){
         libvlc_media_player_set_time(_vlcMediaPlayer, 0);
         qDebug() << "time image";
     }
@@ -231,9 +243,10 @@ void MediaPlayer::play()
         playStream();
         break;
     default:
-        break;
+    break;
     }
     libvlc_media_player_play(_vlcMediaPlayer);
+
     _isPaused = false;
 }
 
@@ -262,6 +275,7 @@ void MediaPlayer::takeScreen()
 void MediaPlayer::stopScreen()
 {
     _timer->stop();
+    QFile("tmp.png").remove();
 }
 
 void MediaPlayer::pause()

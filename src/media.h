@@ -203,6 +203,14 @@ public:
     bool isImage() const;
 
     /**
+     * @brief Media is an sound
+     * @return True if media file is an sound, false otherwise
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    bool isAudio() const;
+
+    /**
      * @brief Add `count` to tell the media is used
      * @param count The number to add
      *

@@ -119,11 +119,12 @@ void SeekWidget::setAutoHide(const bool &autoHide)
     setVisible(!_autoHide);
 }
 
-void SeekWidget::setMediaPlayer(MediaPlayer *player)
+void SeekWidget::setMediaPlayer(MediaPlayer *player, MainWindow * mw)
 {
     if (_vlcMediaPlayer) {
         disconnect(_vlcMediaPlayer, SIGNAL(lengthChanged(int)), this, SLOT(updateFullTime(int)));
         disconnect(_vlcMediaPlayer, SIGNAL(timeChanged(int)), this, SLOT(updateCurrentTime(int)));
+        disconnect(_vlcMediaPlayer, SIGNAL(timeChanged(int)), mw, SLOT(updateBackTime(int)));
         disconnect(_vlcMediaPlayer, SIGNAL(end()), this, SLOT(end()));
         disconnect(_vlcMediaPlayer, SIGNAL(stopped()), this, SLOT(end()));
     }
@@ -132,6 +133,7 @@ void SeekWidget::setMediaPlayer(MediaPlayer *player)
 
     connect(_vlcMediaPlayer, SIGNAL(lengthChanged(int)), this, SLOT(updateFullTime(int)));
     connect(_vlcMediaPlayer, SIGNAL(timeChanged(int)), this, SLOT(updateCurrentTime(int)));
+    connect(_vlcMediaPlayer, SIGNAL(timeChanged(int)), mw, SLOT(updateBackTime(int)));
     connect(_vlcMediaPlayer, SIGNAL(end()), this, SLOT(end()));
     connect(_vlcMediaPlayer, SIGNAL(stopped()), this, SLOT(end()));
 }

@@ -29,6 +29,8 @@
 #include <QPoint>
 #include <QWidget>
 
+#include "mainwindow.h"
+
 class QLabel;
 class QProgressBar;
 class QTimer;
@@ -62,10 +64,11 @@ public:
     /**
      * @brief Set a media player
      * @param player The new media player
+     * @param mw The main window to connect it with the media player
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
-    void setMediaPlayer(MediaPlayer *player);
+    void setMediaPlayer(MediaPlayer *player, MainWindow *mw);
 
 protected:
     /**

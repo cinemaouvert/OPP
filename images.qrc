@@ -437,5 +437,6 @@
         <file>resources/icons/icon_dualscreen_gauche.png</file>
         <file>resources/icons/icon_dualscreen_droite.png</file>
         <file>resources/images/intertitle.jpg</file>
+        <file>resources/images/intertitleSound.jpg</file>
     </qresource>
 </RCC>

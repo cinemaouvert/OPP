@@ -155,6 +155,11 @@ bool Media::isImage() const
     return _audioTracks.count() == 0 && _videoTracks.count() == 1 && _subtitlesTracks.count() == 0;
 }
 
+bool Media::isAudio() const
+{
+    return _audioTracks.count() == 1 && _videoTracks.count() == 0 && _subtitlesTracks.count() == 0;
+}
+
 bool Media::isUsed() const
 {
     return _usageCount > 0;

@@ -127,7 +127,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->binTableView->setModel(_mediaListModel);
     ui->scheduleTableView->setModel(_scheduleListModel);
-    ui->seekWidget->setMediaPlayer(_playlistPlayer->mediaPlayer());
+    ui->seekWidget->setMediaPlayer(_playlistPlayer->mediaPlayer(), this);
 
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)),this, SLOT(updateProjectSummary()));
 
@@ -171,7 +171,6 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         ui->stackedWidget->setCurrentIndex(1);
         _playlistPlayer->mediaPlayer()->setBackMode(MediaPlayer::SCREENSHOT);
-        //setScreenshot();
     }
     else if(settings.value("VideoReturnMode").toString() == "streaming")
     {
@@ -287,8 +286,30 @@ void MainWindow::on_binAddMediaButton_clicked()
 
     QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("New media"), settings.value("moviesPath").toString(), tr("Media (%1)").arg(Media::mediaExtensions().join(" ")));
 
+    libvlc_instance_t *vlc = libvlc_new(0, NULL);
+    libvlc_media_player_t *vlcMP = libvlc_media_player_new(vlc);
+
+    if(!QDir("screenshot").exists())
+    {
+        QDir().mkdir("screenshot");
+    }
+
     foreach (QString fileName, fileNames) {
         Media *media = new Media(fileName, _app->vlcInstance());
+
+        QString screenPath = ("./screenshot/"+media->getLocation().replace(QString("/"),QString("_"))+".png");
+
+        if(!QFile(screenPath).exists())
+        {
+            libvlc_media_player_set_media(vlcMP, media->core());
+            libvlc_video_set_scale (vlcMP, 0.01f);
+            libvlc_media_player_play(vlcMP);
+            libvlc_media_player_set_position(vlcMP, 0.5f);
+            waitSnap(10);
+            libvlc_video_take_snapshot(vlcMP, 0, screenPath.toStdString().c_str(), libvlc_video_get_width(vlcMP), libvlc_video_get_height(vlcMP));
+            libvlc_media_player_stop(vlcMP);
+        }
+
         if (media->exists() == false) {
             QMessageBox::warning(this, tr("Import media"), QString(tr("The file %1 does not exist. Maybe it was deleted.")).arg(media->location()));
             delete media;
@@ -297,6 +318,16 @@ void MainWindow::on_binAddMediaButton_clicked()
             delete media;
         }
     }
+
+    libvlc_media_player_release(vlcMP);
+    libvlc_vlm_release(vlc);
+}
+
+void MainWindow::waitSnap(int t)
+{
+    QTime dieTime= QTime::currentTime().addMSecs(t);
+    while( QTime::currentTime() < dieTime )
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }
 
 void MainWindow::on_binDeleteMediaButton_clicked()
@@ -1219,14 +1250,49 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
         ui->label_stream->setText(time.toString(display));
         ui->label_none->setText(time.toString(display));
 
+        QPixmap pixmap;
+        if(m->isAudio())
+        {
+            pixmap.load(":/icons/resources/images/intertitleSound.jpg");
+
+        }
+        else if(m->isImage())
+        {
+            pixmap.load(m->getLocation().toStdString().c_str());
+        }
+        else
+        {
+            pixmap.load(("./screenshot/"+m->getLocation().replace(QString("/"),QString("_"))+".png").toStdString().c_str());
+        }
+        ui->screen_none->setPixmap(pixmap.scaled(ui->screen_none->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
+        ui->screenBack->setPixmap(pixmap.scaled(ui->screenBack->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
+
+        //gérer retour son
         if(idx > 0)
         {
             Media *mB = currentPlaylistModel()->playlist()->at(idx-1)->media();
             QTime timeB = QTime(0,0,0,0).addMSecs(mB->duration());
+            QPixmap pixmapB;
+            if(mB->isAudio())
+            {
+                pixmapB.load(":/icons/resources/images/intertitleSound.jpg");
+
+            }
+            else if(mB->isImage())
+            {
+                pixmapB.load(mB->getLocation().toStdString().c_str());
+            }
+            else
+            {
+                pixmapB.load(("./screenshot/"+mB->getLocation().replace(QString("/"),QString("_"))+".png").toStdString().c_str());
+            }
+            ui->screenBefore->setPixmap(pixmapB.scaled(ui->screenBefore->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
             ui->labelBefore->setText(timeB.toString(display));
         }
         else
         {
+            QPixmap pixmapB(":/icons/resources/images/intertitle.jpg");
+            ui->screenBefore->setPixmap(pixmapB.scaled(ui->screenBefore->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
             ui->labelBefore->setText("00:00:00");
         }
 
@@ -1234,16 +1300,48 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
         {
             Media *mA = currentPlaylistModel()->playlist()->at(idx+1)->media();
             QTime timeA = QTime(0,0,0,0).addMSecs(mA->duration());
+
+            QPixmap pixmapA;
+            if(mA->isAudio())
+            {
+                pixmapA.load(":/icons/resources/images/intertitleSound.jpg");
+
+            }
+            else if(mA->isImage())
+            {
+                pixmapA.load(mA->getLocation().toStdString().c_str());
+            }
+            else
+            {
+                pixmapA.load(("./screenshot/"+mA->getLocation().replace(QString("/"),QString("_"))+".png").toStdString().c_str());
+            }
+            ui->screenAfter->setPixmap(pixmapA.scaled(ui->screenAfter->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
             ui->labelAfter->setText(timeA.toString(display));
         }
         else
         {
+            QPixmap pixmapA(":/icons/resources/images/intertitle.jpg");
+            ui->screenAfter->setPixmap(pixmapA.scaled(ui->screenAfter->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
             ui->labelAfter->setText("00:00:00");
         }
     }
 }
 
-/*void MainWindow::setScreenBack()
+void MainWindow::updateBackTime(const int &time)
 {
+    QString display = "hh:mm:ss";
+    Media *m = _playlistPlayer->mediaPlayer()->media();
+    int t = m->duration()-time;
+    QTime currentTime = QTime(0,0,0,0).addMSecs(t);
 
-}*/
+    ui->label_screen->setText(currentTime.toString(display));
+    ui->label_stream->setText(currentTime.toString(display));
+    ui->label_none->setText(currentTime.toString(display));
+}
+
+void MainWindow::setScreensBack(QString urlA)
+{
+   QPixmap pixmapA(urlA);
+    ui->screen_none->setPixmap(pixmapA.scaled(ui->screenAfter->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
+
+}

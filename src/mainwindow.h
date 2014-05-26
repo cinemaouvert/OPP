@@ -62,6 +62,7 @@ class Playlist;
 class Locker;
 class DataStorage;
 
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -69,6 +70,13 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    /**
+     * @brief wait t ms between start movie and taking snapshot to have thumbnail
+     *
+     * @author Thomas Berthomé <thoberthome@laposte.net>
+     */
+    void waitSnap(int t);
 
     // FIX : ref 0000001
     /**
@@ -145,13 +153,6 @@ public:
       */
     void setSelectedMediaTimeByIndex(int idx);
 
-    /**
-      *@brief Method used to set the previous and following selected medium back
-      *
-      * @author Thomas Berthome <thoberthome@laposte.net>
-      */
-    void setScreenBack();
-
 public slots:
     /**
       *@brief Method to stop the player
@@ -185,6 +186,21 @@ public slots:
      * @author Thomas Berthomé <thoberthome@laposte.net>
      */
     void setScreenshot(QString url);
+
+    /**
+      *@brief Method used to set the previous and following selected medium back
+      *
+      * @author Thomas Berthome <thoberthome@laposte.net>
+      */
+    void setScreensBack(QString url);
+
+    /**
+     * @brief Update the remaining time value
+     * @param time The new remaining time value
+     *
+     * @author Thomas Berthomé <thoberthome@laposte.net>
+     */
+    void updateBackTime(const int &time);
 private slots:
 
     /**

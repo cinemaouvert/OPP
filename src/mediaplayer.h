@@ -215,6 +215,13 @@ public:
      */
     void close(Playback *playback);
 
+    /**
+     * @brief Get the current media
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    Media * media();
+
 public slots:
     /**
      * @brief Play the media player with the opened Playback
