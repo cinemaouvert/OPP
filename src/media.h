@@ -285,6 +285,8 @@ public:
      * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
      */
     QString getLocation();
+
+
 protected:
 
     /**
@@ -303,6 +305,12 @@ signals:
     void usageCountChanged();
 
 private:
+
+    /**
+      * @brief instance de vlc
+      */
+    libvlc_instance_t* _instance;
+
     /**
      * @brief The number of created instances, used to set a unique identifier for each instance.
      */

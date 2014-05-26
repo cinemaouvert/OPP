@@ -47,6 +47,7 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
     else
         _vlcMedia = libvlc_media_new_location(vlcInstance, location.toLocal8Bit().data());
 
+    _instance = vlcInstance;
     parseMediaInfos();
 }
 
@@ -54,9 +55,15 @@ Media::Media(const Media &media)
 {
     initMedia(media._location);
     _usageCount = media._usageCount;
-    _vlcMedia = libvlc_media_duplicate(media._vlcMedia);
+    _instance = media._instance;
 
-    _id = Media::s_instanceCount++;
+    _vlcMedia = libvlc_media_new_path(_instance, media._location.toLocal8Bit().data());
+
+
+    _id = media._id;
+    parseMediaInfos();
+
+
 }
 
 Media::~Media()
