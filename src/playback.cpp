@@ -29,7 +29,7 @@
 Playback::Playback(Media *media, QObject *parent) :
     QObject(parent)
 {
-    _media = new Media(*media);
+    _media = new Media(media);
 
     _mediaSettings = new MediaSettings();
 
@@ -45,4 +45,6 @@ Playback::Playback(Media *media, QObject *parent) :
 Playback::~Playback()
 {
     delete _mediaSettings;
+    _media->remove();
+    delete _media;
 }

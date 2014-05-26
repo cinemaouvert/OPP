@@ -61,7 +61,7 @@ class Media : public QObject
     Q_OBJECT
 public:
     Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *parent = 0, bool isFile = true);
-    Media(const Media &media);
+    Media(Media *media);
     virtual ~Media();
 
     /**
@@ -219,6 +219,14 @@ public:
     void usageCountAdd(int count = 1);
 
     /**
+     * @brief Getter for the usageCount
+     *
+     * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    int usageCount(){ return this->_usageCount; }
+
+
+    /**
      * @brief Media is used or not
      * @return True if the media is used, false otherwise.
      *
@@ -285,6 +293,13 @@ public:
      * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
      */
     QString getLocation();
+
+    /**
+      * @brief used to decremented original media count
+      *
+      * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+      */
+    void remove();
 
 
 protected:
@@ -365,6 +380,11 @@ private:
      * @brief Original duration of media.
      */
     uint _originalDuration;
+
+    /**
+      * @brief link to the original Media
+      */
+    Media *_original;
 };
 
 #endif // MEDIA_H

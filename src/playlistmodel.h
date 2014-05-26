@@ -219,7 +219,7 @@ public:
      */
     bool isRunningMedia(Media *media){
         for (int i = _playlist->count() - 1; i >= 0; i--) {
-            if (_playlist->at(i)->media() == media) {
+            if ((*_playlist->at(i)->media()) == media) {
                 return isRunningMedia(i);
             }
         }

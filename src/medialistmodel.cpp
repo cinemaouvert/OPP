@@ -29,6 +29,7 @@
 
 #include <QDebug>
 #include <QIcon>
+#include <QStandardItem>
 
 #include "utils.h"
 #include "media.h"
@@ -101,8 +102,9 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
     case Qt::DecorationRole:
         if (index.column() == Used) {
             QIcon icon;
-            if (_mediaList[index.row()]->isUsed())
+            if (_mediaList[index.row()]->isUsed()){
                 icon.addFile(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_152_check.png"), QSize(), QIcon::Normal, QIcon::Off);
+            }
             else
                 icon.addFile(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_153_unchecked.png"), QSize(), QIcon::Normal, QIcon::Off);
             return icon;
@@ -150,6 +152,7 @@ bool MediaListModel::addMedia(Media *media)
 
     _mediaList.append(media);
     connect(media, SIGNAL(usageCountChanged()), this, SIGNAL(layoutChanged()));
+
 
     endInsertRows();
 

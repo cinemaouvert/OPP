@@ -29,6 +29,7 @@
 #include <string.h>
 
 #include <QStringList>
+#include <QDebug>
 
 #include <vlc/vlc.h>
 
@@ -37,7 +38,7 @@
 int Media::s_instanceCount = 0;
 
 Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *parent , bool isFile) :
-    QObject(parent),
+    QObject(parent),_original(NULL),
     _usageCount(0)
 {
     _id = Media::s_instanceCount++;
@@ -51,16 +52,17 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
     parseMediaInfos();
 }
 
-Media::Media(const Media &media)
+Media::Media(Media *media)
 {
-    initMedia(media._location);
-    _usageCount = media._usageCount;
-    _instance = media._instance;
+    _original = media;
+    initMedia(media->_location);
+    _usageCount = media->_usageCount;
+    _instance = media->_instance;
 
-    _vlcMedia = libvlc_media_new_path(_instance, media._location.toLocal8Bit().data());
+    _vlcMedia = libvlc_media_new_path(_instance, media->_location.toLocal8Bit().data());
 
-
-    _id = media._id;
+    media->usageCountAdd() ;
+    _id = media->_id;
     parseMediaInfos();
 
 
@@ -70,6 +72,12 @@ Media::~Media()
 {
     libvlc_media_release(_vlcMedia);
 }
+
+void Media::remove(){
+    if(_original != NULL)
+      _original->usageCountAdd(-1);
+}
+
 
 void Media::parseMediaInfos()
 {

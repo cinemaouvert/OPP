@@ -299,16 +299,22 @@ void MainWindow::on_binAddMediaButton_clicked()
 
         QString screenPath = ("./screenshot/"+media->getLocation().replace(QString("/"),QString("_"))+".png");
 
-        if(!QFile(screenPath).exists())
+        libvlc_video_set_scale (vlcMP, 0.5f);
+        if(!QFile(screenPath).exists() && !media->isAudio())
         {
+
             libvlc_media_player_set_media(vlcMP, media->core());
-            libvlc_video_set_scale (vlcMP, 0.01f);
             libvlc_media_player_play(vlcMP);
             libvlc_media_player_set_position(vlcMP, 0.5f);
-            waitSnap(10);
-            libvlc_video_take_snapshot(vlcMP, 0, screenPath.toStdString().c_str(), libvlc_video_get_width(vlcMP), libvlc_video_get_height(vlcMP));
-            libvlc_media_player_stop(vlcMP);
+            float width = libvlc_video_get_width(vlcMP);
+            float height = libvlc_video_get_height(vlcMP);
+            waitSnap(100);
+            libvlc_video_take_snapshot(vlcMP, 0, screenPath.toStdString().c_str(), width,height);
+            waitSnap(100);
+
         }
+        libvlc_media_player_stop(vlcMP);
+
 
         if (media->exists() == false) {
             QMessageBox::warning(this, tr("Import media"), QString(tr("The file %1 does not exist. Maybe it was deleted.")).arg(media->location()));
