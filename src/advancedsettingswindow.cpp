@@ -81,7 +81,7 @@ void OCPM_Plugin::setPlayback(Playback* playback)
     /*Modified length*/
     updateLength();
 
-    ui->comboBox_testPattern->setCurrentIndex(_playback->mediaSettings()->testPattern());
+    //ui->comboBox_testPattern->setCurrentIndex(_playback->mediaSettings()->testPattern());
 
 
     /*Fill table*/
@@ -166,10 +166,10 @@ void OCPM_Plugin::setPlayback(Playback* playback)
 void OCPM_Plugin::on_buttonBox_OKCancel_accepted()
 {
     /*Test pattern*/
-    int index = ui->comboBox_testPattern->currentIndex();
-    if (index == -1)
-        return;
-    _playback->mediaSettings()->setTestPattern(index==0);
+    //int index = ui->comboBox_testPattern->currentIndex();
+    // if (index == -1)
+    //    return;
+    //_playback->mediaSettings()->setTestPattern(index==0);
 
     /*In mark and out mark*/
     uint timeIn = qTimeToMsec(ui->timeEdit_inMark->time());
