@@ -1241,8 +1241,11 @@ void MainWindow::loadPlugins(){
                     _ocpmPlugin = op;
                     op->setFilename(_selectedMediaName);
                     ui->menuPlugins->addAction(op->getName(),op,SLOT(launch()));
-                    ui->menuPlugins->addSeparator();
-                    ui->menuPlugins->addAction("secondary action",this,SLOT(ocpmSecondaryAction()));
+                    QPushButton *button = new QPushButton(tr("Change screenshot"));
+                    button->setIcon(QIcon(":icons/resources/glyphicons/glyphicons_008_film.png"));
+                    ui->horizontalLayout_11->addWidget(button);
+
+                    connect ( button, SIGNAL( clicked() ), this, SLOT( ocpmSecondaryAction() ) );
                 }
             }
         }
@@ -1251,9 +1254,13 @@ void MainWindow::loadPlugins(){
 }
 
 void MainWindow::ocpmSecondaryAction(){
-    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
-    _ocpmPlugin->secondaryAction();
-    setSelectedMediaTimeByIndex(indexes.first().row());
+    if(currentPlaylistTableView() != NULL &&  currentPlaylistTableView()->selectionModel() != NULL){
+        QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+        if(indexes.count() > 0){
+            _ocpmPlugin->secondaryAction();
+            setSelectedMediaTimeByIndex(indexes.first().row());
+        }
+    }
 }
 
 /****** Chargement des SCREENSHOTS ******/
