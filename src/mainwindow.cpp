@@ -131,6 +131,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)),this, SLOT(updateProjectSummary()));
 
+    connect(_scheduleListModel, SIGNAL(scheduleListChanged()),this, SLOT(updateProjectSummary()));
+
     _statusWidget = new StatusWidget;
     ui->statusBar->addWidget(_statusWidget);
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)), _statusWidget, SLOT(setMediaCount(int)));
@@ -267,7 +269,8 @@ void MainWindow::updateProjectSummary()
 {
     ui->countMoviesLabel->setText( QString::number(_mediaListModel->countMovies()) );
     ui->countPicturesLabel->setText( QString::number(_mediaListModel->countPictures()) );
-    ui->totalDurationLabel->setText( _mediaListModel->totalDuration().toString("hh:mm:ss") );
+    //ui->totalDurationLabel->setText( _mediaListModel->totalDuration().toString("hh:mm:ss") );
+    ui->totalDurationLabel->setText( _scheduleListModel->totalDuration().toString("hh:mm:ss") );
 }
 
 void MainWindow::on_notesEdit_textChanged()
@@ -299,8 +302,9 @@ void MainWindow::on_binAddMediaButton_clicked()
 
         QString screenPath = "./screenshot/";
         screenPath = screenPath.replace("/",QDir::separator());
-        screenPath +=  media->getLocation().replace(QDir::separator(),"_");
+        screenPath +=  media->getLocation().replace(QDir::separator(),"_").remove(":");
         screenPath += ".png";
+        qDebug()<<screenPath;
 
         libvlc_video_set_scale (vlcMP, 0.5f);
         if(!QFile(screenPath).exists() && !media->isAudio() && !media->isImage())
@@ -1290,7 +1294,7 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
             //pixmap.load(("./screenshot/"+m->getLocation().replace(QString(QDir::separator()),QString("_"))+".png").toStdString().c_str());
             QString path = "./screenshot/";
             path = path.replace("/",QDir::separator());
-            path +=  m->getLocation().replace(QDir::separator(),"_");
+            path +=  m->getLocation().replace(QDir::separator(),"_").remove(":");
             path += ".png";
             pixmap.load((path.toStdString().c_str()));
 
@@ -1315,7 +1319,11 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
             }
             else
             {
-                pixmapB.load(("./screenshot/"+mB->getLocation().replace(QString("/"),QString("_"))+".png").toStdString().c_str());
+                QString path = "./screenshot/";
+                path = path.replace("/",QDir::separator());
+                path +=  mB->getLocation().replace(QDir::separator(),"_").remove(":");
+                path += ".png";
+                pixmapB.load((path.toStdString().c_str()));
             }
             ui->screenBefore->setPixmap(pixmapB.scaled(ui->screenBefore->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
             ui->labelBefore->setText(timeB.toString(display));
@@ -1349,7 +1357,7 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
             {
                 QString path = "./screenshot/";
                 path = path.replace("/",QDir::separator());
-                path +=  mA->getLocation().replace(QDir::separator(),"_");
+                path +=  mA->getLocation().replace(QDir::separator(),"_").remove(":");
                 path += ".png";
                 pixmapA.load((path.toStdString().c_str()));
             }
