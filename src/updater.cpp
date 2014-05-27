@@ -57,7 +57,7 @@ void Updater::checkVersion(){
                this->getInstaller();
        }
     }else{
-        QMessageBox::warning(NULL, tr("Update OPP"), tr("Update can not possible, check your connection"));
+        QMessageBox::warning(NULL, tr("Update OPP"), tr("Update unreachable, check your connection"));
     };
     reply->deleteLater();
 }
