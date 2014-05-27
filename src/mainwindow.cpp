@@ -297,7 +297,10 @@ void MainWindow::on_binAddMediaButton_clicked()
     foreach (QString fileName, fileNames) {
         Media *media = new Media(fileName, _app->vlcInstance());
 
-        QString screenPath = ("./screenshot/"+media->getLocation().replace(QString("/"),QString("_"))+".png");
+        QString screenPath = "./screenshot/";
+        screenPath = screenPath.replace("/",QDir::separator());
+        screenPath +=  media->getLocation().replace(QDir::separator(),"_");
+        screenPath += ".png";
 
         libvlc_video_set_scale (vlcMP, 0.5f);
         if(!QFile(screenPath).exists() && !media->isAudio() && !media->isImage())
