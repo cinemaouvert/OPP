@@ -149,6 +149,11 @@ signals:
      */
     void titleChanged();
 
+    /**
+     * @brief signal playlistListChanged
+     */
+    void playlistChanged();
+
 private:
 
     /**

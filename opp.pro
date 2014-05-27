@@ -21,15 +21,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Projection Program. If not, see <http://www.gnu.org/licenses/>.
 ###################################################################################
-
+#
 #To create the application
-TEMPLATE = app
-TARGET = opp
+#TEMPLATE = app
+#TARGET = opp
 
-#To create the lib for plugins
-#TEMPLATE = lib
-#CONFIG += staticlib
-#TARGET = GeneratedLib/opp
+##To create the lib for plugins
+TEMPLATE = lib
+CONFIG += staticlib
+TARGET = GeneratedLib/opp
 
 QT += xml
 QT += network

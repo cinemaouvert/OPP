@@ -35,6 +35,7 @@
 #include <QLabel>
 #include <QModelIndexList>
 #include <QTime>
+#include "plugins.h"
 
 #include "videowindow.h"
 
@@ -231,6 +232,13 @@ private slots:
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void updateProjectSummary();
+
+    /**
+     * @brief Update Details
+     *
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
+     */
+    void updateDetails();
 
     /**
      * @brief Open the settings window
@@ -538,6 +546,13 @@ private slots:
      */
     QList<QWidget*> getLockedWidget();
 
+    /**
+      * @brief slot for the plugin action
+      *
+      * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+      */
+    void ocpmSecondaryAction();
+
 
 
     void on_subtitlesEncodecomboBox_currentIndexChanged(int index);
@@ -665,6 +680,11 @@ private:
       * @brief store the selected Media Name
       */
     QString* _selectedMediaName;
+
+    /**
+      * @brief store the plugin
+      */
+    OCPM* _ocpmPlugin;
 };
 
 #endif // MAINWINDOW_H

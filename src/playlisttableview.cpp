@@ -37,6 +37,7 @@ PlaylistTableView::PlaylistTableView(MainWindow* mainWindow,QWidget *parent) :
     _mainWindow(mainWindow)
 {
     setAcceptDrops(true);
+    setSelectionMode(QTableView::SingleSelection);
 }
 
 void PlaylistTableView::mousePressEvent(QMouseEvent *event)
@@ -128,7 +129,10 @@ void PlaylistTableView::selectionChanged (const QItemSelection & selected, const
     else
     {
         _mainWindow->setSelectedMediaNameByIndex(-1);
+        _mainWindow->setSelectedMediaTimeByIndex(-1);
+        this->selectRow(this->currentIndex().row());
     }
     QAbstractItemView::selectionChanged (selected,deselected);
+
 }
 
