@@ -13,6 +13,16 @@ class OCPM : public QDialog {
 
     public slots:
         void launch();
+
+        /**
+          *
+          * @brief Used to ad an action for the plugin
+          *
+          *
+          * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+          */
+        void secondaryAction();
+
     protected:
         QString* _filename;
 };
