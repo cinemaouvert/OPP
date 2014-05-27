@@ -184,6 +184,14 @@ public:
      */
     void removeAll();
 
+    /**
+     * @brief Returns the total duration of the schedules
+     * @return The total duration of the schedules
+     *
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
+     */
+    QTime totalDuration();
+
 public slots:
     /**
      * @brief Enable or disable automation
@@ -203,6 +211,14 @@ private:
      * @brief _automationEnabled True if the automation is enabled, false otherwise
      */
     bool _automationEnabled;
+
+signals:
+    /**
+     * @brief signal scheduleListChanged
+     */
+    void scheduleListChanged();
 };
+
+
 
 #endif // SCHEDULELISTMODEL_H
