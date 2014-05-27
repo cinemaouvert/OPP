@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1287</width>
-    <height>652</height>
+    <height>727</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -505,6 +505,9 @@
                       <height>200</height>
                      </size>
                     </property>
+                    <property name="frameShape">
+                     <enum>QFrame::Box</enum>
+                    </property>
                     <property name="text">
                      <string/>
                     </property>
@@ -515,6 +518,9 @@
                   </item>
                   <item row="1" column="0">
                    <widget class="QLabel" name="labelBefore">
+                    <property name="frameShape">
+                     <enum>QFrame::NoFrame</enum>
+                    </property>
                     <property name="text">
                      <string>00:00:00</string>
                     </property>
@@ -540,7 +546,7 @@
                    </size>
                   </property>
                   <property name="currentIndex">
-                   <number>2</number>
+                   <number>1</number>
                   </property>
                   <widget class="QWidget" name="page_stream">
                    <layout class="QHBoxLayout" name="horizontalLayout_13">
@@ -635,6 +641,9 @@
                           <height>200</height>
                          </size>
                         </property>
+                        <property name="frameShape">
+                         <enum>QFrame::Box</enum>
+                        </property>
                         <property name="text">
                          <string/>
                         </property>
@@ -678,6 +687,9 @@
                           <height>200</height>
                          </size>
                         </property>
+                        <property name="frameShape">
+                         <enum>QFrame::Box</enum>
+                        </property>
                         <property name="text">
                          <string/>
                         </property>
@@ -688,6 +700,9 @@
                       </item>
                       <item row="1" column="0">
                        <widget class="QLabel" name="label_none">
+                        <property name="frameShape">
+                         <enum>QFrame::NoFrame</enum>
+                        </property>
                         <property name="text">
                          <string>00:00:00</string>
                         </property>
@@ -712,6 +727,9 @@
                   </property>
                   <item row="1" column="0">
                    <widget class="QLabel" name="labelAfter">
+                    <property name="frameShape">
+                     <enum>QFrame::NoFrame</enum>
+                    </property>
                     <property name="text">
                      <string>00:00:00</string>
                     </property>
@@ -733,6 +751,9 @@
                       <width>200</width>
                       <height>200</height>
                      </size>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::Box</enum>
                     </property>
                     <property name="text">
                      <string/>
@@ -1580,7 +1601,7 @@
      <x>0</x>
      <y>0</y>
      <width>1287</width>
-     <height>26</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
