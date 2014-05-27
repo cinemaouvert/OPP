@@ -288,6 +288,7 @@ private:
      * @brief _running get if the playlist is running or not
      */
     bool _running;
+
 };
 
 

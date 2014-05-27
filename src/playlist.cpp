@@ -70,6 +70,7 @@ void Playlist::append(Playback *playback)
     playback->media()->usageCountAdd();
 
     _playbackList.append(playback);
+    playlistChanged();
 }
 
 void Playlist::removeAt(int index)
@@ -78,6 +79,7 @@ void Playlist::removeAt(int index)
 
     delete _playbackList[index];
     _playbackList.removeAt(index);
+    playlistChanged();
 }
 
 int Playlist::indexOf(Playback *playback) const

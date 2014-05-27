@@ -195,10 +195,11 @@ MainWindow::MainWindow(QWidget *parent) :
     //Init selectedFileName
     _selectedMediaName = new QString("");
 
+    ui->textEdit_Codecs->setReadOnly(1);
+    ui->textEdit_Codecs->append("<span style=\"text-decoration: underline;\">Codecs:</span>");
+
     //Chargement des plugins
     loadPlugins();
-
-
 
     if(QApplication::argc()>1) //Restart : filename en argument
         openFile(QApplication::arguments()[1]);
@@ -271,6 +272,21 @@ void MainWindow::updateProjectSummary()
     ui->countPicturesLabel->setText( QString::number(_mediaListModel->countPictures()) );
     //ui->totalDurationLabel->setText( _mediaListModel->totalDuration().toString("hh:mm:ss") );
     ui->totalDurationLabel->setText( _scheduleListModel->totalDuration().toString("hh:mm:ss") );
+}
+
+void MainWindow::updateDetails() {
+    ui->textEdit_Codecs->clear();
+    ui->textEdit_Codecs->append("<span style=\"text-decoration: underline;\">Codecs:</span>");
+    for(int i=0; i<ui->playlistsTabWidget->count();i++) {
+        PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(i))->model();
+        foreach(Playback *playback, model->playlist()->playbackList()) {
+            foreach(AudioTrack audioTrack, playback->media()->audioTracks()) {
+                QString codec = audioTrack.codecDescription();
+                if(!ui->textEdit_Codecs->toHtml().contains(codec))
+                    ui->textEdit_Codecs->append(codec);
+            }
+        }
+    }
 }
 
 void MainWindow::on_notesEdit_textChanged()
@@ -364,6 +380,7 @@ void MainWindow::on_binDeleteMediaButton_clicked()
                     if(!model->isRunningMedia(media)){
                         model->removePlaybackWithDeps(media);
                         updateSettings();
+
                     }else{
                         toDel=false;
                         QMessageBox::critical(this, media->name(), tr("The media wasn't removed because you can not delete files that have been or are  being used.") ,tr("OK"));
@@ -682,24 +699,7 @@ void MainWindow::stop(){
 
 void MainWindow::createPlaylistTab()
 {
-    if(_locker->isLock())
-        QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently locked, you can not add a new playlist.") , tr("OK"));
-    else {
-        PlaylistTableView *newTab = new PlaylistTableView(this);
-        Playlist *playlist = new Playlist(tr("New playlist"));
-        PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel,newTab);
-
-        connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
-
-        newTab->setModel(newModel);
-        newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
-        newTab->horizontalHeader()->setStretchLastSection(true);
-
-        ui->playlistsTabWidget->addTab(newTab, playlist->title());
-        ui->playlistsTabWidget->setCurrentWidget(newTab);
-
-        updatePlaylistListCombox();
-    }
+    createPlaylistTab("New Playlist");
 }
 
 void MainWindow::createPlaylistTab(QString name)
@@ -712,6 +712,7 @@ void MainWindow::createPlaylistTab(QString name)
         PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
 
         connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
+        connect(playlist, SIGNAL(playlistChanged()), this, SLOT(updateDetails()));
 
         newTab->setModel(newModel);
         newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -747,6 +748,7 @@ void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
 
         updateSettings();
         updatePlaylistListCombox();
+
     }
 }
 
@@ -795,6 +797,7 @@ void MainWindow::on_renamePlaylistAction_triggered()
 void MainWindow::on_removePlaylistItemAction_triggered()
 {
     deletePlaylistItem();
+
 }
 
 // FIX : ref 0000001
@@ -811,6 +814,7 @@ void MainWindow::restorePlaylistTab(PlaylistModel *model)
     ui->playlistsTabWidget->setCurrentWidget(newTab);
 
     updatePlaylistListCombox();
+
 }
 
 void MainWindow::on_playlistUpButton_clicked()
@@ -862,6 +866,7 @@ void MainWindow::on_addPlaylistButton_clicked()
     }
     else
         QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently locked, you can not add a new playlist.") , tr("OK"));
+
 }
 
 void MainWindow::on_editNamePlaylistButton_clicked()
@@ -872,6 +877,8 @@ void MainWindow::on_editNamePlaylistButton_clicked()
 void MainWindow::on_deletePlaylistItemButton_clicked()
 {
     deletePlaylistItem();
+
+
 }
 
 void MainWindow::editPlaylistName()
@@ -915,6 +922,7 @@ void MainWindow::deletePlaylistItem()
             QMessageBox::critical(this, tr("Remove item"), tr("This playlist is currently running, you can not delete media that have been or are being displayed.") , tr("OK"));
         }
     }
+
 }
 
 /***********************************************************************************************\
@@ -995,6 +1003,7 @@ void MainWindow::on_openListingAction_triggered()
 
             ui->progEdit->setText(_dataStorage->projectTitle());
             ui->notesEdit->setText(_dataStorage->projectNotes());
+
         }
     }
 }
@@ -1022,6 +1031,7 @@ void MainWindow::on_newListingAction_triggered()
             ui->schedulePlaylistListComboBox->removeItem(i);
         }
         updatePlaylistListCombox();
+
 
         _fileName = "";
     }
