@@ -23,13 +23,13 @@
 ###################################################################################
 #
 #To create the application
-TEMPLATE = app
-TARGET = opp
+#TEMPLATE = app
+#TARGET = opp
 
-#To create the lib for plugins
-#TEMPLATE = lib
-#CONFIG += staticlib
-#TARGET = GeneratedLib/opp
+##To create the lib for plugins
+TEMPLATE = lib
+CONFIG += staticlib
+TARGET = GeneratedLib/opp
 
 QT += xml
 QT += network

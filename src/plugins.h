@@ -11,9 +11,6 @@ class OCPM : public QDialog {
         virtual QString getName() = 0;
         virtual void setFilename(QString * filename)=0;
 
-    public slots:
-        void launch();
-
         /**
           *
           * @brief Used to ad an action for the plugin
@@ -21,7 +18,12 @@ class OCPM : public QDialog {
           *
           * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
           */
-        void secondaryAction();
+        virtual void secondaryAction() =0;
+
+
+    public slots:
+        void launch();
+
 
     protected:
         QString* _filename;

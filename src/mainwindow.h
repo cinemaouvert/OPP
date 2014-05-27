@@ -35,6 +35,7 @@
 #include <QLabel>
 #include <QModelIndexList>
 #include <QTime>
+#include "plugins.h"
 
 #include "videowindow.h"
 
@@ -538,6 +539,13 @@ private slots:
      */
     QList<QWidget*> getLockedWidget();
 
+    /**
+      * @brief slot for the plugin action
+      *
+      * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+      */
+    void ocpmSecondaryAction();
+
 
 
 protected:
@@ -663,6 +671,11 @@ private:
       * @brief store the selected Media Name
       */
     QString* _selectedMediaName;
+
+    /**
+      * @brief store the plugin
+      */
+    OCPM* _ocpmPlugin;
 };
 
 #endif // MAINWINDOW_H

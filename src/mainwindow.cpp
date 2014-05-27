@@ -86,7 +86,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _dataStorage(NULL),
     _fileName(""),
     _projectionMode(VideoWindow::WINDOW),
-    _selectedMediaName(NULL)
+    _selectedMediaName(NULL),
+    _ocpmPlugin(NULL)
 
 {
     //setAttribute(Qt::WA_DeleteOnClose);
@@ -304,7 +305,6 @@ void MainWindow::on_binAddMediaButton_clicked()
         screenPath = screenPath.replace("/",QDir::separator());
         screenPath +=  media->getLocation().replace(QDir::separator(),"_").remove(":");
         screenPath += ".png";
-        qDebug()<<screenPath;
 
         libvlc_video_set_scale (vlcMP, 0.5f);
         if(!QFile(screenPath).exists() && !media->isAudio() && !media->isImage())
@@ -1231,18 +1231,22 @@ void MainWindow::loadPlugins(){
                 OCPM * op = qobject_cast<OCPM *>(plugin);
                 if (op != NULL)
                 {
+                    _ocpmPlugin = op;
                     op->setFilename(_selectedMediaName);
                     ui->menuPlugins->addAction(op->getName(),op,SLOT(launch()));
                     ui->menuPlugins->addSeparator();
-                    ui->menuPlugins->addAction("secondary action",op,SLOT(secondaryAction()));
-                    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
-                    if(indexes.count()>0)
-                        setSelectedMediaTimeByIndex(indexes.first().row());
+                    ui->menuPlugins->addAction("secondary action",this,SLOT(ocpmSecondaryAction()));
                 }
             }
         }
     }
 
+}
+
+void MainWindow::ocpmSecondaryAction(){
+    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+    _ocpmPlugin->secondaryAction();
+    setSelectedMediaTimeByIndex(indexes.first().row());
 }
 
 /****** Chargement des SCREENSHOTS ******/
@@ -1267,6 +1271,7 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
         ui->screenAfter->clear();
         ui->screenBefore->clear();
         ui->screenBack->clear();
+        ui->screen_none->clear();
 
     }
     else

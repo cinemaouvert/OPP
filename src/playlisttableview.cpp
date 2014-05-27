@@ -37,6 +37,7 @@ PlaylistTableView::PlaylistTableView(MainWindow* mainWindow,QWidget *parent) :
     _mainWindow(mainWindow)
 {
     setAcceptDrops(true);
+    setSelectionMode(QTableView::SingleSelection);
 }
 
 void PlaylistTableView::mousePressEvent(QMouseEvent *event)
