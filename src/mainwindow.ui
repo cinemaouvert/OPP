@@ -46,7 +46,7 @@
         <item>
          <widget class="QTabWidget" name="projectTabWidget">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="summaryTab">
            <attribute name="title">
@@ -194,7 +194,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTextEdit" name="textEdit"/>
+             <widget class="QTextEdit" name="textEdit_Codecs"/>
             </item>
            </layout>
           </widget>
