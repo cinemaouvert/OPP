@@ -234,6 +234,13 @@ private slots:
     void updateProjectSummary();
 
     /**
+     * @brief Update Details
+     *
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
+     */
+    void updateDetails();
+
+    /**
      * @brief Open the settings window
      *
      * @author Cyril Naud <futuramath@gmail.com>

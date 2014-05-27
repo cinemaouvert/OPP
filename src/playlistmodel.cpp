@@ -171,6 +171,7 @@ bool PlaylistModel::addPlayback(Playback *playback)
     endInsertRows();
     _scheduleListModel->updateLayout();
 
+
     return true;
 }
 
@@ -227,6 +228,7 @@ void PlaylistModel::removePlaybackWithDeps(Media *media)
             removePlayback(i);
         }
     }
+
 }
 
 void PlaylistModel::removePlayback(int index)
@@ -238,6 +240,7 @@ void PlaylistModel::removePlayback(int index)
 
     endRemoveRows(); 
     _scheduleListModel->updateLayout();
+
 }
 
 void PlaylistModel::playItem()
@@ -271,6 +274,7 @@ void PlaylistModel::setPlayingItem(int index)
 void PlaylistModel::updateLayout()
 {
     emit layoutChanged();
+
 }
 
 bool PlaylistModel::moveUp(const QModelIndex &index)
@@ -346,6 +350,7 @@ void PlaylistModel::removeAll()
     for (int i = _playlist->count()-1; i >= 0; i--) {
         removePlayback(i);
     }
+
 }
 
 void PlaylistModel::repareDelay(QList<Schedule *> scheduleList, uint duration)
