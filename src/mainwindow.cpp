@@ -165,6 +165,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->ratioComboBox->clear();
     ui->ratioComboBox->addItems(MediaSettings::ratioValues());
 
+    ui->subtitlesEncodecomboBox->clear();
+    ui->subtitlesEncodecomboBox->addItems(MediaSettings::encodeValues());
+
     _advancedSettingsWindow = new OCPM_Plugin(this);
     _advancedPictureSettingsWindow = new AdvancedPictureSettingsWindow(this);
     _settingsWindow = new SettingsWindow(this);
@@ -331,7 +334,7 @@ void MainWindow::on_binAddMediaButton_clicked()
             libvlc_media_player_set_position(vlcMP, 0.5f);
             float width = libvlc_video_get_width(vlcMP);
             float height = libvlc_video_get_height(vlcMP);
-            waitSnap(100);
+            waitSnap(750);
             libvlc_video_take_snapshot(vlcMP, 0, screenPath.toStdString().c_str(), width,height);
             waitSnap(100);
 
@@ -619,6 +622,9 @@ void MainWindow::updateSettings()
     ui->subtitlesTrackComboBox->setCurrentIndex( playback->mediaSettings()->subtitlesTrack() );
 
     ui->ratioComboBox->setCurrentIndex( playback->mediaSettings()->ratio() );
+
+    //ui->subtitlesEncodecomboBox->clear();
+    ui->subtitlesEncodecomboBox->setCurrentIndex( playback->mediaSettings()->subtitlesEncode() );
 
     ui->audioTrackComboBox->blockSignals(false);
     ui->videoTrackComboBox->blockSignals(false);
@@ -1412,4 +1418,19 @@ void MainWindow::setScreensBack(QString urlA)
     QPixmap pixmapA(urlA);
     ui->screen_none->setPixmap(pixmapA.scaled(ui->screenAfter->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
 
+}
+
+void MainWindow::on_subtitlesEncodecomboBox_currentIndexChanged(int index)
+{
+    if (index == -1 || index == 0)
+        return;
+
+    Playback *playback = selectedPlayback();
+
+    if (playback) {
+
+        playback->mediaSettings()->setSubtitlesEncode(index);
+    }
+
+    currentPlaylistModel()->updateLayout();
 }

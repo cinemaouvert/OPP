@@ -387,6 +387,14 @@ public slots:
      */
     void setCurrentAudioSync(double sync);
 
+    /**
+     * @brief set set current subtitles encode
+     * @param The new encode for subtitles
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void setCurrentSubtitlesEncode(int encode);
+
 private slots:
 
     /**

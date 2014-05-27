@@ -555,6 +555,8 @@ private slots:
 
 
 
+    void on_subtitlesEncodecomboBox_currentIndexChanged(int index);
+
 protected:
     /**
      * @brief Returns the selected playback

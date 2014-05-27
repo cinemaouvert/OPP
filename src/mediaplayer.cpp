@@ -91,7 +91,7 @@ MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     libvlc_video_set_key_input(_vlcMediaPlayer, false);
     libvlc_video_set_mouse_input(_vlcMediaPlayer, false);
 
-    connect(this, SIGNAL(vout(int)), this, SLOT(applyCurrentPlaybackSettings()));
+   connect(this, SIGNAL(vout(int)), this, SLOT(applyCurrentPlaybackSettings()));
 
     createCoreConnections();
 }
@@ -187,12 +187,13 @@ void MediaPlayer::close(Playback *playback){
         disconnect(playback->mediaSettings(), SIGNAL(audioTrackChanged(int)), this, SLOT(setCurrentAudioTrack(int)));
         disconnect(playback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
         disconnect(playback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
+        disconnect(playback->mediaSettings(), SIGNAL(subtitlesEncodeChanged(int)), this, SLOT(setCurrentSubtitlesEncode(int)));
     }
 }
 
 void MediaPlayer::open(Playback *playback)
 {
-    close(playback);
+    close(_currentPlayback);
 
     _currentPlayback = playback;
 
@@ -210,10 +211,10 @@ void MediaPlayer::open(Playback *playback)
     connect(_currentPlayback->mediaSettings(), SIGNAL(audioTrackChanged(int)), this, SLOT(setCurrentAudioTrack(int)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
     connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
+    connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesEncodeChanged(int)), this, SLOT(setCurrentSubtitlesEncode(int)));
 
        if(_currentPlayback->media()->isImage()){
         libvlc_media_player_set_time(_vlcMediaPlayer, 0);
-        qDebug() << "time image";
     }
 }
 
@@ -385,6 +386,7 @@ void MediaPlayer::applyCurrentPlaybackSettings()
     setCurrentRatio(_currentPlayback->mediaSettings()->ratio());
     setCurrentSaturation(_currentPlayback->mediaSettings()->saturation());
     setCurrentSubtitlesSync(_currentPlayback->mediaSettings()->subtitlesSync());
+    setCurrentSubtitlesEncode(_currentPlayback->mediaSettings()->subtitlesEncode());
 }
 
 void MediaPlayer::setCurrentGain(float gain)
@@ -460,6 +462,16 @@ void MediaPlayer::setCurrentHue(int hue)
 void MediaPlayer::setCurrentAudioSync(double sync)
 {
     libvlc_audio_set_delay(_vlcMediaPlayer,(int64_t)(1000000*sync));
+}
+
+void MediaPlayer::setCurrentSubtitlesEncode(int encode){
+    if(encode > 0 && _currentPlayback != NULL){
+        QString enc = MediaSettings::encodeValues()[encode];
+
+        libvlc_media_add_option(_currentPlayback->media()->core(),
+                                QString(":subsdec-encoding=" + enc).toLocal8Bit().data());
+
+    }
 }
 
 void MediaPlayer::createCoreConnections()

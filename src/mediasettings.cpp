@@ -68,6 +68,11 @@ void MediaSettings::setSubtitlesTrack(const int &track){
     emit subtitlesTrackChanged(_subtitlesTrack);
 }
 
+void MediaSettings::setSubtitlesEncode(const int &encode){
+    _subtitlesEncode = encode;
+     emit subtitlesEncodeChanged(_subtitlesEncode);
+}
+
 void MediaSettings::setGamma(float gamma) {
     _gamma = gamma;
     emit gammaChanged(_gamma);
@@ -141,6 +146,7 @@ void MediaSettings::initDefault()
     _inMark = 0;
     _outMark = 0;
     _gain=0;
+    _subtitlesEncode = 0;
 }
 
 QStringList MediaSettings::ratioValues()
@@ -159,6 +165,55 @@ QStringList MediaSettings::ratioValues()
         << "1:1";
 
     return values;
+}
+
+QStringList MediaSettings::encodeValues()
+{
+    QStringList encodes;
+    encodes <<   ""
+           <<   "UTF-8"
+           <<   "UTF-16"
+           <<   "UTF-16BE"
+           <<   "UTF-16LE"
+           <<   "GB18030"
+           <<   "ISO-8859-15"
+           <<   "Windows-1252"
+           <<   "IBM850"
+           <<   "ISO-8859-2"
+           <<   "Windows-1250"
+           <<   "ISO-8859-3"
+           <<   "ISO-8859-10"
+           <<   "Windows-1251"
+           <<   "KOI8-R"
+           <<   "KOI8-U"
+           <<   "ISO-8859-6"
+           <<   "Windows-1256"
+           <<   "ISO-8859-7"
+           <<   "Windows-1253"
+           <<   "ISO-8859-8"
+           <<   "Windows-1255"
+           <<   "ISO-8859-9"
+           <<   "Windows-1254"
+           <<   "ISO-8859-11"
+           <<   "Windows-874"
+           <<   "ISO-8859-13"
+           <<   "Windows-1257"
+           <<   "ISO-8859-14"
+           <<   "ISO-8859-16"
+           <<   "ISO-2022-CN-EXT"
+           <<   "EUC-CN"
+           <<   "ISO-2022-JP-2"
+           <<   "EUC-JP"
+           <<   "Shift_JIS"
+           <<   "CP949"
+           <<   "ISO-2022-KR"
+           <<   "Big5"
+           <<   "ISO-2022-TW"
+           <<   "Big5-HKSCS"
+           <<   "VISCII"
+           <<   "Windows-1258";
+
+    return encodes;
 }
 
 QStringList MediaSettings::deinterlacingValues()
