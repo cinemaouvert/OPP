@@ -131,6 +131,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)),this, SLOT(updateProjectSummary()));
 
+    connect(_scheduleListModel, SIGNAL(scheduleListChanged()),this, SLOT(updateProjectSummary()));
+
     _statusWidget = new StatusWidget;
     ui->statusBar->addWidget(_statusWidget);
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)), _statusWidget, SLOT(setMediaCount(int)));
@@ -267,7 +269,8 @@ void MainWindow::updateProjectSummary()
 {
     ui->countMoviesLabel->setText( QString::number(_mediaListModel->countMovies()) );
     ui->countPicturesLabel->setText( QString::number(_mediaListModel->countPictures()) );
-    ui->totalDurationLabel->setText( _mediaListModel->totalDuration().toString("hh:mm:ss") );
+    //ui->totalDurationLabel->setText( _mediaListModel->totalDuration().toString("hh:mm:ss") );
+    ui->totalDurationLabel->setText( _scheduleListModel->totalDuration().toString("hh:mm:ss") );
 }
 
 void MainWindow::on_notesEdit_textChanged()

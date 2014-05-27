@@ -28,6 +28,7 @@
 #include <QIcon>
 
 #include "schedule.h"
+#include "utils.h"
 
 ScheduleListModel::ScheduleListModel(QObject *parent) :
     QAbstractTableModel(parent),
@@ -157,6 +158,7 @@ void ScheduleListModel::removeSchedule(int index)
     delete _scheduleList[index];
     _scheduleList.removeAt(index);
     endRemoveRows();
+    emit scheduleListChanged();
 }
 
 void ScheduleListModel::addSchedule(Schedule *schedule)
@@ -171,6 +173,8 @@ void ScheduleListModel::addSchedule(Schedule *schedule)
 
     if (_automationEnabled)
         schedule->start();
+
+    emit scheduleListChanged();
 }
 
 bool ScheduleListModel::isSchedulable(Schedule *schedule) const
@@ -259,3 +263,13 @@ void ScheduleListModel::removeAll()
     }
 }
 
+QTime ScheduleListModel::totalDuration()
+{
+    int duration = 0;
+
+    foreach (Schedule* schedule, _scheduleList) {
+         duration += schedule->playlist()->totalDuration();
+    }
+
+    return msecToQTime(duration);
+}
