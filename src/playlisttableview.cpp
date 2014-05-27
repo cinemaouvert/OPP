@@ -128,7 +128,10 @@ void PlaylistTableView::selectionChanged (const QItemSelection & selected, const
     else
     {
         _mainWindow->setSelectedMediaNameByIndex(-1);
+        _mainWindow->setSelectedMediaTimeByIndex(-1);
+        this->selectRow(this->currentIndex().row());
     }
     QAbstractItemView::selectionChanged (selected,deselected);
+
 }
 

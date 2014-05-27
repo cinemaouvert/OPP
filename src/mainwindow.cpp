@@ -356,7 +356,7 @@ void MainWindow::waitSnap(int t)
 {
     QTime dieTime= QTime::currentTime().addMSecs(t);
     while( QTime::currentTime() < dieTime )
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }
 
 void MainWindow::on_binDeleteMediaButton_clicked()
@@ -635,7 +635,7 @@ void MainWindow::updateSettings()
 
 void MainWindow::on_playerPlayButton_clicked(bool checked)
 {
-   //UNUSED PlaylistModel *playlistModel = currentPlaylistModel();
+    //UNUSED PlaylistModel *playlistModel = currentPlaylistModel();
     if (checked) {
         if (_playlistPlayer->mediaPlayer()->isPaused()) {
             _playlistPlayer->mediaPlayer()->resume();
@@ -655,7 +655,7 @@ void MainWindow::on_playerPlayButton_clicked(bool checked)
             // if no selected item play current playlist from first item
             if (indexes.count() == 0) {
                 _playlistPlayer->playItemAt(0);
-            // play playlist at selected item otherwise
+                // play playlist at selected item otherwise
             } else {
                 const int index = indexes.first().row();
                 _playlistPlayer->playItemAt(index);
@@ -854,12 +854,12 @@ void MainWindow::on_addPlaylistButton_clicked()
         bool ok;
 
         QString text = QInputDialog::getText(this,
-            tr("New playlist"),
-            tr("Playlist title : "),
-            QLineEdit::Normal,
-            tr("New playlist"),
-            &ok
-        );
+                                             tr("New playlist"),
+                                             tr("Playlist title : "),
+                                             QLineEdit::Normal,
+                                             tr("New playlist"),
+                                             &ok
+                                             );
         if(ok) {
             createPlaylistTab(text);
         }
@@ -877,8 +877,11 @@ void MainWindow::on_editNamePlaylistButton_clicked()
 void MainWindow::on_deletePlaylistItemButton_clicked()
 {
     deletePlaylistItem();
-
-
+    if(currentPlaylistTableView() != NULL && currentPlaylistTableView()->selectionModel() != NULL){
+        QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+        if(indexes.count()>0)
+            setSelectedMediaTimeByIndex(indexes.first().row());
+    }
 }
 
 void MainWindow::editPlaylistName()
@@ -890,12 +893,12 @@ void MainWindow::editPlaylistName()
         bool ok;
 
         QString text = QInputDialog::getText(this,
-            tr("Rename playlist"),
-            tr("Playlist title : "),
-            QLineEdit::Normal,
-            ui->playlistsTabWidget->tabText(tabIndex),
-            &ok
-        );
+                                             tr("Rename playlist"),
+                                             tr("Playlist title : "),
+                                             QLineEdit::Normal,
+                                             ui->playlistsTabWidget->tabText(tabIndex),
+                                             &ok
+                                             );
 
         if (ok && !text.isEmpty()) {
             ui->playlistsTabWidget->setTabText(tabIndex, text);
@@ -915,7 +918,7 @@ void MainWindow::deletePlaylistItem()
         if (indexes.count() == 0)
             return;
         if(!currentPlaylistModel()->isRunningMedia(indexes.first().row())){
-             currentPlaylistModel()->removePlayback(indexes.first().row());
+            currentPlaylistModel()->removePlayback(indexes.first().row());
             updateSettings();
             _scheduleListModel->updateLayout();
         }else{
@@ -945,7 +948,7 @@ void MainWindow::on_saveAction_triggered()
             QMessageBox::information(this, tr("Unable to open file."),file.errorString());
         }else{
             for (int i = 0; i < ui->playlistsTabWidget->count(); i++)
-             _dataStorage->addPlaylistModel((PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(i) )->model());
+                _dataStorage->addPlaylistModel((PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(i) )->model());
 
             _dataStorage->save(file);
             file.close();
@@ -959,7 +962,7 @@ void MainWindow::on_saveAsAction_triggered()
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save Listing"), "", tr("OPP file (*.opp)"));
 
     if (fileName.isEmpty()) {
-         return;
+        return;
     } else {
         if(fileName.right(4)!=".opp")
             fileName+=".opp";
@@ -982,13 +985,13 @@ void MainWindow::on_saveAsAction_triggered()
 void MainWindow::on_openListingAction_triggered()
 {
     if(_playlistPlayer->mediaPlayer()->isPlaying() || _playlistPlayer->mediaPlayer()->isPaused()){
-         QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before open a listing."));
+        QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before open a listing."));
     }else{
         //TODO Mettre test si modification de la programmation actuelle à la place
         verifSave();
         QString fileName = QFileDialog::getOpenFileName(this, tr("Open listing"), "", tr("OPP file (*.opp)"));
         if (fileName.isEmpty()) {
-             return;
+            return;
         } else {
             QFile file(fileName);
             if (!file.open(QIODevice::ReadWrite)) {
@@ -1012,7 +1015,7 @@ void MainWindow::on_openListingAction_triggered()
 void MainWindow::on_newListingAction_triggered()
 {
     if(_playlistPlayer->mediaPlayer()->isPlaying() || _playlistPlayer->mediaPlayer()->isPaused()){
-         QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before new listing."));
+        QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before new listing."));
     }else{
         //TODO Mettre test si modification de la programamtion actuelle à la place
         verifSave();
@@ -1104,8 +1107,8 @@ void MainWindow::on_scheduleAddButton_clicked()
         _scheduleListModel->addSchedule(schedule);
     } else {
         QMessageBox::critical(this, tr("Schedule validation"), QString(tr("A playlist was already scheduled between the %1 and %2, \nPlease choose an other launch date."))
-                                .arg(schedule->launchAt().toString())
-                                .arg(schedule->finishAt().toString())
+                              .arg(schedule->launchAt().toString())
+                              .arg(schedule->finishAt().toString())
                               );
         delete schedule;
     }
@@ -1234,9 +1237,14 @@ void MainWindow::loadPlugins(){
 
                 OCPM * op = qobject_cast<OCPM *>(plugin);
                 if (op != NULL)
-                {                    
+                {
                     op->setFilename(_selectedMediaName);
                     ui->menuPlugins->addAction(op->getName(),op,SLOT(launch()));
+                    ui->menuPlugins->addSeparator();
+                    ui->menuPlugins->addAction("secondary action",op,SLOT(secondaryAction()));
+                    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+                    if(indexes.count()>0)
+                        setSelectedMediaTimeByIndex(indexes.first().row());
                 }
             }
         }
@@ -1244,6 +1252,7 @@ void MainWindow::loadPlugins(){
 
 }
 
+/****** Chargement des SCREENSHOTS ******/
 void MainWindow::setSelectedMediaNameByIndex(int idx){
     if(idx == -1){
         *_selectedMediaName = "";
@@ -1257,11 +1266,15 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
 {
     if(idx == -1)
     {
-        ui->labelBefore->setText("00:00:00");
-        ui->label_screen->setText("00:00:00");
-        ui->label_stream->setText("00:00:00");
-        ui->label_none->setText("00:00:00");
-        ui->labelAfter->setText("00:00:00");
+        ui->labelBefore->setText("");
+        ui->label_screen->setText("");
+        ui->label_stream->setText("");
+        ui->label_none->setText("");
+        ui->labelAfter->setText("");
+        ui->screenAfter->clear();
+        ui->screenBefore->clear();
+        ui->screenBack->clear();
+
     }
     else
     {
@@ -1384,7 +1397,7 @@ void MainWindow::updateBackTime(const int &time)
 
 void MainWindow::setScreensBack(QString urlA)
 {
-   QPixmap pixmapA(urlA);
+    QPixmap pixmapA(urlA);
     ui->screen_none->setPixmap(pixmapA.scaled(ui->screenAfter->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
 
 }
