@@ -139,6 +139,7 @@ void DataStorage::save(QFile &file)
             playback.setAttribute("inMark", playbackElement->mediaSettings()->inMark());
             playback.setAttribute("outMark", playbackElement->mediaSettings()->outMark());
             playback.setAttribute("gain", playbackElement->mediaSettings()->gain());
+            playback.setAttribute("subtitlesEncode", playbackElement->mediaSettings()->subtitlesEncode());
             playlist.appendChild(playback);
         }
     }
@@ -252,6 +253,7 @@ void DataStorage::load(QFile &file)
             settings->setInMark( playbackAttributes.namedItem("inMark").nodeValue().toInt() );
             settings->setOutMark( playbackAttributes.namedItem("outMark").nodeValue().toInt() );
             settings->setGain( playbackAttributes.namedItem("gain").nodeValue().toFloat() );
+            settings->setSubtitlesEncode(playbackAttributes.namedItem("subtitlesEncode").nodeValue().toInt() );
 
             model->addPlayback(playback);
             this->_playlistModelList.push_back(model);

@@ -102,6 +102,14 @@ public:
     void initDefault();
 
     /**
+     * @brief Get subtitle encode
+     * @return The subtitle encode
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    inline int subtitlesEncode() const { return _subtitlesEncode; }
+
+    /**
      * @brief Get video ratio
      * @return The video ratio
      *
@@ -350,6 +358,14 @@ public:
     void setSubtitlesTrack(const int &track);
 
     /**
+     * @brief setSubtitlesEncode
+     * @param encode
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+    */
+    void setSubtitlesEncode(const int &encode);
+
+    /**
      * @brief setTestPattern
      * @param testpattern
      *
@@ -378,6 +394,13 @@ public:
      * @return
      */
     static QStringList ratioValues();
+
+    /**
+     * @brief encodeValues
+     * @return
+     */
+    static QStringList encodeValues();
+
 
     /**
      * @brief deinterlacingValues
@@ -483,6 +506,12 @@ signals:
      */
     void gainChanged(float);
 
+
+    /**
+     * @brief subtitlesEncodeChanged
+     */
+    void subtitlesEncodeChanged(int);
+
 private:
 
     /**
@@ -569,6 +598,11 @@ private:
      * @brief _gain
      */
     float _gain;
+
+    /**
+     * @brief _subtitlesEncode
+     */
+    int _subtitlesEncode;
 };
 
 #endif // MEDIASETTINGS_H
