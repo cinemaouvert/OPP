@@ -46,7 +46,7 @@ class MainWindow;
 class VideoWindow;
 class SettingsWindow;
 class LockSettingsWindow;
-class OCPM_Plugin;
+class AdvancedSettings;
 class AdvancedPictureSettingsWindow;
 class AboutDialog;
 class PlaylistTableView;
@@ -72,12 +72,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    /**
-     * @brief wait t ms between start movie and taking snapshot to have thumbnail
-     *
-     * @author Thomas Berthomé <thoberthome@laposte.net>
-     */
-    void waitSnap(int t);
+
 
     // FIX : ref 0000001
     /**
@@ -202,6 +197,32 @@ public slots:
      * @author Thomas Berthomé <thoberthome@laposte.net>
      */
     void updateBackTime(const int &time);
+
+    /**
+     * @brief Used to update the current screenshot
+     *
+     * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    void updateCurrentScreenshot();
+
+    /**
+     * @brief Returns the current playlist table view
+     * @return The current playlist table view
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
+    PlaylistTableView* currentPlaylistTableView() const;
+
+    /**
+     * @brief Returns the current playlist model
+     * @return The current playlist model
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
+    PlaylistModel* currentPlaylistModel() const;
+
+
+
 private slots:
 
     /**
@@ -566,21 +587,7 @@ protected:
      */
     Playback* selectedPlayback() const;
 
-    /**
-     * @brief Returns the current playlist table view
-     * @return The current playlist table view
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>
-     */
-    PlaylistTableView* currentPlaylistTableView() const;
 
-    /**
-     * @brief Returns the current playlist model
-     * @return The current playlist model
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>
-     */
-    PlaylistModel* currentPlaylistModel() const;
 
     /**
      * @brief Returns the playlist at the position index
@@ -589,6 +596,7 @@ protected:
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     Playlist* playlistAt(int index) const;
+
 
 private:
 
@@ -619,7 +627,7 @@ private:
     /**
      * @brief _advancedSettingsWindow The advanced settings window
      */
-    OCPM_Plugin *_advancedSettingsWindow;
+    AdvancedSettings *_advancedSettingsWindow;
     /**
      * @brief _advancedPictureSettingsWindow The advanced picture settings window
      */

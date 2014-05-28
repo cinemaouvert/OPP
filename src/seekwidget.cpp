@@ -101,7 +101,7 @@ void SeekWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void SeekWidget::wheelEvent(QWheelEvent *event)
 {
-    event->ignore();
+    event->ignore();initSeekWidget();
 
     if (!_vlcMediaPlayer)
         return;

@@ -826,23 +826,6 @@
                          <property name="verticalSpacing">
                           <number>0</number>
                          </property>
-                         <item row="0" column="0">
-                          <widget class="QLabel" name="audioTrackLabel">
-                           <property name="text">
-                            <string>Audio track</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="0" column="1">
-                          <widget class="QComboBox" name="audioTrackComboBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                          </widget>
-                         </item>
                          <item row="1" column="0">
                           <widget class="QLabel" name="videoTrackLabel">
                            <property name="text">
@@ -877,38 +860,25 @@
                            </property>
                           </widget>
                          </item>
-                         <item row="7" column="0">
-                          <widget class="QLabel" name="audioSyncLabel">
-                           <property name="text">
-                            <string>Audio sync</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="5" column="0">
-                          <widget class="QLabel" name="audioGainLabel">
-                           <property name="text">
-                            <string>Audio gain</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="5" column="1">
-                          <widget class="QDoubleSpinBox" name="audioGainDoubleSpinBox">
+                         <item row="7" column="1">
+                          <widget class="QComboBox" name="subtitlesTrackComboBox">
                            <property name="sizePolicy">
                             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                              <horstretch>0</horstretch>
                              <verstretch>0</verstretch>
                             </sizepolicy>
                            </property>
-                           <property name="maximum">
-                            <double>3.010000000000000</double>
-                           </property>
-                           <property name="singleStep">
-                            <double>0.010000000000000</double>
+                          </widget>
+                         </item>
+                         <item row="7" column="0">
+                          <widget class="QLabel" name="subtitlesTrackLabel">
+                           <property name="text">
+                            <string>Subtitles track</string>
                            </property>
                           </widget>
                          </item>
-                         <item row="7" column="1">
-                          <widget class="QDoubleSpinBox" name="audioSyncDoubleSpinBox">
+                         <item row="10" column="1">
+                          <widget class="QDoubleSpinBox" name="subtitlesSyncSpinBox">
                            <property name="sizePolicy">
                             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                              <horstretch>0</horstretch>
@@ -916,7 +886,24 @@
                             </sizepolicy>
                            </property>
                            <property name="minimum">
-                            <double>-99.989999999999995</double>
+                            <double>-99.900000000000006</double>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="10" column="0">
+                          <widget class="QLabel" name="subtitlesSyncLabel">
+                           <property name="text">
+                            <string>Subtitles sync</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="9" column="1">
+                          <widget class="QComboBox" name="subtitlesEncodecomboBox"/>
+                         </item>
+                         <item row="9" column="0">
+                          <widget class="QLabel" name="label_SubtiltesEncode">
+                           <property name="text">
+                            <string>Subtitles encode</string>
                            </property>
                           </widget>
                          </item>
@@ -1119,7 +1106,7 @@
                        </sizepolicy>
                       </property>
                       <property name="title">
-                       <string>Subtitle</string>
+                       <string>Audio</string>
                       </property>
                       <layout class="QVBoxLayout" name="verticalLayout_15">
                        <property name="spacing">
@@ -1142,8 +1129,15 @@
                          <property name="verticalSpacing">
                           <number>0</number>
                          </property>
-                         <item row="2" column="1">
-                          <widget class="QComboBox" name="subtitlesTrackComboBox">
+                         <item row="6" column="0">
+                          <widget class="QLabel" name="audioTrackLabel">
+                           <property name="text">
+                            <string>Audio track</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item row="6" column="1">
+                          <widget class="QComboBox" name="audioTrackComboBox">
                            <property name="sizePolicy">
                             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                              <horstretch>0</horstretch>
@@ -1152,22 +1146,24 @@
                            </property>
                           </widget>
                          </item>
-                         <item row="2" column="0">
-                          <widget class="QLabel" name="subtitlesTrackLabel">
-                           <property name="text">
-                            <string>Subtitles track</string>
+                         <item row="7" column="1">
+                          <widget class="QDoubleSpinBox" name="audioGainDoubleSpinBox">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="maximum">
+                            <double>3.010000000000000</double>
+                           </property>
+                           <property name="singleStep">
+                            <double>0.010000000000000</double>
                            </property>
                           </widget>
                          </item>
-                         <item row="3" column="0">
-                          <widget class="QLabel" name="subtitlesSyncLabel">
-                           <property name="text">
-                            <string>Subtitles sync</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="3" column="1">
-                          <widget class="QDoubleSpinBox" name="subtitlesSyncSpinBox">
+                         <item row="8" column="1">
+                          <widget class="QDoubleSpinBox" name="audioSyncDoubleSpinBox">
                            <property name="sizePolicy">
                             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                              <horstretch>0</horstretch>
@@ -1175,19 +1171,23 @@
                             </sizepolicy>
                            </property>
                            <property name="minimum">
-                            <double>-99.900000000000006</double>
+                            <double>-99.989999999999995</double>
                            </property>
                           </widget>
                          </item>
-                         <item row="5" column="0">
-                          <widget class="QLabel" name="label_SubtiltesEncode">
+                         <item row="7" column="0">
+                          <widget class="QLabel" name="audioGainLabel">
                            <property name="text">
-                            <string>Subtitles encode</string>
+                            <string>Audio gain</string>
                            </property>
                           </widget>
                          </item>
-                         <item row="5" column="1">
-                          <widget class="QComboBox" name="subtitlesEncodecomboBox"/>
+                         <item row="8" column="0">
+                          <widget class="QLabel" name="audioSyncLabel">
+                           <property name="text">
+                            <string>Audio sync</string>
+                           </property>
+                          </widget>
                          </item>
                         </layout>
                        </item>

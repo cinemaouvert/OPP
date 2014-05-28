@@ -53,7 +53,7 @@ SOURCES += src/media.cpp \
     src/track.cpp \
     src/audiotrack.cpp \
     src/videotrack.cpp \
-    src/updater.cpp
+    src/updater.cpp \
 
 # vlc library and headers
 mac:LIBS += -L"/Applications/VLC.app/Contents/MacOS/lib"
@@ -75,3 +75,4 @@ windows:INCLUDEPATH += "C:\Program Files (x86)\VideoLAN\VLC\sdk\include\vlc\plug
 
 mac:LIBS += -framework Cocoa
 mac:QMAKE_CXXFLAGS+=-x objective-c++
+

@@ -79,8 +79,10 @@ void PlaylistPlayer::playItemAt(const int &index)
 void PlaylistPlayer::next()
 {
     if (_currentIndex >= _playlist->count() - 1) {
+        _mediaPlayer->close(_playlist->at(_playlist->count() - 1));
         playItemAt(0);
     } else {
+        _mediaPlayer->close(_playlist->at(_currentIndex));
         playItemAt(++_currentIndex);
     }
 }
@@ -88,8 +90,10 @@ void PlaylistPlayer::next()
 void PlaylistPlayer::previous()
 {
     if (_currentIndex == 0) {
+        _mediaPlayer->close(_playlist->at(0));
         playItemAt(_playlist->count() - 1);
     } else {
+        _mediaPlayer->close(_playlist->at(_currentIndex));
         playItemAt(--_currentIndex);
     }
 }

@@ -30,23 +30,65 @@
 #include <QApplication>
 #include <QItemSelectionModel>
 #include <QDebug>
+#include <QMenu>
 #include "mainwindow.h"
+#include "media.h"
 
 PlaylistTableView::PlaylistTableView(MainWindow* mainWindow,QWidget *parent) :
     QTableView(parent),
-    _mainWindow(mainWindow)
+    _mainWindow(mainWindow),
+    _scS(NULL)
 {
     setAcceptDrops(true);
     setSelectionMode(QTableView::SingleSelection);
+    _scS = new ScreenshotSelector(_mainWindow);
+
 }
+
+PlaylistTableView::~PlaylistTableView(){
+    if(_scS != NULL)
+        delete _scS;
+}
+
 
 void PlaylistTableView::mousePressEvent(QMouseEvent *event)
 {
+    QTableView::mousePressEvent(event);
+
     if (event->button() == Qt::LeftButton) {
         startPos = event->pos();
+    }else{
+        QModelIndexList indexes = selectionModel()->selectedRows();
+        if (indexes.count() > 0)
+        {
+            QPoint globalPos = this->mapToGlobal(event->pos());
+
+            QModelIndex indexes = _mainWindow->currentPlaylistTableView()->currentIndex();
+            Media *media = _mainWindow->currentPlaylistModel()->playlist()->at(indexes.row())->media();
+
+            QMenu myMenu;
+            myMenu.addAction("Change screnshot");
+            myMenu.setEnabled(false);
+            if(!media->isAudio() && !media->isImage()){
+                myMenu.setEnabled(true);
+            }
+            // ...
+
+            QAction* selectedItem = myMenu.exec(globalPos);
+            if (selectedItem)
+            {
+                if(!media->isAudio() && !media->isImage()){
+                    _scS->setMedia(media);
+                    _scS->show();
+                }
+            }
+            else
+            {
+                // nothing was chosen
+            }
+        }
     }
 
-    QTableView::mousePressEvent(event);
 }
 
 void PlaylistTableView::mouseDoubleClickEvent ( QMouseEvent * event ){
@@ -57,6 +99,9 @@ void PlaylistTableView::mouseDoubleClickEvent ( QMouseEvent * event ){
             _mainWindow->on_advancedSettingsButton_clicked();
     }
 }
+
+
+
 
 
 void PlaylistTableView::mouseMoveEvent(QMouseEvent *event)
@@ -112,9 +157,9 @@ void PlaylistTableView::dragMoveEvent(QDragMoveEvent *event)
 
 void PlaylistTableView::dropEvent(QDropEvent *event)
 {
-        model()->dropMimeData(event->mimeData(), event->dropAction(), 0, 0, indexAt(event->pos()));
-        event->acceptProposedAction();
-        QTableView::dropEvent(event);
+    model()->dropMimeData(event->mimeData(), event->dropAction(), 0, 0, indexAt(event->pos()));
+    event->acceptProposedAction();
+    QTableView::dropEvent(event);
 }
 
 void PlaylistTableView::selectionChanged (const QItemSelection & selected, const QItemSelection & deselected){

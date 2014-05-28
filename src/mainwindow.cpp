@@ -168,7 +168,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->subtitlesEncodecomboBox->clear();
     ui->subtitlesEncodecomboBox->addItems(MediaSettings::encodeValues());
 
-    _advancedSettingsWindow = new OCPM_Plugin(this);
+    _advancedSettingsWindow = new AdvancedSettings(this);
     _advancedPictureSettingsWindow = new AdvancedPictureSettingsWindow(this);
     _settingsWindow = new SettingsWindow(this);
 
@@ -330,6 +330,7 @@ void MainWindow::on_binAddMediaButton_clicked()
         {
 
             libvlc_media_player_set_media(vlcMP, media->core());
+            libvlc_media_add_option(media->core(),":noaudio");
             libvlc_media_player_play(vlcMP);
             libvlc_media_player_set_position(vlcMP, 0.5f);
             float width = libvlc_video_get_width(vlcMP);
@@ -355,12 +356,7 @@ void MainWindow::on_binAddMediaButton_clicked()
     libvlc_vlm_release(vlc);
 }
 
-void MainWindow::waitSnap(int t)
-{
-    QTime dieTime= QTime::currentTime().addMSecs(t);
-    while( QTime::currentTime() < dieTime )
-        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
-}
+
 
 void MainWindow::on_binDeleteMediaButton_clicked()
 {
@@ -1434,3 +1430,13 @@ void MainWindow::on_subtitlesEncodecomboBox_currentIndexChanged(int index)
 
     currentPlaylistModel()->updateLayout();
 }
+
+void MainWindow::updateCurrentScreenshot(){
+    if(currentPlaylistTableView() != NULL &&  currentPlaylistTableView()->selectionModel() != NULL){
+        QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
+        if(indexes.count() > 0){
+            setSelectedMediaTimeByIndex(indexes.first().row());
+        }
+    }
+}
+

@@ -30,16 +30,20 @@
 #include <QTableView>
 #include "schedulelistmodel.h"
 #include "mainwindow.h"
+#include "screenshotselector.h"
+
 
 class PlaylistTableView : public QTableView
 {
     Q_OBJECT
 public:
     explicit PlaylistTableView(MainWindow* mainWindow,QWidget *parent = 0);
+    virtual ~PlaylistTableView();
 
 protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseDoubleClickEvent(QMouseEvent *event);
+
 
     void mouseMoveEvent(QMouseEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);
@@ -53,6 +57,7 @@ private:
     QPoint startPos;
     ScheduleListModel *_scheduleListModel;
     MainWindow *_mainWindow;
+    ScreenshotSelector *_scS;
 };
 
 #endif // PLAYLISTTABLEVIEW_H

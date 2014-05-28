@@ -46,4 +46,11 @@ QTime msecToQTime(uint msecs);
  */
 int qTimeToMsec(QTime time);
 
+/**
+ * @brief wait t ms between start movie and taking snapshot to have thumbnail
+ *
+ * @author Thomas Berthomé <thoberthome@laposte.net>
+ */
+void waitSnap(int t);
+
 #endif // UTILS_H

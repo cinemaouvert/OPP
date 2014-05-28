@@ -27,14 +27,16 @@
  **********************************************************************************/
 
 #include "utils.h"
+#include <qeventloop.h>
+#include <qcoreapplication.h>
 
 QTime msecToQTime(uint msecs)
 {
     const int hours = msecs/(1000*60*60);
     const int minutes = (msecs-(hours*1000*60*60))/(1000*60);
     const int seconds = (msecs-(minutes*1000*60)-(hours*1000*60*60))/1000;
-
-    return QTime(hours,minutes,seconds);
+    const int mseconds = msecs - ((minutes*1000*60)-(hours*1000*60*60))-(seconds*1000);
+    return QTime(hours,minutes,seconds,mseconds);
 }
 
 int qTimeToMsec(QTime time)
@@ -45,3 +47,9 @@ int qTimeToMsec(QTime time)
     return 1000*seconds+60000*minutes+3600000*hours;
 }
 
+void waitSnap(int t)
+{
+    QTime dieTime= QTime::currentTime().addMSecs(t);
+    while( QTime::currentTime() < dieTime )
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+}

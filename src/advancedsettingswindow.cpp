@@ -36,9 +36,10 @@
 #include <QMessageBox>
 #include <QDir>
 
-OCPM_Plugin::OCPM_Plugin(QWidget *parent) :
+AdvancedSettings::AdvancedSettings(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AdvancedSettingsWindow),
+    selectorWindow(NULL),
     _playback(0)
 {
     ui->setupUi(this);
@@ -46,14 +47,16 @@ OCPM_Plugin::OCPM_Plugin(QWidget *parent) :
     connect(ui->timeEdit_outMark, SIGNAL(timeChanged(QTime)), this, SLOT(updateLength()));
 
     ui->imageDurationTimeEdit->setCurrentSectionIndex(2);
+
+    selectorWindow = new ScreenshotSelector(parent);
 }
 
-OCPM_Plugin::~OCPM_Plugin()
+AdvancedSettings::~AdvancedSettings()
 {
     delete ui;
 }
 
-void OCPM_Plugin::setPlayback(Playback* playback)
+void AdvancedSettings::setPlayback(Playback* playback)
 {
     _playback=playback;
     /*Movie title*/
@@ -148,7 +151,7 @@ void OCPM_Plugin::setPlayback(Playback* playback)
         ui->label_outMark->setVisible(true);
     }
 
-
+    ui->changeScreenshotButton->setVisible(false);
     if(!_playback->media()->isAudio() && !_playback->media()->isImage()){
         QPixmap pixmap;
         QString path = "./screenshot/";
@@ -157,13 +160,14 @@ void OCPM_Plugin::setPlayback(Playback* playback)
         path += ".png";
         pixmap.load((path.toStdString().c_str()));
 
+        ui->changeScreenshotButton->setVisible(true);
         ui->label_picture->setPixmap(pixmap.scaled( QSize(400,400), Qt::KeepAspectRatio, Qt::FastTransformation));
     }else{
         ui->label_picture->clear();
     }
 }
 
-void OCPM_Plugin::on_buttonBox_OKCancel_accepted()
+void AdvancedSettings::on_buttonBox_OKCancel_accepted()
 {
     /*Test pattern*/
     //int index = ui->comboBox_testPattern->currentIndex();
@@ -212,24 +216,30 @@ void OCPM_Plugin::on_buttonBox_OKCancel_accepted()
     this->hide();
 }
 
-void OCPM_Plugin::on_buttonBox_OKCancel_rejected()
+void AdvancedSettings::on_buttonBox_OKCancel_rejected()
 {
     this->hide();
 }
 
-void OCPM_Plugin::updateLength()
+void AdvancedSettings::updateLength()
 {
     int secIn = ui->timeEdit_inMark->time().second()+60*ui->timeEdit_inMark->time().minute()+3600*ui->timeEdit_inMark->time().hour();
     int secOut = ui->timeEdit_outMark->time().second()+60*ui->timeEdit_outMark->time().minute()+3600*ui->timeEdit_outMark->time().hour();
     int diff = 1000*(secOut-secIn);
     QTime modified =  msecToQTime(diff);
-    ui->label_modifiedLengthValue->setText(modified.toString("hh:mm:ss"));
+    ui->label_modifiedLengthValue->setText(modified.toString("hh:mm:ss:zzz"));
 }
 
-void OCPM_Plugin::on_imageDurationTimeEdit_timeChanged(const QTime &date)
+void AdvancedSettings::on_imageDurationTimeEdit_timeChanged(const QTime &date)
 {
     int secOut = ui->imageDurationTimeEdit->time().second()+60*ui->imageDurationTimeEdit->time().minute()+3600*ui->imageDurationTimeEdit->time().hour();
     int diff = 1000*(secOut);
     QTime modified =  msecToQTime(diff);
-    ui->label_modifiedLengthValue->setText(modified.toString("hh:mm:ss"));
+    ui->label_modifiedLengthValue->setText(modified.toString("hh:mm:ss:zzz"));
+}
+
+void AdvancedSettings::on_changeScreenshotButton_clicked()
+{
+    selectorWindow->show();
+    selectorWindow->setMedia(_playback->media());
 }

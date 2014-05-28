@@ -30,18 +30,19 @@
 #define ADVANCEDSETTINGSWINDOW_H
 
 #include <QDialog>
+#include "screenshotselector.h"
 
 namespace Ui {
 class AdvancedSettingsWindow;
 }
 class Playback;
-class OCPM_Plugin : public QDialog
+class AdvancedSettings : public QDialog
 {
     Q_OBJECT
     
 public:
-    explicit OCPM_Plugin(QWidget *parent = 0);
-    ~OCPM_Plugin();
+    explicit AdvancedSettings(QWidget *parent = 0);
+    ~AdvancedSettings();
     /**
      * @brief Apply a playback to the window
      * @param playback The playback to apply
@@ -75,6 +76,8 @@ private slots:
 
     void on_imageDurationTimeEdit_timeChanged(const QTime &date);
 
+    void on_changeScreenshotButton_clicked();
+
 private:
     /**
      * @brief ui The UI
@@ -84,6 +87,12 @@ private:
      * @brief _playback The playback
      */
     Playback* _playback;
+    /**
+     * @brief the screenshot selector dialog
+     */
+    ScreenshotSelector *selectorWindow;
+
+
 };
 
 #endif // ADVANCEDSETTINGSWINDOW_H
