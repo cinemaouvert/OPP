@@ -217,6 +217,8 @@ void DataStorage::load(QFile &file)
         Playlist *playlist = new Playlist(playlistAttributes.namedItem("title").nodeValue());
         playlist->setId(playlistAttributes.namedItem("id").nodeValue().toInt());
 
+        connect(playlist, SIGNAL(playlistChanged()), _win, SLOT(updateDetails()));
+
         PlaylistModel *model = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
 
         // FIX : ref 0000001
@@ -261,6 +263,9 @@ void DataStorage::load(QFile &file)
             QString duration =  QString::number( (settings->outMark()-settings->inMark())) ;
             playback->media()->setDuration(duration);
 
+            QString enc = MediaSettings::encodeValues()[settings->subtitlesEncode()];
+
+            libvlc_media_add_option(playback->media()->core(), QString(":subsdec-encoding=" + enc).toLocal8Bit().data());
             char* optionIn = (QString(":start-time=") + QString::number(settings->inMark() / 1000)).toLocal8Bit().data();
             libvlc_media_add_option(playback->media()->core(),optionIn);
             char* optionOut = (QString(":stop-time=") + QString::number(settings->outMark() / 1000)).toLocal8Bit().data();

@@ -165,7 +165,6 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 bool PlaylistModel::addPlayback(Playback *playback)
 {
     const int count = _playlist->count();
-
     beginInsertRows(QModelIndex(), count, count);
     _playlist->append(playback);
     endInsertRows();

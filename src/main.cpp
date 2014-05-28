@@ -32,6 +32,7 @@
 #include <QLibraryInfo>
 #include <QDir>
 #include <QCoreApplication>
+#include <QTextCodec>
 
 #include <QMessageBox>
 
@@ -50,6 +51,7 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
     /*Settings initialization*/
     QSettings settings("opp", "opp");
 
@@ -115,11 +117,9 @@ int main(int argc, char *argv[])
 
     a.installTranslator(&translator2);
 
-
-
     MainWindow win;
     a.installEventFilter(new CustomEventFilter(win.getLocker(),&a));
-
+    qInstallMsgHandler(MainWindow::myMessageHandler);
     win.show();
 
     return a.exec();

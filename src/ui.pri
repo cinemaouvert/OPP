@@ -48,8 +48,9 @@ HEADERS += src/mainwindow.h \
     src/playlistlistmanager.h \
     src/aboutdialog.h \
     src/customeventfilter.h \
-    src/screenshotselector.h
-
+    src/screenshotselector.h \
+    src/exportpdf.h \
+    src/loggersingleton.h
 
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
@@ -73,7 +74,9 @@ SOURCES += src/main.cpp \
     src/playlistlistmanager.cpp \
     src/aboutdialog.cpp \
     src/customeventfilter.cpp \
-    src/screenshotselector.cpp
+    src/screenshotselector.cpp \
+    src/exportpdf.cpp \
+    src/loggersingleton.cpp
 
 FORMS += src/mainwindow.ui \
     src/saturationwidget.ui \
@@ -83,7 +86,7 @@ FORMS += src/mainwindow.ui \
     src/locksettingswindow.ui \
     src/statuswidget.ui \
     src/aboutdialog.ui \
-    src/screenshotselector.ui
-
+    src/screenshotselector.ui \
+    src/exportpdf.ui
 
 TRANSLATIONS = opp_fr.ts

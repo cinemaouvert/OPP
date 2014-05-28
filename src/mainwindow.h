@@ -37,6 +37,7 @@
 #include <QTime>
 #include "plugins.h"
 
+#include "loggersingleton.h"
 #include "videowindow.h"
 
 namespace Ui {
@@ -62,6 +63,7 @@ class Playback;
 class Playlist;
 class Locker;
 class DataStorage;
+class ExportPDF;
 
 
 class MainWindow : public QMainWindow
@@ -148,6 +150,20 @@ public:
       * @author Thomas Berthome <thoberthome@laposte.net>
       */
     void setSelectedMediaTimeByIndex(int idx);
+
+	/**
+      *@brief Create schedule in html
+      *
+      * @author Denis Sauneir <saunier.denis.86@gmail.com>
+      */
+    QString scheduleToHml();
+
+    /**
+      *@brief Redirect qmessages into a file and the log area
+      *
+      * @author Thomas Berthome <thoberthome@laposte.net>
+      */
+    static void myMessageHandler(QtMsgType type, const char* msg);
 
 public slots:
     /**
@@ -574,9 +590,19 @@ private slots:
       */
     void ocpmSecondaryAction();
 
-
-
+    /**
+     * @brief change subtitles encode
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
     void on_subtitlesEncodecomboBox_currentIndexChanged(int index);
+
+    /**
+     * @brief viex export pdf
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void on_viewExportPDFButton_clicked();
 
 protected:
     /**
@@ -693,6 +719,16 @@ private:
       * @brief store the plugin
       */
     OCPM* _ocpmPlugin;
+
+    /**
+      * @brief show pdf of schedule
+      */
+    ExportPDF* _exportPDF;
+
+    /**
+     * @brief logger
+     */
+    LoggerSingleton *_logger;
 };
 
 #endif // MAINWINDOW_H

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>454</width>
+    <height>478</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
    <item>
     <widget class="QLabel" name="label_version">
      <property name="text">
-      <string>Version 0.9.1</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Version 0.9.3&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -53,13 +53,38 @@
    <item>
     <widget class="QLabel" name="label_developers">
      <property name="text">
-      <string>Developers : Baptiste Roziere, Cyril Naud, Florian Mhun, Hamza Haddar, Thomas Berthomé, Denis Saunier, Thibaud Lamarche, Geoffrey Bergé.</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Developers : &lt;/span&gt;&lt;/p&gt;&lt;p&gt;Bergé Geoffrey &amp;lt;geoffrey.berge@live.fr&amp;gt; &lt;br/&gt;Berthomé Thomas &amp;lt;thoberthome@laposte.net&amp;gt; &lt;br/&gt;Haddar Hamza &amp;lt;ham.haddar@gmail.com&amp;gt; &lt;br/&gt;Lamarche Thibaud &amp;lt;lamarchethibaud@hotmail.fr&amp;gt; &lt;br/&gt;Mhun Florian &amp;lt;florian.mhun@gmail.com&amp;gt; &lt;br/&gt;Naud Cyril &amp;lt;futuramath@gmail.com&amp;gt; &lt;br/&gt;Rozière Baptiste &amp;lt;bapt.roziere@gmail.com&amp;gt; &lt;br/&gt;Saunier Denis &amp;lt;denissaunier@outlook.com&amp;gt; &lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::RichText</enum>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+     <property name="textInteractionFlags">
+      <set>Qt::TextBrowserInteraction</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_link">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/cinemaouvert/opp&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+     <property name="textInteractionFlags">
+      <set>Qt::TextBrowserInteraction</set>
      </property>
     </widget>
    </item>

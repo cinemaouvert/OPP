@@ -248,7 +248,6 @@ void MediaPlayer::play()
     break;
     }
     libvlc_media_player_play(_vlcMediaPlayer);
-
     _isPaused = false;
 }
 
@@ -592,8 +591,6 @@ void MediaPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
         emit player->lengthChanged(event->u.media_player_length_changed.new_length);
         break;
     case libvlc_MediaPlayerVout:
-        //TODO Write to the log file
-        qDebug() <<  "<<<<<<<<<<<<<<vout >>>>>>>>>>>>>";
         emit player->vout(event->u.media_player_vout.new_count);
         break;
     default:
