@@ -38,6 +38,8 @@
 #include <QPixmap>
 #include <QSettings>
 #include <QApplication>
+#include <QPrinter>
+#include <QPainter>
 
 #include <iostream>
 
@@ -63,6 +65,7 @@
 #include "utils.h"
 #include "datastorage.h"
 #include "aboutdialog.h"
+#include "exportpdf.h"
 
 
 #include "plugins.h"
@@ -87,7 +90,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _fileName(""),
     _projectionMode(VideoWindow::WINDOW),
     _selectedMediaName(NULL),
-    _ocpmPlugin(NULL)
+    _ocpmPlugin(NULL),
+    _exportPDF(NULL)
 
 {
     //setAttribute(Qt::WA_DeleteOnClose);
@@ -171,6 +175,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _advancedSettingsWindow = new OCPM_Plugin(this);
     _advancedPictureSettingsWindow = new AdvancedPictureSettingsWindow(this);
     _settingsWindow = new SettingsWindow(this);
+    _exportPDF = new ExportPDF(this);
 
     QSettings settings("opp","opp");
     if(settings.value("VideoReturnMode").toString() == "pictures")
@@ -1434,4 +1439,57 @@ void MainWindow::on_subtitlesEncodecomboBox_currentIndexChanged(int index)
     }
 
     currentPlaylistModel()->updateLayout();
+}
+
+QString MainWindow::scheduleToHml(){
+    QString out;
+    out = "<!DOCTYPE html>\n"
+           "<html>\n"
+               "<head>\n"
+                   "<title>OPP Schedule</title>\n"
+                   "<meta charset='UTF-8'>\n"
+                   "<meta name='viewport' content='width=device-width'>\n"
+               "</head>\n"
+               "<body>\n"
+                   "<div style='text-align:center; margin:0; padding:0;'>\n"
+                        "<h3>Schedule OPP</h3>"
+                        "<table border='1' cellspacing='5' cellpadding='5' style:'margin:10px auto auto auto;'>\n"
+                           "<thead>\n"
+                               "<tr>\n"
+                                   "<th>Launch at</th>\n"
+                                   "<th>Finish at</th>\n"
+                                   "<th>Playlist</th>\n"
+                                   "<th>State</th>\n"
+                               "</tr>\n"
+                           "</thead>\n"
+                           "<tbody>\n";
+
+        foreach(Schedule *schedule, _scheduleListModel->scheduleList()){
+            out +=  "<tr>\n"
+                +  QString("<td>%1</td>\n").arg(schedule->launchAt().toString())
+                +  QString("<td>%1</td>\n").arg(schedule->finishAt().toString())
+                +  QString("<td>%1</td>\n").arg(schedule->playlist()->title())
+                +  QString::fromUtf8("<td style='color:#ff03cc'>%1</td>\n").arg(QString(schedule->isActive() ? QString("Active") : schedule->isExpired() ? QString::fromUtf8("Expirée") : QString("Annulée")))
+                +  "</tr>\n";
+                foreach(Playback *playback, schedule->playlist()->playbackList()){
+                    out +=  "<tr>\n"
+                        +  QString("<td></td>\n")
+                        +  QString("<td colspan='2'>%1</td>\n").arg(playback->media()->name())
+                        +  QString(QString("<td>%1</td>\n").arg( msecToQTime(playback->media()->duration()).toString("hh:mm:ss")))
+                        +  "</tr>\n";
+                }
+        }
+
+        out +=             "</table>\n"
+                           "</div>\n"
+                       "</body>\n"
+                   "</html>\n";
+
+       return out.toUtf8();
+}
+
+void MainWindow::on_viewExportPDFButton_clicked()
+{
+    _exportPDF->setHtml(scheduleToHml());
+    _exportPDF->show();
 }
