@@ -217,6 +217,8 @@ void DataStorage::load(QFile &file)
         Playlist *playlist = new Playlist(playlistAttributes.namedItem("title").nodeValue());
         playlist->setId(playlistAttributes.namedItem("id").nodeValue().toInt());
 
+        connect(playlist, SIGNAL(playlistChanged()), _win, SLOT(updateDetails()));
+
         PlaylistModel *model = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
 
         // FIX : ref 0000001

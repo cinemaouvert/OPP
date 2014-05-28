@@ -754,6 +754,7 @@ void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
 
         updateSettings();
         updatePlaylistListCombox();
+        updateDetails();
 
     }
 }
@@ -1040,7 +1041,7 @@ void MainWindow::on_newListingAction_triggered()
             ui->schedulePlaylistListComboBox->removeItem(i);
         }
         updatePlaylistListCombox();
-
+        updateDetails();
 
         _fileName = "";
     }
