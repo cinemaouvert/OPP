@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2013 Catalogue Ouvert du Cinéma <dev@cinemaouvert.fr>
  *
- * Authors: Florian Mhun <florian.mhun@gmail.com>
+ * Authors: Denis Saunier <saunier.denis.86@gmail.com>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers
@@ -22,7 +22,6 @@
  * You should have received a copy of the GNU General Public License
  * along with Open Projection Program. If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************************/
-
 #include "updater.h"
 
 Updater::Updater(QObject *parent) :

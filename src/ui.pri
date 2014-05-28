@@ -47,7 +47,8 @@ HEADERS += src/mainwindow.h \
     src/datastorage.h \
     src/playlistlistmanager.h \
     src/aboutdialog.h \
-    src/customeventfilter.h
+    src/customeventfilter.h \
+    src/exportpdf.h
 
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
@@ -70,7 +71,8 @@ SOURCES += src/main.cpp \
     src/datastorage.cpp \
     src/playlistlistmanager.cpp \
     src/aboutdialog.cpp \
-    src/customeventfilter.cpp
+    src/customeventfilter.cpp \
+    src/exportpdf.cpp
 
 FORMS += src/mainwindow.ui \
     src/saturationwidget.ui \
@@ -79,6 +81,7 @@ FORMS += src/mainwindow.ui \
     src/settingswindow.ui \
     src/locksettingswindow.ui \
     src/statuswidget.ui \
-    src/aboutdialog.ui
+    src/aboutdialog.ui \
+    src/exportpdf.ui
 
 TRANSLATIONS = opp_fr.ts

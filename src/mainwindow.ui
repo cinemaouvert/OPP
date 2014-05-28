@@ -276,6 +276,17 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QPushButton" name="viewExportPDFButton">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../images.qrc">
+                 <normaloff>:/icons/resources/glyphicons/glyphicons_045_calendar.png</normaloff>:/icons/resources/glyphicons/glyphicons_045_calendar.png</iconset>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item>
@@ -1601,7 +1612,7 @@
      <x>0</x>
      <y>0</y>
      <width>1287</width>
-     <height>29</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
