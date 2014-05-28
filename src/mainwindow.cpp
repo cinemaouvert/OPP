@@ -38,6 +38,8 @@
 #include <QPixmap>
 #include <QSettings>
 #include <QApplication>
+#include <QPrinter>
+#include <QPainter>
 
 #include <iostream>
 
@@ -63,6 +65,7 @@
 #include "utils.h"
 #include "datastorage.h"
 #include "aboutdialog.h"
+#include "exportpdf.h"
 
 
 #include "plugins.h"
@@ -88,7 +91,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _fileName(""),
     _projectionMode(VideoWindow::WINDOW),
     _selectedMediaName(NULL),
-    _ocpmPlugin(NULL)
+    _ocpmPlugin(NULL),
+    _exportPDF(NULL)
 
 {
     //setAttribute(Qt::WA_DeleteOnClose);
@@ -172,6 +176,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _advancedSettingsWindow = new OCPM_Plugin(this);
     _advancedPictureSettingsWindow = new AdvancedPictureSettingsWindow(this);
     _settingsWindow = new SettingsWindow(this);
+    _exportPDF = new ExportPDF(this);
 
     QSettings settings("opp","opp");
     if(settings.value("VideoReturnMode").toString() == "pictures")
@@ -208,6 +213,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Chargement des plugins
     loadPlugins();
+
+    ui->binTableView->setColumnWidth(1,100);
+    ui->binTableView->setColumnWidth(2,60);
+    ui->binTableView->setColumnWidth(3,40);
+
 
     if(QApplication::argc()>1) //Restart : filename en argument
         openFile(QApplication::arguments()[1]);
@@ -358,6 +368,8 @@ void MainWindow::on_binAddMediaButton_clicked()
 
     libvlc_media_player_release(vlcMP);
     libvlc_vlm_release(vlc);
+
+
 }
 
 void MainWindow::waitSnap(int t)
@@ -759,6 +771,7 @@ void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
 
         updateSettings();
         updatePlaylistListCombox();
+        updateDetails();
 
     }
 }
@@ -1045,7 +1058,7 @@ void MainWindow::on_newListingAction_triggered()
             ui->schedulePlaylistListComboBox->removeItem(i);
         }
         updatePlaylistListCombox();
-
+        updateDetails();
 
         _fileName = "";
     }
@@ -1439,6 +1452,60 @@ void MainWindow::on_subtitlesEncodecomboBox_currentIndexChanged(int index)
 
     currentPlaylistModel()->updateLayout();
 }
+
+QString MainWindow::scheduleToHml(){
+    QString out;
+    out = "<!DOCTYPE html>\n"
+           "<html>\n"
+               "<head>\n"
+                   "<title>OPP Schedule</title>\n"
+                   "<meta charset='UTF-8'>\n"
+                   "<meta name='viewport' content='width=device-width'>\n"
+               "</head>\n"
+               "<body>\n"
+                   "<div style='text-align:center; margin:0; padding:0;'>\n"
+                        "<h3>Schedule OPP</h3>"
+                        "<table border='1' cellspacing='0' cellpadding='5' style:'margin: auto;'>\n"
+                           "<thead>\n"
+                               "<tr>\n"
+                                   "<th>Launch at</th>\n"
+                                   "<th>Finish at</th>\n"
+                                   "<th>Playlist</th>\n"
+                                   "<th>State</th>\n"
+                               "</tr>\n"
+                           "</thead>\n"
+                           "<tbody>\n";
+
+        foreach(Schedule *schedule, _scheduleListModel->scheduleList()){
+            out +=  "<tr style='background-color: lightgray; font-weight:bold;'>\n"
+                +  QString("<td>%1</td>\n").arg(schedule->launchAt().toString())
+                +  QString("<td>%1</td>\n").arg(schedule->finishAt().toString())
+                +  QString("<td style='color:#ff03cc'>%1</td>\n").arg(schedule->playlist()->title())
+                +  QString::fromUtf8("<td>%1</td>\n").arg(QString(schedule->isActive() ? QString("Active") : schedule->isExpired() ? QString::fromUtf8("Expirée") : QString("Annulée")))
+                +  "</tr>\n";
+                foreach(Playback *playback, schedule->playlist()->playbackList()){
+                    out +=  "<tr>\n"
+                        +  QString("<td></td>\n")
+                        +  QString("<td colspan='2'>%1</td>\n").arg(playback->media()->name())
+                        +  QString(QString("<td>%1</td>\n").arg( msecToQTime(playback->media()->duration()).toString("hh:mm:ss")))
+                        +  "</tr>\n";
+                }
+        }
+
+        out +=             "</table>\n"
+                           "</div>\n"
+                       "</body>\n"
+                   "</html>\n";
+
+       return out.toUtf8();
+}
+
+void MainWindow::on_viewExportPDFButton_clicked()
+{
+    _exportPDF->setHtml(scheduleToHml());
+    _exportPDF->show();
+}
+
 
 void MainWindow::myMessageHandler(QtMsgType type, const char* msg)
 {

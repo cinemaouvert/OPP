@@ -47,7 +47,7 @@ public:
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
-    enum Columns { Name = 0, Duration = 1, Used = 2, Location = 3 };
+    enum Columns { Name = 0, Duration = 1, Used = 2, Number = 3, Location = 4 };
 
     MediaListModel(QObject *parent = 0);
 

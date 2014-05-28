@@ -22,50 +22,51 @@
  * You should have received a copy of the GNU General Public License
  * along with Open Projection Program. If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************************/
+#ifndef EXPORTPDF_H
+#define EXPORTPDF_H
 
-#ifndef UPDATER_H
-#define UPDATER_H
+#include <QDialog>
 
-#include <QObject>
+namespace Ui {
+class ExportPDF;
+}
 
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkRequest>
-#include <QtNetwork/QNetworkReply>
-
-#include <QtCore/QUrl>
-#include <QtCore/QFile>
-#include <QEventLoop>
-#include <QMessageBox>
-#include <QProcess>
-#include <QDesktopServices>
-
-#include "config.h"
-
-/**
- * @brief Base class for update application
- */
-class Updater : public QObject
+class ExportPDF : public QDialog
 {
     Q_OBJECT
+
 public:
-    explicit Updater(QObject *parent = 0);
-    virtual ~Updater();
+    explicit ExportPDF(QWidget *parent = 0);
+    ~ExportPDF();
 
     /**
-     * @brief Compare version software with installer on cinemaouvert.fr
+     * @brief set html
      *
      * @author Denis Saunier <saunier.denis.86@gmail.com>
      */
-    void checkVersion();
+    void setHtml(const QString &html);
+
+private slots:
+    /**
+     * @brief get schedule and print pdf
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void on_exportPDF_Button_clicked();
+
+    /**
+     * @brief hide window
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void on_CancelButton_clicked();
 
 private:
-    /**
-     * @brief Download installer
-     *
-     * @author Denis Saunier <saunier.denis.86@gmail.com>
-     */
-    void getInstaller();
+    Ui::ExportPDF *ui;
+
+    QString _dir;
+
+    QString _html;
 };
 
-
-#endif // UPDATER_H
+#endif // EXPORTPDF_H
