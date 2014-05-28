@@ -48,7 +48,8 @@ HEADERS += src/mainwindow.h \
     src/playlistlistmanager.h \
     src/aboutdialog.h \
     src/customeventfilter.h \
-    src/exportpdf.h
+    src/exportpdf.h \
+    src/loggersingleton.h
 
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
@@ -72,7 +73,8 @@ SOURCES += src/main.cpp \
     src/playlistlistmanager.cpp \
     src/aboutdialog.cpp \
     src/customeventfilter.cpp \
-    src/exportpdf.cpp
+ 	src/exportpdf.cpp \
+    src/loggersingleton.cpp
 
 FORMS += src/mainwindow.ui \
     src/saturationwidget.ui \

@@ -37,6 +37,7 @@
 #include <QTime>
 #include "plugins.h"
 
+#include "loggersingleton.h"
 #include "videowindow.h"
 
 namespace Ui {
@@ -155,12 +156,19 @@ public:
       */
     void setSelectedMediaTimeByIndex(int idx);
 
-    /**
+	/**
       *@brief Create schedule in html
       *
       * @author Denis Sauneir <saunier.denis.86@gmail.com>
       */
     QString scheduleToHml();
+
+    /**
+      *@brief Redirect qmessages into a file and the log area
+      *
+      * @author Thomas Berthome <thoberthome@laposte.net>
+      */
+    static void myMessageHandler(QtMsgType type, const char* msg);
 
 public slots:
     /**
@@ -708,6 +716,11 @@ private:
       * @brief show pdf of schedule
       */
     ExportPDF* _exportPDF;
+
+    /**
+     * @brief logger
+     */
+    LoggerSingleton *_logger;
 };
 
 #endif // MAINWINDOW_H
