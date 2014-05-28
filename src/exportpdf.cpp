@@ -57,18 +57,20 @@ void ExportPDF::on_exportPDF_Button_clicked()
                                                  QCoreApplication::applicationDirPath(),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-    QPrinter printer(QPrinter::HighResolution);
-              printer.setOutputFormat(QPrinter::PdfFormat);
-              printer.setOrientation(QPrinter::Landscape);
-              printer.setOutputFileName(_dir + QDir::separator() +"scheduleOPP_" + (QDateTime::currentDateTime().toString()).replace(':', "_").replace('.', "_").replace(' ', "_") + ".pdf");
+    if(_dir != ""){
+        QApplication::setOverrideCursor(Qt::WaitCursor);
+        QPrinter printer(QPrinter::HighResolution);
+                  printer.setOutputFormat(QPrinter::PdfFormat);
+                  printer.setOrientation(QPrinter::Landscape);
+                  printer.setOutputFileName(_dir + QDir::separator() +"scheduleOPP_" + (QDateTime::currentDateTime().toString()).replace(':', "_").replace('.', "_").replace(' ', "_") + ".pdf");
 
-     QWebView webView;
-     webView.setHtml(_html);
-     webView.print(&printer);
-     _html = "";
-     _dir = "";
-     QApplication::restoreOverrideCursor();
+         QWebView webView;
+         webView.setHtml(_html);
+         webView.print(&printer);
+         _html = "";
+         _dir = "";
+         QApplication::restoreOverrideCursor();
+     }
      this->hide();
 }
 
