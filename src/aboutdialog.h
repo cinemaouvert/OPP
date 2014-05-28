@@ -42,6 +42,8 @@ private slots:
      */
     void on_pushButton_close_clicked();
 
+    void on_label_link_linkActivated(const QString &link);
+
 private:
     /**
      * @brief ui The UI
