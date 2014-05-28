@@ -1453,7 +1453,7 @@ QString MainWindow::scheduleToHml(){
                "<body>\n"
                    "<div style='text-align:center; margin:0; padding:0;'>\n"
                         "<h3>Schedule OPP</h3>"
-                        "<table border='1' cellspacing='5' cellpadding='5' style:'margin:10px auto auto auto;'>\n"
+                        "<table border='1' cellspacing='0' cellpadding='5' style:'margin: auto;'>\n"
                            "<thead>\n"
                                "<tr>\n"
                                    "<th>Launch at</th>\n"
@@ -1465,11 +1465,11 @@ QString MainWindow::scheduleToHml(){
                            "<tbody>\n";
 
         foreach(Schedule *schedule, _scheduleListModel->scheduleList()){
-            out +=  "<tr>\n"
+            out +=  "<tr style='background-color: lightgray; font-weight:bold;'>\n"
                 +  QString("<td>%1</td>\n").arg(schedule->launchAt().toString())
                 +  QString("<td>%1</td>\n").arg(schedule->finishAt().toString())
-                +  QString("<td>%1</td>\n").arg(schedule->playlist()->title())
-                +  QString::fromUtf8("<td style='color:#ff03cc'>%1</td>\n").arg(QString(schedule->isActive() ? QString("Active") : schedule->isExpired() ? QString::fromUtf8("Expirée") : QString("Annulée")))
+                +  QString("<td style='color:#ff03cc'>%1</td>\n").arg(schedule->playlist()->title())
+                +  QString::fromUtf8("<td>%1</td>\n").arg(QString(schedule->isActive() ? QString("Active") : schedule->isExpired() ? QString::fromUtf8("Expirée") : QString("Annulée")))
                 +  "</tr>\n";
                 foreach(Playback *playback, schedule->playlist()->playbackList()){
                     out +=  "<tr>\n"
