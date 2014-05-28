@@ -37,6 +37,7 @@
 #include <QTime>
 #include "plugins.h"
 
+#include "loggersingleton.h"
 #include "videowindow.h"
 
 namespace Ui {
@@ -153,6 +154,13 @@ public:
       * @author Thomas Berthome <thoberthome@laposte.net>
       */
     void setSelectedMediaTimeByIndex(int idx);
+
+    /**
+      *@brief Redirect qmessages into a file and the log area
+      *
+      * @author Thomas Berthome <thoberthome@laposte.net>
+      */
+    static void myMessageHandler(QtMsgType type, const char* msg);
 
 public slots:
     /**
@@ -685,6 +693,11 @@ private:
       * @brief store the plugin
       */
     OCPM* _ocpmPlugin;
+
+    /**
+     * @brief logger
+     */
+    LoggerSingleton *_logger;
 };
 
 #endif // MAINWINDOW_H

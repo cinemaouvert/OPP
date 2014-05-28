@@ -68,6 +68,7 @@
 #include "plugins.h"
 #include <QPluginLoader>
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -202,6 +203,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->textEdit_Codecs->setReadOnly(1);
     ui->textEdit_Codecs->append("<span style=\"text-decoration: underline;\">Codecs:</span>");
 
+    _logger = LoggerSingleton::getInstance();
+    _logger->setTextEdit(ui->label_5);
+
     //Chargement des plugins
     loadPlugins();
 
@@ -239,6 +243,7 @@ MainWindow::~MainWindow()
         delete _statusWidget;
     if(_locker != NULL)
         delete _locker;
+    LoggerSingleton::destroyInstance();
 }
 
 // FIX : ref 0000001
@@ -1433,4 +1438,35 @@ void MainWindow::on_subtitlesEncodecomboBox_currentIndexChanged(int index)
     }
 
     currentPlaylistModel()->updateLayout();
+}
+
+void MainWindow::myMessageHandler(QtMsgType type, const char* msg)
+{
+   QString dt = QDateTime::currentDateTime().toString("dd/MM/yyyy hh:mm:ss");
+   QString txt = QString("[%1]\n").arg(dt);
+
+   switch (type)
+   {
+      case QtDebugMsg:
+         txt += QString("\t{Debug} %1").arg(msg);
+         break;
+      case QtWarningMsg:
+         txt += QString("\t{Warning} %1").arg(msg);
+         break;
+      case QtCriticalMsg:
+         txt += QString("\t{Critical} %1").arg(msg);
+         break;
+      case QtFatalMsg:
+         txt += QString("\t{Fatal} %1").arg(msg);
+         abort();
+         break;
+   }
+
+   QFile outFile("opp.log");
+   outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+
+   QTextStream textStream(&outFile);
+   textStream << txt << endl;
+
+   LoggerSingleton::getInstance()->writeMessage(txt);
 }
