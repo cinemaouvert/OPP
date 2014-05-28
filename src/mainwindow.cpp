@@ -205,6 +205,11 @@ MainWindow::MainWindow(QWidget *parent) :
     //Chargement des plugins
     loadPlugins();
 
+    ui->binTableView->setColumnWidth(1,100);
+    ui->binTableView->setColumnWidth(2,60);
+    ui->binTableView->setColumnWidth(3,40);
+
+
     if(QApplication::argc()>1) //Restart : filename en argument
         openFile(QApplication::arguments()[1]);
 }
@@ -353,6 +358,8 @@ void MainWindow::on_binAddMediaButton_clicked()
 
     libvlc_media_player_release(vlcMP);
     libvlc_vlm_release(vlc);
+
+
 }
 
 void MainWindow::waitSnap(int t)
