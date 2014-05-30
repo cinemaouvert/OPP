@@ -601,5 +601,6 @@ void MediaPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
         event->type <= libvlc_MediaPlayerEncounteredError) {
         emit player->stateChanged();
     }
+
 }
 

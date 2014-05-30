@@ -75,6 +75,7 @@ private slots:
      */
     void on_buttonBox_OKCancel_rejected();
 
+
 private:
     /**
      * @brief ui The UI
