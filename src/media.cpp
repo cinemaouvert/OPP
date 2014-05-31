@@ -58,7 +58,7 @@ Media::Media(Media *media)
     _usageCount = media->_usageCount;
     _instance = media->_instance;
 
-    _vlcMedia = libvlc_media_new_path(_instance, media->_location.toLocal8Bit().data());
+    _vlcMedia = libvlc_media_new_path(_instance, media->_location.toStdString().data());
 
     media->usageCountAdd() ;
     _id = media->_id;
