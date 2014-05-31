@@ -34,7 +34,10 @@
 MediaTableView::MediaTableView(QWidget *parent) :
     QTableView(parent)
 {
-    setAcceptDrops(true);
+    setDragDropMode(QAbstractItemView::DragOnly);
+    setSelectionMode(QTableView::ContiguousSelection);
+
+
 }
 
 void MediaTableView::mousePressEvent(QMouseEvent *event)
@@ -81,6 +84,8 @@ void MediaTableView::startDrag(Qt::DropActions supportedActions)
         // TODO : It does not work...
         selectionModel()->clear();
     }
+    QTableView::startDrag(supportedActions);
+
 }
 
 void MediaTableView::dragEnterEvent(QDragEnterEvent *event)
@@ -91,6 +96,8 @@ void MediaTableView::dragEnterEvent(QDragEnterEvent *event)
         event->setDropAction(Qt::MoveAction);
         event->accept();
     }
+    QTableView::dragEnterEvent(event);
+
 }
 
 void MediaTableView::dragMoveEvent(QDragMoveEvent *event)
@@ -101,8 +108,11 @@ void MediaTableView::dragMoveEvent(QDragMoveEvent *event)
         event->setDropAction(Qt::MoveAction);
         event->accept();
     }
+    QTableView::dragMoveEvent(event);
+
 }
 
 void MediaTableView::dropEvent(QDropEvent *event)
 {
+    QTableView::dropEvent(event);
 }

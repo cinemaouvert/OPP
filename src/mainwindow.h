@@ -192,6 +192,14 @@ public slots:
      */
     void on_advancedSettingsButton_clicked();
 
+    /**
+     * @brief Open the advanced picture settings window
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
+     */
+    void on_advancedPictureSettingsButton_clicked();
+
+
 	/**
      * @brief Set a new screenshot in the screenBack
      *
@@ -306,12 +314,6 @@ private slots:
      */
     void on_disableButton_clicked();
 
-    /**
-     * @brief Open the advanced picture settings window
-     *
-     * @author Cyril Naud <futuramath@gmail.com>
-     */
-    void on_advancedPictureSettingsButton_clicked();
 
     /**
      * @brief Launch the playback of the playlist

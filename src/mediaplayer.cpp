@@ -624,3 +624,4 @@ void MediaPlayer::applyCrop(int cropTop,int cropLeft, int cropRight, int cropBot
     libvlc_video_set_crop_geometry(core(),val.toStdString().c_str());
 }
 
+

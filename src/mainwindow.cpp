@@ -1263,7 +1263,7 @@ void MainWindow::loadPlugins(){
                     _ocpmPlugin = op;
                     op->setFilename(_selectedMediaName);
                     ui->menuPlugins->addAction(op->getName(),op,SLOT(launch()));
-                    QPushButton *button = new QPushButton(tr("Change screenshot"));
+                    QPushButton *button = new QPushButton(tr("OCPM change screenshot"));
                     button->setIcon(QIcon(":icons/resources/glyphicons/glyphicons_008_film.png"));
                     ui->horizontalLayout_11->addWidget(button);
 

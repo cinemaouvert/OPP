@@ -67,24 +67,33 @@ void PlaylistTableView::mousePressEvent(QMouseEvent *event)
             Media *media = _mainWindow->currentPlaylistModel()->playlist()->at(indexes.row())->media();
 
             QMenu myMenu;
-            myMenu.addAction("Change screnshot");
-            myMenu.setEnabled(false);
+            QAction *change = new QAction(tr("Change screnshot"), this);
+            QAction *advanced = new QAction(tr("Advanced settings"), this);
+            QAction *advancedPic = new QAction(tr("Advanced picture settings"), this);
+
+            myMenu.addAction(change);
+            myMenu.addAction(advanced);
+            myMenu.addAction(advancedPic);
+            change->setEnabled(false);
             if(!media->isAudio() && !media->isImage()){
-                myMenu.setEnabled(true);
+                change->setEnabled(true);
             }
-            // ...
 
             QAction* selectedItem = myMenu.exec(globalPos);
-            if (selectedItem)
+            if (selectedItem == change)
             {
                 if(!media->isAudio() && !media->isImage()){
                     _scS->setMedia(media);
                     _scS->show();
                 }
             }
-            else
+            else if(selectedItem == advanced)
             {
-                // nothing was chosen
+                _mainWindow->on_advancedSettingsButton_clicked();
+            }
+            else if(selectedItem == advancedPic)
+            {
+                _mainWindow->on_advancedPictureSettingsButton_clicked();
             }
         }
     }
