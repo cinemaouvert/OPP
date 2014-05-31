@@ -120,6 +120,9 @@ int main(int argc, char *argv[])
     MainWindow win;
     a.installEventFilter(new CustomEventFilter(win.getLocker(),&a));
     qInstallMsgHandler(MainWindow::myMessageHandler);
+
+
+
     win.show();
 
     return a.exec();

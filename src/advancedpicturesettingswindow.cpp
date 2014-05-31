@@ -33,6 +33,7 @@
 #include "playback.h"
 
 #include "mainwindow.h"
+#include "mediaplayer.h"
 
 AdvancedPictureSettingsWindow::AdvancedPictureSettingsWindow(QWidget *parent) :
     QDialog(parent),
@@ -51,7 +52,6 @@ AdvancedPictureSettingsWindow::~AdvancedPictureSettingsWindow()
 
 void AdvancedPictureSettingsWindow::on_comboBox_deinterlace_currentIndexChanged(int index)
 {
-
     //_mediaPlayer->setCurrentDeinterlacing((Deinterlacing) index);
 }
 
@@ -59,6 +59,10 @@ void AdvancedPictureSettingsWindow::setPlayback(Playback* playback)
 {
     _playback=playback;
     ui->comboBox_deinterlace->setCurrentIndex(_playback->mediaSettings()->deinterlacing());
+    ui->spinBox_up->setValue(_playback->mediaSettings()->cropTop());
+    ui->spinBox_left->setValue(_playback->mediaSettings()->cropLeft());
+    ui->spinBox_right->setValue(_playback->mediaSettings()->cropRight());
+    ui->spinBox_down->setValue(_playback->mediaSettings()->cropBot());
 }
 
 void AdvancedPictureSettingsWindow::on_buttonBox_OKCancel_accepted()
@@ -70,6 +74,11 @@ void AdvancedPictureSettingsWindow::on_buttonBox_OKCancel_accepted()
     Deinterlacing deinterlacing = (Deinterlacing)indexDeinterlacing;
     _playback->mediaSettings()->setDeinterlacing(deinterlacing);
 
+    _playback->mediaSettings()->setCrop(ui->spinBox_up->value(),
+                                        ui->spinBox_left->value(),
+                                        ui->spinBox_right->value(),
+                                        ui->spinBox_down->value()
+                                        );
 
     this->hide();
 }

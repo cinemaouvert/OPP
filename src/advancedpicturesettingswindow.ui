@@ -80,7 +80,7 @@
     <item>
      <widget class="QGroupBox" name="gridGroupBox">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="locale">
        <locale language="English" country="UnitedStates"/>

@@ -65,6 +65,7 @@ mac:INCLUDEPATH += "/Applications/VLC.app/Contents/MacOS/include"
 unix:LIBS += -lvlc -lvlccore
 unix:!macx:LIBS += -lX11
 unix:!macx:INCLUDEPATH += /usr/include/vlc/plugins
+unix:!macx:INCLUDEPATH += /usr/include
 
 
 windows:LIBS += -L"C:\Program Files (x86)\VideoLAN\VLC\sdk\lib" -llibvlc -llibvlccore

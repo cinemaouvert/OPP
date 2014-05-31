@@ -32,7 +32,6 @@
 #include <QDebug>
 
 #include <vlc/vlc.h>
-
 #include "application.h"
 
 int Media::s_instanceCount = 0;
@@ -44,9 +43,9 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
     _id = Media::s_instanceCount++;
     initMedia(location);
     if(isFile)
-        _vlcMedia = libvlc_media_new_path(vlcInstance, location.toLocal8Bit().data());
+        _vlcMedia = libvlc_media_new_path(vlcInstance, location.toStdString().data());
     else
-        _vlcMedia = libvlc_media_new_location(vlcInstance, location.toLocal8Bit().data());
+        _vlcMedia = libvlc_media_new_location(vlcInstance, location.toStdString().data());
 
     _instance = vlcInstance;
     parseMediaInfos();

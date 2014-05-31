@@ -152,9 +152,8 @@ bool MediaListModel::removeMedia(int index)
 
 bool MediaListModel::addMedia(Media *media)
 {   
-    if (_mediaFileList.contains(media->location()))
+    if (_mediaFileList.contains(media->location()) || media->duration()<=0)
         return false;
-
     const int count = _mediaList.count();
 
     beginInsertRows(QModelIndex(), count, count);

@@ -188,6 +188,7 @@ void MediaPlayer::close(Playback *playback){
         disconnect(playback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
         disconnect(playback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
         disconnect(playback->mediaSettings(), SIGNAL(subtitlesEncodeChanged(int)), this, SLOT(setCurrentSubtitlesEncode(int)));
+        disconnect(playback->mediaSettings(), SIGNAL(cropChanged(int,int,int,int)), this, SLOT(applyCrop(int,int,int,int)));
     }
 }
 
@@ -212,6 +213,7 @@ void MediaPlayer::open(Playback *playback)
         connect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
         connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
         connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesEncodeChanged(int)), this, SLOT(setCurrentSubtitlesEncode(int)));
+        connect(playback->mediaSettings(), SIGNAL(cropChanged(int,int,int,int)), this, SLOT(applyCrop(int,int,int,int)));
 
         if(_currentPlayback->media()->isImage()){
             libvlc_media_player_set_time(_vlcMediaPlayer, 0);
@@ -247,6 +249,7 @@ void MediaPlayer::play()
     default:
     break;
     }
+
     libvlc_media_player_play(_vlcMediaPlayer);
     _isPaused = false;
 }
@@ -261,7 +264,7 @@ void MediaPlayer::playScreen()
 {
     _timer = new QTimer();
     _timer->connect(_timer, SIGNAL(timeout()), this, SLOT(takeScreen()));
-    _timer->start(250);
+    _timer->start(40);
 }
 
 void MediaPlayer::takeScreen()
@@ -387,6 +390,12 @@ void MediaPlayer::applyCurrentPlaybackSettings()
     setCurrentSaturation(_currentPlayback->mediaSettings()->saturation());
     setCurrentSubtitlesSync(_currentPlayback->mediaSettings()->subtitlesSync());
     setCurrentSubtitlesEncode(_currentPlayback->mediaSettings()->subtitlesEncode());
+
+    applyCrop(_currentPlayback->mediaSettings()->cropTop(),
+              _currentPlayback->mediaSettings()->cropLeft(),
+              _currentPlayback->mediaSettings()->cropRight(),
+              _currentPlayback->mediaSettings()->cropBot()
+              );
 }
 
 void MediaPlayer::setCurrentGain(float gain)
@@ -602,5 +611,16 @@ void MediaPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
         emit player->stateChanged();
     }
 
+}
+
+
+void MediaPlayer::applyCrop(int cropTop,int cropLeft, int cropRight, int cropBot){
+    QString plus =("+");
+    QString val =
+            QString::number(cropLeft)  +plus+
+            QString::number(cropTop)   +plus+
+            QString::number(cropRight) +plus+
+            QString::number(cropBot);
+    libvlc_video_set_crop_geometry(core(),val.toStdString().c_str());
 }
 

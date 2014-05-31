@@ -395,6 +395,14 @@ public slots:
      */
     void setCurrentSubtitlesEncode(int encode);
 
+    /**
+     * @brief Apply the crop option
+     *
+     * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    void applyCrop(int cropTop,int cropLeft, int cropRight, int cropBot);
+
+
 private slots:
 
     /**
@@ -554,6 +562,7 @@ private:
      */
     void stopScreen();
 
+
     /**
      * @brief The libvlc instance for stream
      */
@@ -620,6 +629,8 @@ private:
     std::string _sizeScreen;
 
     QTimer *_timer;
+
+
 };
 
 #endif // MEDIAPLAYER_H

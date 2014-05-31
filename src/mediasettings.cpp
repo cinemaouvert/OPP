@@ -121,6 +121,18 @@ void MediaSettings::setOutMark(int mark)
     emit outMarkChanged(_outMark);
 }
 
+
+void MediaSettings::setCrop(int top,int left, int right, int bot){
+    _cropTop = top;
+    _cropBot = bot;
+    _cropRight = right;
+    _cropLeft = left;
+
+    emit cropChanged(_cropTop,_cropLeft,_cropRight,_cropBot);
+}
+
+
+
 void MediaSettings::setGain(float gain)
 {
     _gain=gain;
@@ -147,6 +159,10 @@ void MediaSettings::initDefault()
     _outMark = 0;
     _gain=0;
     _subtitlesEncode = 0;
+    _cropTop = 0;
+    _cropBot = 0;
+    _cropLeft = 0;
+    _cropRight = 0;
 }
 
 QStringList MediaSettings::ratioValues()

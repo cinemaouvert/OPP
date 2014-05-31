@@ -219,6 +219,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->binTableView->setColumnWidth(3,40);
 
 
+
+
     if(QApplication::argc()>1) //Restart : filename en argument
         openFile(QApplication::arguments()[1]);
 }
@@ -362,7 +364,7 @@ void MainWindow::on_binAddMediaButton_clicked()
             QMessageBox::warning(this, tr("Import media"), QString(tr("The file %1 does not exist. Maybe it was deleted.")).arg(media->location()));
             delete media;
         } else if (_mediaListModel->addMedia(media) == false) {
-            QMessageBox::warning(this, tr("Import media"), QString(tr("The file %1 was already imported.")).arg(media->location()));
+            QMessageBox::warning(this, tr("Import media"), QString(tr("The file %1 was already imported or has a null timecode.")).arg(media->location()));
             delete media;
         }
     }

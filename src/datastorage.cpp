@@ -140,6 +140,11 @@ void DataStorage::save(QFile &file)
             playback.setAttribute("outMark", playbackElement->mediaSettings()->outMark());
             playback.setAttribute("gain", playbackElement->mediaSettings()->gain());
             playback.setAttribute("subtitlesEncode", playbackElement->mediaSettings()->subtitlesEncode());
+            playback.setAttribute("cropTop", playbackElement->mediaSettings()->cropTop());
+            playback.setAttribute("cropLeft", playbackElement->mediaSettings()->cropLeft());
+            playback.setAttribute("cropRight", playbackElement->mediaSettings()->cropRight());
+            playback.setAttribute("cropBot", playbackElement->mediaSettings()->cropBot());
+
             playlist.appendChild(playback);
         }
     }
@@ -256,6 +261,14 @@ void DataStorage::load(QFile &file)
             settings->setOutMark( playbackAttributes.namedItem("outMark").nodeValue().toInt() );
             settings->setGain( playbackAttributes.namedItem("gain").nodeValue().toFloat() );
             settings->setSubtitlesEncode(playbackAttributes.namedItem("subtitlesEncode").nodeValue().toInt() );
+
+            int cropTop, cropLeft, cropRight, cropBot;
+            cropTop = (playbackAttributes.namedItem("cropTop").nodeValue().toInt() );
+            cropLeft = (playbackAttributes.namedItem("cropLeft").nodeValue().toInt() );
+            cropRight = (playbackAttributes.namedItem("cropRight").nodeValue().toInt() );
+            cropBot = (playbackAttributes.namedItem("cropBot").nodeValue().toInt() );
+
+            settings->setCrop(cropTop,cropLeft,cropRight,cropBot);
 
             model->addPlayback(playback);
             this->_playlistModelList.push_back(model);

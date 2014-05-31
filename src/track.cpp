@@ -69,4 +69,5 @@ bool Track::operator==(const Track &track)
 QString Track::codecDescription() const
 {
     return QString( vlc_fourcc_GetDescription(UNKNOWN_ES, _vlcTrackInfo.i_codec) );
+
 }

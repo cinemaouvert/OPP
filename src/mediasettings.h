@@ -418,6 +418,41 @@ public:
      */
     static QList<float> scaleValues();
 
+    /**
+     * @brief Set crop values
+     *
+     * @author  Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    void setCrop(int top,int left, int right, int bot);
+
+    /**
+     * @brief Get crop Top value
+     *
+     * @author  Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    int cropTop(){return _cropTop;}
+
+    /**
+     * @brief Get crop Bot value
+     *
+     * @author  Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    int cropBot(){return _cropBot;}
+
+    /**
+     * @brief Get crop Right value
+     *
+     * @author  Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    int cropRight(){return _cropRight;}
+
+    /**
+     * @brief Get crop Left value
+     *
+     * @author  Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    int cropLeft(){return _cropLeft;}
+
 signals:
 
     /**
@@ -512,6 +547,12 @@ signals:
      */
     void subtitlesEncodeChanged(int);
 
+    /**
+     * @brief crop changed top left right bot
+     */
+    void cropChanged(int,int,int,int);
+
+
 private:
 
     /**
@@ -603,6 +644,26 @@ private:
      * @brief _subtitlesEncode
      */
     int _subtitlesEncode;
+
+    /**
+     * @brief The crop top value.
+     */
+    int _cropTop;
+
+    /**
+     * @brief The crop top value.
+     */
+    int _cropBot;
+
+    /**
+     * @brief The crop top value.
+     */
+    int _cropLeft;
+
+    /**
+     * @brief The crop top value.
+     */
+    int _cropRight;
 };
 
 #endif // MEDIASETTINGS_H

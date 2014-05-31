@@ -30,7 +30,7 @@
 #define ADVANCEDPICTURESETTINGSWINDOW_H
 
 #include <QDialog>
-
+#include "playlistplayer.h"
 namespace Ui {
 class AdvancedPictureSettingsWindow;
 }
@@ -51,7 +51,8 @@ public:
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void setPlayback(Playback* playback);
-    
+
+
 private slots:
     /**
      * @brief Set a new value for Deinterlacing

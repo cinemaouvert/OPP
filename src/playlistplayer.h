@@ -82,6 +82,15 @@ public:
      */
     bool isPlaying() const;
 
+    /**
+     * @brief Getter for the media player
+     * @return The media player instance
+     *
+     * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    MediaPlayer* getMediaPlayer() {return _mediaPlayer;}
+
+
 public slots:
 
     /**
