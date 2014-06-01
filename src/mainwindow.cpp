@@ -40,6 +40,8 @@
 #include <QApplication>
 #include <QPrinter>
 #include <QPainter>
+#include <QSysInfo>
+
 
 #include <iostream>
 
@@ -217,7 +219,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->binTableView->setColumnWidth(1,100);
     ui->binTableView->setColumnWidth(2,60);
     ui->binTableView->setColumnWidth(3,40);
-
 
 
 

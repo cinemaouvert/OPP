@@ -29,6 +29,9 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
+      <property name="handleWidth">
+       <number>20</number>
+      </property>
       <widget class="QFrame" name="verticalFrame_2">
        <property name="maximumSize">
         <size>
@@ -46,7 +49,7 @@
         <item>
          <widget class="QTabWidget" name="projectTabWidget">
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="summaryTab">
            <attribute name="title">
@@ -524,12 +527,34 @@
                 </property>
                 <item>
                  <layout class="QGridLayout" name="gridLayout_Before">
-                  <property name="margin">
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>7</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
                    <number>0</number>
                   </property>
                   <property name="spacing">
                    <number>0</number>
                   </property>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="labelBefore">
+                    <property name="frameShape">
+                     <enum>QFrame::NoFrame</enum>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
                   <item row="0" column="0">
                    <widget class="QLabel" name="screenBefore">
                     <property name="sizePolicy">
@@ -558,19 +583,6 @@
                     </property>
                     <property name="pixmap">
                      <pixmap resource="../images.qrc">:/icons/resources/images/intertitle.jpg</pixmap>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="0">
-                   <widget class="QLabel" name="labelBefore">
-                    <property name="frameShape">
-                     <enum>QFrame::NoFrame</enum>
-                    </property>
-                    <property name="text">
-                     <string>00:00:00</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -739,6 +751,19 @@
                       <property name="spacing">
                        <number>0</number>
                       </property>
+                      <item row="1" column="0">
+                       <widget class="QLabel" name="label_none">
+                        <property name="frameShape">
+                         <enum>QFrame::NoFrame</enum>
+                        </property>
+                        <property name="text">
+                         <string>00:00:00</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                       </widget>
+                      </item>
                       <item row="0" column="0">
                        <widget class="QLabel" name="screen_none">
                         <property name="sizePolicy">
@@ -767,19 +792,6 @@
                         </property>
                        </widget>
                       </item>
-                      <item row="1" column="0">
-                       <widget class="QLabel" name="label_none">
-                        <property name="frameShape">
-                         <enum>QFrame::NoFrame</enum>
-                        </property>
-                        <property name="text">
-                         <string>00:00:00</string>
-                        </property>
-                        <property name="alignment">
-                         <set>Qt::AlignCenter</set>
-                        </property>
-                       </widget>
-                      </item>
                      </layout>
                     </item>
                    </layout>
@@ -788,7 +800,16 @@
                 </item>
                 <item>
                  <layout class="QGridLayout" name="gridLayout_After">
-                  <property name="margin">
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>7</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
                    <number>0</number>
                   </property>
                   <property name="spacing">
