@@ -42,7 +42,7 @@ MediaListModel::MediaListModel(QObject *parent) :
 
 int MediaListModel::columnCount(const QModelIndex &parent) const
 {
-    return 6;
+    return 5;
 }
 
 int MediaListModel::rowCount(const QModelIndex &parent) const
@@ -73,9 +73,6 @@ QVariant MediaListModel::headerData(int section, Qt::Orientation orientation, in
         case Location:
             return trUtf8("Location");
             break;
-        case Number:
-            return trUtf8("Nb");
-            break;
         case Size:
             return trUtf8("Size");
             break;
@@ -103,11 +100,11 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
         case Duration:
             return msecToQTime(_mediaList[index.row()]->duration()).toString("hh:mm:ss");
             break;
-        case Number:
-            return _mediaList[index.row()]->usageCount();
-            break;
         case Size:
             return humanSize(_mediaList[index.row()]->size());
+            break;
+        case Used:
+            return _mediaList[index.row()]->usageCount();
             break;
         }
         break;
@@ -132,11 +129,11 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
         if (index.column() == Duration) {
             return msecToQTime(_mediaList[index.row()]->duration()).toString("hh:mm:ss");
         }
-        if (index.column() == Number) {
-            return _mediaList[index.row()]->usageCount();
-        }
         if (index.column() == Size) {
             return humanSize(_mediaList[index.row()]->size());
+        }
+        if (index.column() == Used) {
+            return QString("(") + QString::number(_mediaList[index.row()]->usageCount()) + QString(")");
         }
         break;
     }

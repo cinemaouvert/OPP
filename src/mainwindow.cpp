@@ -216,12 +216,11 @@ MainWindow::MainWindow(QWidget *parent) :
     //Chargement des plugins
     loadPlugins();
 
-    ui->binTableView->setColumnWidth(1,100);
+    //Redimensionnement colonnes Bin
+    ui->binTableView->setColumnWidth(1,80);
     ui->binTableView->setColumnWidth(2,60);
-    ui->binTableView->setColumnWidth(3,40);
 
-
-
+    //Restart
     if(QApplication::argc()>1) //Restart : filename en argument
         openFile(QApplication::arguments()[1]);
 }
