@@ -29,6 +29,10 @@
 #include "utils.h"
 #include <qeventloop.h>
 #include <qcoreapplication.h>
+#include <QString>
+#include <QStringList>
+#include <QStringListIterator>
+#include <QObject>
 
 QTime msecToQTime(uint msecs)
 {
@@ -52,4 +56,21 @@ void waitSnap(int t)
     QTime dieTime= QTime::currentTime().addMSecs(t);
     while( QTime::currentTime() < dieTime )
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+}
+
+QString humanSize(int size)
+{
+    float num = (float)size;
+    QStringList list;
+    list << QObject::tr("KB") << QObject::tr("MB") << QObject::tr("GB") << QObject::tr("TB");
+
+    QStringListIterator i(list);
+    QString unit(QObject::tr("bytes"));
+
+    while(num >= 1024.0 && i.hasNext())
+     {
+        unit = i.next();
+        num /= 1024.0;
+    }
+    return QString().setNum(num,'f',2)+" "+unit;
 }

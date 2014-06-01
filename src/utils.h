@@ -53,4 +53,11 @@ int qTimeToMsec(QTime time);
  */
 void waitSnap(int t);
 
+/**
+ * @brief Return the human readable size
+ *
+ * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+ */
+QString humanSize(int size);
+
 #endif // UTILS_H

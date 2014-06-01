@@ -47,7 +47,7 @@ public:
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
-    enum Columns { Name = 0, Duration = 1, Used = 2, Number = 3, Location = 4 };
+    enum Columns { Name = 0, Duration = 1, Used = 2, Number = 3, Location = 4 , Size = 5};
 
     MediaListModel(QObject *parent = 0);
 
@@ -163,6 +163,8 @@ signals:
     void mediaListChanged(int);
 
 private:
+
+
     /**
      * @brief _mediaList The media list
      */

@@ -103,6 +103,10 @@ void Media::parseMediaInfos()
     }
     _originalDuration = libvlc_media_get_duration(_vlcMedia);
     _duration = _originalDuration;
+
+    QFile file(this->location());
+    _size = file.size();
+    file.close();
 }
 
 void Media::setImageTime(QString time){

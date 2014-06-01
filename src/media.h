@@ -301,6 +301,13 @@ public:
       */
     void remove();
 
+    /**
+      * @brief used to get the size of the file
+      *
+      * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+      */
+    int size(){return _size;}
+
 
 protected:
 
@@ -385,6 +392,11 @@ private:
       * @brief link to the original Media
       */
     Media *_original;
+
+    /**
+      * @brief size of the file
+      */
+    int _size;
 };
 
 #endif // MEDIA_H

@@ -33,6 +33,7 @@
 
 #include "utils.h"
 #include "media.h"
+#include "utils.h"
 
 MediaListModel::MediaListModel(QObject *parent) :
     QAbstractTableModel(parent)
@@ -41,7 +42,7 @@ MediaListModel::MediaListModel(QObject *parent) :
 
 int MediaListModel::columnCount(const QModelIndex &parent) const
 {
-    return 5;
+    return 6;
 }
 
 int MediaListModel::rowCount(const QModelIndex &parent) const
@@ -75,9 +76,11 @@ QVariant MediaListModel::headerData(int section, Qt::Orientation orientation, in
         case Number:
             return trUtf8("Nb");
             break;
+        case Size:
+            return trUtf8("Size");
+            break;
         }
     }
-
     return QVariant();
 }
 
@@ -102,6 +105,9 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
             break;
         case Number:
             return _mediaList[index.row()]->usageCount();
+            break;
+        case Size:
+            return humanSize(_mediaList[index.row()]->size());
             break;
         }
         break;
@@ -128,6 +134,9 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
         }
         if (index.column() == Number) {
             return _mediaList[index.row()]->usageCount();
+        }
+        if (index.column() == Size) {
+            return humanSize(_mediaList[index.row()]->size());
         }
         break;
     }
@@ -223,3 +232,5 @@ void MediaListModel::removeAll()
         removeMedia(i);
     }
 }
+
+
