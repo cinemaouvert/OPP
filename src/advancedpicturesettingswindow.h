@@ -77,6 +77,14 @@ private slots:
     void on_buttonBox_OKCancel_rejected();
 
 
+    void on_spinBox_up_valueChanged(int arg1);
+
+    void on_spinBox_down_valueChanged(int arg1);
+
+    void on_spinBox_right_valueChanged(int arg1);
+
+    void on_spinBox_left_valueChanged(int arg1);
+
 private:
     /**
      * @brief ui The UI

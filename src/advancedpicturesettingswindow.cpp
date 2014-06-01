@@ -87,3 +87,31 @@ void AdvancedPictureSettingsWindow::on_buttonBox_OKCancel_rejected()
 {
     this->hide();
 }
+
+void AdvancedPictureSettingsWindow::on_spinBox_up_valueChanged(int arg1)
+{
+    if(ui->checkBox_upDownSync->isChecked()){
+        ui->spinBox_down->setValue(arg1);
+    }
+}
+
+void AdvancedPictureSettingsWindow::on_spinBox_down_valueChanged(int arg1)
+{
+    if(ui->checkBox_upDownSync->isChecked()){
+        ui->spinBox_up->setValue(arg1);
+    }
+}
+
+void AdvancedPictureSettingsWindow::on_spinBox_right_valueChanged(int arg1)
+{
+    if(ui->checkBox_leftRightSync->isChecked()){
+        ui->spinBox_left->setValue(arg1);
+    }
+}
+
+void AdvancedPictureSettingsWindow::on_spinBox_left_valueChanged(int arg1)
+{
+    if(ui->checkBox_leftRightSync->isChecked()){
+        ui->spinBox_right->setValue(arg1);
+    }
+}

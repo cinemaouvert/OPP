@@ -204,7 +204,7 @@ void AdvancedSettings::on_buttonBox_OKCancel_accepted()
         }
     }
     QString duration;
-    if(diff > 0 && timeIn > 0 ){
+    if(diff > 0){
         duration = QString::number(diff);
         _playback->media()->setDuration(duration);
     }else if(diff>0){

@@ -31,8 +31,13 @@
 #include <QItemSelectionModel>
 #include <QDebug>
 #include <QMenu>
+#include <QHeaderView>
+
 #include "mainwindow.h"
 #include "media.h"
+
+
+
 
 PlaylistTableView::PlaylistTableView(MainWindow* mainWindow,QWidget *parent) :
     QTableView(parent),
@@ -40,8 +45,12 @@ PlaylistTableView::PlaylistTableView(MainWindow* mainWindow,QWidget *parent) :
     _scS(NULL)
 {
     setAcceptDrops(true);
+    setDragEnabled(true);
     setSelectionMode(QTableView::SingleSelection);
+    setDragDropMode(QTableView::InternalMove);
     _scS = new ScreenshotSelector(_mainWindow);
+    verticalHeader()->setMovable(true);
+    setDropIndicatorShown(true);
 
 }
 
@@ -140,15 +149,13 @@ void PlaylistTableView::startDrag(Qt::DropActions supportedActions)
     QDrag *drag = new QDrag(this);
     drag->setMimeData(mimedata);
 
-    if (drag->start(Qt::CopyAction | Qt::MoveAction) == Qt::MoveAction) {
-        clearSelection();
-    }
+    drag->start(Qt::CopyAction | Qt::MoveAction);
 }
 
 void PlaylistTableView::dragEnterEvent(QDragEnterEvent *event)
 {
     PlaylistTableView *source = (PlaylistTableView *)(event->source());
-    if (source && source != this)
+    if (source )
     {
         event->setDropAction(Qt::MoveAction);
         event->accept();
@@ -158,7 +165,7 @@ void PlaylistTableView::dragEnterEvent(QDragEnterEvent *event)
 void PlaylistTableView::dragMoveEvent(QDragMoveEvent *event)
 {
     PlaylistTableView *source = (PlaylistTableView *)(event->source());
-    if (source && source != this) {
+    if (source ) {
         event->setDropAction(Qt::MoveAction);
         event->accept();
     }
