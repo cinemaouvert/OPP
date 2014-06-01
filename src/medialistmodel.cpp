@@ -133,7 +133,11 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
             return humanSize(_mediaList[index.row()]->size());
         }
         if (index.column() == Used) {
-            return QString("(") + QString::number(_mediaList[index.row()]->usageCount()) + QString(")");
+            if(_mediaList[index.row()]->usageCount()>0)
+                return QString("(") + QString::number(_mediaList[index.row()]->usageCount()) + QString(")");
+            else
+                return QString("");
+
         }
         break;
     }

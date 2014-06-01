@@ -76,7 +76,7 @@ void PlaylistTableView::mousePressEvent(QMouseEvent *event)
             Media *media = _mainWindow->currentPlaylistModel()->playlist()->at(indexes.row())->media();
 
             QMenu myMenu;
-            QAction *change = new QAction(tr("Change screnshot"), this);
+            QAction *change = new QAction(tr("Change screenshot"), this);
             QAction *advanced = new QAction(tr("Advanced settings"), this);
             QAction *advancedPic = new QAction(tr("Advanced picture settings"), this);
 
