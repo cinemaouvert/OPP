@@ -205,6 +205,9 @@ void MediaPlayer::open(Playback *playback)
 
     if(playback!= NULL && playback->mediaSettings() != NULL){
         _currentPlayback = playback;
+        if(_timerCrossFading != NULL){
+            stopCrossFading();
+        }
         setVolume(_currentVolume);
 
         libvlc_media_player_set_media(_vlcMediaPlayer, playback->media()->core());
