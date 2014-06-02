@@ -281,7 +281,7 @@ void MediaPlayer::startCrossFading(int time){
         _timerCrossFading = new QTimer();
         _timerCrossFading->connect(_timerCrossFading, SIGNAL(timeout()), this, SLOT(crossFading()));
 
-        int duration = _currentPlayback->mediaSettings()->outMark();
+        int duration = _currentPlayback->mediaSettings()->outMark() - _currentPlayback->mediaSettings()->inMark();
 
         if(duration <= 0)
             duration = _currentPlayback->media()->duration();
@@ -297,15 +297,20 @@ void MediaPlayer::startCrossFading(int time){
 
 void MediaPlayer::crossFading(){
     float vol  = _currentVolume;
-    for(float i = vol; i>= vol / 2 && i > 0; i-=4){
-        libvlc_audio_set_volume(_vlcMediaPlayer, ((float) i) * powf(10.f, _currentGain/10.f) );
-        waitSnap(100);
+    float delta = vol / 40;
+    for(float i = 40; i>0; i-=1){
+        vol -= delta;
+        libvlc_audio_set_volume(_vlcMediaPlayer, ((float) vol) * powf(10.f, _currentGain/10.f) );
+
+        int timeToWait =  _currentPlayback->mediaSettings()->crossFading() / 40;
+        waitSnap(timeToWait);
     }
     stopCrossFading();
 }
 
 void MediaPlayer::stopCrossFading(){
-    _timerCrossFading->stop();
+    if(_timerCrossFading != NULL)
+         _timerCrossFading->stop();
 }
 
 void MediaPlayer::playStream()
