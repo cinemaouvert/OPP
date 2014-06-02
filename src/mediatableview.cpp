@@ -36,8 +36,6 @@ MediaTableView::MediaTableView(QWidget *parent) :
 {
     setDragDropMode(QAbstractItemView::DragOnly);
     setSelectionMode(QTableView::ContiguousSelection);
-
-
 }
 
 void MediaTableView::mousePressEvent(QMouseEvent *event)
@@ -50,7 +48,7 @@ void MediaTableView::mousePressEvent(QMouseEvent *event)
 
 void MediaTableView::mouseMoveEvent(QMouseEvent *event)
 {
-    if (event->buttons() && Qt::LeftButton) {
+    if (event->buttons() == Qt::LeftButton) {
         int distance = (event->pos() - startPos).manhattanLength();
         if (distance >= QApplication::startDragDistance())
             startDrag(Qt::MoveAction);

@@ -1206,11 +1206,11 @@ QList<QWidget*> MainWindow::getLockedWidget()
     lockedWidget << ui->seekWidget;
     lockedWidget << ui->disableButton;
 
-    lockedWidget << ui->audioTrackComboBox;
     lockedWidget << ui->videoTrackComboBox;
-    lockedWidget << ui->subtitlesTrackComboBox;
-    lockedWidget << ui->subtitlesSyncSpinBox;
     lockedWidget << ui->ratioComboBox;
+    lockedWidget << ui->subtitlesTrackComboBox;
+    lockedWidget << ui->subtitlesEncodecomboBox;
+    lockedWidget << ui->subtitlesSyncSpinBox;
 
     lockedWidget << ui->gammaSpinBox;
     lockedWidget << ui->contrastSpinBox;
@@ -1218,8 +1218,9 @@ QList<QWidget*> MainWindow::getLockedWidget()
     lockedWidget << ui->saturationSpinBox;
     lockedWidget << ui->hueSpinBox;
 
-    lockedWidget << ui->audioSyncDoubleSpinBox;
+    lockedWidget << ui->audioTrackComboBox;
     lockedWidget << ui->audioGainDoubleSpinBox;
+    lockedWidget << ui->audioSyncDoubleSpinBox;
 
     lockedWidget << ui->advancedSettingsButton;
     lockedWidget << ui->advancedPictureSettingsButton;
