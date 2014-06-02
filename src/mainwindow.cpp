@@ -40,8 +40,7 @@
 #include <QApplication>
 #include <QPrinter>
 #include <QPainter>
-#include <QSysInfo>
-
+#include <QSignalMapper>
 
 #include <iostream>
 
@@ -94,7 +93,12 @@ MainWindow::MainWindow(QWidget *parent) :
     _projectionMode(VideoWindow::WINDOW),
     _selectedMediaName(NULL),
     _ocpmPlugin(NULL),
-    _exportPDF(NULL)
+    _exportPDF(NULL),
+    _vlcMire(NULL),
+    _mpMire(NULL),
+    _mireMire(NULL),
+    _pbMire(NULL),
+    _vWMire(NULL)
 
 {
     //setAttribute(Qt::WA_DeleteOnClose);
@@ -219,6 +223,30 @@ MainWindow::MainWindow(QWidget *parent) :
     //Redimensionnement colonnes Bin
     ui->binTableView->setColumnWidth(1,80);
     ui->binTableView->setColumnWidth(2,60);
+
+    ui->menuPlay_a_test_pattern->clear();
+    QDir mires("mires");
+    QStringList filesList = mires.entryList(QDir::Files);
+    QString fileName;
+
+    QSignalMapper* signalMapper = new QSignalMapper (this) ;
+    foreach(fileName, filesList)
+    {
+        QAction *action = new QAction(fileName,this);
+        ui->menuPlay_a_test_pattern->addAction(action);
+
+        connect(action, SIGNAL(triggered()), signalMapper, SLOT(map()));
+        signalMapper -> setMapping (action, fileName) ;
+
+
+
+    }
+
+    QAction *actionClose = new QAction("Close test pattern.",this);
+    ui->menuPlay_a_test_pattern->addAction(actionClose);
+
+    connect (actionClose,SIGNAL(triggered()),this,SLOT(closeWindowTestPattern()));
+    connect (signalMapper, SIGNAL(mapped(QString)), this, SLOT(playMire(QString)));
 
     //Restart
     if(QApplication::argc()>1) //Restart : filename en argument
@@ -1464,48 +1492,48 @@ void MainWindow::updateCurrentScreenshot(){
 QString MainWindow::scheduleToHml(){
     QString out;
     out = "<!DOCTYPE html>\n"
-           "<html>\n"
-               "<head>\n"
-                   "<title>OPP Schedule</title>\n"
-                   "<meta charset='UTF-8'>\n"
-                   "<meta name='viewport' content='width=device-width'>\n"
-               "</head>\n"
-               "<body>\n"
-                   "<div style='text-align:center; margin:0; padding:0;'>\n"
-                        "<h3>Schedule OPP</h3>"
-                        "<table border='1' cellspacing='0' cellpadding='5' style:'margin: auto;'>\n"
-                           "<thead>\n"
-                               "<tr>\n"
-                                   "<th>Launch at</th>\n"
-                                   "<th>Finish at</th>\n"
-                                   "<th>Playlist</th>\n"
-                                   "<th>State</th>\n"
-                               "</tr>\n"
-                           "</thead>\n"
-                           "<tbody>\n";
+            "<html>\n"
+            "<head>\n"
+            "<title>OPP Schedule</title>\n"
+            "<meta charset='UTF-8'>\n"
+            "<meta name='viewport' content='width=device-width'>\n"
+            "</head>\n"
+            "<body>\n"
+            "<div style='text-align:center; margin:0; padding:0;'>\n"
+            "<h3>Schedule OPP</h3>"
+            "<table border='1' cellspacing='0' cellpadding='5' style:'margin: auto;'>\n"
+            "<thead>\n"
+            "<tr>\n"
+            "<th>Launch at</th>\n"
+            "<th>Finish at</th>\n"
+            "<th>Playlist</th>\n"
+            "<th>State</th>\n"
+            "</tr>\n"
+            "</thead>\n"
+            "<tbody>\n";
 
-        foreach(Schedule *schedule, _scheduleListModel->scheduleList()){
-            out +=  "<tr style='background-color: lightgray; font-weight:bold;'>\n"
+    foreach(Schedule *schedule, _scheduleListModel->scheduleList()){
+        out +=  "<tr style='background-color: lightgray; font-weight:bold;'>\n"
                 +  QString("<td>%1</td>\n").arg(schedule->launchAt().toString())
                 +  QString("<td>%1</td>\n").arg(schedule->finishAt().toString())
                 +  QString("<td style='color:#ff03cc'>%1</td>\n").arg(schedule->playlist()->title())
                 +  QString::fromUtf8("<td>%1</td>\n").arg(QString(schedule->isActive() ? QString("Active") : schedule->isExpired() ? QString::fromUtf8("Expirée") : QString("Annulée")))
                 +  "</tr>\n";
-                foreach(Playback *playback, schedule->playlist()->playbackList()){
-                    out +=  "<tr>\n"
-                        +  QString("<td></td>\n")
-                        +  QString("<td colspan='2'>%1</td>\n").arg(playback->media()->name())
-                        +  QString(QString("<td>%1</td>\n").arg( msecToQTime(playback->media()->duration()).toString("hh:mm:ss")))
-                        +  "</tr>\n";
-                }
+        foreach(Playback *playback, schedule->playlist()->playbackList()){
+            out +=  "<tr>\n"
+                    +  QString("<td></td>\n")
+                    +  QString("<td colspan='2'>%1</td>\n").arg(playback->media()->name())
+                    +  QString(QString("<td>%1</td>\n").arg( msecToQTime(playback->media()->duration()).toString("hh:mm:ss")))
+                    +  "</tr>\n";
         }
+    }
 
-        out +=             "</table>\n"
-                           "</div>\n"
-                       "</body>\n"
-                   "</html>\n";
+    out +=             "</table>\n"
+            "</div>\n"
+            "</body>\n"
+            "</html>\n";
 
-       return out.toUtf8();
+    return out.toUtf8();
 }
 
 void MainWindow::on_viewExportPDFButton_clicked()
@@ -1517,31 +1545,83 @@ void MainWindow::on_viewExportPDFButton_clicked()
 
 void MainWindow::myMessageHandler(QtMsgType type, const char* msg)
 {
-   QString dt = QDateTime::currentDateTime().toString("dd/MM/yyyy hh:mm:ss");
-   QString txt = QString("[%1]\n").arg(dt);
+    QString dt = QDateTime::currentDateTime().toString("dd/MM/yyyy hh:mm:ss");
+    QString txt = QString("[%1]\n").arg(dt);
 
-   switch (type)
-   {
-      case QtDebugMsg:
-         txt += QString("\t{Debug} %1").arg(msg);
-         break;
-      case QtWarningMsg:
-         txt += QString("\t{Warning} %1").arg(msg);
-         break;
-      case QtCriticalMsg:
-         txt += QString("\t{Critical} %1").arg(msg);
-         break;
-      case QtFatalMsg:
-         txt += QString("\t{Fatal} %1").arg(msg);
-         abort();
-         break;
-   }
+    switch (type)
+    {
+    case QtDebugMsg:
+        txt += QString("\t{Debug} %1").arg(msg);
+        break;
+    case QtWarningMsg:
+        txt += QString("\t{Warning} %1").arg(msg);
+        break;
+    case QtCriticalMsg:
+        txt += QString("\t{Critical} %1").arg(msg);
+        break;
+    case QtFatalMsg:
+        txt += QString("\t{Fatal} %1").arg(msg);
+        abort();
+        break;
+    }
 
-   QFile outFile("opp.log");
-   outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+    QFile outFile("opp.log");
+    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
 
-   QTextStream textStream(&outFile);
-   textStream << txt << endl;
+    QTextStream textStream(&outFile);
+    textStream << txt << endl;
 
-   LoggerSingleton::getInstance()->writeMessage(txt);
+    LoggerSingleton::getInstance()->writeMessage(txt);
+}
+
+void MainWindow::playMire(QString fileName){
+    if(_vlcMire == NULL){
+        _vlcMire = libvlc_new(0, NULL);
+        _mpMire = new MediaPlayer(_vlcMire,this);
+        QString path = QString("mires")+QDir::separator()+fileName;
+        _mireMire = new Media(path,_vlcMire);
+        _pbMire = new Playback(_mireMire);
+        _mpMire->setBackMode(MediaPlayer::NONE);
+        _vWMire = new VideoWindow(this,VideoWindow::PROJECTION);
+        _mpMire->setVideoView((VideoView*) _vWMire->videoWidget());
+        _mpMire ->open(_pbMire);
+        _mpMire->play();
+
+        connect(_vWMire,SIGNAL(closed()),this,SLOT(closeMirePlayer()));
+    }else{
+        _mpMire->stop();
+        _mpMire->close(_pbMire);
+        QString path = QString("mires")+QDir::separator()+fileName;
+        _mireMire = new Media(path,_vlcMire);
+        _pbMire = new Playback(_mireMire);
+        _mpMire ->open(_pbMire);
+        _mpMire->play();
+    }
+
+}
+
+void MainWindow::closeWindowTestPattern(){
+    if(_vlcMire != NULL){
+        _mpMire->stop();
+        _mpMire->close(_pbMire);
+        _vWMire->close();
+    }
+}
+
+void MainWindow::closeMirePlayer(){
+    _mpMire->stop();
+    if(_vlcMire != NULL){
+        libvlc_release(_vlcMire);
+        _vlcMire=NULL;
+    }
+    if(_mpMire != NULL){
+        delete(_mpMire);
+        _mpMire=NULL;
+    }if(_pbMire != NULL){
+        delete(_pbMire);
+        _pbMire=NULL;
+    }if(_vWMire != NULL){
+        delete(_vWMire);
+        _vWMire = NULL;
+    }
 }

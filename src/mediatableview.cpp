@@ -42,19 +42,25 @@ MediaTableView::MediaTableView(QWidget *parent) :
 
 void MediaTableView::mousePressEvent(QMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton) {
-        startPos = event->pos();
-    }
     QTableView::mousePressEvent(event);
 }
 
+void MediaTableView::mouseReleaseEvent(QMouseEvent *event){
+
+    QTableView::mouseReleaseEvent(event);
+}
+
+void MediaTableView::dragLeaveEvent(QDragLeaveEvent *event){
+    QTableView::dragLeaveEvent(event);
+}
+
+
+
 void MediaTableView::mouseMoveEvent(QMouseEvent *event)
 {
-    if (event->buttons() && Qt::LeftButton) {
-        int distance = (event->pos() - startPos).manhattanLength();
-        if (distance >= QApplication::startDragDistance())
-            startDrag(Qt::MoveAction);
-    }
+    int distance = (event->pos() - startPos).manhattanLength();
+    if (distance >= QApplication::startDragDistance())
+        startDrag(Qt::MoveAction);
     QTableView::mouseMoveEvent(event);
 }
 

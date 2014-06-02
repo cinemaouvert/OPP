@@ -322,6 +322,18 @@
            </item>
            <item>
             <widget class="QTableView" name="scheduleTableView">
+             <property name="dragDropOverwriteMode">
+              <bool>false</bool>
+             </property>
+             <property name="dragDropMode">
+              <enum>QAbstractItemView::DragOnly</enum>
+             </property>
+             <property name="defaultDropAction">
+              <enum>Qt::MoveAction</enum>
+             </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::MultiSelection</enum>
+             </property>
              <property name="selectionBehavior">
               <enum>QAbstractItemView::SelectRows</enum>
              </property>
@@ -1733,7 +1745,12 @@
      <addaction name="actionProjection"/>
      <addaction name="actionWindow"/>
     </widget>
-    <addaction name="testPatternAction"/>
+    <widget class="QMenu" name="menuPlay_a_test_pattern">
+     <property name="title">
+      <string>Play a test pattern</string>
+     </property>
+     <addaction name="actionDefault"/>
+    </widget>
     <addaction name="separator"/>
     <addaction name="automationAction"/>
     <addaction name="outputAction"/>
@@ -1742,6 +1759,7 @@
     <addaction name="statusBarAction"/>
     <addaction name="separator"/>
     <addaction name="menuVideoMode"/>
+    <addaction name="menuPlay_a_test_pattern"/>
    </widget>
    <widget class="QMenu" name="menuConfiguration">
     <property name="title">
@@ -1846,14 +1864,6 @@
    </property>
    <property name="text">
     <string>Import</string>
-   </property>
-  </action>
-  <action name="testPatternAction">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Play a test pattern</string>
    </property>
   </action>
   <action name="automationAction">
@@ -1994,6 +2004,11 @@
    </property>
    <property name="shortcutContext">
     <enum>Qt::WidgetShortcut</enum>
+   </property>
+  </action>
+  <action name="actionDefault">
+   <property name="text">
+    <string>Default</string>
    </property>
   </action>
  </widget>

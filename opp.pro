@@ -34,6 +34,7 @@ TARGET = opp
 QT += xml
 QT += network
 QT += webkit
+
 DEPENDPATH += ./src
 INCLUDEPATH += ./src
 

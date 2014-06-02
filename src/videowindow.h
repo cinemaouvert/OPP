@@ -88,7 +88,13 @@ public:
      */
     void closeEvent (QCloseEvent *event);
 
-
+signals:
+    /**
+     * @brief Signal launch when we close the window
+     *
+     * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+     */
+    void closed();
 private:
     /**
      * @brief _videoWidget The video widget

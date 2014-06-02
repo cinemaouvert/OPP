@@ -35,6 +35,8 @@
 #include <QLabel>
 #include <QModelIndexList>
 #include <QTime>
+#include <vlc/vlc.h>
+
 #include "plugins.h"
 
 #include "loggersingleton.h"
@@ -64,6 +66,8 @@ class Playlist;
 class Locker;
 class DataStorage;
 class ExportPDF;
+class MediaPlayer;
+class Media;
 
 
 class MainWindow : public QMainWindow
@@ -593,6 +597,13 @@ private slots:
     void ocpmSecondaryAction();
 
     /**
+      * @brief slot for the launch of the mire
+      *
+      * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+      */
+    void playMire(QString fileName);
+
+    /**
      * @brief change subtitles encode
      *
      * @author Denis Saunier <saunier.denis.86@gmail.com>
@@ -605,6 +616,22 @@ private slots:
      * @author Denis Saunier <saunier.denis.86@gmail.com>
      */
     void on_viewExportPDFButton_clicked();
+
+    /**
+      * @brief slot to close the mire player
+      *
+      * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+      */
+    void closeMirePlayer();
+
+    /**
+      * @brief slot to close the window of the mire player
+      *
+      * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+      */
+    void closeWindowTestPattern();
+
+
 
 protected:
     /**
@@ -731,6 +758,31 @@ private:
      * @brief logger
      */
     LoggerSingleton *_logger;
+
+    /**
+     * @brief vlc instance for the test pattern
+     */
+    libvlc_instance_t *_vlcMire;
+
+    /**
+     * @brief Media player for the test pattern
+     */
+    MediaPlayer *_mpMire;
+
+    /**
+     * @brief media for the test pattern
+     */
+    Media *_mireMire;
+
+    /**
+     * @brief Playback for the test pattern
+     */
+    Playback *_pbMire;
+
+    /**
+     * @brief VideoWindow for the test pattern
+     */
+    VideoWindow *_vWMire;
 };
 
 #endif // MAINWINDOW_H
