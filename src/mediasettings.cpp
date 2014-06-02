@@ -167,7 +167,7 @@ void MediaSettings::initDefault()
     _cropBot = 0;
     _cropLeft = 0;
     _cropRight = 0;
-    _crossFading = 5000;
+    _crossFading = 0;
 }
 
 QStringList MediaSettings::ratioValues()
