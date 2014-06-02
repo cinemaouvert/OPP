@@ -197,10 +197,11 @@ void SettingsWindow::on_restart_clicked()
 
 void SettingsWindow::on_radioButton_locateRight_clicked()
 {
-    QMessageBox::information(this, "Apply",tr("There is a 2 seconds delay. \n You'll need to restart the software to apply it."));
+    QMessageBox::information(this, "Apply",tr("You'll need to restart the software to apply it."));
 }
 
 void SettingsWindow::on_radioButton_locateLeft_clicked()
 {
     QMessageBox::information(this, "Apply",tr("You'll need to restart the software to apply it."));
 }
+

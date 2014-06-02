@@ -231,6 +231,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>You will need to restart the software to apply the language.</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -249,16 +256,6 @@
          <layout class="QHBoxLayout" name="horizontalLayout_3"/>
         </item>
        </layout>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_indicationRestartLanguage">
-        <property name="text">
-         <string>You'll need to restart the software to apply the new language and the new dual screen location .</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
       </item>
      </layout>
     </widget>
@@ -287,6 +284,12 @@
      </item>
      <item>
       <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="standardButtons">
         <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
        </property>
