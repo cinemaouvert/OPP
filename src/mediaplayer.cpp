@@ -291,7 +291,6 @@ void MediaPlayer::startCrossFading(int time){
 void MediaPlayer::crossFading(){
     float vol  = _currentVolume;
     for(float i = vol; i>= vol / 2 && i > 0; i-=4){
-        qDebug() << "CrossFading :" + QString::number(i);
         libvlc_audio_set_volume(_vlcMediaPlayer, ((float) i) * powf(10.f, _currentGain/10.f) );
         waitSnap(100);
     }
