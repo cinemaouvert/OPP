@@ -39,6 +39,7 @@
 #include <sstream>
 
 #include"mainwindow.h"
+#include "utils.h"
 
 SettingsWindow::SettingsWindow(QWidget *parent) :
     QDialog(parent),
@@ -56,6 +57,7 @@ void SettingsWindow::init(){
     ui->lineEdit_intertitlePath->setText(settings.value("intertitlePath").toString());
     ui->lineEdit_moviesPath->setText(settings.value("moviesPath").toString());
     ui->lineEdit_UpdatePath->setText(settings.value("updatePath").toString());
+    ui->timeEdit_CrossFading->setTime(msecToQTime(settings.value("crossFadingTime").toInt()));
     ui->groupBox_3->setEnabled(false);
     setVideoReturnMode();
 
@@ -141,6 +143,7 @@ void SettingsWindow::accept() {
     settings.setValue("lang", getLang(ui->comboBox_language->currentIndex()));
     settings.setValue("locateR", ui->radioButton_locateRight->isChecked());
     settings.setValue("updatePath", ui->lineEdit_UpdatePath->text());
+    settings.setValue("crossFadingTime", QString::number(qTimeToMsec(ui->timeEdit_CrossFading->time())));
     setSettingsVideoReturnMode();
 }
 
