@@ -398,13 +398,6 @@ private slots:
     void on_audioGainDoubleSpinBox_valueChanged(double arg1);
 
     /**
-     * @brief Play a test pattern
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>
-     */
-    void on_testPatternAction_triggered();
-
-    /**
      * @brief Save the current project
      */
     void on_saveAsAction_triggered();

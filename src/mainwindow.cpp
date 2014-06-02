@@ -212,7 +212,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _selectedMediaName = new QString("");
 
     ui->textEdit_Codecs->setReadOnly(1);
-    ui->textEdit_Codecs->append("<span style=\"text-decoration: underline;\">Codecs:</span>");
+    ui->textEdit_Codecs->append("<span style=\"text-decoration: underline;\">Audio codecs:</span>");
+    ui->textEdit_Codecs->append("");
+    ui->textEdit_Codecs->append("<span style=\"text-decoration: underline;\">Video codecs:</span>");
 
     _logger = LoggerSingleton::getInstance();
     _logger->setTextEdit(ui->label_5);
@@ -325,12 +327,24 @@ void MainWindow::updateProjectSummary()
 
 void MainWindow::updateDetails() {
     ui->textEdit_Codecs->clear();
-    ui->textEdit_Codecs->append("<span style=\"text-decoration: underline;\">Codecs:</span>");
+    ui->textEdit_Codecs->append("<span style=\"text-decoration: underline;\">Audio codecs:</span>");
     for(int i=0; i<ui->playlistsTabWidget->count();i++) {
         PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(i))->model();
         foreach(Playback *playback, model->playlist()->playbackList()) {
             foreach(AudioTrack audioTrack, playback->media()->audioTracks()) {
                 QString codec = audioTrack.codecDescription();
+                if(!ui->textEdit_Codecs->toHtml().contains(codec))
+                    ui->textEdit_Codecs->append(codec);
+            }
+        }
+    }
+    ui->textEdit_Codecs->append("");
+    ui->textEdit_Codecs->append("<span style=\"text-decoration: underline;\">Video codecs:</span>");
+    for(int i=0; i<ui->playlistsTabWidget->count();i++) {
+        PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(i))->model();
+        foreach(Playback *playback, model->playlist()->playbackList()) {
+            foreach(VideoTrack videoTrack, playback->media()->videoTracks()) {
+                QString codec = videoTrack.codecDescription();
                 if(!ui->textEdit_Codecs->toHtml().contains(codec))
                     ui->textEdit_Codecs->append(codec);
             }
@@ -728,11 +742,6 @@ void MainWindow::on_menuVideoMode_triggered(QAction *action)
             _videoWindow->setDisplayMode(_projectionMode);
         }
     }
-}
-
-// TODO : play test pattern
-void MainWindow::on_testPatternAction_triggered()
-{
 }
 
 void MainWindow::stop(){

@@ -29,6 +29,19 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <widget class="QLabel" name="label_title">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
@@ -66,7 +79,7 @@
         <property name="formAlignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
-        <item row="0" column="0">
+        <item row="1" column="0">
          <widget class="QLabel" name="label_inMark">
           <property name="enabled">
            <bool>true</bool>
@@ -76,7 +89,7 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
+        <item row="1" column="1">
          <widget class="QTimeEdit" name="timeEdit_inMark">
           <property name="enabled">
            <bool>true</bool>
@@ -93,21 +106,41 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="imageDurationLabel">
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_outMark">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="text">
-           <string>Image duration</string>
+           <string>Out mark</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
-         <widget class="QTimeEdit" name="imageDurationTimeEdit">
+        <item row="2" column="1">
+         <widget class="QTimeEdit" name="timeEdit_outMark">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="displayFormat">
            <string>HH:mm:ss</string>
           </property>
          </widget>
         </item>
         <item row="5" column="0">
+         <widget class="QLabel" name="imageDurationLabel">
+          <property name="text">
+           <string>Image duration</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QTimeEdit" name="imageDurationTimeEdit">
+          <property name="displayFormat">
+           <string>HH:mm:ss</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
          <widget class="QLabel" name="label_originalLength">
           <property name="minimumSize">
            <size>
@@ -120,14 +153,14 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="1">
+        <item row="6" column="1">
          <widget class="QLabel" name="label_originalLengthValue">
           <property name="text">
            <string/>
           </property>
          </widget>
         </item>
-        <item row="6" column="0">
+        <item row="7" column="0">
          <widget class="QLabel" name="label_modifiedLength">
           <property name="minimumSize">
            <size>
@@ -140,46 +173,52 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="1">
+        <item row="7" column="1">
          <widget class="QLabel" name="label_modifiedLengthValue">
           <property name="text">
            <string/>
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_outMark">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="text">
-           <string>Out mark</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QTimeEdit" name="timeEdit_outMark">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="displayFormat">
-           <string>HH:mm:ss</string>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="0">
+        <item row="9" column="0">
          <widget class="QLabel" name="label_CrossFading">
           <property name="text">
            <string>Sound Fade-out</string>
           </property>
          </widget>
         </item>
-        <item row="7" column="1">
+        <item row="9" column="1">
          <widget class="QTimeEdit" name="timeEdit_CrossFading">
           <property name="displayFormat">
            <string>HH:mm:ss:zzz</string>
           </property>
          </widget>
+        </item>
+        <item row="8" column="1">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="1">
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>
