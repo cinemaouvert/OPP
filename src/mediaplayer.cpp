@@ -45,6 +45,7 @@
 #include "playlistplayer.h"
 #include "mediasettings.h"
 #include "playback.h"
+#include "utils.h"
 
 MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     QObject(parent),
@@ -57,7 +58,8 @@ MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     _videoBackView(NULL),
     _currentVolume(50),
     _currentGain(0),
-    _isPaused(false)
+    _isPaused(false),
+    _timerCrossFading(NULL)
 {
     QSettings settings("opp","opp");
     if(settings.value("VideoReturnMode").toString() == "none")
@@ -174,6 +176,10 @@ void MediaPlayer::setVideoBackView(VideoView *videoView)
 
 void MediaPlayer::close(Playback *playback){
     if(playback!= NULL && playback->mediaSettings() != NULL){
+        if(_timerCrossFading != NULL){
+            stopCrossFading();
+            setVolume(_currentVolume);
+        }
         disconnect(playback->mediaSettings(), SIGNAL(gainChanged(float)), this, SLOT(setCurrentGain(float)));
         disconnect(playback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
         disconnect(playback->mediaSettings(), SIGNAL(gammaChanged(float)), this, SLOT(setCurrentGamma(float)));
@@ -197,6 +203,7 @@ void MediaPlayer::open(Playback *playback)
 
     if(playback!= NULL && playback->mediaSettings() != NULL){
         _currentPlayback = playback;
+        setVolume(_currentVolume);
 
         libvlc_media_player_set_media(_vlcMediaPlayer, playback->media()->core());
         connect(_currentPlayback->mediaSettings(), SIGNAL(gainChanged(float)), this, SLOT(setCurrentGain(float)));
@@ -250,8 +257,49 @@ void MediaPlayer::play()
     break;
     }
 
+
     libvlc_media_player_play(_vlcMediaPlayer);
+    setVolume(_currentVolume);
+    startCrossFading(0);
     _isPaused = false;
+}
+
+
+void MediaPlayer::startCrossFading(int time){
+    QSettings settings("opp", "opp");
+
+    if(settings.value("crossFadingTime").toInt() > 0){
+        if(_timerCrossFading != NULL){
+            _timerCrossFading->stop();
+        }
+
+        _timerCrossFading = new QTimer();
+        _timerCrossFading->connect(_timerCrossFading, SIGNAL(timeout()), this, SLOT(crossFading()));
+        int launch =((_currentPlayback->media()->duration() - time) -  settings.value("crossFadingTime").toInt());
+
+        qDebug()<< launch ;
+        qDebug() << _currentPlayback->media()->duration();
+
+        if(launch <= 0)
+            _timerCrossFading->start();
+        else
+            _timerCrossFading->start(launch);
+    }
+}
+
+void MediaPlayer::crossFading(){
+    qDebug() << _currentVolume;
+    float vol  = _currentVolume;
+    for(float i = vol; i>= vol / 2 && i > 0; i-=4){
+        qDebug() << "CrossFading :" + QString::number(i);
+        libvlc_audio_set_volume(_vlcMediaPlayer, ((float) i) * powf(10.f, _currentGain/10.f) );
+        waitSnap(100);
+    }
+    stopCrossFading();
+}
+
+void MediaPlayer::stopCrossFading(){
+    _timerCrossFading->stop();
 }
 
 void MediaPlayer::playStream()
@@ -295,6 +343,7 @@ void MediaPlayer::pause()
     default:
         break;
     }
+    stopCrossFading();
     libvlc_media_player_set_pause(_vlcMediaPlayer, true);
     _isPaused = true;
 }
@@ -313,6 +362,7 @@ void MediaPlayer::resume()
         break;
     }
     libvlc_media_player_set_pause(_vlcMediaPlayer, false);
+    startCrossFading(libvlc_media_player_get_time(_vlcMediaPlayer));
     _isPaused = false;
 }
 
@@ -338,6 +388,7 @@ void MediaPlayer::stop()
         break;
     }
     libvlc_media_player_stop(_vlcMediaPlayer);
+    stopCrossFading();
     _isPaused = false;
 }
 
@@ -350,6 +401,7 @@ void MediaPlayer::stopStream()
 void MediaPlayer::setCurrentTime(int time)
 {
     libvlc_media_player_set_time(_vlcMediaPlayer, time);
+    startCrossFading(time);
 }
 
 void MediaPlayer::setVolume(int volume)

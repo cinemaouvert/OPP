@@ -222,7 +222,13 @@ public:
      */
     Media * media();
 
+    void startCrossFading(int);
+    void stopCrossFading();
+
+
+
 public slots:
+    void crossFading();
     /**
      * @brief Play the media player with the opened Playback
      * @see open()
@@ -629,6 +635,8 @@ private:
     std::string _sizeScreen;
 
     QTimer *_timer;
+
+    QTimer *_timerCrossFading;
 
 
 };
