@@ -81,15 +81,15 @@
           <property name="enabled">
            <bool>true</bool>
           </property>
+          <property name="displayFormat">
+           <string>HH:mm:ss:zzz</string>
+          </property>
           <property name="time">
            <time>
             <hour>0</hour>
             <minute>0</minute>
             <second>0</second>
            </time>
-          </property>
-          <property name="displayFormat">
-           <string>HH:mm:ss:zzz</string>
           </property>
          </widget>
         </item>
@@ -195,27 +195,11 @@
         <column/>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_attachment">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>Download attachment files</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../images.qrc">
-          <normaloff>:/icons/resources/glyphicons/glyphicons_181_download_alt.png</normaloff>:/icons/resources/glyphicons/glyphicons_181_download_alt.png</iconset>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
    </layout>
   </widget>
  </widget>
- <resources>
-  <include location="../images.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

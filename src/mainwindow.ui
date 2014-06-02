@@ -278,8 +278,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>494</width>
-                 <height>162</height>
+                 <width>98</width>
+                 <height>35</height>
                 </rect>
                </property>
                <layout class="QGridLayout" name="gridLayout_2">
@@ -1927,9 +1927,6 @@
     <addaction name="newPlaylistAction"/>
     <addaction name="renamePlaylistAction"/>
     <addaction name="removePlaylistItemAction"/>
-    <addaction name="separator"/>
-    <addaction name="cancelAction"/>
-    <addaction name="importAction"/>
    </widget>
    <widget class="QMenu" name="menuDisplay">
     <property name="title">
