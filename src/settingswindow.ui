@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>740</width>
-    <height>515</height>
+    <width>732</width>
+    <height>541</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -153,9 +153,9 @@
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>330</y>
-     <width>701</width>
+     <x>10</x>
+     <y>360</y>
+     <width>711</width>
      <height>121</height>
     </rect>
    </property>
@@ -236,9 +236,9 @@
   <widget class="QGroupBox" name="groupBox_3">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>280</y>
-     <width>701</width>
+     <x>10</x>
+     <y>310</y>
+     <width>711</width>
      <height>51</height>
     </rect>
    </property>
@@ -286,9 +286,9 @@
   <widget class="QGroupBox" name="groupBox_4">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>220</y>
-     <width>691</width>
+     <x>10</x>
+     <y>250</y>
+     <width>711</width>
      <height>51</height>
     </rect>
    </property>
@@ -341,8 +341,8 @@
   <widget class="QWidget" name="horizontalLayoutWidget_4">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>450</y>
+     <x>400</x>
+     <y>480</y>
      <width>318</width>
      <height>51</height>
     </rect>
@@ -363,6 +363,34 @@
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_5">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>200</y>
+     <width>711</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Cross Fading:</string>
+   </property>
+   <widget class="QWidget" name="horizontalLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QTimeEdit" name="timeEdit_CrossFading"/>
+     </item>
+    </layout>
+   </widget>
   </widget>
  </widget>
  <resources>
