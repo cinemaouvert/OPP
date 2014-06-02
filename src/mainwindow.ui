@@ -67,7 +67,7 @@
         <item>
          <widget class="QTabWidget" name="projectTabWidget">
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="summaryTab">
            <attribute name="title">
@@ -2214,6 +2214,12 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>VideoWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">videowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>SeekWidget</class>
    <extends>QWidget</extends>
    <header>seekwidget.h</header>
@@ -2223,12 +2229,6 @@
    <class>MediaTableView</class>
    <extends>QTableView</extends>
    <header>mediatableview.h</header>
-  </customwidget>
-  <customwidget>
-   <class>VideoWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">videowidget.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

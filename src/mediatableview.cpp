@@ -58,7 +58,7 @@ void MediaTableView::mouseMoveEvent(QMouseEvent *event)
 {
     if (event->buttons() == Qt::LeftButton) {
         int distance = (event->pos() - startPos).manhattanLength();
-        if (distance >= QApplication::startDragDistance()) {
+        if (distance >= QApplication::startDragDistance()+50) {
             startDrag(Qt::MoveAction);
             selectionModel()->clearSelection();
         }

@@ -34,6 +34,7 @@
 #include <QFileDialog>
 #include <QDir>
 #include <QProcess>
+#include <QMessageBox>
 
 #include <string.h>
 #include <sstream>
@@ -53,11 +54,8 @@ void SettingsWindow::init(){
     /*Settings*/
     QSettings settings("opp","opp");
     ui->lineEdit_VLCPath->setText(settings.value("vlcPath").toString());
-    ui->lineEdit_testPatternPath->setText(settings.value("testPatternPath").toString());
-    ui->lineEdit_intertitlePath->setText(settings.value("intertitlePath").toString());
     ui->lineEdit_moviesPath->setText(settings.value("moviesPath").toString());
     ui->lineEdit_UpdatePath->setText(settings.value("updatePath").toString());
-    ui->timeEdit_CrossFading->setTime(msecToQTime(settings.value("crossFadingTime").toInt()));
     ui->groupBox_3->setEnabled(false);
     setVideoReturnMode();
 
@@ -137,13 +135,10 @@ void SettingsWindow::on_buttonBox_accepted()
 void SettingsWindow::accept() {
     QSettings settings("opp","opp");
     settings.setValue("vlcPath", ui->lineEdit_VLCPath->text());
-    settings.setValue("testPatternPath", ui->lineEdit_testPatternPath->text());
-    settings.setValue("intertitlePath", ui->lineEdit_intertitlePath->text());
     settings.setValue("moviesPath", ui->lineEdit_moviesPath->text());
     settings.setValue("lang", getLang(ui->comboBox_language->currentIndex()));
     settings.setValue("locateR", ui->radioButton_locateRight->isChecked());
     settings.setValue("updatePath", ui->lineEdit_UpdatePath->text());
-    settings.setValue("crossFadingTime", QString::number(qTimeToMsec(ui->timeEdit_CrossFading->time())));
     setSettingsVideoReturnMode();
 }
 
@@ -161,20 +156,6 @@ void SettingsWindow::on_pushButton_VLCPath_clicked()
         ui->lineEdit_VLCPath->setText(pathVlc);
 }
 
-void SettingsWindow::on_pushButton_testPatternPath_clicked()
-{
-    QString pathTestPattern = QFileDialog::getOpenFileName(this,"", ui->lineEdit_testPatternPath->text(),"");
-    if(pathTestPattern!="")
-        ui->lineEdit_testPatternPath->setText(pathTestPattern);
-}
-
-void SettingsWindow::on_pushButton_intertitlePath_clicked()
-{
-    QString pathIntertitle = QFileDialog::getOpenFileName(this,"", ui->lineEdit_intertitlePath->text(),"");
-    if(pathIntertitle!="")
-        ui->lineEdit_intertitlePath->setText(pathIntertitle);
-}
-
 void SettingsWindow::on_pushButton_moviesPath_clicked()
 {
     QString pathMovies = QFileDialog::getExistingDirectory(this, tr("Open Directory"), ui->lineEdit_moviesPath->text(),QFileDialog::ShowDirsOnly);
@@ -185,16 +166,19 @@ void SettingsWindow::on_pushButton_moviesPath_clicked()
 void SettingsWindow::on_radioButton_Streaming_clicked()
 {
     ui->groupBox_3->setEnabled(true);
+    QMessageBox::information(this, "Apply",tr("There is a 2 seconds delay. \n You'll need to restart the software to apply it."));
 }
 
 void SettingsWindow::on_radioButton_Pictures_clicked()
 {
     ui->groupBox_3->setEnabled(false);
+    QMessageBox::information(this, "Apply",tr("You'll need to restart the software to apply it."));
 }
 
 void SettingsWindow::on_radioButton_None_clicked()
 {
     ui->groupBox_3->setEnabled(false);
+    QMessageBox::information(this, "Apply",tr("You'll need to restart the software to apply it."));
 }
 
 void SettingsWindow::on_restart_clicked()
@@ -209,4 +193,14 @@ void SettingsWindow::on_restart_clicked()
     else
         QProcess::startDetached(QApplication::applicationFilePath());
     exit(2);
+}
+
+void SettingsWindow::on_radioButton_locateRight_clicked()
+{
+    QMessageBox::information(this, "Apply",tr("There is a 2 seconds delay. \n You'll need to restart the software to apply it."));
+}
+
+void SettingsWindow::on_radioButton_locateLeft_clicked()
+{
+    QMessageBox::information(this, "Apply",tr("You'll need to restart the software to apply it."));
 }

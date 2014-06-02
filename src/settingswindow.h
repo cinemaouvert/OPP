@@ -82,20 +82,6 @@ private slots:
     void on_pushButton_VLCPath_clicked();
 
     /**
-     * @brief Change the value of the test pattern path field
-     *
-     * @author Cyril Naud <futuramath@gmail.com>
-     */
-    void on_pushButton_testPatternPath_clicked();
-
-    /**
-     * @brief Change the value of the intertitle path field
-     *
-     * @author Cyril Naud <futuramath@gmail.com>
-     */
-    void on_pushButton_intertitlePath_clicked();
-
-    /**
      * @brief Change the value of the movies path field
      *
      * @author Cyril Naud <futuramath@gmail.com>
@@ -109,6 +95,10 @@ private slots:
     void on_radioButton_None_clicked();
 
     void on_restart_clicked();
+
+    void on_radioButton_locateRight_clicked();
+
+    void on_radioButton_locateLeft_clicked();
 
 private:
     /**
