@@ -58,6 +58,7 @@ MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     _videoBackView(NULL),
     _currentVolume(50),
     _currentGain(0),
+    _currentCrossFading(5000),
     _isPaused(false),
     _timerCrossFading(NULL)
 {
@@ -195,6 +196,7 @@ void MediaPlayer::close(Playback *playback){
         disconnect(playback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
         disconnect(playback->mediaSettings(), SIGNAL(subtitlesEncodeChanged(int)), this, SLOT(setCurrentSubtitlesEncode(int)));
         disconnect(playback->mediaSettings(), SIGNAL(cropChanged(int,int,int,int)), this, SLOT(applyCrop(int,int,int,int)));
+        disconnect(playback->mediaSettings(), SIGNAL(crossFadingChanged(int)), this, SLOT(setCurrentCrossFading(int)));
     }
 }
 
@@ -220,7 +222,8 @@ void MediaPlayer::open(Playback *playback)
         connect(_currentPlayback->mediaSettings(), SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
         connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
         connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesEncodeChanged(int)), this, SLOT(setCurrentSubtitlesEncode(int)));
-        connect(playback->mediaSettings(), SIGNAL(cropChanged(int,int,int,int)), this, SLOT(applyCrop(int,int,int,int)));
+        connect(_currentPlayback->mediaSettings(), SIGNAL(cropChanged(int,int,int,int)), this, SLOT(applyCrop(int,int,int,int)));
+        connect(_currentPlayback->mediaSettings(), SIGNAL(crossFadingChanged(int)), this, SLOT(setCurrentCrossFading(int)));
 
         if(_currentPlayback->media()->isImage()){
             libvlc_media_player_set_time(_vlcMediaPlayer, 0);
@@ -266,19 +269,14 @@ void MediaPlayer::play()
 
 
 void MediaPlayer::startCrossFading(int time){
-    QSettings settings("opp", "opp");
-
-    if(settings.value("crossFadingTime").toInt() > 0){
+    if(_currentPlayback->mediaSettings()->crossFading() > 0){
         if(_timerCrossFading != NULL){
             _timerCrossFading->stop();
         }
 
         _timerCrossFading = new QTimer();
         _timerCrossFading->connect(_timerCrossFading, SIGNAL(timeout()), this, SLOT(crossFading()));
-        int launch =((_currentPlayback->media()->duration() - time) -  settings.value("crossFadingTime").toInt());
-
-        qDebug()<< launch ;
-        qDebug() << _currentPlayback->media()->duration();
+        int launch =((_currentPlayback->media()->duration() - time) -  _currentPlayback->mediaSettings()->crossFading());
 
         if(launch <= 0)
             _timerCrossFading->start();
@@ -288,7 +286,6 @@ void MediaPlayer::startCrossFading(int time){
 }
 
 void MediaPlayer::crossFading(){
-    qDebug() << _currentVolume;
     float vol  = _currentVolume;
     for(float i = vol; i>= vol / 2 && i > 0; i-=4){
         qDebug() << "CrossFading :" + QString::number(i);
@@ -454,6 +451,11 @@ void MediaPlayer::setCurrentGain(float gain)
 {
     _currentGain = gain;
     setVolume(_currentVolume);
+}
+
+void MediaPlayer::setCurrentCrossFading(int time)
+{
+    _currentCrossFading = time;
 }
 
 void MediaPlayer::setCurrentAudioTrack(const int &track)

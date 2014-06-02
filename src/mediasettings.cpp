@@ -131,7 +131,11 @@ void MediaSettings::setCrop(int top,int left, int right, int bot){
     emit cropChanged(_cropTop,_cropLeft,_cropRight,_cropBot);
 }
 
-
+void MediaSettings::setCrossFading(int time)
+{
+    _crossFading = time;
+    emit crossFadingChanged(_crossFading);
+}
 
 void MediaSettings::setGain(float gain)
 {
@@ -163,6 +167,7 @@ void MediaSettings::initDefault()
     _cropBot = 0;
     _cropLeft = 0;
     _cropRight = 0;
+    _crossFading = 5000;
 }
 
 QStringList MediaSettings::ratioValues()

@@ -453,6 +453,20 @@ public:
      */
     int cropLeft(){return _cropLeft;}
 
+    /**
+     * @brief Set cross fading value
+     *
+     * @author  Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void setCrossFading(int time);
+
+    /**
+     * @brief Get cross fading value
+     *
+     * @author  Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    int crossFading(){return _crossFading;}
+
 signals:
 
     /**
@@ -541,7 +555,6 @@ signals:
      */
     void gainChanged(float);
 
-
     /**
      * @brief subtitlesEncodeChanged
      */
@@ -551,6 +564,11 @@ signals:
      * @brief crop changed top left right bot
      */
     void cropChanged(int,int,int,int);
+
+    /**
+     * @brief Cross Fading changed
+     */
+    void crossFadingChanged(int);
 
 
 private:
@@ -664,6 +682,11 @@ private:
      * @brief The crop top value.
      */
     int _cropRight;
+
+    /**
+     * @brief Cross Fading value.
+     */
+    int _crossFading;
 };
 
 #endif // MEDIASETTINGS_H
