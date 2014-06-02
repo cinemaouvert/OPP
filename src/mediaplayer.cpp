@@ -59,7 +59,7 @@ MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     _videoBackView(NULL),
     _currentVolume(50),
     _currentGain(0),
-    _currentCrossFading(5000),
+    _currentCrossFading(0),
     _isPaused(false),
     _timerCrossFading(NULL)
 {
@@ -280,7 +280,13 @@ void MediaPlayer::startCrossFading(int time){
 
         _timerCrossFading = new QTimer();
         _timerCrossFading->connect(_timerCrossFading, SIGNAL(timeout()), this, SLOT(crossFading()));
-        int launch =((_currentPlayback->media()->duration() - time) -  _currentPlayback->mediaSettings()->crossFading());
+
+        int duration = _currentPlayback->mediaSettings()->outMark();
+
+        if(duration <= 0)
+            duration = _currentPlayback->media()->duration();
+
+        int launch =((duration - time) -  _currentPlayback->mediaSettings()->crossFading());
 
         if(launch <= 0)
             _timerCrossFading->start();
@@ -292,7 +298,6 @@ void MediaPlayer::startCrossFading(int time){
 void MediaPlayer::crossFading(){
     float vol  = _currentVolume;
     for(float i = vol; i>= vol / 2 && i > 0; i-=4){
-        qDebug() << "CrossFading :" + QString::number(i);
         libvlc_audio_set_volume(_vlcMediaPlayer, ((float) i) * powf(10.f, _currentGain/10.f) );
         waitSnap(100);
     }
