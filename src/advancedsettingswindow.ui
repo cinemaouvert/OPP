@@ -93,6 +93,62 @@
           </property>
          </widget>
         </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_CrossFading">
+          <property name="text">
+           <string>Sound Fade-out</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QTimeEdit" name="timeEdit_CrossFading">
+          <property name="displayFormat">
+           <string>HH:mm:ss:zzz</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="imageDurationLabel">
+          <property name="text">
+           <string>Image duration</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QTimeEdit" name="imageDurationTimeEdit">
+          <property name="displayFormat">
+           <string>HH:mm:ss</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_originalLength">
+          <property name="text">
+           <string>Before modification</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLabel" name="label_originalLengthValue">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="label_modifiedLength">
+          <property name="text">
+           <string>After modification</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QLabel" name="label_modifiedLengthValue">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_outMark">
           <property name="enabled">
@@ -110,48 +166,6 @@
           </property>
           <property name="displayFormat">
            <string>HH:mm:ss</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="imageDurationLabel">
-          <property name="text">
-           <string>Image duration</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QTimeEdit" name="imageDurationTimeEdit">
-          <property name="displayFormat">
-           <string>HH:mm:ss</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_originalLength">
-          <property name="text">
-           <string>Before modification</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QLabel" name="label_originalLengthValue">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_modifiedLength">
-          <property name="text">
-           <string>After modification</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QLabel" name="label_modifiedLengthValue">
-          <property name="text">
-           <string/>
           </property>
          </widget>
         </item>

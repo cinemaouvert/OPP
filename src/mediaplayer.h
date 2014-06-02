@@ -394,7 +394,7 @@ public slots:
     void setCurrentAudioSync(double sync);
 
     /**
-     * @brief set set current subtitles encode
+     * @brief set current subtitles encode
      * @param The new encode for subtitles
      *
      * @author Denis Saunier <saunier.denis.86@gmail.com>
@@ -407,6 +407,14 @@ public slots:
      * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
      */
     void applyCrop(int cropTop,int cropLeft, int cropRight, int cropBot);
+
+    /**
+     * @brief set current cross fading
+     * @param The new cross fading
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void setCurrentCrossFading(int time);
 
 
 private slots:
@@ -636,7 +644,17 @@ private:
 
     QTimer *_timer;
 
+
+    /**
+     * @brief Timer cross fading
+     */
     QTimer *_timerCrossFading;
+
+
+    /**
+     * @brief The current cross fading
+     */
+    int _currentCrossFading;
 
 
 };

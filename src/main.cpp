@@ -92,9 +92,6 @@ int main(int argc, char *argv[])
     if(!settings.contains("updatePath"))
         settings.setValue("updatePath", config_opp::URL);
 
-    if(!settings.contains("crossFadingTime"))
-        settings.setValue("crossFadingTime", "5000");
-
     if(!settings.contains("lang"))
     {
         /*Check if OS language is available, if not English is set as default language*/

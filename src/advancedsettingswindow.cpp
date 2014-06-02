@@ -75,7 +75,9 @@ void AdvancedSettings::setPlayback(Playback* playback)
     ui->timeEdit_outMark->setCurrentSectionIndex(1);
     ui->timeEdit_inMark->setCurrentSectionIndex(1);
 
+    ui->timeEdit_CrossFading->setTime(msecToQTime(_playback->mediaSettings()->crossFading()));
 
+    ui->timeEdit_CrossFading->setCurrentSectionIndex(2);
 
     /*Original length*/
     QTime original =  msecToQTime(_playback->media()->duration());
@@ -140,6 +142,8 @@ void AdvancedSettings::setPlayback(Playback* playback)
         ui->timeEdit_outMark->setVisible(false);
         ui->label_inMark->setVisible(false);
         ui->label_outMark->setVisible(false);
+        ui->label_CrossFading->setVisible(false);
+        ui->timeEdit_CrossFading->setVisible(false);
         ui->imageDurationTimeEdit->setTime(timeOut);
 
     }else{
@@ -149,6 +153,8 @@ void AdvancedSettings::setPlayback(Playback* playback)
         ui->timeEdit_outMark->setVisible(true);
         ui->label_inMark->setVisible(true);
         ui->label_outMark->setVisible(true);
+        ui->label_CrossFading->setVisible(true);
+        ui->timeEdit_CrossFading->setVisible(true);
     }
 
     ui->changeScreenshotButton->setVisible(false);
@@ -187,6 +193,7 @@ void AdvancedSettings::on_buttonBox_OKCancel_accepted()
             _playback->media()->setImageTime(QString::number(diff/1000));
         }
     }else{
+        _playback->mediaSettings()->setCrossFading(qTimeToMsec(ui->timeEdit_CrossFading->time()));
         diff = timeOut - timeIn;
         if(diff > 0){
             _playback->mediaSettings()->setInMark(qTimeToMsec(ui->timeEdit_inMark->time()));
