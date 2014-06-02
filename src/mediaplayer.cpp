@@ -35,6 +35,7 @@
 #include <QSettings>
 #include <QTime>
 #include <QTimer>
+#include <QDir>
 
 #include <vlc/vlc.h>
 
@@ -374,12 +375,16 @@ void MediaPlayer::stop()
     /*if (_videoView)
         _videoView->release();*/
     _currentWId = 0;
+    QString screenPath = "./screenshot/";
+    screenPath = screenPath.replace("/",QDir::separator());
+    screenPath +=  _currentPlayback->media()->getLocation().replace(QDir::separator(),"_").remove(":");
+    screenPath += ".png";
 
     switch (_bMode)
     {
     case SCREENSHOT:
-        stopScreen();
-        ((MainWindow *)((PlaylistPlayer *)this->parent())->parent())->setScreenshot(":/icons/resources/images/intertitle.jpg");
+        stopScreen();        
+        ((MainWindow *)((PlaylistPlayer *)this->parent())->parent())->setScreenshot(screenPath);
         break;
     case STREAMING:
         stopStream();
