@@ -227,7 +227,7 @@ void AdvancedSettings::updateLength()
     int secOut = ui->timeEdit_outMark->time().second()+60*ui->timeEdit_outMark->time().minute()+3600*ui->timeEdit_outMark->time().hour();
     int diff = 1000*(secOut-secIn);
     QTime modified =  msecToQTime(diff);
-    ui->label_modifiedLengthValue->setText(modified.toString("hh:mm:ss:zzz"));
+    ui->label_modifiedLengthValue->setText(modified.toString("hh:mm:ss"));
 }
 
 void AdvancedSettings::on_imageDurationTimeEdit_timeChanged(const QTime &date)
@@ -235,7 +235,7 @@ void AdvancedSettings::on_imageDurationTimeEdit_timeChanged(const QTime &date)
     int secOut = ui->imageDurationTimeEdit->time().second()+60*ui->imageDurationTimeEdit->time().minute()+3600*ui->imageDurationTimeEdit->time().hour();
     int diff = 1000*(secOut);
     QTime modified =  msecToQTime(diff);
-    ui->label_modifiedLengthValue->setText(modified.toString("hh:mm:ss:zzz"));
+    ui->label_modifiedLengthValue->setText(modified.toString("hh:mm:ss"));
 }
 
 void AdvancedSettings::on_changeScreenshotButton_clicked()

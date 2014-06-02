@@ -81,15 +81,15 @@
           <property name="enabled">
            <bool>true</bool>
           </property>
-          <property name="displayFormat">
-           <string>HH:mm:ss:zzz</string>
-          </property>
           <property name="time">
            <time>
             <hour>0</hour>
             <minute>0</minute>
             <second>0</second>
            </time>
+          </property>
+          <property name="displayFormat">
+           <string>HH:mm:ss</string>
           </property>
          </widget>
         </item>
@@ -109,7 +109,7 @@
            <bool>true</bool>
           </property>
           <property name="displayFormat">
-           <string>HH:mm:ss:zzz</string>
+           <string>HH:mm:ss</string>
           </property>
          </widget>
         </item>
@@ -123,7 +123,7 @@
         <item row="2" column="1">
          <widget class="QTimeEdit" name="imageDurationTimeEdit">
           <property name="displayFormat">
-           <string>HH:mm:ss:zzz</string>
+           <string>HH:mm:ss</string>
           </property>
          </widget>
         </item>

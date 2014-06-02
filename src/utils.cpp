@@ -48,7 +48,8 @@ int qTimeToMsec(QTime time)
     int hours = time.hour();
     int minutes = time.minute();
     int seconds = time.second();
-    return 1000*seconds+60000*minutes+3600000*hours;
+    int msec = time.msec();
+    return 1000*seconds+60000*minutes+3600000*hours+msec;
 }
 
 void waitSnap(int t)
