@@ -93,8 +93,8 @@ void MediaSettings::setSaturation(float saturation) {
 }
 
 void MediaSettings::setHue(int hue) {
-    _saturation = hue;
-    emit saturationChanged(_saturation);
+    _hue = hue;
+    emit hueChanged(_hue);
 }
 
 void MediaSettings::setAudioSync(double sync){
@@ -155,7 +155,7 @@ void MediaSettings::initDefault()
     _contrast = 1;
     _brightness = 1;
     _saturation = 1;
-    _hue = 0;
+    _hue = 1;
     _audioSync=0;
     _testPattern = false;
     _inMark = 0;
