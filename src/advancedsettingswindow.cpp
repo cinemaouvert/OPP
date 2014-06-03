@@ -79,11 +79,15 @@ void AdvancedSettings::setPlayback(Playback* playback)
     ui->timeEdit_VideoFadeIN->setCurrentSectionIndex(2);
     ui->timeEdit_VideoFadeOut->setCurrentSectionIndex(2);
 
+    ui->timeEdit_CrossFading->setMaximumTime(msecToQTime(_playback->media()->getOriginalDuration()));
+    ui->timeEdit_CrossFadingIN->setMaximumTime(msecToQTime(_playback->media()->getOriginalDuration()));
+    ui->timeEdit_VideoFadeOut->setMaximumTime(msecToQTime(_playback->media()->getOriginalDuration()));
+    ui->timeEdit_VideoFadeIN->setMaximumTime(msecToQTime(_playback->media()->getOriginalDuration()));
 
     ui->timeEdit_CrossFading->setTime(msecToQTime(_playback->mediaSettings()->audioFadeOut()));
     ui->timeEdit_CrossFadingIN->setTime(msecToQTime(_playback->mediaSettings()->audioFadeIn()));
     ui->timeEdit_VideoFadeOut->setTime(msecToQTime(_playback->mediaSettings()->videoFadeOut()));
-    ui->timeEdit_VideoFadeIN->setTime(msecToQTime(_playback->mediaSettings()->videoFadeIn()));
+    ui->timeEdit_VideoFadeIN->setTime(msecToQTime(_playback->mediaSettings()->videoFadeIn()));  
 
     /*Original length*/
     QTime original =  msecToQTime(_playback->media()->duration());

@@ -115,6 +115,15 @@ MediaPlayer::~MediaPlayer()
     if(_timerAudioFadeOut != NULL){
         delete(_timerAudioFadeOut);
     }
+    if(_timerAudioFadeIn != NULL){
+        delete(_timerAudioFadeIn);
+    }
+    if(_timerVideoFadeOut != NULL){
+        delete(_timerVideoFadeOut);
+    }
+    if(_timerVideoFadeIn != NULL){
+        delete(_timerVideoFadeIn);
+    }
     if(_timer != NULL){
         delete (_timer);
     }
