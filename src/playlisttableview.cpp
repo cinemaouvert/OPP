@@ -140,11 +140,13 @@ void PlaylistTableView::startDrag(Qt::DropActions supportedActions)
     if (indexes.count() == 0)
         return;
 
+
     QModelIndex index = indexes.first();
 
     QMimeData *mimedata = new QMimeData;
 
     mimedata->setText(index.data().toString());
+    mimedata->setHtml("#"+QString::number(index.row()));
 
     QDrag *drag = new QDrag(this);
     drag->setMimeData(mimedata);
@@ -165,7 +167,7 @@ void PlaylistTableView::dragEnterEvent(QDragEnterEvent *event)
 void PlaylistTableView::dragMoveEvent(QDragMoveEvent *event)
 {
     PlaylistTableView *source = (PlaylistTableView *)(event->source());
-    if (source ) {
+    if (source) {
         event->setDropAction(Qt::MoveAction);
         event->accept();
     }
@@ -173,7 +175,7 @@ void PlaylistTableView::dragMoveEvent(QDragMoveEvent *event)
 
 void PlaylistTableView::dropEvent(QDropEvent *event)
 {
-    model()->dropMimeData(event->mimeData(), event->dropAction(), 0, 0, indexAt(event->pos()));
+    model()->dropMimeData(event->mimeData(), event->dropAction(), indexAt(event->pos()).row(), 0, indexAt(event->pos()));
     event->acceptProposedAction();
     QTableView::dropEvent(event);
 }

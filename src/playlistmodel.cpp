@@ -138,7 +138,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                 return QString("%1 x %2 ")
                         .arg(media->videoTracks().at(mediaSettings->videoTrack()).width())
                         .arg(media->videoTracks().at(mediaSettings->videoTrack()).height())
-                    + media->videoTracks().at(mediaSettings->videoTrack()).codecDescription();
+                        + media->videoTracks().at(mediaSettings->videoTrack()).codecDescription();
             }
         }
         else if (index.column() == Audio) {
@@ -162,11 +162,13 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool PlaylistModel::addPlayback(Playback *playback)
+bool PlaylistModel::addPlayback(Playback *playback,int row)
 {
     const int count = _playlist->count();
-    beginInsertRows(QModelIndex(), count, count);
-    _playlist->append(playback);
+    if(row == -1)
+        row = count;
+    beginInsertRows(QModelIndex(), row, row);
+    _playlist->append(playback,row);
     endInsertRows();
     _scheduleListModel->updateLayout();
 
@@ -176,46 +178,54 @@ bool PlaylistModel::addPlayback(Playback *playback)
 
 bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent )
 {
-
     QString indexes = data->html();
+    qDebug()<<indexes;
+
     int countIndexes = indexes.count(":");
+    if(indexes.startsWith("#")){
+        if(!isRunning()){
+             _playlist->move(indexes.remove("#").toInt(),row);
+        }else{
+            QMessageBox::critical(NULL, tr("Moving during playlist"), tr("This media can not be moved with drag and drop during a projection.(Please use the arrows on the right)") , tr("Ok"));
+        }
+    }else{
+        for (int i = 0; i < countIndexes; i++) {
 
-    for (int i = 0; i < countIndexes; i++) {
-        Media *media = _mediaListModel->mediaList().at(indexes.section(":", i, i).toInt());
+            Media *media = _mediaListModel->mediaList().at(indexes.section(":", i, i).toInt());
+            if (!media)
+                return false;
 
-        if (!media)
-            return false;
+            QList<Schedule*> scheduleList = _scheduleListModel->scheduleList();
 
-        QList<Schedule*> scheduleList = _scheduleListModel->scheduleList();
-
-        foreach(Schedule *schedule, scheduleList)
-        {
-            if(this->playlist() == schedule->playlist())
+            foreach(Schedule *schedule, scheduleList)
             {
-                foreach(Schedule *schedule2, scheduleList)
+                if(this->playlist() == schedule->playlist())
                 {
-                    if(schedule->launchAt() < schedule2->launchAt())
+                    foreach(Schedule *schedule2, scheduleList)
                     {
-                        if(schedule->finishAt().addMSecs(media->duration()) > schedule2->launchAt())
+                        if(schedule->launchAt() < schedule2->launchAt())
                         {
-                            int delay = QMessageBox::warning(NULL, tr("Add track into playlist"), tr("This new track create a overlapping.") , tr("Delay automation"), tr("Do not add track"));
+                            if(schedule->finishAt().addMSecs(media->duration()) > schedule2->launchAt())
+                            {
+                                int delay = QMessageBox::warning(NULL, tr("Add track into playlist"), tr("This new track create a overlapping.") , tr("Delay automation"), tr("Do not add track"));
 
-                            if(delay == 0)
-                            {
-                                uint t = media->duration();
-                                schedule2->delay(t);
-                                repareDelay(scheduleList, t);
-                            }
-                            if(delay == 1)
-                            {
-                                return false;
+                                if(delay == 0)
+                                {
+                                    uint t = media->duration();
+                                    schedule2->delay(t);
+                                    repareDelay(scheduleList, t);
+                                }
+                                if(delay == 1)
+                                {
+                                    return false;
+                                }
                             }
                         }
                     }
                 }
             }
+            addPlayback(new Playback(media),row);
         }
-        addPlayback(new Playback(media));
     }
     return true;
 }
@@ -237,7 +247,7 @@ void PlaylistModel::removePlayback(int index)
 
     _playlist->removeAt(index);
 
-    endRemoveRows(); 
+    endRemoveRows();
     _scheduleListModel->updateLayout();
 
 }
@@ -282,13 +292,13 @@ bool PlaylistModel::moveUp(const QModelIndex &index)
     {
         int tmpSecond = _activeItem.second;
         if(_activeItem.first == index.row()){
-        _playlist->move(index.row(),index.row()-1);
-        _activeItem.first = index.row();
-        _activeItem.second = Idle;
-        updateLayout();
+            _playlist->move(index.row(),index.row()-1);
+            _activeItem.first = index.row();
+            _activeItem.second = Idle;
+            updateLayout();
 
-        _activeItem.first = index.row()-1;
-        _activeItem.second = (PlaybackState)tmpSecond;
+            _activeItem.first = index.row()-1;
+            _activeItem.second = (PlaybackState)tmpSecond;
         }else{
             if(_activeItem.first == index.row()-1){
                 _playlist->move(index.row(),index.row()-1);
@@ -316,13 +326,13 @@ bool PlaylistModel::moveDown(const QModelIndex &index)
     {
         int tmpSecond = _activeItem.second;
         if(_activeItem.first == index.row()){
-        _playlist->move(index.row(),index.row()+1);
-        _activeItem.first = index.row();
-        _activeItem.second = Idle;
-        updateLayout();
+            _playlist->move(index.row(),index.row()+1);
+            _activeItem.first = index.row();
+            _activeItem.second = Idle;
+            updateLayout();
 
-        _activeItem.first = index.row()+1;
-        _activeItem.second = (PlaybackState)tmpSecond;
+            _activeItem.first = index.row()+1;
+            _activeItem.second = (PlaybackState)tmpSecond;
         }else{
             if(_activeItem.first == index.row()+1){
                 _playlist->move(index.row(),index.row()+1);
@@ -330,8 +340,8 @@ bool PlaylistModel::moveDown(const QModelIndex &index)
                 _activeItem.second = Idle;
                 updateLayout();
 
-                 _activeItem.first = index.row();
-                 _activeItem.second = (PlaybackState)tmpSecond;
+                _activeItem.first = index.row();
+                _activeItem.second = (PlaybackState)tmpSecond;
             }else{
                 _playlist->move(index.row(),index.row()+1);
                 updateLayout();

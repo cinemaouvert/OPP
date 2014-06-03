@@ -140,7 +140,7 @@ public:
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
-    bool addPlayback(Playback *playback);
+    bool addPlayback(Playback *playback,int row=-1);
 
     /**
      * @brief Remove playback matching to the media

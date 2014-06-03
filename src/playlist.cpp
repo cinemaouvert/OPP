@@ -65,11 +65,13 @@ Playback* Playlist::at(const int &index) const
     return _playbackList.at(index);
 }
 
-void Playlist::append(Playback *playback)
+void Playlist::append(Playback *playback,int idx)
 {
     playback->media()->usageCountAdd();
-
-    _playbackList.append(playback);
+    if(idx != -1)
+        _playbackList.insert(idx,playback);
+    else
+        _playbackList.append(playback);
     emit playlistChanged();
 }
 

@@ -98,7 +98,7 @@ public:
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
-    void append(Playback *playback);
+    void append(Playback *playback,int idx = -1);
 
     /**
      * @brief Remove item at `index`
