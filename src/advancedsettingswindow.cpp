@@ -74,8 +74,16 @@ void AdvancedSettings::setPlayback(Playback* playback)
 
     ui->timeEdit_outMark->setCurrentSectionIndex(1);
     ui->timeEdit_inMark->setCurrentSectionIndex(1);
+    ui->timeEdit_CrossFading->setCurrentSectionIndex(2);
+    ui->timeEdit_CrossFadingIN->setCurrentSectionIndex(2);
+    ui->timeEdit_VideoFadeIN->setCurrentSectionIndex(2);
+    ui->timeEdit_VideoFadeOut->setCurrentSectionIndex(2);
 
 
+    ui->timeEdit_CrossFading->setTime(msecToQTime(_playback->mediaSettings()->audioFadeOut()));
+    ui->timeEdit_CrossFadingIN->setTime(msecToQTime(_playback->mediaSettings()->audioFadeIn()));
+    ui->timeEdit_VideoFadeOut->setTime(msecToQTime(_playback->mediaSettings()->videoFadeOut()));
+    ui->timeEdit_VideoFadeIN->setTime(msecToQTime(_playback->mediaSettings()->videoFadeIn()));
 
     /*Original length*/
     QTime original =  msecToQTime(_playback->media()->duration());
@@ -142,7 +150,14 @@ void AdvancedSettings::setPlayback(Playback* playback)
         ui->label_outMark->setVisible(false);
         ui->label_CrossFading->setVisible(false);
         ui->timeEdit_CrossFading->setVisible(false);
+        ui->label_CrossFading_2->setVisible(false);
+        ui->timeEdit_CrossFadingIN->setVisible(false);
         ui->imageDurationTimeEdit->setTime(timeOut);
+        ui->label_CrossFading_3->setVisible(true);
+        ui->label_CrossFading_4->setVisible(true);
+        ui->timeEdit_VideoFadeIN->setVisible(true);
+        ui->timeEdit_VideoFadeOut->setVisible(true);
+
 
     }else{
         ui->imageDurationLabel->setVisible(false);
@@ -153,7 +168,20 @@ void AdvancedSettings::setPlayback(Playback* playback)
         ui->label_outMark->setVisible(true);
         ui->label_CrossFading->setVisible(true);
         ui->timeEdit_CrossFading->setVisible(true);
+        ui->label_CrossFading_2->setVisible(true);
+        ui->timeEdit_CrossFadingIN->setVisible(true);
+        if(_playback->media()->isAudio()){
+            ui->label_CrossFading_3->setVisible(false);
+            ui->label_CrossFading_4->setVisible(false);
+            ui->timeEdit_VideoFadeIN->setVisible(false);
+            ui->timeEdit_VideoFadeOut->setVisible(false);
+        }else{
+            ui->label_CrossFading_3->setVisible(true);
+            ui->label_CrossFading_4->setVisible(true);
+            ui->timeEdit_VideoFadeIN->setVisible(true);
+            ui->timeEdit_VideoFadeOut->setVisible(true);
 
+        }
     }
 
     ui->changeScreenshotButton->setVisible(false);
@@ -184,6 +212,22 @@ void AdvancedSettings::on_buttonBox_OKCancel_accepted()
     uint timeIn = qTimeToMsec(ui->timeEdit_inMark->time());
     uint timeOut = qTimeToMsec(ui->timeEdit_outMark->time());
 
+
+    if(_playback->media()->isImage()){
+        _playback->mediaSettings()->setVideoFadeOut(qTimeToMsec(ui->timeEdit_VideoFadeOut->time()));
+        _playback->mediaSettings()->setVideoFadeIn(qTimeToMsec(ui->timeEdit_VideoFadeIN->time()));
+
+    }else if(_playback->media()->isAudio()){
+        _playback->mediaSettings()->setAudioFadeOut(qTimeToMsec(ui->timeEdit_CrossFading->time()));
+        _playback->mediaSettings()->setAudioFadeIn(qTimeToMsec(ui->timeEdit_CrossFadingIN->time()));
+    }else{
+        _playback->mediaSettings()->setAudioFadeOut(qTimeToMsec(ui->timeEdit_CrossFading->time()));
+        _playback->mediaSettings()->setAudioFadeIn(qTimeToMsec(ui->timeEdit_CrossFadingIN->time()));
+        _playback->mediaSettings()->setVideoFadeOut(qTimeToMsec(ui->timeEdit_VideoFadeOut->time()));
+        _playback->mediaSettings()->setVideoFadeIn(qTimeToMsec(ui->timeEdit_VideoFadeIN->time()));
+    }
+
+
     int diff;
     if(_playback->media()->isImage()){
         int secOut = ui->imageDurationTimeEdit->time().second()+60*ui->imageDurationTimeEdit->time().minute()+3600*ui->imageDurationTimeEdit->time().hour();
@@ -207,6 +251,8 @@ void AdvancedSettings::on_buttonBox_OKCancel_accepted()
             _playback->mediaSettings()->setInMark(timeIn);
             _playback->mediaSettings()->setOutMark(timeOut);
         }
+
+
     }
     QString duration;
     if(diff > 0){
@@ -215,6 +261,9 @@ void AdvancedSettings::on_buttonBox_OKCancel_accepted()
     }else{
         QMessageBox::warning(NULL, tr("Negative time"), tr("Start time is lower or equals to Stop time.") , tr("Ok"));
     }
+
+
+
     this->hide();
 }
 

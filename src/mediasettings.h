@@ -454,18 +454,60 @@ public:
     int cropLeft(){return _cropLeft;}
 
     /**
-     * @brief Set cross fading value
+     * @brief Set audio fade out value
      *
      * @author  Denis Saunier <saunier.denis.86@gmail.com>
      */
-    void setCrossFading(int time);
+    void setAudioFadeOut(int time);
 
     /**
-     * @brief Get cross fading value
+     * @brief Get audio fade out value
      *
      * @author  Denis Saunier <saunier.denis.86@gmail.com>
      */
-    int crossFading(){return _crossFading;}
+    int audioFadeOut(){return _audioFadeOut;}
+
+    /**
+     * @brief Set audio fade in value
+     *
+     * @author  Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void setAudioFadeIn(int time){_audioFadeIn = time;    emit audioFadeInChanged(_audioFadeIn);}
+
+    /**
+     * @brief Get audio fade in value
+     *
+     * @author  Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    int audioFadeIn(){return _audioFadeIn;}
+
+    /**
+     * @brief Set video fade out value
+     *
+     * @author  Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void setVideoFadeOut(int time){_videoFadeOut = time;  emit videoFadeOutChanged(_videoFadeOut);}
+
+    /**
+     * @brief Get video fade out value
+     *
+     * @author  Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    int videoFadeOut(){return _videoFadeOut;}
+
+    /**
+     * @brief Set video fade in value
+     *
+     * @author  Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void setVideoFadeIn(int time){_videoFadeIn = time;   emit videoFadeInChanged(_videoFadeIn);}
+
+    /**
+     * @brief Get video fade in value
+     *
+     * @author  Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    int videoFadeIn(){return _videoFadeIn;}
 
 signals:
 
@@ -566,9 +608,27 @@ signals:
     void cropChanged(int,int,int,int);
 
     /**
-     * @brief Cross Fading changed
+     * @brief Audio Fade out changed
      */
-    void crossFadingChanged(int);
+    void audioFadeOutChanged(int);
+
+    /**
+     * @brief Audio Fade in changed
+     */
+    void audioFadeInChanged(int);
+
+
+    /**
+     * @brief Video Fade out changed
+     */
+    void videoFadeOutChanged(int);
+
+
+    /**
+     * @brief Video Fade In changed
+     */
+    void videoFadeInChanged(int);
+
 
 
 private:
@@ -684,9 +744,24 @@ private:
     int _cropRight;
 
     /**
-     * @brief Cross Fading value.
+     * @brief audio Fade out value.
      */
-    int _crossFading;
+    int _audioFadeOut;
+
+    /**
+     * @brief audio Fade in value.
+     */
+    int _audioFadeIn;
+
+    /**
+     * @brief vdeo Fade out value.
+     */
+    int _videoFadeOut;
+
+    /**
+     * @brief vdeo Fade in value.
+     */
+    int _videoFadeIn;
 };
 
 #endif // MEDIASETTINGS_H

@@ -25,7 +25,6 @@
  **********************************************************************************/
 
 #include "mediasettings.h"
-#include "QDebug"
 
 MediaSettings::MediaSettings(QObject *parent) :
     QObject(parent)
@@ -94,8 +93,8 @@ void MediaSettings::setSaturation(float saturation) {
 }
 
 void MediaSettings::setHue(int hue) {
-    _saturation = hue;
-    emit saturationChanged(_saturation);
+    _hue = hue;
+    emit hueChanged(_hue);
 }
 
 void MediaSettings::setAudioSync(double sync){
@@ -131,10 +130,10 @@ void MediaSettings::setCrop(int top,int left, int right, int bot){
     emit cropChanged(_cropTop,_cropLeft,_cropRight,_cropBot);
 }
 
-void MediaSettings::setCrossFading(int time)
+void MediaSettings::setAudioFadeOut(int time)
 {
-    _crossFading = time;
-    emit crossFadingChanged(_crossFading);
+    _audioFadeOut = time;
+    emit audioFadeOutChanged(_audioFadeOut);
 }
 
 void MediaSettings::setGain(float gain)
@@ -156,7 +155,7 @@ void MediaSettings::initDefault()
     _contrast = 1;
     _brightness = 1;
     _saturation = 1;
-    _hue = 0;
+    _hue = 1;
     _audioSync=0;
     _testPattern = false;
     _inMark = 0;
@@ -167,7 +166,10 @@ void MediaSettings::initDefault()
     _cropBot = 0;
     _cropLeft = 0;
     _cropRight = 0;
-    _crossFading = 0;
+    _audioFadeOut = 0;
+    _audioFadeIn = 0;
+    _videoFadeOut = 0;
+    _videoFadeIn = 0;
 }
 
 QStringList MediaSettings::ratioValues()

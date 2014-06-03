@@ -222,13 +222,66 @@ public:
      */
     Media * media();
 
-    void startCrossFading(int);
-    void stopCrossFading();
+    /**
+     * @brief Start the audio FadeOut.
+     * @param the time of the current launch.
+     *
+     * @author Thibaud Lamarche <thibaud.lamarche@gmail.com>
+     */
+    void startAudioFadeOut(int time);
+
+    /**
+     * @brief Start the audio FadeIn.
+     *
+     * @author Thibaud Lamarche <thibaud.lamarche@gmail.com>
+     */
+    void startAudioFadeIn();
+
+
+    /**
+     * @brief Start the video FadeIn.
+     *
+     * @author Thibaud Lamarche <thibaud.lamarche@gmail.com>
+     */
+    void startVideoFadeIn();
+
+    /**
+     * @brief Start the video FadeOut.
+     * @param the time of the current launch.
+     *
+     * @author Thibaud Lamarche <thibaud.lamarche@gmail.com>
+     */
+    void startVideoFadeOut(int time);
+
+
+    /**
+     * @brief Stop the timer.
+     * @param the timer to stop
+     *
+     * @author Thibaud Lamarche <thibaud.lamarche@gmail.com>
+     */
+    void stopFader(QTimer *timer);
+
+    /**
+     * @brief Start a fader.
+     * @param the timer to launch.
+     * @param the time to fade
+     *
+     * @author Thibaud Lamarche <thibaud.lamarche@gmail.com>
+     */
+    void startFaderOut(QTimer* timer,int time, int timeToFade);
+
+    /**
+     * @brief Start a fader.
+     *
+     * @author Thibaud Lamarche <thibaud.lamarche@gmail.com>
+     */
+    void startFaderIn(QTimer* timer);
+
 
 
 
 public slots:
-    void crossFading();
     /**
      * @brief Play the media player with the opened Playback
      * @see open()
@@ -409,12 +462,64 @@ public slots:
     void applyCrop(int cropTop,int cropLeft, int cropRight, int cropBot);
 
     /**
-     * @brief set current cross fading
-     * @param The new cross fading
+     * @brief set current Audio fade-out
+     * @param The new Audio fade-out
      *
      * @author Denis Saunier <saunier.denis.86@gmail.com>
      */
-    void setCurrentCrossFading(int time);
+    void setCurrentAudioFadeOut(int time);
+
+    /**
+     * @brief set current Audio fade-in
+     * @param The new Audio fade-in
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void setCurrentAudioFadeIn(int time);
+
+    /**
+     * @brief set current Video fade-in
+     * @param The new Video fade-in
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void setCurrentVideoFadeIn(int time);
+
+    /**
+     * @brief set current Video fade-out
+     * @param The new video fade-out
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void setCurrentVideoFadeOut(int time);
+
+    /**
+     * @brief loop for the audio FadeOut
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void audioFadeOut();
+
+    /**
+     * @brief loop for the audio FadeIn
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void audioFadeIn();
+
+    /**
+     * @brief loop for the video FadeOut
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void videoFadeOut();
+
+    /**
+     * @brief loop for the video FadeIn
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void videoFadeIn();
 
 
 private slots:
@@ -646,15 +751,45 @@ private:
 
 
     /**
-     * @brief Timer cross fading
+     * @brief Timer audio fade-out
      */
-    QTimer *_timerCrossFading;
+    QTimer *_timerAudioFadeOut;
+
+    /**
+     * @brief Timer audio fade-in
+     */
+    QTimer *_timerAudioFadeIn;
+
+    /**
+     * @brief Timer video fade-out
+     */
+    QTimer *_timerVideoFadeOut;
+
+    /**
+     * @brief Timer video fade-in
+     */
+    QTimer *_timerVideoFadeIn;
 
 
     /**
-     * @brief The current cross fading
+     * @brief The current audio audio fade-out
      */
-    int _currentCrossFading;
+    int _currentAudioFadeOut;
+
+    /**
+     * @brief The current audio audio fade-in
+     */
+    int _currentAudioFadeIn;
+
+    /**
+     * @brief The current video audio fade-in
+     */
+    int _currentVideoFadeIn;
+
+    /**
+     * @brief The current video audio fade-Out
+     */
+    int _currentVideoFadeOut;
 
 
 };

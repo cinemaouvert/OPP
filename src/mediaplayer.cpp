@@ -59,9 +59,12 @@ MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     _videoBackView(NULL),
     _currentVolume(50),
     _currentGain(0),
-    _currentCrossFading(0),
+    _currentAudioFadeOut(0),
     _isPaused(false),
-    _timerCrossFading(NULL)
+    _timerAudioFadeOut(NULL),
+    _timerAudioFadeIn(NULL),
+    _timerVideoFadeOut(NULL),
+    _timerVideoFadeIn(NULL)
 {
     QSettings settings("opp","opp");
     if(settings.value("VideoReturnMode").toString() == "none")
@@ -108,6 +111,13 @@ MediaPlayer::~MediaPlayer()
     libvlc_media_player_release(_vlcMediaPlayer);
     libvlc_media_player_release(_vlcBackMediaPlayer);
     libvlc_vlm_release(_inst);
+
+    if(_timerAudioFadeOut != NULL){
+        delete(_timerAudioFadeOut);
+    }
+    if(_timer != NULL){
+        delete (_timer);
+    }
 }
 
 int MediaPlayer::currentTime() const
@@ -178,10 +188,12 @@ void MediaPlayer::setVideoBackView(VideoView *videoView)
 
 void MediaPlayer::close(Playback *playback){
     if(playback!= NULL && playback->mediaSettings() != NULL){
-        if(_timerCrossFading != NULL){
-            stopCrossFading();
-            setVolume(_currentVolume);
-        }
+        stopFader(_timerAudioFadeOut);
+        stopFader(_timerAudioFadeIn);
+        stopFader(_timerVideoFadeOut);
+        stopFader(_timerVideoFadeIn);
+
+        setVolume(_currentVolume);
         disconnect(playback->mediaSettings(), SIGNAL(gainChanged(float)), this, SLOT(setCurrentGain(float)));
         disconnect(playback->mediaSettings(), SIGNAL(ratioChanged(Ratio)), this, SLOT(setCurrentRatio(Ratio)));
         disconnect(playback->mediaSettings(), SIGNAL(gammaChanged(float)), this, SLOT(setCurrentGamma(float)));
@@ -197,7 +209,10 @@ void MediaPlayer::close(Playback *playback){
         disconnect(playback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
         disconnect(playback->mediaSettings(), SIGNAL(subtitlesEncodeChanged(int)), this, SLOT(setCurrentSubtitlesEncode(int)));
         disconnect(playback->mediaSettings(), SIGNAL(cropChanged(int,int,int,int)), this, SLOT(applyCrop(int,int,int,int)));
-        disconnect(playback->mediaSettings(), SIGNAL(crossFadingChanged(int)), this, SLOT(setCurrentCrossFading(int)));
+        disconnect(playback->mediaSettings(), SIGNAL(audioFadeOutChanged(int)), this, SLOT(setCurrentAudioFadeOut(int)));
+        disconnect(playback->mediaSettings(), SIGNAL(audioFadeInChanged(int)), this, SLOT(setCurrentAudioFadeIn(int)));
+        disconnect(playback->mediaSettings(), SIGNAL(videoFadeOutChanged(int)), this, SLOT(setCurrentVideoFadeOut(int)));
+        disconnect(playback->mediaSettings(), SIGNAL(videoFadeInChanged(int)), this, SLOT(setCurrentVideoFadeIn(int)));
     }
 }
 
@@ -206,9 +221,10 @@ void MediaPlayer::open(Playback *playback)
 
     if(playback!= NULL && playback->mediaSettings() != NULL){
         _currentPlayback = playback;
-        if(_timerCrossFading != NULL){
-            stopCrossFading();
-        }
+        stopFader(_timerAudioFadeOut);
+        stopFader(_timerAudioFadeIn);
+        stopFader(_timerVideoFadeOut);
+        stopFader(_timerVideoFadeIn);
         setVolume(_currentVolume);
 
         libvlc_media_player_set_media(_vlcMediaPlayer, playback->media()->core());
@@ -227,7 +243,10 @@ void MediaPlayer::open(Playback *playback)
         connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
         connect(_currentPlayback->mediaSettings(), SIGNAL(subtitlesEncodeChanged(int)), this, SLOT(setCurrentSubtitlesEncode(int)));
         connect(_currentPlayback->mediaSettings(), SIGNAL(cropChanged(int,int,int,int)), this, SLOT(applyCrop(int,int,int,int)));
-        connect(_currentPlayback->mediaSettings(), SIGNAL(crossFadingChanged(int)), this, SLOT(setCurrentCrossFading(int)));
+        connect(_currentPlayback->mediaSettings(), SIGNAL(audioFadeOutChanged(int)), this, SLOT(setCurrentAudioFadeOut(int)));
+        connect(_currentPlayback->mediaSettings(), SIGNAL(audioFadeInChanged(int)), this, SLOT(setCurrentAudioFadeIn(int)));
+        connect(_currentPlayback->mediaSettings(), SIGNAL(videoFadeOutChanged(int)), this, SLOT(setCurrentVideoFadeOut(int)));
+        connect(_currentPlayback->mediaSettings(), SIGNAL(videoFadeInChanged(int)), this, SLOT(setCurrentVideoFadeIn(int)));
 
         if(_currentPlayback->media()->isImage()){
             libvlc_media_player_set_time(_vlcMediaPlayer, 0);
@@ -267,47 +286,11 @@ void MediaPlayer::play()
 
     libvlc_media_player_play(_vlcMediaPlayer);
     setVolume(_currentVolume);
-    startCrossFading(0);
+    startAudioFadeOut(0);
+    startAudioFadeIn();
+    startVideoFadeOut(0);
+    startVideoFadeIn();
     _isPaused = false;
-}
-
-
-void MediaPlayer::startCrossFading(int time){
-    if(_currentPlayback->mediaSettings()->crossFading() > 0){
-        if(_timerCrossFading != NULL){
-            _timerCrossFading->stop();
-        }
-
-        _timerCrossFading = new QTimer();
-        _timerCrossFading->connect(_timerCrossFading, SIGNAL(timeout()), this, SLOT(crossFading()));
-
-        int duration = _currentPlayback->mediaSettings()->outMark() - _currentPlayback->mediaSettings()->inMark();
-
-        int launch =((duration - time) -  _currentPlayback->mediaSettings()->crossFading());
-
-        if(launch <= 0)
-            _timerCrossFading->start();
-        else
-            _timerCrossFading->start(launch);
-    }
-}
-
-void MediaPlayer::crossFading(){
-    float vol  = _currentVolume;
-    float delta = vol / 40;
-    for(float i = 40; i>0; i-=1){
-        vol -= delta;
-        libvlc_audio_set_volume(_vlcMediaPlayer, ((float) vol) * powf(10.f, _currentGain/10.f) );
-
-        int timeToWait =  _currentPlayback->mediaSettings()->crossFading() / 40;
-        waitSnap(timeToWait);
-    }
-    stopCrossFading();
-}
-
-void MediaPlayer::stopCrossFading(){
-    if(_timerCrossFading != NULL)
-         _timerCrossFading->stop();
 }
 
 void MediaPlayer::playStream()
@@ -318,7 +301,9 @@ void MediaPlayer::playStream()
 
 void MediaPlayer::playScreen()
 {
-    _timer = new QTimer();
+    if(_timer == NULL){
+        _timer = new QTimer();
+    }
     _timer->connect(_timer, SIGNAL(timeout()), this, SLOT(takeScreen()));
     _timer->start(40);
 }
@@ -351,7 +336,8 @@ void MediaPlayer::pause()
     default:
         break;
     }
-    stopCrossFading();
+    stopFader(_timerAudioFadeOut);
+    stopFader(_timerVideoFadeOut);
     libvlc_media_player_set_pause(_vlcMediaPlayer, true);
     _isPaused = true;
 }
@@ -370,7 +356,9 @@ void MediaPlayer::resume()
         break;
     }
     libvlc_media_player_set_pause(_vlcMediaPlayer, false);
-    startCrossFading(libvlc_media_player_get_time(_vlcMediaPlayer));
+    setVolume(_currentVolume);
+    startAudioFadeOut(libvlc_media_player_get_time(_vlcMediaPlayer));
+    startVideoFadeOut(libvlc_media_player_get_time(_vlcMediaPlayer));
     _isPaused = false;
 }
 
@@ -400,7 +388,11 @@ void MediaPlayer::stop()
         break;
     }
     libvlc_media_player_stop(_vlcMediaPlayer);
-    stopCrossFading();
+    stopFader(_timerAudioFadeOut);
+    stopFader(_timerAudioFadeIn);
+    stopFader(_timerVideoFadeOut);
+    stopFader(_timerVideoFadeIn);
+
     _isPaused = false;
 }
 
@@ -413,7 +405,8 @@ void MediaPlayer::stopStream()
 void MediaPlayer::setCurrentTime(int time)
 {
     libvlc_media_player_set_time(_vlcMediaPlayer, time);
-    startCrossFading(time);
+    startAudioFadeOut(time);
+    startVideoFadeOut(time);
 }
 
 void MediaPlayer::setVolume(int volume)
@@ -460,6 +453,11 @@ void MediaPlayer::applyCurrentPlaybackSettings()
               _currentPlayback->mediaSettings()->cropRight(),
               _currentPlayback->mediaSettings()->cropBot()
               );
+
+    setCurrentAudioFadeOut(_currentPlayback->mediaSettings()->audioFadeOut());
+    setCurrentAudioFadeIn(_currentPlayback->mediaSettings()->audioFadeIn());
+    setCurrentVideoFadeOut(_currentPlayback->mediaSettings()->videoFadeOut());
+    setCurrentVideoFadeIn(_currentPlayback->mediaSettings()->videoFadeIn());
 }
 
 void MediaPlayer::setCurrentGain(float gain)
@@ -468,9 +466,22 @@ void MediaPlayer::setCurrentGain(float gain)
     setVolume(_currentVolume);
 }
 
-void MediaPlayer::setCurrentCrossFading(int time)
+void MediaPlayer::setCurrentAudioFadeOut(int time)
 {
-    _currentCrossFading = time;
+    _currentAudioFadeOut = time;
+}
+
+void MediaPlayer::setCurrentAudioFadeIn(int time){
+    _currentAudioFadeIn = time;
+
+}
+
+void MediaPlayer::setCurrentVideoFadeIn(int time){
+    _currentVideoFadeIn = time;
+}
+
+void MediaPlayer::setCurrentVideoFadeOut(int time){
+    _currentVideoFadeOut = time;
 }
 
 void MediaPlayer::setCurrentAudioTrack(const int &track)
@@ -693,4 +704,170 @@ void MediaPlayer::applyCrop(int cropTop,int cropLeft, int cropRight, int cropBot
     libvlc_video_set_crop_geometry(core(),val.toStdString().c_str());
 }
 
+/****************************/
+/***      FADERS          ***/
+/****************************/
+
+void MediaPlayer::startAudioFadeOut(int time){
+    if(_currentPlayback->mediaSettings()->audioFadeOut() > 0){
+        setVolume(_currentVolume);
+        stopFader(_timerAudioFadeOut);
+        if(_timerAudioFadeOut == NULL){
+             _timerAudioFadeOut = new QTimer();
+             _timerAudioFadeOut->setSingleShot(true);
+             _timerAudioFadeOut->connect(_timerAudioFadeOut, SIGNAL(timeout()), this, SLOT(audioFadeOut()));
+        }
+
+        startFaderOut(_timerAudioFadeOut,time, _currentPlayback->mediaSettings()->audioFadeOut());
+
+    }
+}
+
+void MediaPlayer::startAudioFadeIn(){
+    if(_currentPlayback->mediaSettings()->audioFadeIn() > 0){
+        stopFader(_timerAudioFadeIn);
+        if(_timerAudioFadeIn == NULL){
+             _timerAudioFadeIn = new QTimer();
+             _timerAudioFadeIn->setSingleShot(true);
+             _timerAudioFadeIn->connect(_timerAudioFadeIn, SIGNAL(timeout()), this, SLOT(audioFadeIn()));
+        }
+
+        startFaderIn(_timerAudioFadeIn);
+    }
+}
+void MediaPlayer::startVideoFadeOut(int time){
+    if(_currentPlayback->mediaSettings()->videoFadeOut() > 0){
+        setCurrentBrightness(_currentPlayback->mediaSettings()->brightness());
+        stopFader(_timerVideoFadeOut);
+        if(_timerVideoFadeOut == NULL){
+             _timerVideoFadeOut = new QTimer();
+             _timerVideoFadeOut->setSingleShot(true);
+             _timerVideoFadeOut->connect(_timerVideoFadeOut, SIGNAL(timeout()), this, SLOT(videoFadeOut()));
+        }
+
+        startFaderOut(_timerVideoFadeOut,time, _currentPlayback->mediaSettings()->videoFadeOut());
+
+    }
+}
+void MediaPlayer::startVideoFadeIn(){
+    if(_currentPlayback->mediaSettings()->videoFadeIn() > 0){
+        stopFader(_timerVideoFadeIn);
+        if(_timerVideoFadeIn == NULL){
+             _timerVideoFadeIn = new QTimer();
+             _timerVideoFadeIn->setSingleShot(true);
+             _timerVideoFadeIn->connect(_timerVideoFadeIn, SIGNAL(timeout()), this, SLOT(videoFadeIn()));
+        }
+
+        startFaderIn(_timerVideoFadeIn);
+    }
+}
+
+void MediaPlayer::startFaderOut(QTimer* timer,int time, int timeToFade){
+    int duration = _currentPlayback->mediaSettings()->outMark() - _currentPlayback->mediaSettings()->inMark();
+    duration = (duration <= 0) ? 0 : _currentPlayback->media()->duration();
+
+    int launch = duration - timeToFade;
+    if(time > 0){
+        launch -= time - _currentPlayback->mediaSettings()->inMark() ;
+    }
+    launch = launch < 0 ? 0 : launch;
+    timer->start(launch);
+}
+
+void MediaPlayer::startFaderIn(QTimer* timer){
+    timer->start();
+}
+
+void MediaPlayer::audioFadeOut(){
+    float vol  = _currentVolume;
+    float delta = vol / 40;
+
+    for(float i = 40; i>0; i--){
+        int duration = _currentPlayback->mediaSettings()->outMark();
+        if(duration <=0){
+            duration = _currentPlayback->media()->duration();
+        }
+
+        int timeLeft = (duration - currentTime() );
+        int timeToWait =  (timeLeft) / i;
+
+        if(!isPlaying() || (timeLeft-500) >_currentPlayback->mediaSettings()->audioFadeOut()){
+            return;
+        }else{
+            vol -= delta;
+            libvlc_audio_set_volume(_vlcMediaPlayer, ((float) vol) * powf(10.f, _currentGain/10.f) );
+        }
+        waitSnap(timeToWait);
+    }
+}
+
+void MediaPlayer::audioFadeIn(){
+    libvlc_audio_set_volume(_vlcMediaPlayer, ((float) 0) * powf(10.f, _currentGain/10.f) );
+    float vol  = 0;
+    float delta = _currentVolume / 40;
+
+    for(float i = 40; i>0; i--){
+        int timeToWait =  _currentPlayback->mediaSettings()->audioFadeIn() / 40;
+        waitSnap(timeToWait);
+
+        if(!isPlaying()){
+            return;
+        }else{
+            vol += delta;
+            libvlc_audio_set_volume(_vlcMediaPlayer, ((float) vol) * powf(10.f, _currentGain/10.f) );
+        }
+    }
+    qDebug()<<"OUT";
+    libvlc_audio_set_volume(_vlcMediaPlayer, ((float) _currentVolume) * powf(10.f, _currentGain/10.f) );
+
+}
+void MediaPlayer::videoFadeOut(){
+    int nbEchantillon = 40;
+    float brightness  = _currentPlayback->mediaSettings()->brightness();
+    float delta = brightness / nbEchantillon;
+
+    for(float i = nbEchantillon; i>0; i--){
+        int duration = _currentPlayback->mediaSettings()->outMark();
+        if(duration <=0){
+            duration = _currentPlayback->media()->duration();
+        }
+
+        int timeLeft = duration - currentTime();
+        int timeToWait =  timeLeft / i;
+
+        if(!isPlaying() || (timeLeft-500) >_currentPlayback->mediaSettings()->videoFadeOut()){
+            return;
+        }else{
+            brightness -= delta;
+            setCurrentBrightness(brightness);
+        }
+        waitSnap(timeToWait);
+    }
+}
+void MediaPlayer::videoFadeIn(){
+    float brightness  = 0;
+    setCurrentBrightness(brightness);
+    float delta = _currentPlayback->mediaSettings()->brightness() / 40;
+
+    for(float i = 40; i>0; i--){
+        int timeToWait =  _currentPlayback->mediaSettings()->videoFadeIn() / 40;
+        waitSnap(timeToWait);
+
+        if(!isPlaying()){
+            return;
+        }else{
+            brightness += delta;
+            setCurrentBrightness(brightness);
+        }
+    }
+    setCurrentBrightness(_currentPlayback->mediaSettings()->brightness());
+
+}
+
+
+void MediaPlayer::stopFader(QTimer *timer){
+    if(timer != NULL){
+        timer->stop();
+    }
+}
 

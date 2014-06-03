@@ -144,7 +144,10 @@ void DataStorage::save(QFile &file)
             playback.setAttribute("cropLeft", playbackElement->mediaSettings()->cropLeft());
             playback.setAttribute("cropRight", playbackElement->mediaSettings()->cropRight());
             playback.setAttribute("cropBot", playbackElement->mediaSettings()->cropBot());
-            playback.setAttribute("crossFading", playbackElement->mediaSettings()->crossFading());
+            playback.setAttribute("audioFadeOut", playbackElement->mediaSettings()->audioFadeOut());
+            playback.setAttribute("audioFadeIn", playbackElement->mediaSettings()->audioFadeIn());
+            playback.setAttribute("videoFadeOut", playbackElement->mediaSettings()->videoFadeOut());
+            playback.setAttribute("videoFadeIn", playbackElement->mediaSettings()->videoFadeIn());
 
             playlist.appendChild(playback);
         }
@@ -262,7 +265,11 @@ void DataStorage::load(QFile &file)
             settings->setOutMark( playbackAttributes.namedItem("outMark").nodeValue().toInt() );
             settings->setGain( playbackAttributes.namedItem("gain").nodeValue().toFloat() );
             settings->setSubtitlesEncode(playbackAttributes.namedItem("subtitlesEncode").nodeValue().toInt() );
-            settings->setCrossFading(playbackAttributes.namedItem("crossFading").nodeValue().toInt());
+            settings->setAudioFadeOut(playbackAttributes.namedItem("audioFadeOut").nodeValue().toInt());
+            settings->setAudioFadeIn(playbackAttributes.namedItem("audioFadeIn").nodeValue().toInt());
+            settings->setVideoFadeOut(playbackAttributes.namedItem("videoFadeOut").nodeValue().toInt());
+            settings->setVideoFadeIn(playbackAttributes.namedItem("videoFadeIn").nodeValue().toInt());
+
 
             int cropTop, cropLeft, cropRight, cropBot;
             cropTop = (playbackAttributes.namedItem("cropTop").nodeValue().toInt() );
