@@ -1526,7 +1526,7 @@ QString MainWindow::scheduleToHml(){
         out +=  "<tr style='background-color: lightgray; font-weight:bold;'>\n"
                 +  QString("<td>%1</td>\n").arg(schedule->launchAt().toString())
                 +  QString("<td>%1</td>\n").arg(schedule->finishAt().toString())
-                +  QString("<td style='color:#ff03cc'>%1</td>\n").arg(schedule->playlist()->title())
+                +  QString("<td style='color:#000000'>%1</td>\n").arg(schedule->playlist()->title())
                 +  QString::fromUtf8("<td>%1</td>\n").arg(QString(schedule->isActive() ? QString("Active") : schedule->isExpired() ? QString::fromUtf8("Expirée") : QString("Annulée")))
                 +  "</tr>\n";
         foreach(Playback *playback, schedule->playlist()->playbackList()){
