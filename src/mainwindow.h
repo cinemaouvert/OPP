@@ -79,7 +79,6 @@ public:
     ~MainWindow();
 
 
-
     // FIX : ref 0000001
     /**
      * @brief Restore playlist tab
@@ -253,6 +252,7 @@ public slots:
 
 private slots:
 
+    void showTimeOut();
     /**
      * @brief Change the value of Ratio settings
      * @param index Index of the new Ratio
@@ -776,6 +776,11 @@ private:
      * @brief VideoWindow for the test pattern
      */
     VideoWindow *_vWMire;
+
+    /**
+     * @brief ui The timer for automation
+     */
+    QTimer *_timerOut;
 };
 
 #endif // MAINWINDOW_H

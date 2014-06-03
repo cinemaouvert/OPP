@@ -283,9 +283,6 @@ void MediaPlayer::startCrossFading(int time){
 
         int duration = _currentPlayback->mediaSettings()->outMark() - _currentPlayback->mediaSettings()->inMark();
 
-        if(duration <= 0)
-            duration = _currentPlayback->media()->duration();
-
         int launch =((duration - time) -  _currentPlayback->mediaSettings()->crossFading());
 
         if(launch <= 0)

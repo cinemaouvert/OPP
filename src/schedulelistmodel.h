@@ -192,6 +192,13 @@ public:
      */
     QTime totalDuration();
 
+    /**
+     * @brief Return launching time of next automation
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
+    QDateTime *getNextSchedule();
+
 public slots:
     /**
      * @brief Enable or disable automation

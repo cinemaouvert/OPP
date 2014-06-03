@@ -98,8 +98,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _mpMire(NULL),
     _mireMire(NULL),
     _pbMire(NULL),
-    _vWMire(NULL)
-
+    _vWMire(NULL),
+    _timerOut(NULL)
 {
     //setAttribute(Qt::WA_DeleteOnClose);
 
@@ -116,6 +116,10 @@ MainWindow::MainWindow(QWidget *parent) :
     // internal core initalization
     _app = new Application();
     _playlistPlayer = new PlaylistPlayer(_app->vlcInstance(), this);
+
+    _timerOut = new QTimer();
+    _timerOut->connect(_timerOut, SIGNAL(timeout()), this, SLOT(showTimeOut()));
+    _timerOut->start(900);
 
     _videoWindow = new VideoWindow(this);
 
@@ -285,6 +289,8 @@ MainWindow::~MainWindow()
         delete _statusWidget;
     if(_locker != NULL)
         delete _locker;
+    if(_timerOut != NULL)
+        delete _timerOut;
     LoggerSingleton::destroyInstance();
 }
 
@@ -1182,6 +1188,11 @@ void MainWindow::on_scheduleDelayButton_clicked()
         QMessageBox::critical(this, tr("Delay validation"), tr("With this delay a playlist starts before the end of the current playlist. \nPlease choose an other delay."));
     else if(err == 2)
         QMessageBox::critical(this, tr("Delay validation"), tr("With this delay a playlist starts before the current date. \nPlease choose an other delay."));
+
+    /*if(_scheduleListModel->getNextSchedule().isNull())
+        qDebug() << "null" ;
+    else
+        qDebug() << _scheduleListModel->getNextSchedule().time() ;*/
 }
 
 void MainWindow::on_scheduleToggleEnabledButton_toggled(bool checked)
@@ -1193,6 +1204,44 @@ void MainWindow::on_scheduleToggleEnabledButton_toggled(bool checked)
     }
 }
 
+void MainWindow::showTimeOut()
+{
+    if(!_scheduleListModel->getNextSchedule() == NULL)
+    {
+        int ecart = QTime::currentTime().secsTo(_scheduleListModel->getNextSchedule()->time());
+
+        int h = ecart / 3600;
+        int m = (ecart - h*3600) /60;
+        int s = ecart - h*3600 - m*60;
+
+        if(h == 0 && m == 0 && s < 11)
+        {
+            if(s%2 == 0)     //Even seconds -> orange label
+            {
+                ui->label_timeout->setStyleSheet("QLabel { color : orange; }");
+            }
+            else            //Odd seconds -> red label
+            {
+                ui->label_timeout->setStyleSheet("QLabel { color : red; }");
+            }
+        }
+        else if(h == 0 && m < 5)    //Under 5 minutes -> red label
+        {
+            ui->label_timeout->setStyleSheet("QLabel { color : red; }");
+        }
+        else
+        {
+            ui->label_timeout->setStyleSheet("QLabel { color : black; }");
+        }
+        QTime *t = new QTime(h,m,s,0);
+        ui->label_timeout->setText(t->toString("hh:mm:ss"));
+    }
+    else
+    {
+        //_timerOut->stop();
+        ui->label_timeout->setText("");
+    }
+}
 
 /***********************************************************************************************\
                                           Helpers
@@ -1635,3 +1684,5 @@ void MainWindow::closeMirePlayer(){
         _vWMire = NULL;
     }
 }
+
+
