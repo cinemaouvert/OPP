@@ -53,16 +53,19 @@ void ExportPDF::setHtml(const QString &html){
 
 void ExportPDF::on_exportPDF_Button_clicked()
 {
-    _dir = QFileDialog::getExistingDirectory(this, tr("Open Folder"),
-                                                 QCoreApplication::applicationDirPath(),
-                                                 QFileDialog::ShowDirsOnly
-                                                 | QFileDialog::DontResolveSymlinks);
-    if(_dir != ""){
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Schedule"), "", tr("PDF file (*.pdf)"));
+
+    if (fileName.isEmpty()) {
+        return;
+    } else {
+        if(fileName.right(4)!=".pdf")
+            fileName+=".pdf";
+
         QApplication::setOverrideCursor(Qt::WaitCursor);
         QPrinter printer(QPrinter::HighResolution);
                   printer.setOutputFormat(QPrinter::PdfFormat);
                   printer.setOrientation(QPrinter::Landscape);
-                  printer.setOutputFileName(_dir + QDir::separator() +"scheduleOPP_" + (QDateTime::currentDateTime().toString()).replace(':', "_").replace('.', "_").replace(' ', "_") + ".pdf");
+                  printer.setOutputFileName(fileName);
 
          QWebView webView;
          webView.setHtml(_html);
