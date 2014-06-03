@@ -108,6 +108,20 @@ QVariant ScheduleListModel::data(const QModelIndex &index, int role) const
         case PlaylistId:
             return _scheduleList[index.row()]->playlist()->title();
             break;
+        case State:
+            if (index.column() == State) {
+                if (_scheduleList[index.row()]->isExpired()) {
+                    if (_scheduleList[index.row()]->canceled())
+                        return tr("Played");
+                    else
+                        return tr("Ignored");
+                } else if (_automationEnabled){
+                    return tr("Pending...");
+                }
+                else
+                    return tr("Sleeping...");
+            }
+            break;
         }
         break;
     case Qt::ToolTipRole:
@@ -222,8 +236,8 @@ int ScheduleListModel::delayAll(int ms)
     }
 
     foreach(Schedule *schedule, _scheduleList) {
-            if(!schedule->isExpired())
-                schedule->delay(ms);
+        if(!schedule->isExpired())
+            schedule->delay(ms);
     }
 
     emit layoutChanged();
@@ -268,8 +282,34 @@ QTime ScheduleListModel::totalDuration()
     int duration = 0;
 
     foreach (Schedule* schedule, _scheduleList) {
-         duration += schedule->playlist()->totalDuration();
+        duration += schedule->playlist()->totalDuration();
     }
 
     return msecToQTime(duration);
+}
+
+QDateTime *ScheduleListModel::getNextSchedule()
+{
+    QDateTime *next = NULL;
+    if(!_scheduleList.isEmpty())
+    {
+        foreach (Schedule* schedule, _scheduleList)
+        {
+            if(!schedule->isExpired())
+            {
+                next = new QDateTime(schedule->launchAt());
+            }
+        }
+    }
+    if(next != NULL)
+    {
+        foreach (Schedule* schedule, _scheduleList)
+        {
+            if(!schedule->isExpired() && schedule->launchAt() < *next)
+            {
+                next = new QDateTime(schedule->launchAt());
+            }
+        }
+    }
+    return next;
 }
