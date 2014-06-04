@@ -55,7 +55,7 @@ void ScreenshotSelector::setMedia(Media *media){
 
 
     libvlc_media_player_play(vlcp);
-    waitSnap(750);
+    wait(750);
     libvlc_media_player_pause(vlcp);
 
 

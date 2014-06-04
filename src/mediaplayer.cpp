@@ -807,7 +807,7 @@ void MediaPlayer::audioFadeOut(){
             vol -= delta;
             libvlc_audio_set_volume(_vlcMediaPlayer, ((float) vol) * powf(10.f, _currentGain/10.f) );
         }
-        waitSnap(timeToWait);
+        wait(timeToWait);
     }
 }
 
@@ -818,7 +818,7 @@ void MediaPlayer::audioFadeIn(){
 
     for(float i = 40; i>0; i--){
         int timeToWait =  _currentPlayback->mediaSettings()->audioFadeIn() / 40;
-        waitSnap(timeToWait);
+        wait(timeToWait);
 
         if(!isPlaying()){
             return;
@@ -850,7 +850,7 @@ void MediaPlayer::videoFadeOut(){
             brightness -= delta;
             setCurrentBrightness(brightness);
         }
-        waitSnap(timeToWait);
+        wait(timeToWait);
     }
 }
 void MediaPlayer::videoFadeIn(){
@@ -860,7 +860,7 @@ void MediaPlayer::videoFadeIn(){
 
     for(float i = 40; i>0; i--){
         int timeToWait =  _currentPlayback->mediaSettings()->videoFadeIn() / 40;
-        waitSnap(timeToWait);
+        wait(timeToWait);
 
         if(!isPlaying()){
             return;

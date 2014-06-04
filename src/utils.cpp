@@ -52,7 +52,7 @@ int qTimeToMsec(QTime time)
     return 1000*seconds+60000*minutes+3600000*hours+msec;
 }
 
-void waitSnap(int t)
+void wait(int t)
 {
     QTime dieTime= QTime::currentTime().addMSecs(t);
     while( QTime::currentTime() < dieTime )

@@ -51,7 +51,7 @@ int qTimeToMsec(QTime time);
  *
  * @author Thomas Berthomé <thoberthome@laposte.net>
  */
-void waitSnap(int t);
+void wait(int t);
 
 /**
  * @brief Return the human readable size

@@ -417,9 +417,9 @@ void MainWindow::on_binAddMediaButton_clicked()
             libvlc_media_player_set_position(vlcMP, 0.5f);
             float width = libvlc_video_get_width(vlcMP);
             float height = libvlc_video_get_height(vlcMP);
-            waitSnap(750);
+            wait(750);
             libvlc_video_take_snapshot(vlcMP, 0, screenPath.toStdString().c_str(), width,height);
-            waitSnap(100);
+            wait(100);
 
         }
         libvlc_media_player_stop(vlcMP);
