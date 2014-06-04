@@ -383,15 +383,15 @@ void MainWindow::on_binAddMediaButton_clicked()
     libvlc_media_player_t *vlcMP = libvlc_media_player_new(vlc);
 
 
-    int WId = vw->request();
+    WId wid = vw->request();
 
-    if (WId) {
+    if (wid) {
         #if defined(Q_OS_WIN)
-                libvlc_media_player_set_hwnd(vlcMP, (void *)WId);
+                libvlc_media_player_set_hwnd(vlcMP, (void *)wid);
         #elif defined(Q_OS_MAC)
-                libvlc_media_player_set_nsobject(vlcMP, (void *)WId);
+                libvlc_media_player_set_nsobject(vlcMP, (void *)wid);
         #elif defined(Q_OS_UNIX)
-                libvlc_media_player_set_xwindow(vlcMP, WId);
+                libvlc_media_player_set_xwindow(vlcMP, wid);
         #endif
     }
 
