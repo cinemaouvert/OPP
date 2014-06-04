@@ -670,11 +670,13 @@ void MainWindow::updateSettings()
     ui->videoTrackComboBox->blockSignals(true);
     ui->subtitlesTrackComboBox->blockSignals(true);
 
-    ui->mediaSettingsWidget->setEnabled(true);
-    ui->advancedSettingsButton->setEnabled(true);
-    ui->advancedPictureSettingsButton->setEnabled(true);
-    ui->playerControlsWidget->setEnabled(true);
-
+    if(!_locker->isLock())
+    {
+        ui->mediaSettingsWidget->setEnabled(true);
+        ui->advancedSettingsButton->setEnabled(true);
+        ui->advancedPictureSettingsButton->setEnabled(true);
+        ui->playerControlsWidget->setEnabled(true);
+    }
     ui->audioTrackComboBox->clear();
     ui->audioTrackComboBox->addItem(tr("Disabled"));
     ui->audioTrackComboBox->addItems(playback->media()->audioTracksName());
