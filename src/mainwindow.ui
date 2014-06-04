@@ -480,7 +480,7 @@
                   <set>Qt::ImhNone</set>
                  </property>
                  <property name="text">
-                  <string> </string>
+                  <string/>
                  </property>
                  <property name="textFormat">
                   <enum>Qt::AutoText</enum>
@@ -2276,7 +2276,7 @@
     <string>Ctrl+S</string>
    </property>
    <property name="shortcutContext">
-    <enum>Qt::WidgetShortcut</enum>
+    <enum>Qt::WindowShortcut</enum>
    </property>
   </action>
   <action name="actionDefault">
