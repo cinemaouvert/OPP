@@ -229,6 +229,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //Redimensionnement colonnes Bin
     ui->binTableView->setColumnWidth(1,80);
     ui->binTableView->setColumnWidth(2,60);
+    ui->scheduleTableView->setColumnWidth(0,130);
+    ui->scheduleTableView->setColumnWidth(1,130);
 
     ui->menuPlay_a_test_pattern->clear();
     QDir mires("mires");
@@ -1204,11 +1206,6 @@ void MainWindow::on_scheduleDelayButton_clicked()
         QMessageBox::critical(this, tr("Delay validation"), tr("With this delay a playlist starts before the end of the current playlist. \nPlease choose an other delay."));
     else if(err == 2)
         QMessageBox::critical(this, tr("Delay validation"), tr("With this delay a playlist starts before the current date. \nPlease choose an other delay."));
-
-    /*if(_scheduleListModel->getNextSchedule().isNull())
-        qDebug() << "null" ;
-    else
-        qDebug() << _scheduleListModel->getNextSchedule().time() ;*/
 }
 
 void MainWindow::on_scheduleToggleEnabledButton_toggled(bool checked)

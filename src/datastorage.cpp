@@ -107,7 +107,6 @@ void DataStorage::save(QFile &file)
     int playlistId=0;
     foreach(PlaylistModel* playlistElement, _playlistModelList)
     {
-        qDebug() << "save playlist " << playlistElement->playlist()->title();
         playlist= doc.createElement("playlist");
         playlist.setAttribute("title", playlistElement->playlist()->title());
         playlist.setAttribute("id", playlistId);
@@ -176,7 +175,6 @@ void DataStorage::save(QFile &file)
     doc.save(ts, indent);
 
     _playlistModelList.clear();
-    qDebug()<<"End save";
 }
 
 void DataStorage::load(QFile &file)
