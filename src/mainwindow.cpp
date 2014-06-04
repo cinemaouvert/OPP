@@ -119,7 +119,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _timerOut = new QTimer();
     _timerOut->connect(_timerOut, SIGNAL(timeout()), this, SLOT(showTimeOut()));
-    _timerOut->start(900);
+    _timerOut->start(1000);
 
     _videoWindow = new VideoWindow(this);
 
@@ -255,6 +255,32 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect (actionClose,SIGNAL(triggered()),this,SLOT(closeWindowTestPattern()));
     connect (signalMapper, SIGNAL(mapped(QString)), this, SLOT(playMire(QString)));
+
+    ui->screenBefore->setStyleSheet(QString("QLabel { ")+
+                                     QString("border-style: outset;")+
+                                     QString("border-width: 1px;")+
+                                     QString("border-radius: 5px;")+
+                                     QString("border-color: black; }"));
+    ui->screenAfter->setStyleSheet(QString("QLabel { ")+
+                                     QString("border-style: outset;")+
+                                     QString("border-width: 1px;")+
+                                     QString("border-radius: 5px;")+
+                                     QString("border-color: black; }"));
+    ui->screen_none->setStyleSheet(QString("QLabel { ")+
+                                     QString("border-style: outset;")+
+                                     QString("border-width: 1px;")+
+                                     QString("border-radius: 5px;")+
+                                     QString("border-color: black; }"));
+    ui->screenBack->setStyleSheet(QString("QLabel { ")+
+                                     QString("border-style: outset;")+
+                                     QString("border-width: 1px;")+
+                                     QString("border-radius: 5px;")+
+                                     QString("border-color: black; }"));
+    ui->screenAfter->clear();
+    ui->screenBefore->clear();
+    ui->screenBack->clear();
+    ui->screen_none->clear();
+
 
     //Restart
     if(QApplication::argc()>1) //Restart : filename en argument
