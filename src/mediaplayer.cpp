@@ -61,6 +61,7 @@ MediaPlayer::MediaPlayer(libvlc_instance_t *vlcInstance, QObject *parent) :
     _currentGain(0),
     _currentAudioFadeOut(0),
     _isPaused(false),
+    _timer(NULL),
     _timerAudioFadeOut(NULL),
     _timerAudioFadeIn(NULL),
     _timerVideoFadeOut(NULL),

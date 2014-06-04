@@ -374,8 +374,25 @@ void MainWindow::on_binAddMediaButton_clicked()
 
     QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("New media"), settings.value("moviesPath").toString(), tr("Media (%1)").arg(Media::mediaExtensions().join(" ")));
 
+
+    VideoWindow win(this, VideoWindow::WINDOW);
+    VideoWidget *vw = win.videoWidget();
     libvlc_instance_t *vlc = libvlc_new(0, NULL);
     libvlc_media_player_t *vlcMP = libvlc_media_player_new(vlc);
+
+
+    int WId = vw->request();
+
+    if (WId) {
+        #if defined(Q_OS_WIN)
+                libvlc_media_player_set_hwnd(vlcMP, (void *)WId);
+        #elif defined(Q_OS_MAC)
+                libvlc_media_player_set_nsobject(vlcMP, (void *)WId);
+        #elif defined(Q_OS_UNIX)
+                libvlc_media_player_set_xwindow(vlcMP, WId);
+        #endif
+    }
+
 
     if(!QDir("screenshot").exists())
     {
@@ -390,7 +407,6 @@ void MainWindow::on_binAddMediaButton_clicked()
         screenPath +=  media->getLocation().replace(QDir::separator(),"_").remove(":");
         screenPath += ".png";
 
-        libvlc_video_set_scale (vlcMP, 0.5f);
         if(!QFile(screenPath).exists() && !media->isAudio() && !media->isImage())
         {
 
