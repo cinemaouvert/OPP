@@ -229,6 +229,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //Redimensionnement colonnes Bin
     ui->binTableView->setColumnWidth(1,80);
     ui->binTableView->setColumnWidth(2,60);
+    ui->scheduleTableView->setColumnWidth(0,130);
+    ui->scheduleTableView->setColumnWidth(1,130);
 
     ui->menuPlay_a_test_pattern->clear();
     QDir mires("mires");
