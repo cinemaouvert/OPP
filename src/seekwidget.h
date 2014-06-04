@@ -53,6 +53,7 @@ public:
      */
     bool autoHide() const { return _autoHide; }
 
+
     /**
      * @brief Set the value of autoHide
      * @param autoHide The new value of autoHide

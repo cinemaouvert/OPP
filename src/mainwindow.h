@@ -257,7 +257,6 @@ public slots:
 private slots:
 
     void showTimeOut();
-    void showTimePlaylist();
     /**
      * @brief Change the value of Ratio settings
      * @param index Index of the new Ratio
@@ -645,6 +644,7 @@ protected:
 
 
 private:
+    void showTimePlaylist();
 
     /**
       * @brief Loads the plugins from the folder plugins

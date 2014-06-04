@@ -119,7 +119,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _timerOut = new QTimer();
     _timerOut->connect(_timerOut, SIGNAL(timeout()), this, SLOT(showTimeOut()));
-    _timerOut->connect(_timerOut, SIGNAL(timeout()), this, SLOT(showTimePlaylist()));
     _timerOut->start(900);
 
     _videoWindow = new VideoWindow(this);
@@ -731,6 +730,7 @@ void MainWindow::on_playerPlayButton_clicked(bool checked)
         if (_playlistPlayer->mediaPlayer()->isPaused()) {
             _playlistPlayer->mediaPlayer()->resume();
         } else {
+            showTimePlaylist();
             //Creation de la window elle n'existe pas
             if(!_videoWindow->isVisible()){
                 delete(_videoWindow);
@@ -773,6 +773,7 @@ void MainWindow::on_menuVideoMode_triggered(QAction *action)
 }
 
 void MainWindow::stop(){
+    ui->label_timeRemaining->setText("00:00:00");
     if(_playlistPlayer->mediaPlayer()->isPaused() || _playlistPlayer->mediaPlayer()->isPlaying())
         _playlistPlayer->stop();
     ui->playerPlayButton->setChecked(false);
@@ -1543,6 +1544,21 @@ void MainWindow::updateBackTime(const int &time)
     ui->label_screen->setText(currentTime.toString(display));
     ui->label_stream->setText(currentTime.toString(display));
     ui->label_none->setText(currentTime.toString(display));
+
+    int totalTime = _playlistPlayer->currentPlaylist()->totalDuration();
+    int idx = _playlistPlayer->currentPlaylist()->indexOf(_playlistPlayer->mediaPlayer()->currentPlayback());
+    qDebug()<<idx;
+    int timeAlreadyElapsed = 0;
+
+    for(int i = 0 ; i < idx ; i++){
+        timeAlreadyElapsed += _playlistPlayer->currentPlaylist()->at(i)->media()->duration();
+    }
+
+    int newTimeInMSec = totalTime-time-timeAlreadyElapsed;
+    QTime newQTime = QTime(0,0,0,0).addMSecs(newTimeInMSec);
+
+
+    ui->label_timeRemaining->setText(newQTime.toString("hh:mm:ss"));
 }
 
 void MainWindow::setScreensBack(QString urlA)
