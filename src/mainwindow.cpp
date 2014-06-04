@@ -452,7 +452,7 @@ void MainWindow::on_binDeleteMediaButton_clicked()
         bool toDel = true;
 
         QModelIndex index = selectionModel->selectedRows().at(i);
-        Media *media = _mediaListModel->mediaList().at(index.row());
+        Media *media = _mediaListModel->mediaList()[index.row()];
 
         if (media->isUsed()) {
             //If user answer Yes
@@ -468,6 +468,7 @@ void MainWindow::on_binDeleteMediaButton_clicked()
                     }else{
                         toDel=false;
                         QMessageBox::critical(this, media->name(), tr("The media wasn't removed because you can not delete files that have been or are  being used.") ,tr("OK"));
+
                     }
                 }
             }else{
@@ -481,6 +482,7 @@ void MainWindow::on_binDeleteMediaButton_clicked()
             i--;
         }
     }
+
 }
 
 /***********************************************************************************************\

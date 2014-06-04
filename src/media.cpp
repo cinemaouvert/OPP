@@ -40,7 +40,6 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
     QObject(parent),_original(NULL),
     _usageCount(0)
 {
-    _id = Media::s_instanceCount++;
     initMedia(location);
     if(isFile)
         _vlcMedia = libvlc_media_new_path(vlcInstance, location.toStdString().data());
@@ -51,8 +50,9 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
     parseMediaInfos();
 }
 
-Media::Media(Media *media)
+Media::Media(Media *media,bool incrementParent)
 {
+
     _original = media;
     initMedia(media->_location);
     _usageCount = media->_usageCount;
@@ -60,7 +60,8 @@ Media::Media(Media *media)
 
     _vlcMedia = libvlc_media_new_path(_instance, media->_location.toStdString().data());
 
-    media->usageCountAdd() ;
+    if(incrementParent)
+        media->usageCountAdd();
     _id = media->_id;
     parseMediaInfos();
 
@@ -164,6 +165,7 @@ bool Media::exists() const
 
 void Media::usageCountAdd(int count)
 {
+
     _usageCount += count;
     emit usageCountChanged();
 }
