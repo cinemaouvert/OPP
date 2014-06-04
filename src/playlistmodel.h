@@ -219,7 +219,7 @@ public:
      * @author Thibaud Lamarche <thibaud.lamarche@gmail.com>
      */
     bool isRunningMedia(Media *media){
-        for (int i = _playlist->count() - 1; i >= 0; i--) {
+        for (int i = 0; i < _playlist->count(); i++) {
             if ((*_playlist->at(i)->media()) == media) {
                 return isRunningMedia(i);
             }

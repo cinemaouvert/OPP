@@ -29,7 +29,7 @@
 Playback::Playback(Media *media, QObject *parent) :
     QObject(parent)
 {
-    _media = new Media(media);
+    _media = new Media(media,true);
 
     _mediaSettings = new MediaSettings();
 
