@@ -826,7 +826,6 @@ void MediaPlayer::audioFadeIn(){
             libvlc_audio_set_volume(_vlcMediaPlayer, ((float) vol) * powf(10.f, _currentGain/10.f) );
         }
     }
-    qDebug()<<"OUT";
     libvlc_audio_set_volume(_vlcMediaPlayer, ((float) _currentVolume) * powf(10.f, _currentGain/10.f) );
 
 }

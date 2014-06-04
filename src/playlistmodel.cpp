@@ -179,7 +179,6 @@ bool PlaylistModel::addPlayback(Playback *playback,int row)
 bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent )
 {
     QString indexes = data->html();
-    qDebug()<<indexes;
 
     int countIndexes = indexes.count(":");
     if(indexes.startsWith("#")){
