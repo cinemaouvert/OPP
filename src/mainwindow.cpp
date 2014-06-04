@@ -119,6 +119,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _timerOut = new QTimer();
     _timerOut->connect(_timerOut, SIGNAL(timeout()), this, SLOT(showTimeOut()));
+    _timerOut->connect(_timerOut, SIGNAL(timeout()), this, SLOT(showTimePlaylist()));
     _timerOut->start(900);
 
     _videoWindow = new VideoWindow(this);
@@ -1255,6 +1256,18 @@ void MainWindow::showTimeOut()
         //_timerOut->stop();
         ui->label_timeout->setText("");
     }
+}
+
+void MainWindow::showTimePlaylist()
+{
+        int timeLeft = _playlistPlayer->currentPlaylist()->totalDuration()/1000;
+        qDebug() << timeLeft;
+        int h = timeLeft / 3600;
+        int m = (timeLeft - h*3600) /60;
+        int s = timeLeft - h*3600 - m*60;
+
+        QTime *t = new QTime(h,m,s,0);
+        ui->label_timeRemaining->setText(t->toString("hh:mm:ss"));
 }
 
 /***********************************************************************************************\
