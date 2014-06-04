@@ -184,7 +184,8 @@ bool PlaylistModel::dropMimeData ( const QMimeData * data, Qt::DropAction action
     int countIndexes = indexes.count(":");
     if(indexes.startsWith("#")){
         if(!isRunning()){
-             _playlist->move(indexes.remove("#").toInt(),row);
+            if(row != -1)
+                 _playlist->move(indexes.remove("#").toInt(),row);
         }else{
             QMessageBox::critical(NULL, tr("Moving during playlist"), tr("This media can not be moved with drag and drop during a projection.(Please use the arrows on the right)") , tr("Ok"));
         }

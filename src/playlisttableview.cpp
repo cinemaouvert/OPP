@@ -168,9 +168,11 @@ void PlaylistTableView::dragMoveEvent(QDragMoveEvent *event)
 {
     PlaylistTableView *source = (PlaylistTableView *)(event->source());
     if (source) {
+        //selectionModel()->currentIndex()
         event->setDropAction(Qt::MoveAction);
         event->accept();
     }
+
 }
 
 void PlaylistTableView::dropEvent(QDropEvent *event)
