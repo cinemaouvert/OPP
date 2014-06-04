@@ -1224,40 +1224,52 @@ void MainWindow::on_scheduleToggleEnabledButton_toggled(bool checked)
 
 void MainWindow::showTimeOut()
 {
-    if(!_scheduleListModel->getNextSchedule() == NULL)
+    if(!_scheduleListModel->getNextSchedule() == NULL && ui->scheduleToggleEnabledButton->isChecked())
     {
+
         int ecart = QTime::currentTime().secsTo(_scheduleListModel->getNextSchedule()->time());
 
-        int h = ecart / 3600;
-        int m = (ecart - h*3600) /60;
-        int s = ecart - h*3600 - m*60;
-
-        if(h == 0 && m == 0 && s < 11)
-        {
-            if(s%2 == 0)     //Even seconds -> orange label
+        if(ecart > (60*5)){
+            ui->label_timeout->setStyleSheet("QLabel { color : black; font-weight : 200;}");
+        }else if (ecart > 30){
+            ui->label_timeout->setStyleSheet("QLabel { color : red;font-weight : 200; }");
+        }else{
+            if(ecart%2 == 0)     //Even seconds -> orange label
             {
-                ui->label_timeout->setStyleSheet("QLabel { color : orange; }");
+                ui->label_timeout->setStyleSheet(QString("QLabel { ")+
+                                                 QString("color : white;")+
+                                                 QString("font-weight : 500;")+
+                                                 QString("background-color: red;")+
+                                                 QString("border-style: outset;")+
+                                                 QString("border-width: 2px;")+
+                                                 QString("border-radius: 10px;")+
+                                                 QString("border-color: black; }"));
             }
             else            //Odd seconds -> red label
             {
-                ui->label_timeout->setStyleSheet("QLabel { color : red; }");
+                ui->label_timeout->setStyleSheet(QString("QLabel { ")+
+                                                 QString("color : red;")+
+                                                 QString("font-weight : 500;")+
+                                                 QString("background-color: white;")+
+                                                 QString("border-style: outset;")+
+                                                 QString("border-width: 2px;")+
+                                                 QString("border-radius: 10px;")+
+                                                 QString("border-color: black; }"));
             }
         }
-        else if(h == 0 && m < 5)    //Under 5 minutes -> red label
-        {
-            ui->label_timeout->setStyleSheet("QLabel { color : red; }");
-        }
-        else
-        {
-            ui->label_timeout->setStyleSheet("QLabel { color : black; }");
-        }
-        QTime *t = new QTime(h,m,s,0);
-        ui->label_timeout->setText(t->toString("hh:mm:ss"));
+
+        QTime t(0,0);
+        t = t.addSecs(ecart);
+        ui->label_timeout->setText(t.toString("hh:mm:ss"));
+
     }
     else
     {
-        //_timerOut->stop();
-        ui->label_timeout->setText("");
+        QString none = tr("None Scheduled");
+        if(ui->label_timeout->text() != none){
+            ui->label_timeout->setStyleSheet("QLabel { color : black; font-weight : 200; }");
+            ui->label_timeout->setText(none);
+        }
     }
 }
 

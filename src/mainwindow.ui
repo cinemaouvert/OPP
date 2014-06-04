@@ -453,7 +453,7 @@
                   <set>Qt::ImhNone</set>
                  </property>
                  <property name="text">
-                  <string/>
+                  <string>None Scheduled</string>
                  </property>
                  <property name="textFormat">
                   <enum>Qt::AutoText</enum>
