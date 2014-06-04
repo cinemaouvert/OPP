@@ -61,7 +61,7 @@ class Media : public QObject
     Q_OBJECT
 public:
     Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *parent = 0, bool isFile = true);
-    Media(Media *media);
+    Media(Media *media, bool isWanted=false);
     virtual ~Media();
 
     /**
