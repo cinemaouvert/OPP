@@ -226,7 +226,7 @@ void DataStorage::load(QFile &file)
 
         connect(playlist, SIGNAL(playlistChanged()), _win, SLOT(updateDetails()));
 
-        PlaylistModel *model = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
+        PlaylistModel *model = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel, _win);
 
         // FIX : ref 0000001
         _win->restorePlaylistTab(model);

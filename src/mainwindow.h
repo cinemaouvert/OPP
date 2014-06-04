@@ -202,7 +202,6 @@ public slots:
      */
     void on_advancedPictureSettingsButton_clicked();
 
-
 	/**
      * @brief Set a new screenshot in the screenBack
      *
@@ -248,7 +247,12 @@ public slots:
      */
     PlaylistModel* currentPlaylistModel() const;
 
-
+    /**
+     * @brief Update project summary
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
+    void updateProjectSummary();
 
 private slots:
 
@@ -274,13 +278,6 @@ private slots:
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_binDeleteMediaButton_clicked();
-
-    /**
-     * @brief Update project summary
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>
-     */
-    void updateProjectSummary();
 
     /**
      * @brief Update Details

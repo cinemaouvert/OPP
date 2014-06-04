@@ -2026,7 +2026,6 @@
     </widget>
     <addaction name="separator"/>
     <addaction name="automationAction"/>
-    <addaction name="outputAction"/>
     <addaction name="resumeDetailsAction"/>
     <addaction name="binAction"/>
     <addaction name="statusBarAction"/>
