@@ -1731,3 +1731,14 @@ void MainWindow::closeMirePlayer(){
 }
 
 
+void MainWindow::closeEvent (QCloseEvent *event)
+{
+    if(currentPlaylistModel()->isRunning()){
+        if (1 == QMessageBox::warning(this, tr("Save"), tr("A projection is running, are you sure you want to close the software ?") ,tr("No"), tr("Yes"))){
+            stop();
+        }else{
+            event->ignore();
+        }
+    }
+
+}

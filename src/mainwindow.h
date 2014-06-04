@@ -646,6 +646,9 @@ protected:
 private:
     void showTimePlaylist();
 
+    void closeEvent (QCloseEvent *event);
+
+
     /**
       * @brief Loads the plugins from the folder plugins
       *
