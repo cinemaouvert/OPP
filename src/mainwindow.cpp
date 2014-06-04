@@ -329,7 +329,6 @@ void MainWindow::updateProjectSummary()
 {
     ui->countMoviesLabel->setText( QString::number(_mediaListModel->countMovies()) );
     ui->countPicturesLabel->setText( QString::number(_mediaListModel->countPictures()) );
-    //ui->totalDurationLabel->setText( _mediaListModel->totalDuration().toString("hh:mm:ss") );
     ui->totalDurationLabel->setText( _scheduleListModel->totalDuration().toString("hh:mm:ss") );
 }
 
@@ -793,7 +792,7 @@ void MainWindow::createPlaylistTab(QString name)
     else {
         PlaylistTableView *newTab = new PlaylistTableView(this);
         Playlist *playlist = new Playlist(name);
-        PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel);
+        PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel, this);
 
         connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
         connect(playlist, SIGNAL(playlistChanged()), this, SLOT(updateDetails()));

@@ -35,6 +35,7 @@
 #include <QIcon>
 #include <QMimeData>
 
+#include "mainwindow.h"
 #include "playlist.h"
 #include "utils.h"
 #include "playlistmodel.h"
@@ -68,7 +69,7 @@ public:
      */
     enum PlaybackState { Playing = 0, Paused = 1, Idle = 2 };
 
-    PlaylistModel(Playlist *playlist, MediaListModel *mediaListModel, ScheduleListModel *scheduleListModel, QObject *parent = 0);
+    PlaylistModel(Playlist *playlist, MediaListModel *mediaListModel, ScheduleListModel *scheduleListModel, MainWindow *mw, QObject *parent = 0);
 
     virtual ~PlaylistModel();
 
@@ -288,6 +289,11 @@ private:
      * @brief _running get if the playlist is running or not
      */
     bool _running;
+
+    /**
+     * @brief mainwindow
+     */
+    MainWindow *_mw;
 
 };
 
