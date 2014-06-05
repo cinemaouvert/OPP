@@ -1636,48 +1636,121 @@ void MainWindow::updateCurrentScreenshot(){
 
 QString MainWindow::scheduleToHml(){
     QString out;
-    out = "<!DOCTYPE html>\n"
-            "<html>\n"
-            "<head>\n"
-            "<title>OPP Schedule</title>\n"
-            "<meta charset='UTF-8'>\n"
-            "<meta name='viewport' content='width=device-width'>\n"
-            "</head>\n"
-            "<body>\n"
-            "<div style='text-align:center; margin:0; padding:0;'>\n"
-            "<h3>Schedule OPP</h3>"
-            "<table border='1' cellspacing='0' cellpadding='5' style:'margin: auto;'>\n"
-            "<thead>\n"
-            "<tr>\n"
-            "<th>Launch at</th>\n"
-            "<th>Finish at</th>\n"
-            "<th>Playlist</th>\n"
-            "<th>State</th>\n"
-            "</tr>\n"
-            "</thead>\n"
-            "<tbody>\n";
+    out = "<!DOCTYPE html>"
+            "<html>"
+            "<head>"
+            "<title>OPP Schedule</title>"
+            "<meta charset=\"UTF-8\">"
+            "<meta name=\"viewport\" content=\"width=device-width\">"
+            "<style type=\"text/css\">"
+            "body{"
+            " font-family: arial;"
+            " }"
+            " .marge{"
+            " padding-left: 10px;"
+            "  padding-right: 10px; "
+            " }"
+            "  .page{"
+            " width: 29.7cm;"
+            "  //min-height: 21cm;"
+
+            "   }    "
+            "  .title {"
+            " border: solid 1px #000;"
+            " padding-left: 2px;"
+            "text-align: center;"
+            "  font-size: 16px;"
+            " margin-bottom: 10px;"
+            "   }"
+            "   thead{"
+            "   background-color: lightgray;"
+            " line-height: 24px;"
+            " }"
+            " .droit{"
+            "   text-align: right;"
+            " vertical-align: top;"
+            "  padding-right: 2px;"
+            " }"
+            " .titre{"
+            "  width: 50%;"
+            " }"
+            "  td, img{"
+            "      text-align: center;"
+            "    padding: 2px;"
+            "   width: 220px;"
+            " height: 120px;"
+            "  }"
+            " </style>"
+            " </head>"
+            " <body>"
+             "  <div class=\"page marge\">";
 
     foreach(Schedule *schedule, _scheduleListModel->scheduleList()){
-        out +=  "<tr style='background-color: lightgray; font-weight:bold;'>\n"
-                +  QString("<td>%1</td>\n").arg(schedule->launchAt().toString())
-                +  QString("<td>%1</td>\n").arg(schedule->finishAt().toString())
-                +  QString("<td style='color:#000000'>%1</td>\n").arg(schedule->playlist()->title())
-                +  QString::fromUtf8("<td>%1</td>\n").arg(QString(schedule->isActive() ? QString("Active") : schedule->isExpired() ? QString::fromUtf8("Expirée") : QString("Annulée")))
-                +  "</tr>\n";
-        foreach(Playback *playback, schedule->playlist()->playbackList()){
-            out +=  "<tr>\n"
-                    +  QString("<td></td>\n")
-                    +  QString("<td colspan='2'>%1</td>\n").arg(playback->media()->name())
-                    +  QString(QString("<td>%1</td>\n").arg( msecToQTime(playback->media()->duration()).toString("hh:mm:ss")))
-                    +  "</tr>\n";
-        }
+        out+=
+
+            " <div class=\"title\">"
+
+              + QString("<strong>Nom de la séance : </strong>%1 - <strong>Durée total : </strong>%2 –  <strong>Début : </strong>%3 – <strong>Fin : </strong>%4 –  <strong>Jour : </strong>%5").arg(
+                  schedule->playlist()->title(),
+                  msecToQTime(schedule->playlist()->totalDuration()).toString("hh:mm:ss"),
+                  schedule->launchAt().time().toString("hh:mm:ss"),
+                  schedule->finishAt().time().toString("hh:mm:ss"),
+                  schedule->launchAt().date().toString("dd/MM/yyyy")
+                  )
+              +
+
+            " </div>"
+        "<table border='1' cellspacing='0' class='page'>"
+            "<thead>"
+            "  <tr>"
+            "<th>Titre</th>"
+            " <th>Durée</th>"
+            "<th>Début</th>"
+            " <th>Fin</th>"
+            "    </tr>"
+            "  </thead>"
+            " <tbody>";
+            int timeMedia = qTimeToMsec(schedule->launchAt().time());
+            foreach(Playback *playback, schedule->playlist()->playbackList()){
+                int dure = (int)playback->media()->duration();
+                timeMedia += dure;
+
+                QString screenPath = "./screenshot/";
+                screenPath = screenPath.replace("/",QDir::separator());
+                screenPath +=  playback->media()->getLocation().replace(QDir::separator(),"_").remove(":");
+                screenPath += ".png";
+
+                out += "<tr>"
+                + QString("<td class=\"droit titre\">%1</td>").arg(
+                    playback->media()->name()
+                 )
+                + QString("<td class=\"droit\">%1</td>").arg(
+                    msecToQTime(dure).toString("hh:mm:ss")
+                 )
+                + QString("<td class=\"droit\">%1</td>").arg(
+                    msecToQTime(timeMedia - dure).toString("hh:mm:ss")
+                 )
+                +QString("<td class=\"droit\">%1</td>").arg(
+                     msecToQTime(timeMedia).toString("hh:mm:ss")
+                 )
+                +
+                "  </tr>";
+            }
+            out+=
+                  "  </tbody>"
+                  " </table>";
     }
 
-    out +=             "</table>\n"
-            "</div>\n"
-            "</body>\n"
-            "</html>\n";
+    out+=
+          "   </div>"
+          "     </body>"
+          "   </html>";
 
+    QFile file("in.html");
+         file.open(QIODevice::WriteOnly | QIODevice::Text);
+
+    file.write(out.toStdString().c_str());
+    file.close();
     return out.toUtf8();
 }
 
