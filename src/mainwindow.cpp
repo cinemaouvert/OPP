@@ -119,8 +119,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _timerOut = new QTimer();
     _timerOut->connect(_timerOut, SIGNAL(timeout()), this, SLOT(showTimeOut()));
-    _timerOut->connect(_timerOut, SIGNAL(timeout()), this, SLOT(showTimePlaylist()));
-    _timerOut->start(900);
+    _timerOut->start(1000);
 
     _videoWindow = new VideoWindow(this);
 
@@ -256,6 +255,32 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect (actionClose,SIGNAL(triggered()),this,SLOT(closeWindowTestPattern()));
     connect (signalMapper, SIGNAL(mapped(QString)), this, SLOT(playMire(QString)));
+
+    ui->screenBefore->setStyleSheet(QString("QLabel { ")+
+                                     QString("border-style: solid;")+
+                                     QString("border-width: 1px;")+
+                                     QString("border-radius: 5px;")+
+                                     QString("border-color: rgb(180, 180, 180); }"));
+    ui->screenAfter->setStyleSheet(QString("QLabel { ")+
+                                   QString("border-style: solid;")+
+                                   QString("border-width: 1px;")+
+                                   QString("border-radius: 5px;")+
+                                   QString("border-color: rgb(180, 180, 180); }"));
+    ui->screen_none->setStyleSheet(QString("QLabel { ")+
+                                   QString("border-style: solid;")+
+                                   QString("border-width: 1px;")+
+                                   QString("border-radius: 5px;")+
+                                   QString("border-color: rgb(180, 180, 180); }"));
+    ui->screenBack->setStyleSheet(QString("QLabel { ")+
+                                  QString("border-style: solid;")+
+                                  QString("border-width: 1px;")+
+                                  QString("border-radius: 5px;")+
+                                  QString("border-color: rgb(180, 180, 180); }"));
+    ui->screenAfter->clear();
+    ui->screenBefore->clear();
+    ui->screenBack->clear();
+    ui->screen_none->clear();
+
 
     //Restart
     if(QApplication::argc()>1) //Restart : filename en argument
@@ -732,11 +757,7 @@ void MainWindow::on_playerPlayButton_clicked(bool checked)
             _playlistPlayer->mediaPlayer()->resume();
         } else {
             //Creation de la window elle n'existe pas
-            if(!_videoWindow->isVisible()){
-                delete(_videoWindow);
-                _videoWindow = new VideoWindow(this, _projectionMode);
-                _playlistPlayer->mediaPlayer()->setVideoView( (VideoView*) _videoWindow->videoWidget() );
-            }
+            needVideoWindow();
 
             // play or resume playback
 
@@ -773,6 +794,7 @@ void MainWindow::on_menuVideoMode_triggered(QAction *action)
 }
 
 void MainWindow::stop(){
+    ui->label_timeRemaining->setText("00:00:00");
     if(_playlistPlayer->mediaPlayer()->isPaused() || _playlistPlayer->mediaPlayer()->isPlaying())
         _playlistPlayer->stop();
     ui->playerPlayButton->setChecked(false);
@@ -1191,6 +1213,7 @@ void MainWindow::on_scheduleAddButton_clicked()
 
     if (_scheduleListModel->isSchedulable(schedule)) {
         connect(schedule, SIGNAL(triggered(Playlist*)), _playlistPlayer, SLOT(playPlaylist(Playlist*)));
+        connect(schedule, SIGNAL(triggered(Playlist*)), this, SLOT(needVideoWindow(Playlist*)));
         _scheduleListModel->addSchedule(schedule);
     } else {
         QMessageBox::critical(this, tr("Schedule validation"), QString(tr("A playlist was already scheduled between the %1 and %2, \nPlease choose an other launch date."))
@@ -1198,6 +1221,14 @@ void MainWindow::on_scheduleAddButton_clicked()
                               .arg(schedule->finishAt().toString())
                               );
         delete schedule;
+    }
+}
+
+void MainWindow::needVideoWindow(Playlist *pl){
+    if(!_videoWindow->isVisible()){
+        delete(_videoWindow);
+        _videoWindow = new VideoWindow(this, _projectionMode);
+        _playlistPlayer->mediaPlayer()->setVideoView( (VideoView*) _videoWindow->videoWidget() );
     }
 }
 
@@ -1223,53 +1254,64 @@ void MainWindow::on_scheduleToggleEnabledButton_toggled(bool checked)
 
 void MainWindow::showTimeOut()
 {
-    if(!_scheduleListModel->getNextSchedule() == NULL)
+    if(!_scheduleListModel->getNextSchedule() == NULL && ui->scheduleToggleEnabledButton->isChecked())
     {
-        int ecart = QTime::currentTime().secsTo(_scheduleListModel->getNextSchedule()->time());
 
-        int h = ecart / 3600;
-        int m = (ecart - h*3600) /60;
-        int s = ecart - h*3600 - m*60;
+        int ecart = QDateTime::currentDateTime().secsTo(*_scheduleListModel->getNextSchedule());
 
-        if(h == 0 && m == 0 && s < 11)
-        {
-            if(s%2 == 0)     //Even seconds -> orange label
+        if(ecart > (60*5)){
+            ui->label_timeout->setStyleSheet("QLabel { color : black; font-weight : 200;}");
+        }else if (ecart > 30){
+            ui->label_timeout->setStyleSheet("QLabel { color : red;font-weight : 200; }");
+        }else{
+            if(ecart%2 == 0)     //Even seconds -> orange label
             {
-                ui->label_timeout->setStyleSheet("QLabel { color : orange; }");
+                ui->label_timeout->setStyleSheet(QString("QLabel { ")+
+                                                 QString("color : white;")+
+                                                 QString("font-weight : 500;")+
+                                                 QString("background-color: red;")+
+                                                 QString("border-style: outset;")+
+                                                 QString("border-width: 2px;")+
+                                                 QString("border-radius: 10px;")+
+                                                 QString("border-color: black; }"));
             }
             else            //Odd seconds -> red label
             {
-                ui->label_timeout->setStyleSheet("QLabel { color : red; }");
+                ui->label_timeout->setStyleSheet(QString("QLabel { ")+
+                                                 QString("color : red;")+
+                                                 QString("font-weight : 500;")+
+                                                 QString("background-color: white;")+
+                                                 QString("border-style: outset;")+
+                                                 QString("border-width: 2px;")+
+                                                 QString("border-radius: 10px;")+
+                                                 QString("border-color: black; }"));
             }
         }
-        else if(h == 0 && m < 5)    //Under 5 minutes -> red label
+
+        QTime t(0,0);
+        if(ecart<86400)
         {
-            ui->label_timeout->setStyleSheet("QLabel { color : red; }");
+            t = t.addSecs(ecart);
+            ui->label_timeout->setText(t.toString("hh:mm:ss"));
         }
         else
         {
-            ui->label_timeout->setStyleSheet("QLabel { color : black; }");
+            int nbDays = ecart / 86400;
+            ecart -= nbDays*86400;
+            t = t.addSecs(ecart);
+            ui->label_timeout->setText(QString(tr("%1day(s) and ").arg(nbDays))+t.toString("hh:mm:ss"));
         }
-        QTime *t = new QTime(h,m,s,0);
-        ui->label_timeout->setText(t->toString("hh:mm:ss"));
+
+
     }
     else
     {
-        //_timerOut->stop();
-        ui->label_timeout->setText("");
+        QString none = tr("None Scheduled");
+        if(ui->label_timeout->text() != none){
+            ui->label_timeout->setStyleSheet("QLabel { color : black; font-weight : 200; }");
+            ui->label_timeout->setText(none);
+        }
     }
-}
-
-void MainWindow::showTimePlaylist()
-{
-        int timeLeft = _playlistPlayer->currentPlaylist()->totalDuration()/1000;
-        qDebug() << timeLeft;
-        int h = timeLeft / 3600;
-        int m = (timeLeft - h*3600) /60;
-        int s = timeLeft - h*3600 - m*60;
-
-        QTime *t = new QTime(h,m,s,0);
-        ui->label_timeRemaining->setText(t->toString("hh:mm:ss"));
 }
 
 /***********************************************************************************************\
@@ -1543,6 +1585,21 @@ void MainWindow::updateBackTime(const int &time)
     ui->label_screen->setText(currentTime.toString(display));
     ui->label_stream->setText(currentTime.toString(display));
     ui->label_none->setText(currentTime.toString(display));
+
+    int totalTime = _playlistPlayer->currentPlaylist()->totalDuration();
+    int idx = _playlistPlayer->currentPlaylist()->indexOf(_playlistPlayer->mediaPlayer()->currentPlayback());
+    qDebug()<<idx;
+    int timeAlreadyElapsed = 0;
+
+    for(int i = 0 ; i < idx ; i++){
+        timeAlreadyElapsed += _playlistPlayer->currentPlaylist()->at(i)->media()->duration();
+    }
+
+    int newTimeInMSec = totalTime-time-timeAlreadyElapsed;
+    QTime newQTime = QTime(0,0,0,0).addMSecs(newTimeInMSec);
+
+
+    ui->label_timeRemaining->setText(newQTime.toString("hh:mm:ss"));
 }
 
 void MainWindow::setScreensBack(QString urlA)
@@ -1579,48 +1636,121 @@ void MainWindow::updateCurrentScreenshot(){
 
 QString MainWindow::scheduleToHml(){
     QString out;
-    out = "<!DOCTYPE html>\n"
-            "<html>\n"
-            "<head>\n"
-            "<title>OPP Schedule</title>\n"
-            "<meta charset='UTF-8'>\n"
-            "<meta name='viewport' content='width=device-width'>\n"
-            "</head>\n"
-            "<body>\n"
-            "<div style='text-align:center; margin:0; padding:0;'>\n"
-            "<h3>Schedule OPP</h3>"
-            "<table border='1' cellspacing='0' cellpadding='5' style:'margin: auto;'>\n"
-            "<thead>\n"
-            "<tr>\n"
-            "<th>Launch at</th>\n"
-            "<th>Finish at</th>\n"
-            "<th>Playlist</th>\n"
-            "<th>State</th>\n"
-            "</tr>\n"
-            "</thead>\n"
-            "<tbody>\n";
+    out = "<!DOCTYPE html>"
+            "<html>"
+            "<head>"
+            "<title>OPP Schedule</title>"
+            "<meta charset=\"UTF-8\">"
+            "<meta name=\"viewport\" content=\"width=device-width\">"
+            "<style type=\"text/css\">"
+            "body{"
+            " font-family: arial;"
+            " }"
+            " .marge{"
+            " padding-left: 10px;"
+            "  padding-right: 10px; "
+            " }"
+            "  .page{"
+            " width: 29.7cm;"
+            "  //min-height: 21cm;"
+
+            "   }    "
+            "  .title {"
+            " border: solid 1px #000;"
+            " padding-left: 2px;"
+            "text-align: center;"
+            "  font-size: 16px;"
+            " margin-bottom: 10px;"
+            "   }"
+            "   thead{"
+            "   background-color: lightgray;"
+            " line-height: 24px;"
+            " }"
+            " .droit{"
+            "   text-align: right;"
+            " vertical-align: top;"
+            "  padding-right: 2px;"
+            " }"
+            " .titre{"
+            "  width: 50%;"
+            " }"
+            "  td, img{"
+            "      text-align: center;"
+            "    padding: 2px;"
+            "   width: 220px;"
+            " height: 120px;"
+            "  }"
+            " </style>"
+            " </head>"
+            " <body>"
+             "  <div class=\"page marge\">";
 
     foreach(Schedule *schedule, _scheduleListModel->scheduleList()){
-        out +=  "<tr style='background-color: lightgray; font-weight:bold;'>\n"
-                +  QString("<td>%1</td>\n").arg(schedule->launchAt().toString())
-                +  QString("<td>%1</td>\n").arg(schedule->finishAt().toString())
-                +  QString("<td style='color:#000000'>%1</td>\n").arg(schedule->playlist()->title())
-                +  QString::fromUtf8("<td>%1</td>\n").arg(QString(schedule->isActive() ? QString("Active") : schedule->isExpired() ? QString::fromUtf8("Expirée") : QString("Annulée")))
-                +  "</tr>\n";
-        foreach(Playback *playback, schedule->playlist()->playbackList()){
-            out +=  "<tr>\n"
-                    +  QString("<td></td>\n")
-                    +  QString("<td colspan='2'>%1</td>\n").arg(playback->media()->name())
-                    +  QString(QString("<td>%1</td>\n").arg( msecToQTime(playback->media()->duration()).toString("hh:mm:ss")))
-                    +  "</tr>\n";
-        }
+        out+=
+
+            " <div class=\"title\">"
+
+              + QString("<strong>Nom de la séance : </strong>%1 - <strong>Durée total : </strong>%2 –  <strong>Début : </strong>%3 – <strong>Fin : </strong>%4 –  <strong>Jour : </strong>%5").arg(
+                  schedule->playlist()->title(),
+                  msecToQTime(schedule->playlist()->totalDuration()).toString("hh:mm:ss"),
+                  schedule->launchAt().time().toString("hh:mm:ss"),
+                  schedule->finishAt().time().toString("hh:mm:ss"),
+                  schedule->launchAt().date().toString("dd/MM/yyyy")
+                  )
+              +
+
+            " </div>"
+        "<table border='1' cellspacing='0' class='page'>"
+            "<thead>"
+            "  <tr>"
+            "<th>Titre</th>"
+            " <th>Durée</th>"
+            "<th>Début</th>"
+            " <th>Fin</th>"
+            "    </tr>"
+            "  </thead>"
+            " <tbody>";
+            int timeMedia = qTimeToMsec(schedule->launchAt().time());
+            foreach(Playback *playback, schedule->playlist()->playbackList()){
+                int dure = (int)playback->media()->duration();
+                timeMedia += dure;
+
+                QString screenPath = "./screenshot/";
+                screenPath = screenPath.replace("/",QDir::separator());
+                screenPath +=  playback->media()->getLocation().replace(QDir::separator(),"_").remove(":");
+                screenPath += ".png";
+
+                out += "<tr>"
+                + QString("<td class=\"droit titre\">%1</td>").arg(
+                    playback->media()->name()
+                 )
+                + QString("<td class=\"droit\">%1</td>").arg(
+                    msecToQTime(dure).toString("hh:mm:ss")
+                 )
+                + QString("<td class=\"droit\">%1</td>").arg(
+                    msecToQTime(timeMedia - dure).toString("hh:mm:ss")
+                 )
+                +QString("<td class=\"droit\">%1</td>").arg(
+                     msecToQTime(timeMedia).toString("hh:mm:ss")
+                 )
+                +
+                "  </tr>";
+            }
+            out+=
+                  "  </tbody>"
+                  " </table>";
     }
 
-    out +=             "</table>\n"
-            "</div>\n"
-            "</body>\n"
-            "</html>\n";
+    out+=
+          "   </div>"
+          "     </body>"
+          "   </html>";
 
+    QFile file("in.html");
+         file.open(QIODevice::WriteOnly | QIODevice::Text);
+
+    file.write(out.toStdString().c_str());
+    file.close();
     return out.toUtf8();
 }
 
@@ -1715,3 +1845,14 @@ void MainWindow::closeMirePlayer(){
 }
 
 
+void MainWindow::closeEvent (QCloseEvent *event)
+{
+    if(currentPlaylistModel()->isRunning()){
+        if (1 == QMessageBox::warning(this, tr("Save"), tr("A projection is running, are you sure you want to close the software ?") ,tr("No"), tr("Yes"))){
+            stop();
+        }else{
+            event->ignore();
+        }
+    }
+
+}

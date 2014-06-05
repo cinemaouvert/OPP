@@ -256,8 +256,14 @@ public slots:
 
 private slots:
 
+    /**
+     * @brief Used to relaunch the video window if it was closed
+     *
+     * @author Lamarche Thibaud <lamarchethibaud@hotmail.fr>
+     */
+    void needVideoWindow(Playlist *pl = NULL);
+
     void showTimeOut();
-    void showTimePlaylist();
     /**
      * @brief Change the value of Ratio settings
      * @param index Index of the new Ratio
@@ -645,6 +651,10 @@ protected:
 
 
 private:
+    void showTimePlaylist();
+
+    void closeEvent (QCloseEvent *event);
+
 
     /**
       * @brief Loads the plugins from the folder plugins
