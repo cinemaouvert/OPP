@@ -256,6 +256,11 @@ public slots:
 
 private slots:
 
+    /**
+     * @brief Used to relaunch the video window if it was closed
+     *
+     * @author Lamarche Thibaud <lamarchethibaud@hotmail.fr>
+     */
     void needVideoWindow(Playlist *pl = NULL);
 
     void showTimeOut();

@@ -756,7 +756,6 @@ void MainWindow::on_playerPlayButton_clicked(bool checked)
         if (_playlistPlayer->mediaPlayer()->isPaused()) {
             _playlistPlayer->mediaPlayer()->resume();
         } else {
-            showTimePlaylist();
             //Creation de la window elle n'existe pas
             needVideoWindow();
 
@@ -1302,18 +1301,6 @@ void MainWindow::showTimeOut()
             ui->label_timeout->setText(none);
         }
     }
-}
-
-void MainWindow::showTimePlaylist()
-{
-        int timeLeft = _playlistPlayer->currentPlaylist()->totalDuration()/1000;
-        qDebug() << timeLeft;
-        int h = timeLeft / 3600;
-        int m = (timeLeft - h*3600) /60;
-        int s = timeLeft - h*3600 - m*60;
-
-        QTime *t = new QTime(h,m,s,0);
-        ui->label_timeRemaining->setText(t->toString("hh:mm:ss"));
 }
 
 /***********************************************************************************************\
