@@ -196,6 +196,10 @@ bool ScheduleListModel::isSchedulable(Schedule *schedule) const
     foreach (Schedule *other, _scheduleList) {
         if ( (schedule->launchAt() >= other->launchAt() && schedule->launchAt() <= other->finishAt())
                 || (schedule->launchAt() <= other->launchAt() && schedule->finishAt() >= other->launchAt()) )
+            QMessageBox::critical(NULL, tr("Schedule validation"), QString(tr("A playlist was already scheduled between the %1 and %2, \nPlease choose an other launch date."))
+                                  .arg(other->launchAt().toString())
+                                  .arg(other->finishAt().toString())
+                                  );
             return false;
     }
     return true;

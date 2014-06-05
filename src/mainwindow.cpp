@@ -1216,10 +1216,6 @@ void MainWindow::on_scheduleAddButton_clicked()
         connect(schedule, SIGNAL(triggered(Playlist*)), this, SLOT(needVideoWindow(Playlist*)));
         _scheduleListModel->addSchedule(schedule);
     } else {
-        QMessageBox::critical(this, tr("Schedule validation"), QString(tr("A playlist was already scheduled between the %1 and %2, \nPlease choose an other launch date."))
-                              .arg(schedule->launchAt().toString())
-                              .arg(schedule->finishAt().toString())
-                              );
         delete schedule;
     }
 }
