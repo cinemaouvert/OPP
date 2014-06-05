@@ -758,11 +758,7 @@ void MainWindow::on_playerPlayButton_clicked(bool checked)
         } else {
             showTimePlaylist();
             //Creation de la window elle n'existe pas
-            if(!_videoWindow->isVisible()){
-                delete(_videoWindow);
-                _videoWindow = new VideoWindow(this, _projectionMode);
-                _playlistPlayer->mediaPlayer()->setVideoView( (VideoView*) _videoWindow->videoWidget() );
-            }
+            needVideoWindow();
 
             // play or resume playback
 
@@ -1218,6 +1214,7 @@ void MainWindow::on_scheduleAddButton_clicked()
 
     if (_scheduleListModel->isSchedulable(schedule)) {
         connect(schedule, SIGNAL(triggered(Playlist*)), _playlistPlayer, SLOT(playPlaylist(Playlist*)));
+        connect(schedule, SIGNAL(triggered(Playlist*)), this, SLOT(needVideoWindow(Playlist*)));
         _scheduleListModel->addSchedule(schedule);
     } else {
         QMessageBox::critical(this, tr("Schedule validation"), QString(tr("A playlist was already scheduled between the %1 and %2, \nPlease choose an other launch date."))
@@ -1225,6 +1222,14 @@ void MainWindow::on_scheduleAddButton_clicked()
                               .arg(schedule->finishAt().toString())
                               );
         delete schedule;
+    }
+}
+
+void MainWindow::needVideoWindow(Playlist *pl){
+    if(!_videoWindow->isVisible()){
+        delete(_videoWindow);
+        _videoWindow = new VideoWindow(this, _projectionMode);
+        _playlistPlayer->mediaPlayer()->setVideoView( (VideoView*) _videoWindow->videoWidget() );
     }
 }
 

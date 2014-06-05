@@ -256,6 +256,8 @@ public slots:
 
 private slots:
 
+    void needVideoWindow(Playlist *pl = NULL);
+
     void showTimeOut();
     /**
      * @brief Change the value of Ratio settings

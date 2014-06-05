@@ -34,7 +34,7 @@ StatusWidget::StatusWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    _timerId = startTimer(900);
+    _timerId = startTimer(1000);
     setMediaCount(0);
 
     QIcon icon;
