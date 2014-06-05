@@ -1257,7 +1257,7 @@ void MainWindow::showTimeOut()
     if(!_scheduleListModel->getNextSchedule() == NULL && ui->scheduleToggleEnabledButton->isChecked())
     {
 
-        int ecart = QTime::currentTime().secsTo(_scheduleListModel->getNextSchedule()->time());
+        int ecart = QDateTime::currentDateTime().secsTo(*_scheduleListModel->getNextSchedule());
 
         if(ecart > (60*5)){
             ui->label_timeout->setStyleSheet("QLabel { color : black; font-weight : 200;}");
@@ -1289,8 +1289,19 @@ void MainWindow::showTimeOut()
         }
 
         QTime t(0,0);
-        t = t.addSecs(ecart);
-        ui->label_timeout->setText(t.toString("hh:mm:ss"));
+        if(ecart<86400)
+        {
+            t = t.addSecs(ecart);
+            ui->label_timeout->setText(t.toString("hh:mm:ss"));
+        }
+        else
+        {
+            int nbDays = ecart / 86400;
+            ecart -= nbDays*86400;
+            t = t.addSecs(ecart);
+            ui->label_timeout->setText(QString(tr("%1day(s) and ").arg(nbDays))+t.toString("hh:mm:ss"));
+        }
+
 
     }
     else
