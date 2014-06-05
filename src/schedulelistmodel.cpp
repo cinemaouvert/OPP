@@ -194,7 +194,8 @@ void ScheduleListModel::addSchedule(Schedule *schedule)
 bool ScheduleListModel::isSchedulable(Schedule *schedule) const
 {
     foreach (Schedule *other, _scheduleList) {
-        if (schedule->launchAt() >= other->launchAt() && schedule->launchAt() <= other->finishAt())
+        if ( (schedule->launchAt() >= other->launchAt() && schedule->launchAt() <= other->finishAt())
+                || (schedule->launchAt() <= other->launchAt() && schedule->finishAt() >= other->launchAt()) )
             return false;
     }
     return true;
