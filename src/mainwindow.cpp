@@ -257,25 +257,25 @@ MainWindow::MainWindow(QWidget *parent) :
     connect (signalMapper, SIGNAL(mapped(QString)), this, SLOT(playMire(QString)));
 
     ui->screenBefore->setStyleSheet(QString("QLabel { ")+
-                                     QString("border-style: outset;")+
+                                     QString("border-style: solid;")+
                                      QString("border-width: 1px;")+
                                      QString("border-radius: 5px;")+
-                                     QString("border-color: black; }"));
+                                     QString("border-color: rgb(180, 180, 180); }"));
     ui->screenAfter->setStyleSheet(QString("QLabel { ")+
-                                     QString("border-style: outset;")+
-                                     QString("border-width: 1px;")+
-                                     QString("border-radius: 5px;")+
-                                     QString("border-color: black; }"));
+                                   QString("border-style: solid;")+
+                                   QString("border-width: 1px;")+
+                                   QString("border-radius: 5px;")+
+                                   QString("border-color: rgb(180, 180, 180); }"));
     ui->screen_none->setStyleSheet(QString("QLabel { ")+
-                                     QString("border-style: outset;")+
-                                     QString("border-width: 1px;")+
-                                     QString("border-radius: 5px;")+
-                                     QString("border-color: black; }"));
+                                   QString("border-style: solid;")+
+                                   QString("border-width: 1px;")+
+                                   QString("border-radius: 5px;")+
+                                   QString("border-color: rgb(180, 180, 180); }"));
     ui->screenBack->setStyleSheet(QString("QLabel { ")+
-                                     QString("border-style: outset;")+
-                                     QString("border-width: 1px;")+
-                                     QString("border-radius: 5px;")+
-                                     QString("border-color: black; }"));
+                                  QString("border-style: solid;")+
+                                  QString("border-width: 1px;")+
+                                  QString("border-radius: 5px;")+
+                                  QString("border-color: rgb(180, 180, 180); }"));
     ui->screenAfter->clear();
     ui->screenBefore->clear();
     ui->screenBack->clear();
