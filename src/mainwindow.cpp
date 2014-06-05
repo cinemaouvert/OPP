@@ -257,25 +257,25 @@ MainWindow::MainWindow(QWidget *parent) :
     connect (signalMapper, SIGNAL(mapped(QString)), this, SLOT(playMire(QString)));
 
     ui->screenBefore->setStyleSheet(QString("QLabel { ")+
-                                     QString("border-style: outset;")+
+                                     QString("border-style: solid;")+
                                      QString("border-width: 1px;")+
                                      QString("border-radius: 5px;")+
-                                     QString("border-color: black; }"));
+                                     QString("border-color: rgb(180, 180, 180); }"));
     ui->screenAfter->setStyleSheet(QString("QLabel { ")+
-                                     QString("border-style: outset;")+
-                                     QString("border-width: 1px;")+
-                                     QString("border-radius: 5px;")+
-                                     QString("border-color: black; }"));
+                                   QString("border-style: solid;")+
+                                   QString("border-width: 1px;")+
+                                   QString("border-radius: 5px;")+
+                                   QString("border-color: rgb(180, 180, 180); }"));
     ui->screen_none->setStyleSheet(QString("QLabel { ")+
-                                     QString("border-style: outset;")+
-                                     QString("border-width: 1px;")+
-                                     QString("border-radius: 5px;")+
-                                     QString("border-color: black; }"));
+                                   QString("border-style: solid;")+
+                                   QString("border-width: 1px;")+
+                                   QString("border-radius: 5px;")+
+                                   QString("border-color: rgb(180, 180, 180); }"));
     ui->screenBack->setStyleSheet(QString("QLabel { ")+
-                                     QString("border-style: outset;")+
-                                     QString("border-width: 1px;")+
-                                     QString("border-radius: 5px;")+
-                                     QString("border-color: black; }"));
+                                  QString("border-style: solid;")+
+                                  QString("border-width: 1px;")+
+                                  QString("border-radius: 5px;")+
+                                  QString("border-color: rgb(180, 180, 180); }"));
     ui->screenAfter->clear();
     ui->screenBefore->clear();
     ui->screenBack->clear();
@@ -1257,7 +1257,7 @@ void MainWindow::showTimeOut()
     if(!_scheduleListModel->getNextSchedule() == NULL && ui->scheduleToggleEnabledButton->isChecked())
     {
 
-        int ecart = QTime::currentTime().secsTo(_scheduleListModel->getNextSchedule()->time());
+        int ecart = QDateTime::currentDateTime().secsTo(*_scheduleListModel->getNextSchedule());
 
         if(ecart > (60*5)){
             ui->label_timeout->setStyleSheet("QLabel { color : black; font-weight : 200;}");
@@ -1289,8 +1289,19 @@ void MainWindow::showTimeOut()
         }
 
         QTime t(0,0);
-        t = t.addSecs(ecart);
-        ui->label_timeout->setText(t.toString("hh:mm:ss"));
+        if(ecart<86400)
+        {
+            t = t.addSecs(ecart);
+            ui->label_timeout->setText(t.toString("hh:mm:ss"));
+        }
+        else
+        {
+            int nbDays = ecart / 86400;
+            ecart -= nbDays*86400;
+            t = t.addSecs(ecart);
+            ui->label_timeout->setText(QString(tr("%1day(s) and ").arg(nbDays))+t.toString("hh:mm:ss"));
+        }
+
 
     }
     else
