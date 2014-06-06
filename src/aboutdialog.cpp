@@ -4,6 +4,7 @@
  * Copyright (C) 2013 Catalogue Ouvert du Cinéma <dev@cinemaouvert.fr>
  *
  * Authors: Cyril Naud <futuramath@gmail.com>
+ *          Geoffrey Bergé <geoffrey.berge@live.fr>
  *
  * Open Projection Program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

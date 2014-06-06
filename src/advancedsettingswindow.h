@@ -7,6 +7,10 @@
  *          Cyril Naud <futuramath@gmail.com>
  *          Baptiste Rozière <bapt.roziere@gmail.com>
  *          Hamza Haddar <ham.haddar@gmail.com>
+ *          Geoffrey Bergé <geoffrey.berge@live.fr>
+ *          Thomas Berthomé <thoberthome@laposte.net>
+ *          Thibaud Lamarche <lamarchethibaud@hotmail.com>
+ *          Denis Saunier <saunier.denis.86@gmail.com>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers
@@ -74,8 +78,19 @@ private slots:
      */
     void on_buttonBox_OKCancel_rejected();
 
+    /**
+     * @brief Update the lenght value of the image
+     * @param date duration given by the user
+     *
+     * @author Thibaud Lamarche <lamarchethibaud@hotmail.com>
+     */
     void on_imageDurationTimeEdit_timeChanged(const QTime &date);
 
+    /**
+     * @brief Open the screenshot selector window with the media
+     *
+     * @author Thibaud Lamarche <lamarchethibaud@hotmail.com>
+     */
     void on_changeScreenshotButton_clicked();
 
 private:

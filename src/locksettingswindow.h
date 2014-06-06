@@ -5,6 +5,7 @@
  *
  * Authors: Baptiste Rozière <bapt.roziere@gmail.com>
  *          Cyril Naud <futuramath@gmail.com>
+ *          Thomas Berthomé <thoberthome@laposte.net>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers

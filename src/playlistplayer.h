@@ -4,6 +4,8 @@
  * Copyright (C) 2013 Catalogue Ouvert du Cinéma <dev@cinemaouvert.fr>
  *
  * Authors: Florian Mhun <florian.mhun@gmail.com>
+ *          Thibaud Lamarche <lamarchethibaud@hotmail.com>
+ *          Denis Saunier <saunier.denis.86@gmail.com>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers
@@ -155,7 +157,6 @@ private slots:
 
     /**
      * @brief Handle player end state.
-     * @todo Use different playback mode (loop mode for example)
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */

@@ -45,7 +45,6 @@ HEADERS += src/mainwindow.h \
     src/locker.h \
     src/statuswidget.h \
     src/datastorage.h \
-    src/playlistlistmanager.h \
     src/aboutdialog.h \
     src/customeventfilter.h \
     src/screenshotselector.h \
@@ -71,7 +70,6 @@ SOURCES += src/main.cpp \
     src/locker.cpp \
     src/statuswidget.cpp \
     src/datastorage.cpp \
-    src/playlistlistmanager.cpp \
     src/aboutdialog.cpp \
     src/customeventfilter.cpp \
     src/screenshotselector.cpp \

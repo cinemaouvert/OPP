@@ -7,6 +7,10 @@
  *          Cyril Naud <futuramath@gmail.com>
  *          Baptiste Rozière <bapt.roziere@gmail.com>
  *          Hamza Haddar <ham.haddar@gmail.com>
+ *          Geoffrey Bergé <geoffrey.berge@live.fr>
+ *          Thomas Berthomé <thoberthome@laposte.net>
+ *          Thibaud Lamarche <lamarchethibaud@hotmail.com>
+ *          Denis Saunier <saunier.denis.86@gmail.com>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers
@@ -470,7 +474,6 @@ void MainWindow::on_binAddMediaButton_clicked()
 void MainWindow::on_binDeleteMediaButton_clicked()
 {
     QItemSelectionModel *selectionModel = ui->binTableView->selectionModel();
-    //TODO check if working well
     int nbMedia = selectionModel->selectedRows().length();
     for(int i=0;i<nbMedia;i++){
         bool toDel = true;
@@ -1405,7 +1408,7 @@ void MainWindow::setScreenshot(QString url)
 }
 
 
-/****** CHARGEMENT DES PLUGINS ***********/
+/****** PLUGIN LOADER***********/
 
 void MainWindow::loadPlugins(){
 
@@ -1419,7 +1422,7 @@ void MainWindow::loadPlugins(){
             {
 
                 OCPM * op = qobject_cast<OCPM *>(plugin);
-                if (op != NULL)
+                if (op != 0)
                 {
                     _ocpmPlugin = op;
                     op->setFilename(_selectedMediaName);
@@ -1429,6 +1432,11 @@ void MainWindow::loadPlugins(){
                     ui->horizontalLayout_11->addWidget(button);
 
                     connect ( button, SIGNAL( clicked() ), this, SLOT( ocpmSecondaryAction() ) );
+                }else{
+                    OPP_GENERIC_PLUGIN *oppGEN = qobject_cast<OPP_GENERIC_PLUGIN *>(plugin);
+                    if(oppGEN != 0){
+                        oppGEN->setMainWindow(this);
+                    }
                 }
             }
         }
@@ -1591,7 +1599,6 @@ void MainWindow::updateBackTime(const int &time)
 
     int totalTime = _playlistPlayer->currentPlaylist()->totalDuration();
     int idx = _playlistPlayer->currentPlaylist()->indexOf(_playlistPlayer->mediaPlayer()->currentPlayback());
-    qDebug()<<idx;
     int timeAlreadyElapsed = 0;
 
     for(int i = 0 ; i < idx ; i++){
@@ -1862,5 +1869,4 @@ void MainWindow::closeEvent (QCloseEvent *event)
         if(verifSave() == 0)
             event->ignore();
     }
-
 }
