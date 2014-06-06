@@ -117,7 +117,7 @@ public:
      *
      * @author Geoffrey Bergé <geoffrey.berge@live.fr>
      */
-    void verifSave();
+    int verifSave();
 
     /**
      * @brief GetFilename

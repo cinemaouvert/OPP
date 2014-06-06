@@ -75,13 +75,6 @@ private slots:
     void on_buttonBox_rejected();
 
     /**
-     * @brief Change the value of the VLC path field
-     *
-     * @author Cyril Naud <futuramath@gmail.com>
-     */
-    void on_pushButton_VLCPath_clicked();
-
-    /**
      * @brief Change the value of the movies path field
      *
      * @author Cyril Naud <futuramath@gmail.com>

@@ -1041,10 +1041,17 @@ void MainWindow::deletePlaylistItem()
                                           Project import/export
 \***********************************************************************************************/
 
-void MainWindow::verifSave () {
+int MainWindow::verifSave () {
+    int choice = 1;
     if(_mediaListModel->rowCount()!=0)
-        if (1 == QMessageBox::warning(this, tr("Save"), tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost.") ,tr("No"), tr("Yes")))
+    {
+        choice = QMessageBox::warning(this, tr("Save"), tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost."), tr("Cancel"), tr("No"), tr("Yes"));
+        if(choice == 2)
+        {
             on_saveAction_triggered();
+        }
+    }
+    return choice;
 }
 
 void MainWindow::on_saveAction_triggered()
@@ -1780,6 +1787,12 @@ void MainWindow::closeEvent (QCloseEvent *event)
         }else{
             event->ignore();
         }
+    }
+    else
+    {
+        if(verifSave() == 0)
+            event->ignore();
+       // on_quitAction_triggered()
     }
 
 }
