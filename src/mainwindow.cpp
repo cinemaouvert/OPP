@@ -7,6 +7,10 @@
  *          Cyril Naud <futuramath@gmail.com>
  *          Baptiste Rozière <bapt.roziere@gmail.com>
  *          Hamza Haddar <ham.haddar@gmail.com>
+ *          Geoffrey Bergé <geoffrey.berge@live.fr>
+ *          Thomas Berthomé <thoberthome@laposte.net>
+ *          Thibaud Lamarche <lamarchethibaud@hotmail.com>
+ *          Denis Saunier <saunier.denis.86@gmail.com>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers
@@ -471,7 +475,6 @@ void MainWindow::on_binAddMediaButton_clicked()
 void MainWindow::on_binDeleteMediaButton_clicked()
 {
     QItemSelectionModel *selectionModel = ui->binTableView->selectionModel();
-    //TODO check if working well
     int nbMedia = selectionModel->selectedRows().length();
     for(int i=0;i<nbMedia;i++){
         bool toDel = true;
@@ -717,6 +720,7 @@ void MainWindow::updateSettings()
     ui->subtitlesTrackComboBox->addItems(playback->media()->subtitlesTracksName());
 
     ui->subtitlesSyncSpinBox->setValue(playback->mediaSettings()->subtitlesSync());
+    ui->audioSyncDoubleSpinBox->setValue(playback->mediaSettings()->audioSync());
 
     ui->gammaSpinBox->setValue(playback->mediaSettings()->gamma());
     ui->contrastSpinBox->setValue(playback->mediaSettings()->contrast());
@@ -1041,10 +1045,17 @@ void MainWindow::deletePlaylistItem()
                                           Project import/export
 \***********************************************************************************************/
 
-void MainWindow::verifSave () {
+int MainWindow::verifSave () {
+    int choice = 1;
     if(_mediaListModel->rowCount()!=0)
-        if (1 == QMessageBox::warning(this, tr("Save"), tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost.") ,tr("No"), tr("Yes")))
+    {
+        choice = QMessageBox::warning(this, tr("Save"), tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost."), tr("Cancel"), tr("No"), tr("Yes"));
+        if(choice == 2)
+        {
             on_saveAction_triggered();
+        }
+    }
+    return choice;
 }
 
 void MainWindow::on_saveAction_triggered()
@@ -1216,10 +1227,6 @@ void MainWindow::on_scheduleAddButton_clicked()
         connect(schedule, SIGNAL(triggered(Playlist*)), this, SLOT(needVideoWindow(Playlist*)));
         _scheduleListModel->addSchedule(schedule);
     } else {
-        QMessageBox::critical(this, tr("Schedule validation"), QString(tr("A playlist was already scheduled between the %1 and %2, \nPlease choose an other launch date."))
-                              .arg(schedule->launchAt().toString())
-                              .arg(schedule->finishAt().toString())
-                              );
         delete schedule;
     }
 }
@@ -1593,7 +1600,6 @@ void MainWindow::updateBackTime(const int &time)
 
     int totalTime = _playlistPlayer->currentPlaylist()->totalDuration();
     int idx = _playlistPlayer->currentPlaylist()->indexOf(_playlistPlayer->mediaPlayer()->currentPlayback());
-    qDebug()<<idx;
     int timeAlreadyElapsed = 0;
 
     for(int i = 0 ; i < idx ; i++){
@@ -1858,5 +1864,10 @@ void MainWindow::closeEvent (QCloseEvent *event)
         }else{
             event->ignore();
         }
+    }
+    else
+    {
+        if(verifSave() == 0)
+            event->ignore();
     }
 }

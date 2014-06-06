@@ -56,36 +56,6 @@ int main(int argc, char *argv[])
     /*Settings initialization*/
     QSettings settings("opp", "opp");
 
-    if(!settings.contains("vlcPath"))
-    #if defined(Q_OS_WIN)
-        settings.setValue("vlcPath", "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe");
-    #elif defined(Q_OS_MAC)
-        settings.setValue("vlcPath", "/Applications/VLC.app");
-    #elif defined(Q_OS_UNIX)
-        settings.setValue("vlcPath", "/usr/bin/vlc");
-    #endif
-
-    QString currentDir = QCoreApplication::applicationDirPath();
-
-    if(!settings.contains("testPatternPath"))
-    #if defined(Q_OS_WIN)
-        settings.setValue("testPatternPath", currentDir+"\\test_pattern.jpg");
-    #elif defined(Q_OS_MAC)
-        settings.setValue("testPatternPath", currentDir+"/test_pattern.jpg");
-    #elif defined(Q_OS_UNIX)
-        settings.setValue("testPatternPath", currentDir+"/test_pattern.jpg");
-    #endif
-
-
-    if(!settings.contains("intertitlePath"))
-    #if defined(Q_OS_WIN)
-        settings.setValue("intertitlePath", currentDir+"\\intertitle.jpg");
-    #elif defined(Q_OS_MAC)
-        settings.setValue("intertitlePath", currentDir+"/intertitle.jpg");
-    #elif defined(Q_OS_UNIX)
-        settings.setValue("intertitlePath", currentDir+"/intertitle.jpg");
-    #endif
-
     if(!settings.contains("moviesPath"))
         settings.setValue("moviesPath", QDir::homePath ());
 
@@ -121,8 +91,6 @@ int main(int argc, char *argv[])
     MainWindow win;
     a.installEventFilter(new CustomEventFilter(win.getLocker(),&a));
     qInstallMsgHandler(MainWindow::myMessageHandler);
-
-
 
     win.show();
 

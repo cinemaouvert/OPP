@@ -4,6 +4,10 @@
  * Copyright (C) 2013 Catalogue Ouvert du Cinéma <dev@cinemaouvert.fr>
  *
  * Authors: Cyril Naud <futuramath@gmail.com>
+ *          Geoffrey Bergé <geoffrey.berge@live.fr>
+ *          Thomas Berthomé <thoberthome@laposte.net>
+ *          Thibaud Lamarche <lamarchethibaud@hotmail.com>
+ *          Denis Saunier <saunier.denis.86@gmail.com>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers
@@ -75,29 +79,52 @@ private slots:
     void on_buttonBox_rejected();
 
     /**
-     * @brief Change the value of the VLC path field
-     *
-     * @author Cyril Naud <futuramath@gmail.com>
-     */
-    void on_pushButton_VLCPath_clicked();
-
-    /**
      * @brief Change the value of the movies path field
      *
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void on_pushButton_moviesPath_clicked();
 
+    /**
+     * @brief Activate the group box for the screen position and show an information message
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
     void on_radioButton_Streaming_clicked();
 
+    /**
+     * @brief Desactivate the group box for the screen position and show an information message
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
     void on_radioButton_Pictures_clicked();
 
+    /**
+     * @brief Desactivate the group box for the screen position and show an information message
+     *
+     * @author Thomas Berthome <thoberthome@laposte.net>
+     */
     void on_radioButton_None_clicked();
 
+    /**
+     * @brief Save modified settings, close the window and restart the software
+     *
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
+     */
     void on_restart_clicked();
 
+    /**
+     * @brief Show an information message
+     *
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
+     */
     void on_radioButton_locateRight_clicked();
 
+    /**
+     * @brief Show an information message
+     *
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
+     */
     void on_radioButton_locateLeft_clicked();
 
 private:

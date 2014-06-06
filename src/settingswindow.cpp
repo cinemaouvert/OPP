@@ -4,6 +4,10 @@
  * Copyright (C) 2013 Catalogue Ouvert du Cinéma <dev@cinemaouvert.fr>
  *
  * Authors: Cyril Naud <futuramath@gmail.com>
+ *          Geoffrey Bergé <geoffrey.berge@live.fr>
+ *          Thomas Berthomé <thoberthome@laposte.net>
+ *          Thibaud Lamarche <lamarchethibaud@hotmail.com>
+ *          Denis Saunier <saunier.denis.86@gmail.com>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers
@@ -53,7 +57,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
 void SettingsWindow::init(){
     /*Settings*/
     QSettings settings("opp","opp");
-    ui->lineEdit_VLCPath->setText(settings.value("vlcPath").toString());
     ui->lineEdit_moviesPath->setText(settings.value("moviesPath").toString());
     ui->lineEdit_UpdatePath->setText(settings.value("updatePath").toString());
     ui->groupBox_3->setEnabled(false);
@@ -134,7 +137,6 @@ void SettingsWindow::on_buttonBox_accepted()
 
 void SettingsWindow::accept() {
     QSettings settings("opp","opp");
-    settings.setValue("vlcPath", ui->lineEdit_VLCPath->text());
     settings.setValue("moviesPath", ui->lineEdit_moviesPath->text());
     settings.setValue("lang", getLang(ui->comboBox_language->currentIndex()));
     settings.setValue("locateR", ui->radioButton_locateRight->isChecked());
@@ -146,14 +148,6 @@ void SettingsWindow::on_buttonBox_rejected()
 {
     init();
     this->close();
-}
-
-void SettingsWindow::on_pushButton_VLCPath_clicked()
-{
-
-    QString pathVlc = QFileDialog::getOpenFileName(this,"", ui->lineEdit_VLCPath->text(),"");
-    if(pathVlc!="")
-        ui->lineEdit_VLCPath->setText(pathVlc);
 }
 
 void SettingsWindow::on_pushButton_moviesPath_clicked()

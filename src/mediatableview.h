@@ -5,6 +5,9 @@
  *
  * Authors: Florian Mhun <florian.mhun@gmail.com>
  *          Cyril Naud <futuramath@gmail.com>
+ *          Geoffrey Bergé <geoffrey.berge@live.fr>
+ *          Thibaud Lamarche <lamarchethibaud@hotmail.com>
+ *          Denis Saunier <saunier.denis.86@gmail.com>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers
@@ -36,16 +39,74 @@ public:
     explicit MediaTableView(QWidget *parent = 0);
     
 protected:
+    /**
+     * @brief mousePressEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void mousePressEvent(QMouseEvent *event);
+
+    /**
+     * @brief mouseReleaseEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void mouseReleaseEvent(QMouseEvent *event);
+
+    /**
+     * @brief mouseMoveEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void mouseMoveEvent(QMouseEvent *event);
+
+    /**
+     * @brief dragEnterEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void dragEnterEvent(QDragEnterEvent *event);
+
+    /**
+     * @brief dragMoveEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void dragMoveEvent(QDragMoveEvent *event);
+
+    /**
+     * @brief dropEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void dropEvent(QDropEvent *event);
+
+    /**
+     * @brief startDrag
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void startDrag(Qt::DropActions supportedActions);
+
+    /**
+     * @brief dragLeaveEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void dragLeaveEvent(QDragLeaveEvent *event);
 
 private:
+    /**
+     * @brief _startPos Mouse press position
+     */
     QPoint startPos;
     
 };

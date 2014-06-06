@@ -7,6 +7,10 @@
  *          Cyril Naud <futuramath@gmail.com>
  *          Baptiste Rozière <bapt.roziere@gmail.com>
  *          Hamza Haddar <ham.haddar@gmail.com>
+ *          Geoffrey Bergé <geoffrey.berge@live.fr>
+ *          Thomas Berthomé <thoberthome@laposte.net>
+ *          Thibaud Lamarche <lamarchethibaud@hotmail.com>
+ *          Denis Saunier <saunier.denis.86@gmail.com>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers
@@ -76,13 +80,36 @@ private slots:
      */
     void on_buttonBox_OKCancel_rejected();
 
-
+    /**
+     * @brief If the synchronization is activated, synchronize up and down
+     * @param arg1 down value
+     *
+     * @author Thibaud Lamarche <lamarchethibaud@hotmail.com>
+     */
     void on_spinBox_up_valueChanged(int arg1);
 
+    /**
+     * @brief If the synchronization is activated, synchronize up and down
+     * @param arg1 up value
+     *
+     * @author Thibaud Lamarche <lamarchethibaud@hotmail.com>
+     */
     void on_spinBox_down_valueChanged(int arg1);
 
+    /**
+     * @brief If the synchronization is activated, synchronize right and left
+     * @param arg1 left value
+     *
+     * @author Thibaud Lamarche <lamarchethibaud@hotmail.com>
+     */
     void on_spinBox_right_valueChanged(int arg1);
 
+    /**
+     * @brief If the synchronization is activated, synchronize right and left
+     * @param arg1 left value
+     *
+     * @author Thibaud Lamarche <lamarchethibaud@hotmail.com>
+     */
     void on_spinBox_left_valueChanged(int arg1);
 
 private:

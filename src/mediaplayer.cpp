@@ -5,6 +5,8 @@
  *
  * Authors: Florian Mhun <florian.mhun@gmail.com>
  *          Cyril Naud <futuramath@gmail.com>
+ *          Thomas Berthomé <thoberthome@laposte.net>
+ *          Thibaud Lamarche <lamarchethibaud@hotmail.com>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers
@@ -456,6 +458,7 @@ void MediaPlayer::applyCurrentPlaybackSettings()
     setCurrentRatio(_currentPlayback->mediaSettings()->ratio());
     setCurrentSaturation(_currentPlayback->mediaSettings()->saturation());
     setCurrentSubtitlesSync(_currentPlayback->mediaSettings()->subtitlesSync());
+    setCurrentAudioSync(_currentPlayback->mediaSettings()->audioSync());
     setCurrentSubtitlesEncode(_currentPlayback->mediaSettings()->subtitlesEncode());
 
     applyCrop(_currentPlayback->mediaSettings()->cropTop(),

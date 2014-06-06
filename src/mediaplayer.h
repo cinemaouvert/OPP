@@ -7,6 +7,8 @@
  *          Cyril Naud <futuramath@gmail.com>
  *          Baptiste Rozière <bapt.roziere@gmail.com>
  *          Hamza Haddar <ham.haddar@gmail.com>
+ *          Thomas Berthomé <thoberthome@laposte.net>
+ *          Thibaud Lamarche <lamarchethibaud@hotmail.com>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers
@@ -747,8 +749,10 @@ private:
      */
     std::string _sizeScreen;
 
+    /**
+     * @brief Timer screenPlay
+     */
     QTimer *_timer;
-
 
     /**
      * @brief Timer audio fade-out
@@ -769,7 +773,6 @@ private:
      * @brief Timer video fade-in
      */
     QTimer *_timerVideoFadeIn;
-
 
     /**
      * @brief The current audio audio fade-out

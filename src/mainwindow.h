@@ -7,6 +7,10 @@
  *          Cyril Naud <futuramath@gmail.com>
  *          Baptiste Rozière <bapt.roziere@gmail.com>
  *          Hamza Haddar <ham.haddar@gmail.com>
+ *          Geoffrey Bergé <geoffrey.berge@live.fr>
+ *          Thomas Berthomé <thoberthome@laposte.net>
+ *          Thibaud Lamarche <lamarchethibaud@hotmail.com>
+ *          Denis Saunier <saunier.denis.86@gmail.com>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers
@@ -117,7 +121,7 @@ public:
      *
      * @author Geoffrey Bergé <geoffrey.berge@live.fr>
      */
-    void verifSave();
+    int verifSave();
 
     /**
      * @brief GetFilename
@@ -263,7 +267,13 @@ private slots:
      */
     void needVideoWindow(Playlist *pl = NULL);
 
+    /**
+     * @brief Show timeout before the end of the current playlist
+     *
+     * @author Lamarche Thibaud <lamarchethibaud@hotmail.fr>
+     */
     void showTimeOut();
+
     /**
      * @brief Change the value of Ratio settings
      * @param index Index of the new Ratio
@@ -411,7 +421,6 @@ private slots:
      */
     void on_quitAction_triggered();
 
-
     /**
      * @brief Open a saved project
      *
@@ -435,6 +444,7 @@ private slots:
 
     /**
      * @brief Create a new playlist and its tab with a name given by the user
+     * @param name The playlist name
      *
      * @author Thomas Berthome <thoberthome@laposte.net>
      */
@@ -595,6 +605,7 @@ private slots:
 
     /**
       * @brief slot for the launch of the mire
+      * @param fileName The mire filename
       *
       * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
       */
@@ -602,6 +613,7 @@ private slots:
 
     /**
      * @brief change subtitles encode
+     * @param index Index of the subtitle encode
      *
      * @author Denis Saunier <saunier.denis.86@gmail.com>
      */
@@ -651,10 +663,13 @@ protected:
 
 
 private:
-    void showTimePlaylist();
 
+    /**
+      * @brief Check if a playlist is running and advert the user
+      *
+      * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
+      */
     void closeEvent (QCloseEvent *event);
-
 
     /**
       * @brief Loads the plugins from the folder plugins

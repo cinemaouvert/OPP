@@ -4,6 +4,8 @@
  * Copyright (C) 2013 Catalogue Ouvert du Cinéma <dev@cinemaouvert.fr>
  *
  * Authors: Florian Mhun <florian.mhun@gmail.com>
+ *          Geoffrey Bergé <geoffrey.berge@live.fr>
+ *          Thomas Berthomé <thoberthome@laposte.net>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers
@@ -194,7 +196,12 @@ void ScheduleListModel::addSchedule(Schedule *schedule)
 bool ScheduleListModel::isSchedulable(Schedule *schedule) const
 {
     foreach (Schedule *other, _scheduleList) {
-        if (schedule->launchAt() >= other->launchAt() && schedule->launchAt() <= other->finishAt())
+        if ( (schedule->launchAt() >= other->launchAt() && schedule->launchAt() <= other->finishAt())
+                || (schedule->launchAt() <= other->launchAt() && schedule->finishAt() >= other->launchAt()) )
+            QMessageBox::critical(NULL, tr("Schedule validation"), QString(tr("A playlist was already scheduled between the %1 and %2, \nPlease choose an other launch date."))
+                                  .arg(other->launchAt().toString())
+                                  .arg(other->finishAt().toString())
+                                  );
             return false;
     }
     return true;
