@@ -53,22 +53,12 @@ public:
     virtual void setFilename(QString * filename)=0;
 
     /**
-      * @brief Used to ad an action for the plugin
+      * @brief Used to add an action for the plugin
       *
       * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
       */
     virtual void secondaryAction() =0;
 
-<<<<<<< HEAD
-        /**
-          *
-          * @brief Used to ad an action for the plugin
-          *
-          * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
-          */
-        virtual void secondaryAction() =0;
-=======
->>>>>>> c044a89b14e40812f7519373fc33ab658167cf13
 
 public slots:
 
