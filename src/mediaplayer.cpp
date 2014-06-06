@@ -5,6 +5,8 @@
  *
  * Authors: Florian Mhun <florian.mhun@gmail.com>
  *          Cyril Naud <futuramath@gmail.com>
+ *          Thomas Berthomé <thoberthome@laposte.net>
+ *          Thibaud Lamarche <lamarchethibaud@hotmail.com>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers

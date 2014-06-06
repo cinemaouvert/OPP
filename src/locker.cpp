@@ -6,6 +6,7 @@
  * Authors: Baptiste Rozière <bapt.roziere@gmail.com>
  *          Florian Mhun <florian.mhun@gmail.com>
  *          Cyril Naud <futuramath@gmail.com>
+ *          Geoffrey Bergé <geoffrey.berge@live.fr>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers

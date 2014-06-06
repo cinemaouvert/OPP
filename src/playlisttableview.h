@@ -5,6 +5,7 @@
  *
  * Authors: Cyril Naud <futuramath@gmail.com>
  *          Florian Mhun <florian.mhun@gmail.com>
+ *          Thibaud Lamarche <lamarchethibaud@hotmail.com>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers
@@ -41,22 +42,89 @@ public:
     virtual ~PlaylistTableView();
 
 protected:
+    /**
+     * @brief mousePressEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void mousePressEvent(QMouseEvent *event);
+
+    /**
+     * @brief mouseDoubleClickEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void mouseDoubleClickEvent(QMouseEvent *event);
 
-
+    /**
+     * @brief mouseMoveEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void mouseMoveEvent(QMouseEvent *event);
+
+    /**
+     * @brief dragEnterEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void dragEnterEvent(QDragEnterEvent *event);
+
+    /**
+     * @brief dragMoveEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void dragMoveEvent(QDragMoveEvent *event);
+
+    /**
+     * @brief dropEvent
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void dropEvent(QDropEvent *event);
+
+    /**
+     * @brief startDrag
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void startDrag(Qt::DropActions supportedActions);
 
+    /**
+     * @brief selectionChanged
+     * @param event
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
     void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected);
 
 private:
+    /**
+     * @brief _startPos Mouse press position
+     */
     QPoint startPos;
+
+    /**
+     * @brief _scheduleListModel List model of schedules
+     */
     ScheduleListModel *_scheduleListModel;
+
+    /**
+     * @brief _mainWindow The Main Window
+     */
     MainWindow *_mainWindow;
+
+    /**
+     * @brief _scS The screenshot selector
+     */
     ScreenshotSelector *_scS;
 };
 

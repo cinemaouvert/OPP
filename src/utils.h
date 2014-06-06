@@ -4,6 +4,8 @@
  * Copyright (C) 2013 Catalogue Ouvert du Cinéma <dev@cinemaouvert.fr>
  *
  * Authors: Florian Mhun <florian.mhun@gmail.com>
+ *          Geoffrey Bergé <geoffrey.berge@live.fr>
+ *          Thibaud Lamarche <lamarchethibaud@hotmail.com>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers

@@ -4,6 +4,7 @@
  * Copyright (C) 2013 Catalogue Ouvert du Cinéma <dev@cinemaouvert.fr>
  *
  * Authors: Denis Saunier <saunier.denis.86@gmail.com>
+ *          Geoffrey Bergé <geoffrey.berge@live.fr>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers

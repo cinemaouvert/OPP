@@ -41,6 +41,10 @@ public:
     ~SaturationWidget();
     
 private:
+    /**
+     * @brief ui The ui
+     *
+     */
     Ui::SaturationWidget *ui;
 };
 

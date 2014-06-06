@@ -4,6 +4,7 @@
  * Copyright (C) 2013 Catalogue Ouvert du Cinéma <dev@cinemaouvert.fr>
  *
  * Authors: Denis Saunier <saunier.denis.86@gmail.com>
+ *          Geoffrey Bergé <geoffrey.berge@live.fr>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
  * The software was developed by four students of University of Poitiers
@@ -41,6 +42,7 @@ public:
 
     /**
      * @brief set html
+     * @param html the html text
      *
      * @author Denis Saunier <saunier.denis.86@gmail.com>
      */
@@ -62,10 +64,19 @@ private slots:
     void on_CancelButton_clicked();
 
 private:
+    /**
+     * @brief The ui
+     */
     Ui::ExportPDF *ui;
 
+    /**
+     * @brief The destination folder
+     */
     QString _dir;
 
+    /**
+     * @brief The html text
+     */
     QString _html;
 };
 
