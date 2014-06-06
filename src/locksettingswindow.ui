@@ -125,7 +125,6 @@
             </layout>
             <zorder>radioButton_autoLockOn</zorder>
             <zorder>radioButton_autoLockOff</zorder>
-            <zorder>buttonBox</zorder>
            </widget>
           </item>
           <item>
@@ -158,8 +157,6 @@
        </layout>
       </item>
      </layout>
-     <zorder>verticalLayoutWidget</zorder>
-     <zorder>buttonBox</zorder>
     </widget>
    </item>
    <item>
