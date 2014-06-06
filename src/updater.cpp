@@ -82,14 +82,7 @@ void Updater::getInstaller(){
     file->close();
     reply->deleteLater();
 
-    //Launch installer
-    #if defined(Q_OS_WIN)
-        QProcess::startDetached(config_opp::NAME_INSTALLER);
-        //exit(0);
-    #else
-        QDesktopServices::openUrl(QUrl(config_opp::URL + config_opp::LINK_UPDATE + config_opp::NAME_INSTALLER));
-
-    #endif
+    QDesktopServices::openUrl(QUrl(config_opp::URL + config_opp::LINK_UPDATE + config_opp::NAME_INSTALLER));
 }
 
 

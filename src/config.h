@@ -32,7 +32,7 @@
 
 namespace config_opp {
     const QString URL = "http://localhost/";
-    const QString VERSION = "0.9.3";
+    const QString VERSION = "v0.5-dev";
 
     #if defined(Q_OS_MAC)
         const QString LINK_UPDATE = "macos/latest/";
