@@ -70,6 +70,7 @@ void ExportPDF::on_exportPDF_Button_clicked()
          QWebView webView;
          webView.setHtml(_html);
          webView.print(&printer);
+
          _html = "";
          _dir = "";
          QApplication::restoreOverrideCursor();
