@@ -76,6 +76,5 @@ void VideoWindow::moveToDisplay(const int &display)
 
 void VideoWindow::closeEvent (QCloseEvent *event)
 {
-    ((MainWindow * )this->parentWidget())->stop();
     emit(closed());
 }
