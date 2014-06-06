@@ -456,6 +456,7 @@ void MediaPlayer::applyCurrentPlaybackSettings()
     setCurrentRatio(_currentPlayback->mediaSettings()->ratio());
     setCurrentSaturation(_currentPlayback->mediaSettings()->saturation());
     setCurrentSubtitlesSync(_currentPlayback->mediaSettings()->subtitlesSync());
+    setCurrentAudioSync(_currentPlayback->mediaSettings()->audioSync());
     setCurrentSubtitlesEncode(_currentPlayback->mediaSettings()->subtitlesEncode());
 
     applyCrop(_currentPlayback->mediaSettings()->cropTop(),

@@ -717,6 +717,7 @@ void MainWindow::updateSettings()
     ui->subtitlesTrackComboBox->addItems(playback->media()->subtitlesTracksName());
 
     ui->subtitlesSyncSpinBox->setValue(playback->mediaSettings()->subtitlesSync());
+    ui->audioSyncDoubleSpinBox->setValue(playback->mediaSettings()->audioSync());
 
     ui->gammaSpinBox->setValue(playback->mediaSettings()->gamma());
     ui->contrastSpinBox->setValue(playback->mediaSettings()->contrast());
