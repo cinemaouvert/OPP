@@ -1402,7 +1402,7 @@ void MainWindow::setScreenshot(QString url)
 }
 
 
-/****** CHARGEMENT DES PLUGINS ***********/
+/****** PLUGIN LOADER***********/
 
 void MainWindow::loadPlugins(){
 
@@ -1416,7 +1416,7 @@ void MainWindow::loadPlugins(){
             {
 
                 OCPM * op = qobject_cast<OCPM *>(plugin);
-                if (op != NULL)
+                if (op != 0)
                 {
                     _ocpmPlugin = op;
                     op->setFilename(_selectedMediaName);
@@ -1426,6 +1426,11 @@ void MainWindow::loadPlugins(){
                     ui->horizontalLayout_11->addWidget(button);
 
                     connect ( button, SIGNAL( clicked() ), this, SLOT( ocpmSecondaryAction() ) );
+                }else{
+                    OPP_GENERIC_PLUGIN *oppGEN = qobject_cast<OPP_GENERIC_PLUGIN *>(plugin);
+                    if(oppGEN != 0){
+                        oppGEN->setMainWindow(this);
+                    }
                 }
             }
         }
@@ -1854,5 +1859,4 @@ void MainWindow::closeEvent (QCloseEvent *event)
             event->ignore();
         }
     }
-
 }
