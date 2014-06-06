@@ -561,7 +561,7 @@ signals:
     void hueChanged(int);
 
     /**
-     * @brief audioSyncChanged
+     * @brief +audioSyncChanged
      * @param sync
      */
     void audioSyncChanged(double sync);
