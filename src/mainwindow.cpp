@@ -281,7 +281,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->screenBack->clear();
     ui->screen_none->clear();
 
-
     //Restart
     if(QApplication::argc()>1) //Restart : filename en argument
         openFile(QApplication::arguments()[1]);
@@ -1862,7 +1861,6 @@ void MainWindow::closeEvent (QCloseEvent *event)
     {
         if(verifSave() == 0)
             event->ignore();
-       // on_quitAction_triggered()
     }
 
 }

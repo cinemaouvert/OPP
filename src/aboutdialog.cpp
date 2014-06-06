@@ -21,6 +21,7 @@
 
 #include "aboutdialog.h"
 #include "ui_aboutdialog.h"
+#include "config.h"
 #include <QDebug>
 
 AboutDialog::AboutDialog(QWidget *parent) :
@@ -28,7 +29,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui(new Ui::AboutDialog)
 {
     ui->setupUi(this);
-
+    ui->label_num->setText(config_opp::VERSION);
 }
 
 AboutDialog::~AboutDialog()
