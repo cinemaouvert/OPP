@@ -1883,6 +1883,7 @@ void MainWindow::on_actionScreenshots_triggered()
 
 void MainWindow::on_actionPlugins_triggered()
 {
+    QDesktopServices::openUrl(qApp->applicationDirPath() + "/" +QString("pluginsOPP"));
 }
 
 void MainWindow::on_helpAction_triggered()
