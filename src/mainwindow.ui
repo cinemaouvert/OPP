@@ -267,8 +267,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>494</width>
-                 <height>255</height>
+                 <width>484</width>
+                 <height>248</height>
                 </rect>
                </property>
                <layout class="QGridLayout" name="gridLayout_2">
@@ -1811,7 +1811,7 @@
      <x>0</x>
      <y>0</y>
      <width>1287</width>
-     <height>29</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1889,6 +1889,7 @@
     <addaction name="actionTest_patterns"/>
     <addaction name="actionScreenshots"/>
     <addaction name="actionPlugins"/>
+    <addaction name="actionLog"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -2134,6 +2135,11 @@
   <action name="actionPlugins">
    <property name="text">
     <string>Plugins</string>
+   </property>
+  </action>
+  <action name="actionLog">
+   <property name="text">
+    <string>Log</string>
    </property>
   </action>
  </widget>
