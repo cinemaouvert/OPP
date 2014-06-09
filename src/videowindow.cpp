@@ -31,7 +31,6 @@
 
 #include <iostream>
 #include "mainwindow.h"
-#include "playlistplayer.h"
 #include "videowidget.h"
 
 VideoWindow::VideoWindow(QWidget *parent ,const DisplayMode &mode) :

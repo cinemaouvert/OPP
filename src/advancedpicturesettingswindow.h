@@ -34,7 +34,6 @@
 #define ADVANCEDPICTURESETTINGSWINDOW_H
 
 #include <QDialog>
-#include "playlistplayer.h"
 namespace Ui {
 class AdvancedPictureSettingsWindow;
 }
