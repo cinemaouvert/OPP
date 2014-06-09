@@ -126,6 +126,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _timerOut->start(1000);
 
     _videoWindow = new VideoWindow(this);
+    connect(_videoWindow,SIGNAL(closed()),this,SLOT(stop()));
+
 
     _playlistPlayer->mediaPlayer()->setVideoView( (VideoView*) _videoWindow->videoWidget() );
     _playlistPlayer->mediaPlayer()->setVideoBackView( (VideoView*) ui->backWidget );
@@ -1232,9 +1234,7 @@ void MainWindow::on_scheduleAddButton_clicked()
 
 void MainWindow::needVideoWindow(Playlist *pl){
     if(!_videoWindow->isVisible()){
-        delete(_videoWindow);
-        _videoWindow = new VideoWindow(this, _projectionMode);
-        _playlistPlayer->mediaPlayer()->setVideoView( (VideoView*) _videoWindow->videoWidget() );
+        _videoWindow->show();
     }
 }
 

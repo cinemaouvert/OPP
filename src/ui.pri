@@ -28,7 +28,6 @@
 ###################################################################################
 
 HEADERS += src/mainwindow.h \
-    src/saturationwidget.h \
     src/advancedpicturesettingswindow.h \
     src/advancedsettingswindow.h \
     src/settingswindow.h \
@@ -53,7 +52,6 @@ HEADERS += src/mainwindow.h \
 
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
-    src/saturationwidget.cpp \
     src/advancedpicturesettingswindow.cpp \
     src/advancedsettingswindow.cpp \
     src/settingswindow.cpp \
