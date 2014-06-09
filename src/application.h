@@ -68,6 +68,14 @@ private:
      * @author Denis Saunier <saunier.denis.86@gmail.com>
      */
     void closeLibvlc();
+
+    /**
+     * @brief get color in vlc format
+     * @param index of combox subtitle color
+     * @return string of color
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    QString subtitleColor(int index);
 };
 
 #endif // APPLICATION_H

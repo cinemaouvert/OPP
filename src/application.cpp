@@ -26,12 +26,14 @@
 #include "application.h"
 
 #include <QStringList>
+#include <QSettings>
 #include <QDebug>
 
 #include <vlc/vlc.h>
 
 Application::Application()
 {
+    QSettings settings("opp", "opp");
     QStringList vlcargs;
         vlcargs << "--intf=dummy"
                 <<"--no-media-library"
@@ -50,6 +52,11 @@ Application::Application()
     #endif
                        <<"--drop-late-frames"
                        <<"--no-snapshot-preview";
+
+    if(settings.contains("subtitleColor")){
+        vlcargs <<"--sub-filter=freetype"
+                <<"--freetype-color=" + subtitleColor(settings.value("subtitleColor").toInt());
+    }
     initVlcInstanceFromArgs(vlcargs);
 }
 
@@ -79,4 +86,10 @@ void Application::initVlcInstanceFromArgs(const QStringList &args)
 void Application::closeLibvlc()
 {
     libvlc_release(_vlcInstance);
+}
+
+QString Application::subtitleColor(int index){
+    QStringList sl;
+    sl <<"16777215" << "16776960";
+    return sl.at(index);
 }

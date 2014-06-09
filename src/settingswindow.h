@@ -112,20 +112,6 @@ private slots:
      */
     void on_restart_clicked();
 
-    /**
-     * @brief Show an information message
-     *
-     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
-     */
-    void on_radioButton_locateRight_clicked();
-
-    /**
-     * @brief Show an information message
-     *
-     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
-     */
-    void on_radioButton_locateLeft_clicked();
-
 private:
     /**
      * @brief ui The UI
@@ -159,7 +145,6 @@ private:
      * @author  Thibaud Lamarche <lamarchethibaud@hotmail.fr>
      */
     void accept();
-
 
 
 };

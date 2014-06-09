@@ -66,7 +66,10 @@ void SettingsWindow::init(){
     ui->radioButton_locateLeft->setChecked(!settings.value("locateR").toBool());
 
     ui->comboBox_language->setCurrentIndex(getIndex(settings.value("lang").toString()));
-
+    QStringList sl;
+    sl << "Blanc" << "Jaune";
+    ui->comboBox_SubtitleColor->addItems(sl);
+    ui->comboBox_SubtitleColor->setCurrentIndex(settings.value("subtitleColor").toInt());
 }
 
 SettingsWindow::~SettingsWindow()
@@ -141,6 +144,7 @@ void SettingsWindow::accept() {
     settings.setValue("lang", getLang(ui->comboBox_language->currentIndex()));
     settings.setValue("locateR", ui->radioButton_locateRight->isChecked());
     settings.setValue("updatePath", ui->lineEdit_UpdatePath->text());
+    settings.setValue("subtitleColor", ui->comboBox_SubtitleColor->currentIndex());
     setSettingsVideoReturnMode();
 }
 
@@ -160,19 +164,17 @@ void SettingsWindow::on_pushButton_moviesPath_clicked()
 void SettingsWindow::on_radioButton_Streaming_clicked()
 {
     ui->groupBox_3->setEnabled(true);
-    QMessageBox::information(this, "Apply",tr("There is a 2 seconds delay. \n You'll need to restart the software to apply it."));
+    QMessageBox::information(this, "Apply",tr("There is a 2 seconds delay."));
 }
 
 void SettingsWindow::on_radioButton_Pictures_clicked()
 {
     ui->groupBox_3->setEnabled(false);
-    QMessageBox::information(this, "Apply",tr("You'll need to restart the software to apply it."));
 }
 
 void SettingsWindow::on_radioButton_None_clicked()
 {
     ui->groupBox_3->setEnabled(false);
-    QMessageBox::information(this, "Apply",tr("You'll need to restart the software to apply it."));
 }
 
 void SettingsWindow::on_restart_clicked()
@@ -188,14 +190,3 @@ void SettingsWindow::on_restart_clicked()
         QProcess::startDetached(QApplication::applicationFilePath());
     exit(2);
 }
-
-void SettingsWindow::on_radioButton_locateRight_clicked()
-{
-    QMessageBox::information(this, "Apply",tr("You'll need to restart the software to apply it."));
-}
-
-void SettingsWindow::on_radioButton_locateLeft_clicked()
-{
-    QMessageBox::information(this, "Apply",tr("You'll need to restart the software to apply it."));
-}
-
