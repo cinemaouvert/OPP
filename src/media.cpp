@@ -34,7 +34,6 @@
 #include <QDebug>
 
 #include <vlc/vlc.h>
-#include "application.h"
 
 int Media::s_instanceCount = 0;
 

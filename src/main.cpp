@@ -37,7 +37,6 @@
 #include <QMessageBox>
 
 #include "mainwindow.h"
-#include "media.h"
 #include "customeventfilter.h"
 #include "config.h"
 #include "utils.h"

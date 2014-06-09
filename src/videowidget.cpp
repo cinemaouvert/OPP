@@ -27,7 +27,6 @@
 
 #include <QtGlobal>
 #include <QDebug>
-#include <QApplication>
 #include <QDesktopWidget>
 #include <QHBoxLayout>
 #include <QToolBar>

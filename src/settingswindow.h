@@ -32,7 +32,6 @@
 
 #include <QDialog>
 
-#include "mediaplayer.h"
 
 namespace Ui {
 class SettingsWindow;

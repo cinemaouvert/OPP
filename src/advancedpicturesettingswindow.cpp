@@ -37,7 +37,6 @@
 #include "playback.h"
 
 #include "mainwindow.h"
-#include "mediaplayer.h"
 
 AdvancedPictureSettingsWindow::AdvancedPictureSettingsWindow(QWidget *parent) :
     QDialog(parent),
