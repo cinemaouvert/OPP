@@ -1870,3 +1870,22 @@ void MainWindow::closeEvent (QCloseEvent *event)
             event->ignore();
     }
 }
+
+void MainWindow::on_actionTest_patterns_triggered()
+{
+    QDesktopServices::openUrl(QString("mires"));
+}
+
+void MainWindow::on_actionScreenshots_triggered()
+{
+    QDesktopServices::openUrl(QString("screenshot"));
+}
+
+void MainWindow::on_actionPlugins_triggered()
+{
+}
+
+void MainWindow::on_helpAction_triggered()
+{
+    QDesktopServices::openUrl(QString("help/usersDocumentation.pdf"));
+}

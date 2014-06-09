@@ -642,6 +642,14 @@ private slots:
 
 
 
+    void on_actionTest_patterns_triggered();
+
+    void on_actionScreenshots_triggered();
+
+    void on_actionPlugins_triggered();
+
+    void on_helpAction_triggered();
+
 protected:
     /**
      * @brief Returns the selected playback
