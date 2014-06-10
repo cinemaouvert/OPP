@@ -1893,16 +1893,16 @@ void MainWindow::on_actionPlugins_triggered()
 
 void MainWindow::on_helpAction_triggered()
 {
-    QDesktopServices::openUrl(qApp->applicationDirPath() + "/" +QString("help/usersDocumentation.pdf"));
+    QDesktopServices::openUrl(QString("file:///") + qApp->applicationDirPath() + "/" +QString("help/usersDocumentation.pdf"));
 }
 
 void MainWindow::on_actionLog_triggered()
 {
-    QDesktopServices::openUrl(qApp->applicationDirPath() + "/" +QString("opp.log"));
+    QDesktopServices::openUrl(QString("file:///") + qApp->applicationDirPath() + "/" +QString("opp.log"));
 }
 
 void MainWindow::openDir(QString name){
-    QString folder = qApp->applicationDirPath() + "/" +QString(name);
+    QString folder = QString("file:///") + qApp->applicationDirPath() + "/" +QString(name);
     QDir dir(folder);
     if(!dir.exists(folder)){
        dir.mkdir(folder);
