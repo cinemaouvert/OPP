@@ -48,6 +48,14 @@ public:
      */
     void setHtml(const QString &html);
 
+    /**
+     * @brief set html
+     * @param html the html text
+     *
+     * @author Denis Saunier <saunier.denis.86@gmail.com>
+     */
+    void setHtmlPDF(const QString &pdf);
+
 private slots:
     /**
      * @brief get schedule and print pdf
@@ -62,6 +70,8 @@ private slots:
      * @author Denis Saunier <saunier.denis.86@gmail.com>
      */
     void on_CancelButton_clicked();
+
+    void on_pushButton_ExportHtml_clicked();
 
 private:
     /**
@@ -78,6 +88,11 @@ private:
      * @brief The html text
      */
     QString _html;
+
+    /**
+     * @brief The html text for pdf
+     */
+    QString _pdf;
 };
 
 #endif // EXPORTPDF_H

@@ -166,6 +166,12 @@ public:
     QString scheduleToHml();
 
     /**
+      *@brief Create schedule in html for pdf
+      *
+      * @author Denis Sauneir <saunier.denis.86@gmail.com>
+      */
+    QString scheduleToHmlForPDF();
+    /**
       *@brief Redirect qmessages into a file and the log area
       *
       * @author Thomas Berthome <thoberthome@laposte.net>

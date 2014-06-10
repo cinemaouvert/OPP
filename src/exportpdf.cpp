@@ -52,6 +52,11 @@ void ExportPDF::setHtml(const QString &html){
     ui->textEdit_viewPDF->setHtml(_html.toUtf8());
 }
 
+void ExportPDF::setHtmlPDF(const QString &pdf){
+    _pdf = pdf;
+    ui->textEdit_viewPDF->setHtml(_pdf.toUtf8());
+}
+
 void ExportPDF::on_exportPDF_Button_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save Schedule"), "", tr("PDF file (*.pdf)"));
@@ -71,8 +76,8 @@ void ExportPDF::on_exportPDF_Button_clicked()
          QWebView webView;
          webView.setHtml(_html);
          webView.print(&printer);
-
-         _html = "";
+         webView.close();
+         _pdf = "";
          _dir = "";
          QApplication::restoreOverrideCursor();
      }
@@ -85,4 +90,25 @@ void ExportPDF::on_CancelButton_clicked()
     _dir = "";
     this->hide();
 
+}
+
+void ExportPDF::on_pushButton_ExportHtml_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Schedule"), "", tr("HTML file (*.html)"));
+
+    if (fileName.isEmpty()) {
+        return;
+    } else {
+        if(fileName.right(5)!=".html")
+            fileName+=".html";
+
+        QFile htmlFile(fileName);
+        htmlFile.open(QIODevice::WriteOnly);
+        htmlFile.write(_html.toUtf8());
+        htmlFile.close();
+        _html = "";
+        _dir = "";
+        QApplication::restoreOverrideCursor();
+     }
+     this->hide();
 }

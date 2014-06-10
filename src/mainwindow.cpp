@@ -1720,6 +1720,7 @@ QString MainWindow::scheduleToHml(){
         "<table border='1' cellspacing='0' class='page'>"
             "<thead>"
             "  <tr>"
+            "<th>Aperçu</th>"
             "<th>Titre</th>"
             " <th>Durée</th>"
             "<th>Début</th>"
@@ -1732,7 +1733,129 @@ QString MainWindow::scheduleToHml(){
                 int dure = (int)playback->media()->duration();
                 timeMedia += dure;
 
-                QString screenPath = "./screenshot/";
+                QString screenPath = qApp->applicationDirPath() + "/screenshot/";
+                screenPath = screenPath.replace("/",QDir::separator());
+                screenPath +=  playback->media()->getLocation().replace(QDir::separator(),"_").remove(":");
+                screenPath += ".png";
+
+                if(playback->media()->isAudio())
+                    screenPath = "";
+                if(playback->media()->isImage())
+                    screenPath = "file:///" +playback->media()->getLocation();
+
+                out += "<tr>"
+                + QString("<td class=\"img\"><img src=\"%1\" alt=\"%1\" /></td>").arg(
+                    screenPath
+                 )
+                + QString("<td class=\"droit titre\">%1</td>").arg(
+                    playback->media()->name()
+                 )
+                + QString("<td class=\"droit\">%1</td>").arg(
+                    msecToQTime(dure).toString("hh:mm:ss")
+                 )
+                + QString("<td class=\"droit\">%1</td>").arg(
+                    msecToQTime(timeMedia - dure).toString("hh:mm:ss")
+                 )
+                +QString("<td class=\"droit\">%1</td>").arg(
+                     msecToQTime(timeMedia).toString("hh:mm:ss")
+                 )
+                +
+                "  </tr>";
+            }
+            out+=
+                  "  </tbody>"
+                  " </table><br />";
+    }
+
+    out+=
+          "   </div>"
+          "     </body>"
+          "   </html>";
+    return out.toUtf8();
+}
+
+QString MainWindow::scheduleToHmlForPDF(){
+    QString out;
+    out = "<!DOCTYPE html>"
+            "<html>"
+            "<head>"
+            "<title>OPP Schedule</title>"
+            "<meta charset=\"UTF-8\">"
+            "<meta name=\"viewport\" content=\"width=device-width\">"
+            "<style type=\"text/css\">"
+            "body{"
+            " font-family: arial;"
+            " }"
+            " .marge{"
+            " padding-left: 10px;"
+            "  padding-right: 10px; "
+            " }"
+            "  .page{"
+            " width: 29.7cm;"
+            "  //min-height: 21cm;"
+
+            "   }    "
+            "  .title {"
+            " border: solid 1px #000;"
+            " padding-left: 2px;"
+            "text-align: center;"
+            "  font-size: 16px;"
+            " margin-bottom: 10px;"
+            "   }"
+            "   thead{"
+            "   background-color: lightgray;"
+            " line-height: 24px;"
+            " }"
+            " .droit{"
+            "   text-align: right;"
+            " vertical-align: top;"
+            "  padding-right: 2px;"
+            " }"
+            " .titre{"
+            "  width: 50%;"
+            " }"
+            "  td, img{"
+            "      text-align: center;"
+            "    padding: 2px;"
+            "   width: 220px;"
+            " height: 120px;"
+            "  }"
+            " </style>"
+            " </head>"
+            " <body>"
+             "  <div class=\"page marge\">";
+
+    foreach(Schedule *schedule, _scheduleListModel->scheduleList()){
+        out+=
+
+            " <div class=\"title\">"
+
+              + QString("<strong>Nom de la séance : </strong>%1 - <strong>Durée total : </strong>%2 –  <strong>Début : </strong>%3 – <strong>Fin : </strong>%4 –  <strong>Jour : </strong>%5").arg(
+                  schedule->playlist()->title(),
+                  msecToQTime(schedule->playlist()->totalDuration()).toString("hh:mm:ss"),
+                  schedule->launchAt().time().toString("hh:mm:ss"),
+                  schedule->finishAt().time().toString("hh:mm:ss"),
+                  schedule->launchAt().date().toString("dd/MM/yyyy")
+                  )
+              +
+
+            " </div>"
+        "<table border='1' cellspacing='0' class='page'>"
+            "<thead>"
+            "  <tr>"
+            "<th>Titre</th>"
+            " <th>Durée</th>"
+            "<th>Début</th>"
+            " <th>Fin</th>"
+            "    </tr>"
+            "  </thead>"
+            " <tbody>";
+            int timeMedia = qTimeToMsec(schedule->launchAt().time());
+            foreach(Playback *playback, schedule->playlist()->playbackList()){
+                int dure = (int)playback->media()->duration();
+                timeMedia += dure;
+
+                QString screenPath = qApp->applicationDirPath() + "/screenshot/";
                 screenPath = screenPath.replace("/",QDir::separator());
                 screenPath +=  playback->media()->getLocation().replace(QDir::separator(),"_").remove(":");
                 screenPath += ".png";
@@ -1755,25 +1878,20 @@ QString MainWindow::scheduleToHml(){
             }
             out+=
                   "  </tbody>"
-                  " </table>";
+                  " </table><br />";
     }
 
     out+=
           "   </div>"
           "     </body>"
           "   </html>";
-
-    QFile file("in.html");
-         file.open(QIODevice::WriteOnly | QIODevice::Text);
-
-    file.write(out.toStdString().c_str());
-    file.close();
     return out.toUtf8();
 }
 
 void MainWindow::on_viewExportPDFButton_clicked()
 {
     _exportPDF->setHtml(scheduleToHml());
+    _exportPDF->setHtmlPDF(scheduleToHmlForPDF());
     _exportPDF->show();
 }
 
