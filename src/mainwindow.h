@@ -642,6 +642,16 @@ private slots:
 
 
 
+    void on_actionTest_patterns_triggered();
+
+    void on_actionScreenshots_triggered();
+
+    void on_actionPlugins_triggered();
+
+    void on_helpAction_triggered();
+
+    void on_actionLog_triggered();
+
 protected:
     /**
      * @brief Returns the selected playback
@@ -804,6 +814,11 @@ private:
      * @brief ui The timer for automation
      */
     QTimer *_timerOut;
+
+    /**
+     * @brief open dir and create if not exits
+     */
+    void openDir(QString name);
 };
 
 #endif // MAINWINDOW_H

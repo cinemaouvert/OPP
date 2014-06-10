@@ -424,17 +424,17 @@ void MainWindow::on_binAddMediaButton_clicked()
                 libvlc_media_player_set_xwindow(vlcMP, wid);
         #endif
     }
+    QDir appPath = QDir(qApp->applicationDirPath());
 
-
-    if(!QDir("screenshot").exists())
+    if(!QDir(appPath.path() + "/screenshot").exists())
     {
-        QDir().mkdir("screenshot");
+        QDir().mkdir(appPath.path() + "/screenshot");
     }
 
     foreach (QString fileName, fileNames) {
         Media *media = new Media(fileName, _app->vlcInstance());
 
-        QString screenPath = "./screenshot/";
+        QString screenPath = appPath.path() + "/screenshot/";
         screenPath = screenPath.replace("/",QDir::separator());
         screenPath +=  media->getLocation().replace(QDir::separator(),"_").remove(":");
         screenPath += ".png";
@@ -1466,6 +1466,7 @@ void MainWindow::setSelectedMediaNameByIndex(int idx){
 
 void MainWindow::setSelectedMediaTimeByIndex(int idx)
 {
+    QDir appPath = QDir(qApp->applicationDirPath());
     if(idx == -1)
     {
         ui->labelBefore->setText("");
@@ -1502,7 +1503,11 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
         else
         {
             //pixmap.load(("./screenshot/"+m->getLocation().replace(QString(QDir::separator()),QString("_"))+".png").toStdString().c_str());
-            QString path = "./screenshot/";
+
+
+
+
+            QString path = appPath.path()  + "/screenshot/";
             path = path.replace("/",QDir::separator());
             path +=  m->getLocation().replace(QDir::separator(),"_").remove(":");
             path += ".png";
@@ -1529,7 +1534,7 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
             }
             else
             {
-                QString path = "./screenshot/";
+                QString path = appPath.path() + "/screenshot/";
                 path = path.replace("/",QDir::separator());
                 path +=  mB->getLocation().replace(QDir::separator(),"_").remove(":");
                 path += ".png";
@@ -1565,7 +1570,7 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
             }
             else
             {
-                QString path = "./screenshot/";
+                QString path = appPath.path() + "/screenshot/";
                 path = path.replace("/",QDir::separator());
                 path +=  mA->getLocation().replace(QDir::separator(),"_").remove(":");
                 path += ".png";
@@ -1793,7 +1798,7 @@ void MainWindow::myMessageHandler(QtMsgType type, const char* msg)
         break;
     }
 
-    QFile outFile("opp.log");
+    QFile outFile(QDir(qApp->applicationDirPath()).path() + "/" + "opp.log");
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
 
     QTextStream textStream(&outFile);
@@ -1869,4 +1874,38 @@ void MainWindow::closeEvent (QCloseEvent *event)
         if(verifSave() == 0)
             event->ignore();
     }
+}
+
+void MainWindow::on_actionTest_patterns_triggered()
+{
+    openDir("mires");
+}
+
+void MainWindow::on_actionScreenshots_triggered()
+{
+    openDir("screenshot");
+}
+
+void MainWindow::on_actionPlugins_triggered()
+{
+    openDir("pluginsOPP");
+}
+
+void MainWindow::on_helpAction_triggered()
+{
+    QDesktopServices::openUrl(qApp->applicationDirPath() + "/" +QString("help/usersDocumentation.pdf"));
+}
+
+void MainWindow::on_actionLog_triggered()
+{
+    QDesktopServices::openUrl(qApp->applicationDirPath() + "/" +QString("opp.log"));
+}
+
+void MainWindow::openDir(QString name){
+    QString folder = qApp->applicationDirPath() + "/" +QString(name);
+    QDir dir(folder);
+    if(!dir.exists(folder)){
+       dir.mkdir(folder);
+    }
+    QDesktopServices::openUrl(folder);
 }
