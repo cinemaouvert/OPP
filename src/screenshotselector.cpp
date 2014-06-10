@@ -90,7 +90,7 @@ void ScreenshotSelector::setMedia(Media *media){
 
 void ScreenshotSelector::on_buttonBox_accepted()
 {
-    QString screenPath = "./screenshot/";
+    QString screenPath = qApp->applicationDirPath() + "/screenshot/";
     screenPath = screenPath.replace("/",QDir::separator());
     screenPath +=  _media->getLocation().replace(QDir::separator(),"_").remove(":");
     screenPath += ".png";

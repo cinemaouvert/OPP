@@ -195,10 +195,11 @@ void AdvancedSettings::setPlayback(Playback* playback)
     ui->changeScreenshotButton->setVisible(false);
     if(!_playback->media()->isAudio() && !_playback->media()->isImage()){
         QPixmap pixmap;
-        QString path = "./screenshot/";
+        QString path = qApp->applicationDirPath() + "/screenshot/";
         path = path.replace("/",QDir::separator());
-        path +=  _playback->media()->getLocation().replace(QDir::separator(),"_");
+        path +=  _playback->media()->getLocation().replace(QDir::separator(),"_").replace(":", "");
         path += ".png";
+        qDebug() << path;
         pixmap.load((path.toStdString().c_str()));
 
         ui->changeScreenshotButton->setVisible(true);
