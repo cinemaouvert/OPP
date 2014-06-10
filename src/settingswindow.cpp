@@ -67,7 +67,7 @@ void SettingsWindow::init(){
 
     ui->comboBox_language->setCurrentIndex(getIndex(settings.value("lang").toString()));
     QStringList sl;
-    sl << "Blanc" << "Jaune";
+    sl << "White" << "Yellow";
     ui->comboBox_SubtitleColor->addItems(sl);
     ui->comboBox_SubtitleColor->setCurrentIndex(settings.value("subtitleColor").toInt());
 }
