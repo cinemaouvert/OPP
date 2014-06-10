@@ -1610,7 +1610,9 @@ void MainWindow::updateBackTime(const int &time)
         timeAlreadyElapsed += _playlistPlayer->currentPlaylist()->at(i)->media()->duration();
     }
 
-    int newTimeInMSec = totalTime-time-timeAlreadyElapsed;
+    int newTimeInMSec = totalTime-time-timeAlreadyElapsed+_playlistPlayer->mediaPlayer()->currentPlayback()->mediaSettings()->inMark();
+
+
     QTime newQTime = QTime(0,0,0,0).addMSecs(newTimeInMSec);
 
 
