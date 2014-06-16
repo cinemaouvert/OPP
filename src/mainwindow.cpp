@@ -1595,7 +1595,7 @@ void MainWindow::updateBackTime(const int &time)
 {
     QString display = "hh:mm:ss";
     Media *m = _playlistPlayer->mediaPlayer()->media();
-    int t = m->duration()-time;
+    int t = m->duration()-time+_playlistPlayer->mediaPlayer()->currentPlayback()->mediaSettings()->inMark();
     QTime currentTime = QTime(0,0,0,0).addMSecs(t);
 
     ui->label_screen->setText(currentTime.toString(display));
