@@ -32,7 +32,7 @@
 
 namespace config_opp {
     const QString URL = "http://cinemaouvert.fr/";
-    const QString VERSION = "1.0-stable";
+    const QString VERSION = "v1.0-stable";
 
     #if defined(Q_OS_MAC)
         const QString LINK_UPDATE = "macos/latest/";
