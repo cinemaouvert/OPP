@@ -9,7 +9,7 @@
  *          Hamza Haddar <ham.haddar@gmail.com>
  *          Geoffrey Bergé <geoffrey.berge@live.fr>
  *          Thomas Berthomé <thoberthome@laposte.net>
- *          Thibaud Lamarche <lamarchethibaud@hotmail.com>
+ *          Thibaud Lamarche <lamarchethibaud@hotmail.fr>
  *          Denis Saunier <saunier.denis.86@gmail.com>
  *
  * Open Projection Program is an initiative of Catalogue Ouvert du Cinéma.
@@ -199,7 +199,6 @@ void AdvancedSettings::setPlayback(Playback* playback)
         path = path.replace("/",QDir::separator());
         path +=  _playback->media()->getLocation().replace(QDir::separator(),"_").replace(":", "");
         path += ".png";
-        qDebug() << path;
         pixmap.load((path.toStdString().c_str()));
 
         ui->changeScreenshotButton->setVisible(true);
