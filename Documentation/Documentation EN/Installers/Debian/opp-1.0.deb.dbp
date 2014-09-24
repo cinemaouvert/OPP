@@ -1,21 +1,25 @@
 [DEBREATE-0.7.7]
 <<CTRL>>
-Package: OPP
-Version: 0.9.3
+Package: opp
+Version: 1.0
 Section: video
 Maintainer: Cinema Ouvert <dev@cinemaouvert.fr>
 Homepage: http://cinemaouvert.fr
 Priority: extra
 Architecture: amd64
-Depends: libqt4-core,  libvlc-dev, libvlccore-dev,  libvlccore5, vlc
+Suggests: libqtwebkit4, libvlccore7, libvlccore5
+Depends: libqt4-core,  libvlc-dev, libvlccore-dev, vlc
 Description: Open Projection Player
- Open Projection Player (OPP) 
- Cinema Ouvert
+ [en]         The Open Projection Player is an open source software developed by the Catalogue Ouvert du Cinema organization. The project has for aim to provide a stable toolbox for digital projection.
+ .
+ [fr]          L'Open Projection Player est un logiciel open source développé par l'organisation Catalogue Ouvert du Cinéma.Le projet a pour but de fournir une boite à outil stable pour la projection numérique.
 
 <</CTRL>>
 <<FILES>>
 1
-/home/zhano/Documents/OPP_0.9.3_amd64__dbp__/usr/bin/opp* -> opp -> /usr/bin
+/home/yohann/Documents/C++/opp_fr.qm -> opp_fr.qm -> /bin
+/home/yohann/Documents/C++/logo_opp.ico -> logo_opp.ico -> /usr/share/opp
+/home/yohann/Documents/C++/build-opp-Desktop_Qt_4_8_6_qt4-Debug/opp* -> opp -> /bin
 <</FILES>>
 <<SCRIPTS>>
 <<PREINST>>
@@ -33,11 +37,13 @@ Description: Open Projection Player
 <</SCRIPTS>>
 <<CHANGELOG>>
 <<DEST>>DEFAULT<</DEST>>
-OPP (0.9.3) Debian; urgency=low
+opp (1.0) Debian; urgency=low
 
   * 
 
- -- Cinema Ouvert <dev@cinemaouvert.fr>  Wed, 04 Jun 2014 17:42:05 +0200
+ -- Cinema Ouvert <dev@cinemaouvert.fr>  Sat, 02 Aug 2014 10:26:27 +0200
+
+
 
 
 <</CHANGELOG>>
@@ -721,17 +727,17 @@ Public License instead of this License.  But first, please read
 1
 Name=OPP
 Version=1.0
-Exec=opp
+Exec=/bin/opp
 Comment=
-Icon=/usr/bin/opp/logo_opp.ico
+Icon=/usr/share/opp/logo_opp.ico
 Type=Application
 Terminal=false
 StartupNotify=true
 Encoding=UTF-8
-Categories=
+Categories=Video;
 <</MENU>>
 <<BUILD>>
-1
+0
 1
 0
 <</BUILD>>

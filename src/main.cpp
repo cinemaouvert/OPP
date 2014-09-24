@@ -41,15 +41,22 @@
 #include "config.h"
 #include "utils.h"
 
-/*
- * TO FIX
- *
- *     ref 0000001 - move codes into PlaylistListManager.
- */
 int main(int argc, char *argv[])
 {
 
     QApplication a(argc, argv);
+	
+	/** 
+	 * Set the library path to prevent the Qt default 
+	 * behaviour which is to load the Qt dependencies
+	 * from the Qt folder installed on the computer.
+	 * Useful for deploy the software.
+	 */
+	#if defined( Q_OS_MAC )
+		QStringList libPaths;
+		libPaths << a.applicationDirPath() + "/../PlugIns";
+		QApplication::setLibraryPaths( libPaths );
+	#endif
 
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
     /*Settings initialization*/
