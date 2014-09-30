@@ -1,6 +1,7 @@
 
 Improvement ideas for OPP.
 
+- [ ] Add the default support of .opp files.
 - [ ] In playlists, put the state of the media to left hand.
 - [ ] The selection color in playlist must follow the current played media.
 - [ ] Add the subtitle repositioning functionalitie.
