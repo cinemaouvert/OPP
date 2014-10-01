@@ -34,6 +34,10 @@
 #include <QMenu>
 #include <QHeaderView>
 
+#if (QT_VERSION >= 0x050000) // Qt version 5 and above
+    #include <QDrag>
+#endif
+
 #include "mainwindow.h"
 #include "media.h"
 
@@ -50,7 +54,13 @@ PlaylistTableView::PlaylistTableView(MainWindow* mainWindow,QWidget *parent) :
     setSelectionMode(QTableView::SingleSelection);
     setDragDropMode(QTableView::InternalMove);
     _scS = new ScreenshotSelector(_mainWindow);
-    verticalHeader()->setMovable(true);
+
+    #if (QT_VERSION >= 0x050000) // Qt version 5 and above
+        verticalHeader()->setSectionsMovable(true);
+    #else // until version 5
+        verticalHeader()->setMovable(true);
+    #endif
+
     setDropIndicatorShown(true);
 
 }

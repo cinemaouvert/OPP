@@ -288,7 +288,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->screen_none->clear();
 
     //Restart
-    if(QApplication::argc()>1) //Restart : filename en argument
+    /** use size() function to be compatible with Qt4 and Qt5 */
+    if(QApplication::arguments().size() > 1) //Restart : filename en argument
         openFile(QApplication::arguments()[1]);
 }
 
@@ -1895,8 +1896,11 @@ void MainWindow::on_viewExportPDFButton_clicked()
     _exportPDF->show();
 }
 
-
-void MainWindow::myMessageHandler(QtMsgType type, const char* msg)
+#if (QT_VERSION >= 0x050000) // Qt version 5 and above
+    void MainWindow::myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString& msg)
+#else // until version 5
+    void MainWindow::myMessageHandler(QtMsgType type, const char* msg)
+#endif
 {
     QString dt = QDateTime::currentDateTime().toString("dd/MM/yyyy hh:mm:ss");
     QString txt = QString("[%1]\n").arg(dt);
@@ -1904,16 +1908,32 @@ void MainWindow::myMessageHandler(QtMsgType type, const char* msg)
     switch (type)
     {
     case QtDebugMsg:
-        txt += QString("\t{Debug} %1").arg(msg);
+        #if (QT_VERSION >= 0x050000) // Qt version 5 and above
+            txt += QString("\t{Debug} ") + msg;
+        #else // until version 5
+            txt += QString("\t{Debug} %1").arg(msg);
+        #endif
         break;
     case QtWarningMsg:
-        txt += QString("\t{Warning} %1").arg(msg);
+        #if (QT_VERSION >= 0x050000) // Qt version 5 and above
+            txt += QString("\t{Warning} ") + msg;
+        #else // until version 5
+            txt += QString("\t{Warning} %1").arg(msg);
+        #endif
         break;
     case QtCriticalMsg:
-        txt += QString("\t{Critical} %1").arg(msg);
+        #if (QT_VERSION >= 0x050000) // Qt version 5 and above
+            txt += QString("\t{Critical} ") + msg;
+        #else // until version 5
+            txt += QString("\t{Critical} %1").arg(msg);
+        #endif
         break;
     case QtFatalMsg:
-        txt += QString("\t{Fatal} %1").arg(msg);
+        #if (QT_VERSION >= 0x050000) // Qt version 5 and above
+            txt += QString("\t{Fatal} ") + msg;
+        #else // until version 5
+            txt += QString("\t{Fatal} %1").arg(msg);
+        #endif
         abort();
         break;
     }

@@ -77,7 +77,7 @@ void Application::initVlcInstanceFromArgs(const QStringList &args)
     if (_vlcInstance) {
         qDebug() << "Using libvlc version:" << QString(libvlc_get_version());
     } else {
-        qDebug() << "opp error: libvlc failed to load!";
+        qDebug() << "OPP error: libvlc failed to load!";
         this->closeLibvlc();
         abort();
     }

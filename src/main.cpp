@@ -24,8 +24,6 @@
  * along with Open Projection Program. If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************************/
 
-#include <QtGui/QApplication>
-#include <QtGui/QDesktopWidget>
 #include <QDebug>
 #include <QTranslator>
 #include <QSettings>
@@ -33,6 +31,14 @@
 #include <QDir>
 #include <QCoreApplication>
 #include <QTextCodec>
+
+#if (QT_VERSION >= 0x050000) // Qt version 5 and above
+    #include <QApplication>
+    #include <QDesktopWidget>
+#else // until version 5
+    #include <QtGui/QApplication>
+    #include <QtGui/QDesktopWidget>
+#endif
 
 #include <QMessageBox>
 
@@ -58,7 +64,12 @@ int main(int argc, char *argv[])
 		QApplication::setLibraryPaths( libPaths );
 	#endif
 
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+    #if (QT_VERSION >= 0x050000) // Qt version 5 and above
+        QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+    #else // until version 5
+        QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+    #endif
+
     /*Settings initialization*/
     QSettings settings("opp", "opp");
 
@@ -96,7 +107,12 @@ int main(int argc, char *argv[])
 
     MainWindow win;
     a.installEventFilter(new CustomEventFilter(win.getLocker(),&a));
-    qInstallMsgHandler(MainWindow::myMessageHandler);
+
+    #if (QT_VERSION >= 0x050000) // Qt version 5 and above
+        qInstallMessageHandler(MainWindow::myMessageHandler);
+    #else // until version 5
+        qInstallMsgHandler(MainWindow::myMessageHandler);
+    #endif
 
     win.show();
 

@@ -54,6 +54,7 @@ SOURCES += src/media.cpp \
     src/audiotrack.cpp \
     src/videotrack.cpp \
     src/updater.cpp \
+    src/config.cpp
 
 # vlc library and headers
 mac:LIBS += -L"/Applications/VLC.app/Contents/MacOS/lib"

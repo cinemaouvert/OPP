@@ -26,13 +26,22 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-
+#include <vlc/vlc.h>
 
 #include <QObject>
+#include <QDebug>
 
 namespace config_opp {
+    /**
+     * @brief Test the Qt version and the libvlc version and define the version of OPP
+     * @return {QString} The current version of OPP
+     * @author Yohann Vioujard <y.vioujard@gmail.com>
+     */
+    QString getVersion();
+
     const QString URL = "http://cinemaouvert.fr/";
-    const QString VERSION = "v1.0-stable";
+    const QString VERSION = getVersion();
+
 
     #if defined(Q_OS_MAC)
         const QString LINK_UPDATE = "macos/latest/";

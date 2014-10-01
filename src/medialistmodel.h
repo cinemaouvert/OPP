@@ -36,7 +36,7 @@
 #include <QStringList>
 
 #include "media.h"
-#include<QTime>
+#include <QTime>
 #include "utils.h"
 
 class MediaListModel : public QAbstractTableModel

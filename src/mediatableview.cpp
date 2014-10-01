@@ -34,6 +34,11 @@
 #include <QItemSelectionModel>
 #include <QDebug>
 
+#if (QT_VERSION >= 0x050000) // Qt version 5 and above
+    #include <QMimeData>
+    #include <QDrag>
+#endif
+
 MediaTableView::MediaTableView(QWidget *parent) :
     QTableView(parent)
 {

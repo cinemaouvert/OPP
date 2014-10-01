@@ -145,38 +145,43 @@ public:
     inline PlaylistPlayer* getPlaylistPlayer() const {return _playlistPlayer;}
 
     /**
-      *@brief Method used to set the selected media name
+      * @brief Method used to set the selected media name
       *
       * @author Thibaud Lamarche <lamarchethibaud@hotmail.com>
       */
     void setSelectedMediaNameByIndex(int idx);
 
     /**
-      *@brief Method used to set the previous and following selected medium time
+      * @brief Method used to set the previous and following selected medium time
       *
       * @author Thomas Berthome <thoberthome@laposte.net>
       */
     void setSelectedMediaTimeByIndex(int idx);
 
 	/**
-      *@brief Create schedule in html
+      * @brief Create schedule in html
       *
       * @author Denis Sauneir <saunier.denis.86@gmail.com>
       */
     QString scheduleToHml();
 
     /**
-      *@brief Create schedule in html for pdf
+      * @brief Create schedule in html for pdf
       *
       * @author Denis Sauneir <saunier.denis.86@gmail.com>
       */
     QString scheduleToHmlForPDF();
+
     /**
-      *@brief Redirect qmessages into a file and the log area
+      * @brief Redirect qmessages into a file and the log area
       *
       * @author Thomas Berthome <thoberthome@laposte.net>
       */
-    static void myMessageHandler(QtMsgType type, const char* msg);
+    #if (QT_VERSION >= 0x050000) // Qt version 5 and above
+        static void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString& msg);
+    #else // until version 5
+        static void myMessageHandler(QtMsgType type, const char* msg);
+    #endif
 
 public slots:
     /**

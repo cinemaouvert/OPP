@@ -31,7 +31,12 @@
 #include <QTextDocument>
 #include <QPrinter>
 #include <QDebug>
-#include <QtWebKit/QWebView>
+
+#if (QT_VERSION >= 0x050000) // Qt version 5 and above
+    #include <QWebView>
+#else // until version 5
+    #include <QtWebKit/QWebView>
+#endif
 
 ExportPDF::ExportPDF(QWidget *parent) :
     QDialog(parent),

@@ -31,9 +31,17 @@ TARGET = opp
 #CONFIG += staticlib
 #TARGET = GeneratedLib/opp
 
+# Qt version 4 and 5
 QT += xml
 QT += network
 QT += webkit
+
+# from Qt version 5
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += widgets
+    QT += printsupport
+    QT += webkitwidgets
+}
 
 DEPENDPATH += ./src
 INCLUDEPATH += ./src
