@@ -26,6 +26,9 @@
 TEMPLATE = app
 TARGET = opp
 
+#Specific to MAC to open the .opp files by default
+QMAKE_INFO_PLIST += Info.plist
+
 ##To create the lib for plugins
 #TEMPLATE = lib
 #CONFIG += staticlib
@@ -46,8 +49,12 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 DEPENDPATH += ./src
 INCLUDEPATH += ./src
 
-include(src/core.pri)
-include(src/ui.pri)
+include(src/CORE.pri)
+include(src/C_MediaPlayer/C_MediaPlayer.pri)
+include(src/C_Playlist/C_Playlist.pri)
+include(src/UI.pri)
+include(src/U_PlayerControl/U_PlayerControl.pri)
+include(src/U_PlaylistHandler/U_PlaylistHandler.pri)
 
 RESOURCES += images.qrc
 TRANSLATIONS = opp_fr.ts

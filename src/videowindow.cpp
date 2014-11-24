@@ -33,7 +33,7 @@
 #include "mainwindow.h"
 #include "videowidget.h"
 
-VideoWindow::VideoWindow(QWidget *parent ,const DisplayMode &mode) :
+VideoWindow::VideoWindow(QWidget *parent, const DisplayMode &mode) :
     QMainWindow(parent)
 {
     _videoWidget = new VideoWidget(this);
@@ -43,6 +43,22 @@ VideoWindow::VideoWindow(QWidget *parent ,const DisplayMode &mode) :
     resize(640,480);
 
     setDisplayMode(mode);
+
+    _f1_shortcut = new QShortcut(QKeySequence("f1"), this);
+    _escape_shortcut = new QShortcut(QKeySequence(tr("escape")), this);
+
+    connect(_f1_shortcut, SIGNAL(activated()), this, SLOT(switchVideoMode()));
+    connect(_escape_shortcut, SIGNAL(activated()), this, SLOT(escapeFullscreen()));
+}
+
+VideoWindow::VideoWindow(QWidget *parent, int width, int height) :
+    QMainWindow(parent)
+{
+    _videoWidget = new VideoWidget(this);
+    setCentralWidget(_videoWidget);
+
+    setWindowTitle("Video");
+    resize(width, height);
 }
 
 VideoWindow::~VideoWindow()
@@ -58,10 +74,12 @@ void VideoWindow::setDisplayMode(const DisplayMode &mode)
     case PROJECTION:
         moveToDisplay(1);
         showFullScreen();
+        setCursor(Qt::BlankCursor);
         break;
     case WINDOW:
         moveToDisplay(0);
         showNormal();
+        setCursor(Qt::ArrowCursor);
         break;
     }
 }
@@ -75,5 +93,19 @@ void VideoWindow::moveToDisplay(const int &display)
 
 void VideoWindow::closeEvent (QCloseEvent *event)
 {
+    Q_UNUSED(event);
     emit(closed());
+}
+
+void VideoWindow::switchVideoMode(){
+    ((MainWindow*)parent())->switchVideoMode();
+}
+
+void VideoWindow::escapeFullscreen()
+{
+    if(isFullScreen()){
+        if(!((MainWindow*)parent())->locker()->isLock()){
+            ((MainWindow*)parent())->switchVideoMode();
+        }
+    }
 }

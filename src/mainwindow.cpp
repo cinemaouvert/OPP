@@ -62,20 +62,18 @@
 #include "statuswidget.h"
 #include "updater.h"
 
-#include "application.h"
+#include "VLCApplication.h"
 #include "media.h"
-#include "playlistplayer.h"
-#include "mediaplayer.h"
+#include "PlaylistPlayer.h"
+#include "MediaPlayer.h"
 #include "playback.h"
 #include "utils.h"
 #include "datastorage.h"
 #include "aboutdialog.h"
 #include "exportpdf.h"
 
-
 #include "plugins.h"
 #include <QPluginLoader>
-
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -95,6 +93,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _dataStorage(NULL),
     _fileName(""),
     _projectionMode(VideoWindow::WINDOW),
+    _playerControlWidget(NULL),
     _selectedMediaName(NULL),
     _ocpmPlugin(NULL),
     _exportPDF(NULL),
@@ -105,43 +104,35 @@ MainWindow::MainWindow(QWidget *parent) :
     _vWMire(NULL),
     _timerOut(NULL)
 {
-    //setAttribute(Qt::WA_DeleteOnClose);
-
     ui->setupUi(this);
 
-    _lastSelectedTab=-1;
-    _locker = new Locker(getLockedWidget(), this);
-
-    connect(_locker, SIGNAL(toggled(bool)), ui->lockButton, SLOT(setChecked(bool)));
-    connect(ui->lockButton, SIGNAL(clicked(bool)), _locker, SLOT(toggle(bool)));
-
-    _lockSettingsWindow = new LockSettingsWindow(_locker, this);
-
-    // internal core initalization
-    _app = new Application();
+    /****************** internal core initalization *********************/
+    _app = new VLCApplication();
     _playlistPlayer = new PlaylistPlayer(_app->vlcInstance(), this);
 
     _timerOut = new QTimer();
     _timerOut->connect(_timerOut, SIGNAL(timeout()), this, SLOT(showTimeOut()));
     _timerOut->start(1000);
 
-    _videoWindow = new VideoWindow(this);
-    connect(_videoWindow,SIGNAL(closed()),this,SLOT(stop()));
+    /********************** The video window ****************************/
+    _videoWindow = new VideoWindow(this, VideoWindow::WINDOW);
+    connect(_videoWindow, SIGNAL(closed()), _playlistPlayer, SLOT(stop()));
 
+    /************ Initialize the media player *************/
+    MediaPlayer* mediaPlayer = _playlistPlayer->mediaPlayer();
+    mediaPlayer->setVideoView( (VideoView*) _videoWindow->videoWidget() );
+    mediaPlayer->setVideoBackView( (VideoView*) ui->backWidget );
+    mediaPlayer->initStream();
 
-    _playlistPlayer->mediaPlayer()->setVideoView( (VideoView*) _videoWindow->videoWidget() );
-    _playlistPlayer->mediaPlayer()->setVideoBackView( (VideoView*) ui->backWidget );
-    _playlistPlayer->mediaPlayer()->initStream();
-    _playlistPlayer->mediaPlayer()->setVolume(ui->playerVolumeSlider->value());
+    connect(mediaPlayer, SIGNAL(stopped()), this, SLOT(stop()));
 
-    connect(ui->playerVolumeSlider, SIGNAL(valueChanged(int)), _playlistPlayer->mediaPlayer(), SLOT(setVolume(int)));
-    connect(_playlistPlayer->mediaPlayer(), SIGNAL(playing(bool)), ui->playerPlayButton, SLOT(setChecked(bool)));
-    connect(ui->playerStopButton, SIGNAL(clicked()), this, SLOT(stop()));
-    connect(ui->playerPreviousButton, SIGNAL(clicked()), _playlistPlayer, SLOT(previous()));
-    connect(ui->playerNextButton, SIGNAL(clicked()), _playlistPlayer, SLOT(next()));
-    connect(_playlistPlayer, SIGNAL(end()), ui->playerPlayButton, SLOT(toggle()));
-    connect(ui->disableButton, SIGNAL(clicked()), this, SLOT(on_disableButton_clicked()));
+    /**
+     * Create the widget which handle the playlist player.
+     * It have to be created before the locker.
+     */
+    _playerControlWidget = new PlayerControlWidget(_playlistPlayer, this);
 
+    /*********** Media list model and schedule list model *************/
     _mediaListModel = new MediaListModel();
     _scheduleListModel = new ScheduleListModel();
 
@@ -149,26 +140,48 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->binTableView->setModel(_mediaListModel);
     ui->scheduleTableView->setModel(_scheduleListModel);
-    ui->seekWidget->setMediaPlayer(_playlistPlayer->mediaPlayer(), this);
 
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)),this, SLOT(updateProjectSummary()));
-
     connect(_scheduleListModel, SIGNAL(scheduleListChanged()),this, SLOT(updateProjectSummary()));
 
+    /********************** Locker In The Status Bar ***********************/
+    _locker = new Locker(this);
     _statusWidget = new StatusWidget;
-    ui->statusBar->addWidget(_statusWidget);
+
+    ui->statusBar->addPermanentWidget(_statusWidget);
     connect(_mediaListModel, SIGNAL(mediaListChanged(int)), _statusWidget, SLOT(setMediaCount(int)));
 
-    // show/hide pannel actions
-    //connect(ui->quitAction, SIGNAL(triggered()), this, SLOT(close()));
+    connect(_locker, SIGNAL(toggled(bool)), _statusWidget->lockButton(), SLOT(setChecked(bool)));
+    connect(_statusWidget->lockButton(), SIGNAL(clicked(bool)), _locker, SLOT(toggle(bool)));
+
+    _lockSettingsWindow = new LockSettingsWindow(_locker, this);
+
+    /************** Create the playlist handler widget ****************/
+    _playlistHandlerWidget = new PlaylistHandlerWidget(this);
+    _playlistTabWidget = _playlistHandlerWidget->playlistTabWidget();
+
+    /************************ Add the widgets *************************/
+    ui->verticalLayout->addWidget(_playlistHandlerWidget);
+    ui->verticalLayout->addWidget(_playerControlWidget);
+
+    /**** Create a first default playlist *******/
+    _playlistTabWidget->createTab();
+
+    /***************** Give the widgets to the locker ***************/
+    _locker->setLockedWidgets(getLockedWidget());
+
+    /************ show/hide pannel actions *********************/
     connect(ui->resumeDetailsAction, SIGNAL(toggled(bool)), ui->projectTabWidget, SLOT(setVisible(bool)));
     connect(ui->binAction, SIGNAL(toggled(bool)), ui->binGroupBox, SLOT(setVisible(bool)));
     connect(ui->automationAction, SIGNAL(toggled(bool)), ui->scheduleGroupBox, SLOT(setVisible(bool)));
     connect(ui->statusBarAction, SIGNAL(toggled(bool)), ui->statusBar, SLOT(setVisible(bool)));
 
-    connect(ui->newPlaylistAction, SIGNAL(triggered()), this, SLOT(on_addPlaylistButton_clicked()));
+    /*************** Connect actions to the playlist handler widget ****************/
+    connect(ui->newPlaylistAction, SIGNAL(triggered()), _playlistHandlerWidget->playlistControlWidget(), SLOT(addPlaylist()));
+    connect(ui->removePlaylistItemAction, SIGNAL(triggered()), _playlistHandlerWidget->playlistControlWidget(), SLOT(removePlaylistItem()));
+    connect(ui->renamePlaylistAction, SIGNAL(triggered()), _playlistHandlerWidget->playlistControlWidget(), SLOT(renamePlaylist()));
 
-    // set video mode actions data
+    /********** set video mode actions data *********************/
     ui->actionProjection->setData(QVariant(VideoWindow::PROJECTION));
     ui->actionWindow->setData(QVariant(VideoWindow::WINDOW));
 
@@ -178,8 +191,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->progEdit,SIGNAL(textChanged(QString)), _dataStorage, SLOT(setProjectTitle(QString)));
 
-    createPlaylistTab();
-
+    /************* Set the default schedule information ***********/
     ui->scheduleLaunchAtDateEdit->setDate(QDate::currentDate());
     ui->scheduleLaunchAtTimeEdit->setTime(QTime::currentTime());
 
@@ -197,7 +209,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QSettings settings("opp","opp");
     if(settings.value("VideoReturnMode").toString() == "pictures")
     {
-        ui->stackedWidget->setCurrentIndex(1);
+        //ui->stackedWidget->setCurrentIndex(1);
         _playlistPlayer->mediaPlayer()->setBackMode(MediaPlayer::SCREENSHOT);
     }
     else if(settings.value("VideoReturnMode").toString() == "streaming")
@@ -229,7 +241,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _logger = LoggerSingleton::getInstance();
     _logger->setTextEdit(ui->label_5);
 
-    //Chargement des plugins
+    /*** load plugins ***/
     loadPlugins();
 
     //Redimensionnement colonnes Bin
@@ -251,46 +263,115 @@ MainWindow::MainWindow(QWidget *parent) :
 
         connect(action, SIGNAL(triggered()), signalMapper, SLOT(map()));
         signalMapper -> setMapping (action, fileName) ;
-
-
-
     }
 
-    QAction *actionClose = new QAction("Close test pattern.",this);
+    QAction *actionClose = new QAction("Close test pattern.", this);
     ui->menuPlay_a_test_pattern->addAction(actionClose);
 
-    connect (actionClose,SIGNAL(triggered()),this,SLOT(closeWindowTestPattern()));
-    connect (signalMapper, SIGNAL(mapped(QString)), this, SLOT(playMire(QString)));
+    connect(actionClose,SIGNAL(triggered()),this,SLOT(closeWindowTestPattern()));
+    connect(signalMapper, SIGNAL(mapped(QString)), this, SLOT(playMire(QString)));
 
-    ui->screenBefore->setStyleSheet(QString("QLabel { ")+
-                                     QString("border-style: solid;")+
-                                     QString("border-width: 1px;")+
-                                     QString("border-radius: 5px;")+
-                                     QString("border-color: rgb(180, 180, 180); }"));
-    ui->screenAfter->setStyleSheet(QString("QLabel { ")+
-                                   QString("border-style: solid;")+
-                                   QString("border-width: 1px;")+
-                                   QString("border-radius: 5px;")+
-                                   QString("border-color: rgb(180, 180, 180); }"));
-    ui->screen_none->setStyleSheet(QString("QLabel { ")+
-                                   QString("border-style: solid;")+
-                                   QString("border-width: 1px;")+
-                                   QString("border-radius: 5px;")+
-                                   QString("border-color: rgb(180, 180, 180); }"));
-    ui->screenBack->setStyleSheet(QString("QLabel { ")+
-                                  QString("border-style: solid;")+
-                                  QString("border-width: 1px;")+
-                                  QString("border-radius: 5px;")+
-                                  QString("border-color: rgb(180, 180, 180); }"));
+    QString styleScreen = QString(
+        "QLabel {"
+        "   background: rgb(0, 0, 0);"
+        "   border: 0;"
+        "}"
+    );
+
+    ui->screenBefore->setStyleSheet(styleScreen);
+    ui->screenAfter->setStyleSheet(styleScreen);
+    ui->screen_none->setStyleSheet(styleScreen);
+    ui->screenBack->setStyleSheet(styleScreen);
+
     ui->screenAfter->clear();
     ui->screenBefore->clear();
     ui->screenBack->clear();
     ui->screen_none->clear();
 
-    //Restart
-    /** use size() function to be compatible with Qt4 and Qt5 */
-    if(QApplication::arguments().size() > 1) //Restart : filename en argument
-        openFile(QApplication::arguments()[1]);
+    /***************  Set the style *********************/
+    setStyleSheet(QString(
+        "QPushButton{"
+        "   margin: 0px 0px 0px 0px;"
+        "   padding: 5px 2px 5px 2px;"
+        "   border-radius: 0px;"
+        "   border: 1px solid rgb(190, 190, 190);"
+        "   background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 rgb(240,240,240), stop:1 rgb(223,223,223));"
+        "}"
+        "QPushButton:!enabled{"
+        "   border: 1px solid rgb(210, 210, 210);"
+        "   background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 rgb(255,255,255), stop:1 rgb(238,238,238));"
+        "}"
+        "QPushButton:pressed{"
+        "   border: 1px solid rgb(153, 153, 153);"
+        "   background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 rgb(220,220,220), stop:1 rgb(203,203,203));"
+        "}"
+        "QPushButton:selected{"
+        "   border: 1px solid rgb(153, 153, 153);"
+        "   background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 rgb(220,220,220), stop:1 rgb(203,203,203));"
+        "}"
+        "QPushButton:focus {"
+        "   border-color: rgb(120, 120, 120);" /* make the default button prominent */
+        "}"
+        "QTabWidget::pane{"
+        "   padding: 2px 0px 0px 0px;"
+        "   border-radius: 0px;"
+        "   border: 1px solid rgb(180,180,180);"
+        "   background: rgb(240, 240, 240);"
+        "   position: absolute;"
+        "   top: -1px;"
+        "}"
+        "QTabWidget::tab-bar {"
+        "   alignment: left;"
+        "}"
+        "QTabBar::text{"
+        "   margin: 0;"
+        "}"
+        "QTabBar::tab{"
+        "	padding: 4px;"
+        "	border-top: 1px solid rgb(180, 180, 180);"
+        "	border-left: 1px solid rgb(180, 180, 180);"
+        "	border-right: 1px solid rgb(180, 180, 180);"
+        "	border-bottom: 1px solid rgb(240, 240, 240);"
+        "}"
+        "QTabBar::tab:selected {"
+        "	background-color: rgb(240, 240, 240);"
+        "   margin-left: -2px;" /* expand/overlap to the left and right by 4px */
+        "   margin-right: -2px;"
+        "}"
+        "QTabBar::tab:first:selected {"
+        "   margin-left: 0;" /* the first selected tab has nothing to overlap with on the left */
+        "}"
+
+        "QTabBar::tab:last:selected {"
+        "   margin-right: 0;" /* the last selected tab has nothing to overlap with on the right */
+        "}"
+        "QTabBar::tab:only-one {"
+        "   margin: 0;" /* if there is only one tab, we don't want overlapping margins */
+        "}"
+        "QTabBar::tab:!selected {"
+        "   margin-top: 4px;" /* make non-selected tabs look smaller */
+        "	background: rgb(210, 210, 210);"
+        "	border-bottom: 1px solid rgb(180, 180, 180);"
+        "}"
+    ));
+
+    // Start/stop automation button
+    ui->scheduleToggleEnabledButton->setStyleSheet(
+        "background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 rgb(255,220,220), stop:1 rgb(255,203,203));"
+        "border: 1px solid rgb(200, 170, 170);"
+        "font-size: 13px;"
+        "margin: 1px 0px 0px 0px;"
+        "padding-right: 3px;"
+        "padding-left: 3px;"
+        "padding-top: 3px;"
+        "padding-bottom: 3px;"
+    );
+    ui->scheduleToggleEnabledButton->setFocusPolicy(Qt::NoFocus);
+
+    // Create the shortcut which enable to switch video modes
+    _f1_shortcut = new QShortcut(QKeySequence("f1"), this);
+
+    connect(_f1_shortcut, SIGNAL(activated()), this, SLOT(switchVideoMode()));
 }
 
 MainWindow::~MainWindow()
@@ -326,31 +407,35 @@ MainWindow::~MainWindow()
     if(_timerOut != NULL)
         delete _timerOut;
     LoggerSingleton::destroyInstance();
+
+    /** record the last opened listing to open it automatically the next time */
+    QSettings settings("opp", "opp");
+    settings.setValue("lastOpenedListing", _fileName);
 }
 
-// FIX : ref 0000001
-QTabWidget* MainWindow::playlistTabWidget() const { return ui->playlistsTabWidget; }
+void MainWindow::openListing(QString fileName) {
+    if (fileName.isEmpty()) {
+        return;
+    } else {
+        QFile file(fileName);
+        if (!file.open(QIODevice::ReadWrite)) {
+            QMessageBox::information(this, tr("Unable to open file"), file.errorString());
+        }
 
-Locker* MainWindow::getLocker() {
-    return _locker;
-}
+        _fileName = fileName;
 
-QString MainWindow::getFilename() {
-    return _fileName;
-}
+        _dataStorage->load(file);
+        updatePlaylistListCombox();
+        file.close();
 
-void MainWindow::openFile(QString fileName) {
-    QFile file(fileName);
-    if (!file.open(QIODevice::ReadWrite)) {
-        QMessageBox::information(this, tr("Unable to open file"),file.errorString());
+        ui->progEdit->setText(_dataStorage->projectTitle());
+        ui->notesEdit->setText(_dataStorage->projectNotes());
     }
-    _fileName = fileName;
-    _dataStorage->load(file);
-    updatePlaylistListCombox();
-    file.close();
+}
 
-    ui->progEdit->setText(_dataStorage->projectTitle());
-    ui->notesEdit->setText(_dataStorage->projectNotes());
+QLabel* MainWindow::screenBefore() const
+{
+    return ui->screenBefore;
 }
 
 /***********************************************************************************************\
@@ -367,8 +452,8 @@ void MainWindow::updateProjectSummary()
 void MainWindow::updateDetails() {
     ui->textEdit_Codecs->clear();
     ui->textEdit_Codecs->append("<span style=\"text-decoration: underline;\">Audio codecs:</span>");
-    for(int i=0; i<ui->playlistsTabWidget->count();i++) {
-        PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(i))->model();
+    for(int i=0; i< _playlistTabWidget->count();i++) {
+        PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) _playlistTabWidget->widget(i))->model();
         foreach(Playback *playback, model->playlist()->playbackList()) {
             foreach(AudioTrack audioTrack, playback->media()->audioTracks()) {
                 QString codec = audioTrack.codecDescription();
@@ -379,8 +464,8 @@ void MainWindow::updateDetails() {
     }
     ui->textEdit_Codecs->append("");
     ui->textEdit_Codecs->append("<span style=\"text-decoration: underline;\">Video codecs:</span>");
-    for(int i=0; i<ui->playlistsTabWidget->count();i++) {
-        PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(i))->model();
+    for(int i=0; i< _playlistTabWidget->count();i++) {
+        PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) _playlistTabWidget->widget(i))->model();
         foreach(Playback *playback, model->playlist()->playbackList()) {
             foreach(VideoTrack videoTrack, playback->media()->videoTracks()) {
                 QString codec = videoTrack.codecDescription();
@@ -407,12 +492,49 @@ void MainWindow::on_binAddMediaButton_clicked()
 
     QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("New media"), settings.value("moviesPath").toString(), tr("Media (%1)").arg(Media::mediaExtensions().join(" ")));
 
+    // Import medias
+    foreach (QString fileName, fileNames) {
+        addMedia(fileName);
+    }
 
-    VideoWindow win(this, VideoWindow::WINDOW);
+    takeScreenshot(fileNames);
+}
+
+int MainWindow::addMedia(QString location)
+{
+    Media *media = new Media(location, _app->vlcInstance());
+
+    if (media->exists() == false) {
+        QMessageBox::warning(this, tr("Import media"), QString(tr("The file %1 does not exist. Maybe it was deleted.")).arg(media->location()));
+        delete media;
+        return -1;
+    }
+
+    int index = _mediaListModel->index(media);
+    if (index == -1){
+        index = _mediaListModel->mediaList().count();
+        _mediaListModel->addMedia(media);
+        return index;
+    }else{
+        delete media;
+        return index;
+    }
+}
+
+void MainWindow::takeScreenshot(QString fileName)
+{
+    QStringList list;
+    list.append(fileName);
+
+    takeScreenshot(list);
+}
+
+void MainWindow::takeScreenshot(QStringList fileNames)
+{
+    VideoWindow win(this);
     VideoWidget *vw = win.videoWidget();
     libvlc_instance_t *vlc = libvlc_new(0, NULL);
     libvlc_media_player_t *vlcMP = libvlc_media_player_new(vlc);
-
 
     WId wid = vw->request();
 
@@ -442,37 +564,45 @@ void MainWindow::on_binAddMediaButton_clicked()
 
         if(!QFile(screenPath).exists() && !media->isAudio() && !media->isImage())
         {
-
             libvlc_media_player_set_media(vlcMP, media->core());
             libvlc_media_add_option(media->core(),":noaudio");
             libvlc_media_player_play(vlcMP);
             libvlc_media_player_set_position(vlcMP, 0.5f);
-            float width = libvlc_video_get_width(vlcMP);
-            float height = libvlc_video_get_height(vlcMP);
-            wait(750);
-            libvlc_video_take_snapshot(vlcMP, 0, screenPath.toStdString().c_str(), width,height);
-            wait(100);
+            unsigned* width = new unsigned(0);
+            unsigned* height = new unsigned(0);
+            libvlc_video_get_size(vlcMP, 0, width, height);
 
+            // reduce the size to a suitable size
+            unsigned denom;
+            unsigned denomH = *height / (unsigned)ui->screen_none->height();
+            unsigned denomW = *width / (unsigned)ui->screen_none->width();
+            if(denomH < denomW)
+                denom = denomH;
+            else
+                denom = denomW;
+
+            if(denom > 1){
+                *width = *width/denom;
+                *height = *height/denom;
+            }
+
+            wait(60);
+            libvlc_video_take_snapshot(vlcMP, 0, screenPath.toStdString().c_str(), *width, *height);
+
+            /*** Wait the screenshot creation to release the function ****/
+            while(!QFile::exists(screenPath)){
+                wait(3);
+            }
+
+            delete width;
+            delete height;
         }
         libvlc_media_player_stop(vlcMP);
-
-
-        if (media->exists() == false) {
-            QMessageBox::warning(this, tr("Import media"), QString(tr("The file %1 does not exist. Maybe it was deleted.")).arg(media->location()));
-            delete media;
-        } else if (_mediaListModel->addMedia(media) == false) {
-            QMessageBox::warning(this, tr("Import media"), QString(tr("The file %1 was already imported or has a null timecode.")).arg(media->location()));
-            delete media;
-        }
     }
 
     libvlc_media_player_release(vlcMP);
     libvlc_vlm_release(vlc);
-
-
 }
-
-
 
 void MainWindow::on_binDeleteMediaButton_clicked()
 {
@@ -488,9 +618,9 @@ void MainWindow::on_binDeleteMediaButton_clicked()
             //If user answer Yes
             if (1 == QMessageBox::warning(this, media->name(), tr("This media is used. All references of this media into playlists will be deleted too.\n Are you sure to remove this media ?") ,tr("No"), tr("Yes")))
             {
-                int countPlaylists = ui->playlistsTabWidget->count();
+                int countPlaylists = _playlistTabWidget->count();
                 for (int i = 0; i < countPlaylists; i++) {
-                    PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(i))->model();
+                    PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) _playlistTabWidget->widget(i))->model();
                     if(!model->isRunningMedia(media)){
                         model->removePlaybackWithDeps(media);
                         updateSettings();
@@ -525,7 +655,7 @@ void MainWindow::on_disableButton_clicked()
     {
         ui->disableButton->setText(tr("Disable"));
         _playlistPlayer->mediaPlayer()->setBackMode(MediaPlayer::STREAMING);
-        if(_playlistPlayer->isPlaying())
+        if(_playlistPlayer->mediaPlayer()->isPlaying())
         {
             _playlistPlayer->mediaPlayer()->playStream();
         }
@@ -534,7 +664,7 @@ void MainWindow::on_disableButton_clicked()
     {
         ui->disableButton->setText(tr("Enable"));
         _playlistPlayer->mediaPlayer()->setBackMode(MediaPlayer::NONE);
-        if(_playlistPlayer->isPlaying())
+        if(_playlistPlayer->mediaPlayer()->isPlaying())
         {
             _playlistPlayer->mediaPlayer()->stopStream();
         }
@@ -542,7 +672,7 @@ void MainWindow::on_disableButton_clicked()
 }
 
 
-void MainWindow::on_advancedSettingsButton_clicked()
+void MainWindow::openAdvancedSettingsWindow()
 {
     _advancedSettingsWindow->setPlayback(selectedPlayback());
     _advancedSettingsWindow->show();
@@ -550,7 +680,7 @@ void MainWindow::on_advancedSettingsButton_clicked()
     _advancedSettingsWindow->activateWindow();
 }
 
-void MainWindow::on_advancedPictureSettingsButton_clicked()
+void MainWindow::openAdvancedPictureSettings()
 {
     _advancedPictureSettingsWindow->setPlayback(selectedPlayback());
     _advancedPictureSettingsWindow->show();
@@ -691,10 +821,10 @@ void MainWindow::updateSettings()
 {
     Playback* playback = selectedPlayback();
     if(!playback){
-        ui->mediaSettingsWidget->setEnabled(false);
-        ui->advancedSettingsButton->setEnabled(false);
-        ui->advancedPictureSettingsButton->setEnabled(false);
-        ui->playerControlsWidget->setEnabled(false);
+        ui->generalSettingsWidget->setEnabled(false);
+        ui->audioSettingsWidget->setEnabled(false);
+        ui->pictureSettingsWidget->setEnabled(false);
+        _playerControlWidget->setEnabled(false);
         return;
     }
 
@@ -704,10 +834,10 @@ void MainWindow::updateSettings()
 
     if(!_locker->isLock())
     {
-        ui->mediaSettingsWidget->setEnabled(true);
-        ui->advancedSettingsButton->setEnabled(true);
-        ui->advancedPictureSettingsButton->setEnabled(true);
-        ui->playerControlsWidget->setEnabled(true);
+        ui->generalSettingsWidget->setEnabled(true);
+        ui->audioSettingsWidget->setEnabled(true);
+        ui->pictureSettingsWidget->setEnabled(true);
+        _playerControlWidget->setEnabled(true);
     }
     ui->audioTrackComboBox->clear();
     ui->audioTrackComboBox->addItem(tr("Disabled"));
@@ -739,7 +869,6 @@ void MainWindow::updateSettings()
 
     ui->ratioComboBox->setCurrentIndex( playback->mediaSettings()->ratio() );
 
-    //ui->subtitlesEncodecomboBox->clear();
     ui->subtitlesEncodecomboBox->setCurrentIndex( playback->mediaSettings()->subtitlesEncode() );
 
     ui->audioTrackComboBox->blockSignals(false);
@@ -753,36 +882,6 @@ void MainWindow::updateSettings()
 /***********************************************************************************************\
                                           Player
 \***********************************************************************************************/
-
-
-void MainWindow::on_playerPlayButton_clicked(bool checked)
-{
-    //UNUSED PlaylistModel *playlistModel = currentPlaylistModel();
-    if (checked) {
-        if (_playlistPlayer->mediaPlayer()->isPaused()) {
-            _playlistPlayer->mediaPlayer()->resume();
-        } else {
-            //Creation de la window elle n'existe pas
-            needVideoWindow();
-
-            // play or resume playback
-
-            QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
-
-
-            // if no selected item play current playlist from first item
-            if (indexes.count() == 0) {
-                _playlistPlayer->playItemAt(0);
-                // play playlist at selected item otherwise
-            } else {
-                const int index = indexes.first().row();
-                _playlistPlayer->playItemAt(index);
-            }
-        }
-    } else {
-        _playlistPlayer->mediaPlayer()->pause();
-    }
-}
 
 void MainWindow::on_menuVideoMode_triggered(QAction *action)
 {
@@ -799,257 +898,29 @@ void MainWindow::on_menuVideoMode_triggered(QAction *action)
     }
 }
 
-void MainWindow::stop(){
-    ui->label_timeRemaining->setText("00:00:00");
-    if(_playlistPlayer->mediaPlayer()->isPaused() || _playlistPlayer->mediaPlayer()->isPlaying())
-        _playlistPlayer->stop();
-    ui->playerPlayButton->setChecked(false);
-}
-
-
-/***********************************************************************************************\
-                                          Playlist
-\***********************************************************************************************/
-
-void MainWindow::createPlaylistTab()
-{
-    createPlaylistTab("New Playlist");
-}
-
-void MainWindow::createPlaylistTab(QString name)
-{
-    if(_locker->isLock())
-        QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently locked, you can not add a new playlist.") , tr("OK"));
-    else {
-        PlaylistTableView *newTab = new PlaylistTableView(this);
-        Playlist *playlist = new Playlist(name);
-        PlaylistModel *newModel = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel, this);
-
-        connect(playlist, SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
-        connect(playlist, SIGNAL(playlistChanged()), this, SLOT(updateDetails()));
-
-        newTab->setModel(newModel);
-        newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
-        newTab->horizontalHeader()->setStretchLastSection(true);
-
-        ui->playlistsTabWidget->addTab(newTab, playlist->title());
-        ui->playlistsTabWidget->setCurrentWidget(newTab);
-
-        updatePlaylistListCombox();
-    }
-}
-
-void MainWindow::on_playlistsTabWidget_tabCloseRequested(int index)
-{
-    Playlist *playlist = playlistAt(index);
-
-    PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(index))->model();
-    if(model->isRunning()){
-        QMessageBox::critical(this, tr("Remove playlist"), tr("This playlist is currently running, you can't delete it.") , tr("OK"));
-    }else{
-        if (_scheduleListModel->isScheduled(playlist)) {
-            if (0 == QMessageBox::warning(this, tr("Remove playlist"), tr("This playlist was scheduled. All schedules which use this playlist will be deleted too.\n Are you sure to remove this playlist ?") ,tr("No"), tr("Yes")))
+void MainWindow::switchVideoMode(){
+    if(!_locker->isLock()){
+        foreach(QAction *action, ui->menuVideoMode->actions()) {
+            if (action->data().toInt() != (int)_projectionMode) {
+                on_menuVideoMode_triggered(action);
                 return;
-            _scheduleListModel->removeScheduleWithDeps(playlist);
-        }
-
-        if (ui->playlistsTabWidget->count() == 1) {
-            createPlaylistTab();
-        }
-
-        delete (PlaylistModel*) ((PlaylistTableView*) ui->playlistsTabWidget->widget(index))->model();
-        ui->playlistsTabWidget->removeTab(index);
-
-        updateSettings();
-        updatePlaylistListCombox();
-        updateDetails();
-
-    }
-}
-
-void MainWindow::on_playlistsTabWidget_currentChanged(int index)
-{
-
-    if(_lastSelectedTab != -1){
-        PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->widget(_lastSelectedTab);
-        if(view != NULL){
-            PlaylistModel *model = (PlaylistModel*) view->model();
-            if(model != NULL){
-                if(model->isRunning()){
-                    return;
-                }
-                disconnect(_playlistPlayer->mediaPlayer(), SIGNAL(playing()), model, SLOT(playItem()));
-                disconnect(_playlistPlayer->mediaPlayer(), SIGNAL(paused()), model, SLOT(pauseItem()));
-                disconnect(_playlistPlayer->mediaPlayer(), SIGNAL(stopped()), model, SLOT(stopItem()));
-                disconnect(_playlistPlayer, SIGNAL(itemChanged(int)), model, SLOT(setPlayingItem(int)));
             }
         }
     }
-
-    PlaylistTableView *view = (PlaylistTableView*) ui->playlistsTabWidget->widget(index);
-    PlaylistModel *model = (PlaylistModel*) view->model();
-
-    connect(view, SIGNAL(clicked(QModelIndex)), this, SLOT(updateSettings()));
-
-    connect(_playlistPlayer->mediaPlayer(), SIGNAL(playing()), model, SLOT(playItem()));
-    connect(_playlistPlayer->mediaPlayer(), SIGNAL(paused()), model, SLOT(pauseItem()));
-    connect(_playlistPlayer->mediaPlayer(), SIGNAL(stopped()), model, SLOT(stopItem()));
-    connect(_playlistPlayer, SIGNAL(itemChanged(int)), model, SLOT(setPlayingItem(int)));
-
-
-
-    updateSettings();
-
-    _playlistPlayer->setPlaylist(model->playlist());
-    _lastSelectedTab = index;
 }
 
-void MainWindow::on_renamePlaylistAction_triggered()
-{
-    editPlaylistName();
-}
-
-void MainWindow::on_removePlaylistItemAction_triggered()
-{
-    deletePlaylistItem();
-
-}
-
-// FIX : ref 0000001
-void MainWindow::restorePlaylistTab(PlaylistModel *model)
-{
-    PlaylistTableView *newTab = new PlaylistTableView(this);
-    connect(model->playlist(), SIGNAL(titleChanged()), _scheduleListModel, SIGNAL(layoutChanged()));
-
-    newTab->setModel(model);
-    newTab->setSelectionBehavior(QAbstractItemView::SelectRows);
-    newTab->horizontalHeader()->setStretchLastSection(true);
-
-    ui->playlistsTabWidget->addTab(newTab, model->playlist()->title());
-    ui->playlistsTabWidget->setCurrentWidget(newTab);
-
-    updatePlaylistListCombox();
-
-}
-
-void MainWindow::on_playlistUpButton_clicked()
-{
-    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
-    if(indexes.count()==0)
-        return;
-
-    if(currentPlaylistModel()->moveUp(indexes.first())){
-        currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() - 1, indexes.first().column()));
-        if( _playlistPlayer->getCurrentIndex() == ((QModelIndex)indexes.first()).row())
-            _playlistPlayer->currentIndexDown();
-        else if (_playlistPlayer->getCurrentIndex() == ((QModelIndex)indexes.first()).row()-1)
-            _playlistPlayer->currentIndexUp();
-    }
-}
-
-void MainWindow::on_playlistDownButton_clicked()
-{
-    QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
-
-    if(indexes.count()==0)
-        return;
-
-    if(currentPlaylistModel()->moveDown(indexes.first())){
-        currentPlaylistTableView()->setCurrentIndex(currentPlaylistModel()->index(indexes.first().row() + 1, indexes.first().column()));
-        if( _playlistPlayer->getCurrentIndex() == ((QModelIndex)indexes.first()).row())
-            _playlistPlayer->currentIndexUp();
-        else if (_playlistPlayer->getCurrentIndex() == ((QModelIndex)indexes.first()).row()+1)
-            _playlistPlayer->currentIndexDown();
-    }
-}
-
-void MainWindow::on_addPlaylistButton_clicked()
-{
-    if(!_locker->isLock()) {
-        bool ok;
-
-        QString text = QInputDialog::getText(this,
-                                             tr("New playlist"),
-                                             tr("Playlist title : "),
-                                             QLineEdit::Normal,
-                                             tr("New playlist"),
-                                             &ok
-                                             );
-        if(ok) {
-            createPlaylistTab(text);
-        }
-    }
-    else
-        QMessageBox::critical(this, tr("Add new playlist"), tr("The playlist is currently locked, you can not add a new playlist.") , tr("OK"));
-
-}
-
-void MainWindow::on_editNamePlaylistButton_clicked()
-{
-    editPlaylistName();
-}
-
-void MainWindow::on_deletePlaylistItemButton_clicked()
-{
-    deletePlaylistItem();
-    if(currentPlaylistTableView() != NULL && currentPlaylistTableView()->selectionModel() != NULL){
-        QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
-        if(indexes.count()>0)
-            setSelectedMediaTimeByIndex(indexes.first().row());
-    }
-}
-
-void MainWindow::editPlaylistName()
-{
-    if(_locker->isLock())
-        QMessageBox::critical(this, tr("Edit playlist name"), tr("This playlist is currently locked, you can not edit the name of the playlist.") , tr("OK"));
-    else {
-        int tabIndex = ui->playlistsTabWidget->currentIndex();
-        bool ok;
-
-        QString text = QInputDialog::getText(this,
-                                             tr("Rename playlist"),
-                                             tr("Playlist title : "),
-                                             QLineEdit::Normal,
-                                             ui->playlistsTabWidget->tabText(tabIndex),
-                                             &ok
-                                             );
-
-        if (ok && !text.isEmpty()) {
-            ui->playlistsTabWidget->setTabText(tabIndex, text);
-            currentPlaylistModel()->playlist()->setTitle(text);
-            updatePlaylistListCombox();
-        }
-    }
-}
-
-void MainWindow::deletePlaylistItem()
-{
-    if(_locker->isLock())
-        QMessageBox::critical(this, tr("Delete playlist item"), tr("This playlist is currently locked, you can not delete an item.") , tr("OK"));
-    else {
-        QModelIndexList indexes = currentPlaylistTableView()->selectionModel()->selectedRows();
-
-        if (indexes.count() == 0)
-            return;
-        if(!currentPlaylistModel()->isRunningMedia(indexes.first().row())){
-            currentPlaylistModel()->removePlayback(indexes.first().row());
-            updateSettings();
-            _scheduleListModel->updateLayout();
-        }else{
-            QMessageBox::critical(this, tr("Remove item"), tr("This playlist is currently running, you can not delete media that have been or are being displayed.") , tr("OK"));
-        }
-    }
-
+void MainWindow::stop(){
+    ui->label_timeRemaining->setText("00:00:00");
 }
 
 /***********************************************************************************************\
                                           Project import/export
 \***********************************************************************************************/
 
-int MainWindow::verifSave () {
+int MainWindow::verifSave ()
+{
     int choice = 1;
-    if(_mediaListModel->rowCount()!=0)
+    if(_mediaListModel->rowCount() != 0)
     {
         choice = QMessageBox::warning(this, tr("Save"), tr("Do you want to save the current listing ? \nOtherwise unsaved data will be lost."), tr("Cancel"), tr("No"), tr("Yes"));
         if(choice == 2)
@@ -1058,6 +929,11 @@ int MainWindow::verifSave () {
         }
     }
     return choice;
+}
+
+void MainWindow::on_addMediaAction_triggered()
+{
+    on_binAddMediaButton_clicked();
 }
 
 void MainWindow::on_saveAction_triggered()
@@ -1069,10 +945,11 @@ void MainWindow::on_saveAction_triggered()
         if (!file.open(QIODevice::WriteOnly)) {
             QMessageBox::information(this, tr("Unable to open file."),file.errorString());
         }else{
-            for (int i = 0; i < ui->playlistsTabWidget->count(); i++)
-                _dataStorage->addPlaylistModel((PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(i) )->model());
+            for (int i = 0; i < _playlistTabWidget->count(); i++)
+                _dataStorage->addPlaylistModel((PlaylistModel*) ( (PlaylistTableView*) _playlistTabWidget->widget(i) )->model());
 
             _dataStorage->save(file);
+
             file.close();
             QMessageBox::information(this, tr("Saved"),tr("Listing saved."));
         }
@@ -1081,7 +958,7 @@ void MainWindow::on_saveAction_triggered()
 
 void MainWindow::on_saveAsAction_triggered()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Listing"), "", tr("OPP file (*.opp)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Listing"), QDir::homePath(), tr("OPP file (*.opp)"));
 
     if (fileName.isEmpty()) {
         return;
@@ -1093,8 +970,8 @@ void MainWindow::on_saveAsAction_triggered()
             QMessageBox::information(this, tr("Unable to open file."),file.errorString());
         }else{
             _fileName = fileName;
-            for (int i = 0; i < ui->playlistsTabWidget->count(); i++)
-                _dataStorage->addPlaylistModel((PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(i) )->model());
+            for (int i = 0; i < _playlistTabWidget->count(); i++)
+                _dataStorage->addPlaylistModel((PlaylistModel*) ( (PlaylistTableView*) _playlistTabWidget->widget(i) )->model());
 
             _dataStorage->save(file);
             file.close();
@@ -1110,29 +987,12 @@ void MainWindow::on_openListingAction_triggered()
         QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before open a listing."));
     }else{
         //TODO Mettre test si modification de la programmation actuelle à la place
-        verifSave();
-        QString fileName = QFileDialog::getOpenFileName(this, tr("Open listing"), "", tr("OPP file (*.opp)"));
-        if (fileName.isEmpty()) {
-            return;
-        } else {
-            QFile file(fileName);
-            if (!file.open(QIODevice::ReadWrite)) {
-                QMessageBox::information(this, tr("Unable to open file."),file.errorString());
-            }
-
-            _fileName = fileName;
-
-            _dataStorage->load(file);
-            updatePlaylistListCombox();
-            file.close();
-
-            ui->progEdit->setText(_dataStorage->projectTitle());
-            ui->notesEdit->setText(_dataStorage->projectNotes());
-
+        if(verifSave() != 0){
+            QString listingPath = QFileDialog::getOpenFileName(this, tr("Open listing"), QDir::homePath(), tr("OPP file (*.opp)"));
+            openListing(listingPath);
         }
     }
 }
-
 
 void MainWindow::on_newListingAction_triggered()
 {
@@ -1140,25 +1000,26 @@ void MainWindow::on_newListingAction_triggered()
         QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before new listing."));
     }else{
         //TODO Mettre test si modification de la programamtion actuelle à la place
-        verifSave();
-        _dataStorage->clear();
-        // FIX : ref 0000001
-        // add empty tab and remove all other one (init state)
-        createPlaylistTab();
-        int size = ui->schedulePlaylistListComboBox->count();
+        if(verifSave() != 0){
+            _dataStorage->clear();
 
-        while (ui->playlistsTabWidget->count() > 1)
-            ui->playlistsTabWidget->removeTab(0);
+            // add empty tab and remove all other one (init state)
+            _playlistTabWidget->createTab();
+            int size = ui->schedulePlaylistListComboBox->count();
 
-        ui->progEdit->clear();
-        ui->notesEdit->clear();
-        for(int i = 0; i < size; i++){
-            ui->schedulePlaylistListComboBox->removeItem(i);
+            while (_playlistTabWidget->count() > 1)
+                _playlistTabWidget->removeTab(0);
+
+            ui->progEdit->clear();
+            ui->notesEdit->clear();
+            for(int i = 0; i < size; i++){
+                ui->schedulePlaylistListComboBox->removeItem(i);
+            }
+            updatePlaylistListCombox();
+            updateDetails();
+
+            _fileName = "";
         }
-        updatePlaylistListCombox();
-        updateDetails();
-
-        _fileName = "";
     }
 }
 
@@ -1194,8 +1055,8 @@ void MainWindow::updatePlaylistListCombox()
 {
     QStringList tabs;
 
-    for (int i = 0; i < ui->playlistsTabWidget->count(); i++)
-        tabs << ui->playlistsTabWidget->tabText(i);
+    for (int i = 0; i < _playlistTabWidget->count(); i++)
+        tabs << _playlistTabWidget->tabText(i);
 
     ui->schedulePlaylistListComboBox->clear();
     ui->schedulePlaylistListComboBox->addItems(tabs);
@@ -1221,7 +1082,7 @@ void MainWindow::on_scheduleAddButton_clicked()
         return;
     }
 
-    Playlist *playlist = playlistAt(playlistIndex);
+    Playlist *playlist = _playlistHandlerWidget->playlistAt(playlistIndex);
     Schedule *schedule = new Schedule(playlist, launchAt);
 
     if (_scheduleListModel->isSchedulable(schedule)) {
@@ -1233,7 +1094,7 @@ void MainWindow::on_scheduleAddButton_clicked()
     }
 }
 
-void MainWindow::needVideoWindow(Playlist *pl){
+void MainWindow::needVideoWindow(){
     if(!_videoWindow->isVisible()){
         _videoWindow->show();
     }
@@ -1253,9 +1114,9 @@ void MainWindow::on_scheduleDelayButton_clicked()
 void MainWindow::on_scheduleToggleEnabledButton_toggled(bool checked)
 {
     if (checked) {
-        ui->scheduleToggleEnabledButton->setText(tr("Stop automation"));
+        ui->scheduleToggleEnabledButton->setText(tr("Stop"));
     } else {
-        ui->scheduleToggleEnabledButton->setText(tr("Start automation"));
+        ui->scheduleToggleEnabledButton->setText(tr("Start"));
     }
 }
 
@@ -1337,17 +1198,12 @@ Playback* MainWindow::selectedPlayback() const {
 
 PlaylistTableView* MainWindow::currentPlaylistTableView() const
 {
-    return (PlaylistTableView*) ui->playlistsTabWidget->currentWidget();
+    return _playlistHandlerWidget->currentPlaylistTableView();
 }
 
 PlaylistModel* MainWindow::currentPlaylistModel() const
 {
-    return (PlaylistModel*) currentPlaylistTableView()->model();
-}
-
-Playlist* MainWindow::playlistAt(int index) const
-{
-    return ( (PlaylistModel*) ( (PlaylistTableView*) ui->playlistsTabWidget->widget(index) )->model() )->playlist();
+    return _playlistHandlerWidget->currentPlaylistModel();
 }
 
 void MainWindow::on_aboutAction_triggered()
@@ -1355,7 +1211,6 @@ void MainWindow::on_aboutAction_triggered()
     _aboutdialog->show();
     _aboutdialog->raise();
     _aboutdialog->activateWindow();
-
 }
 
 void MainWindow::on_updateAction_triggered(){
@@ -1367,37 +1222,12 @@ QList<QWidget*> MainWindow::getLockedWidget()
 {
     QList<QWidget*> lockedWidget;
 
-    lockedWidget << ui->seekWidget;
+    lockedWidget << ui->generalSettingsWidget;
+    lockedWidget << ui->audioSettingsWidget;
+    lockedWidget << ui->pictureSettingsWidget;
     lockedWidget << ui->disableButton;
-
-    lockedWidget << ui->videoTrackComboBox;
-    lockedWidget << ui->ratioComboBox;
-    lockedWidget << ui->subtitlesTrackComboBox;
-    lockedWidget << ui->subtitlesEncodecomboBox;
-    lockedWidget << ui->subtitlesSyncSpinBox;
-
-    lockedWidget << ui->gammaSpinBox;
-    lockedWidget << ui->contrastSpinBox;
-    lockedWidget << ui->brightnessSpinBox;
-    lockedWidget << ui->saturationSpinBox;
-    lockedWidget << ui->hueSpinBox;
-
-    lockedWidget << ui->audioTrackComboBox;
-    lockedWidget << ui->audioGainDoubleSpinBox;
-    lockedWidget << ui->audioSyncDoubleSpinBox;
-
-    lockedWidget << ui->advancedSettingsButton;
-    lockedWidget << ui->advancedPictureSettingsButton;
-
-    lockedWidget << ui->playlistsTabWidget;
-
-    lockedWidget << ui->addPlaylistButton;
-    lockedWidget << ui->editNamePlaylistButton;
-    lockedWidget << ui->playlistUpButton;
-    lockedWidget << ui->deletePlaylistItemButton;
-    lockedWidget << ui->playlistDownButton;
-
-    lockedWidget << ui->playerControlsWidget;
+    lockedWidget << _playlistHandlerWidget;
+    lockedWidget << _playerControlWidget;
 
     return lockedWidget;
 }
@@ -1408,11 +1238,14 @@ void MainWindow::setScreenshot(QString url)
     ui->screenBack->setPixmap(pixmap.scaled(ui->screenBack->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
 }
 
+QLabel* MainWindow::screenBack() const
+{
+    return ui->screenBack;
+}
 
 /****** PLUGIN LOADER***********/
 
 void MainWindow::loadPlugins(){
-
     QDir pluginsDir = QDir(qApp->applicationDirPath());
     pluginsDir.cd("pluginsOPP");
     if(pluginsDir.exists()){
@@ -1442,7 +1275,6 @@ void MainWindow::loadPlugins(){
             }
         }
     }
-
 }
 
 void MainWindow::ocpmSecondaryAction(){
@@ -1470,16 +1302,20 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
     QDir appPath = QDir(qApp->applicationDirPath());
     if(idx == -1)
     {
+        ui->titleBefore->setText("");
         ui->labelBefore->setText("");
+        ui->title_screen->setText("");
         ui->label_screen->setText("");
+        ui->title_stream->setText("");
         ui->label_stream->setText("");
+        ui->title_none->setText("");
         ui->label_none->setText("");
+        ui->titleAfter->setText("");
         ui->labelAfter->setText("");
         ui->screenAfter->clear();
         ui->screenBefore->clear();
         ui->screenBack->clear();
         ui->screen_none->clear();
-
     }
     else
     {
@@ -1491,11 +1327,17 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
         ui->label_stream->setText(time.toString(display));
         ui->label_none->setText(time.toString(display));
 
+        // Title
+        QFontMetrics metrics(ui->title_none->font());
+        QString elidedText = metrics.elidedText(m->name(), Qt::ElideRight, ui->title_none->width());
+        ui->title_none->setText(elidedText);
+        ui->title_stream->setText(elidedText);
+        ui->title_screen->setText(elidedText);
+
         QPixmap pixmap;
         if(m->isAudio())
         {
             pixmap.load( QString(":/icons/resources/images/intertitleSound.jpg").replace("/",QDir::separator()).toStdString().c_str() );
-
         }
         else if(m->isImage())
         {
@@ -1503,17 +1345,18 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
         }
         else
         {
-            //pixmap.load(("./screenshot/"+m->getLocation().replace(QString(QDir::separator()),QString("_"))+".png").toStdString().c_str());
-
-
-
-
             QString path = appPath.path()  + "/screenshot/";
             path = path.replace("/",QDir::separator());
             path +=  m->getLocation().replace(QDir::separator(),"_").remove(":");
             path += ".png";
-            pixmap.load((path.toStdString().c_str()));
 
+            /*** If we can't load the screenshot, we retake it ***/
+            if(!pixmap.load((path.toStdString().c_str()))){
+                takeScreenshot(m->getLocation());
+
+                /*** Retry ****/
+                pixmap.load((path.toStdString().c_str()));
+            }
         }
         ui->screen_none->setPixmap(pixmap.scaled(ui->screen_none->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
         ui->screenBack->setPixmap(pixmap.scaled(ui->screenBack->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
@@ -1539,19 +1382,28 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
                 path = path.replace("/",QDir::separator());
                 path +=  mB->getLocation().replace(QDir::separator(),"_").remove(":");
                 path += ".png";
-                pixmapB.load((path.toStdString().c_str()));
+
+                /*** If we can't load the screenshot, we retake it ***/
+                if(!pixmapB.load((path.toStdString().c_str()))){
+                    takeScreenshot(mB->getLocation());
+
+                    /*** Retry ****/
+                    pixmapB.load((path.toStdString().c_str()));
+                }
             }
             ui->screenBefore->setPixmap(pixmapB.scaled(ui->screenBefore->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
             ui->labelBefore->setText(timeB.toString(display));
+
+            // Title
+            QFontMetrics metrics(ui->titleBefore->font());
+            QString elidedText = metrics.elidedText(mB->name(), Qt::ElideRight, ui->titleBefore->width());
+            ui->titleBefore->setText(elidedText);
         }
         else
         {
-            //QPixmap pixmapB(QString(":/icons/resources/glyphicons/glyphicons_207_remove_2.png").replace("/",QDir::separator()).toStdString().c_str() );
-            //ui->screenBefore->setPixmap(pixmapB.scaled(ui->screenBefore->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
-            //ui->labelBefore->setText("00:00:00");
             ui->screenBefore->clear();
             ui->labelBefore->setText("");
-
+            ui->titleBefore->setText("");
         }
 
         if(currentPlaylistModel()->playlist()->count()-1 - idx > 0)
@@ -1575,56 +1427,36 @@ void MainWindow::setSelectedMediaTimeByIndex(int idx)
                 path = path.replace("/",QDir::separator());
                 path +=  mA->getLocation().replace(QDir::separator(),"_").remove(":");
                 path += ".png";
-                pixmapA.load((path.toStdString().c_str()));
+
+                /*** If we can't load the screenshot, we retake it ***/
+                if(!pixmapA.load((path.toStdString().c_str()))){
+                    takeScreenshot(mA->getLocation());
+
+                    /*** Retry ****/
+                    pixmapA.load((path.toStdString().c_str()));
+                }
             }
             ui->screenAfter->setPixmap(pixmapA.scaled(ui->screenAfter->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
             ui->labelAfter->setText(timeA.toString(display));
+
+            // Title
+            QFontMetrics metrics(ui->titleAfter->font());
+            QString elidedText = metrics.elidedText(mA->name(), Qt::ElideRight, ui->titleAfter->width());
+            ui->titleAfter->setText(elidedText);
         }
         else
         {
-            //QPixmap pixmapA(QString(":/icons/resources/glyphicons/glyphicons_207_remove_2.png").replace("/",QDir::separator()).toStdString().c_str());
-            //ui->screenAfter->setPixmap(pixmapA.scaled(ui->screenAfter->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
-            //ui->labelAfter->setText("00:00:00");
             ui->screenAfter->clear();
             ui->labelAfter->setText("");
-
+            ui->titleAfter->setText("");
         }
     }
-}
-
-void MainWindow::updateBackTime(const int &time)
-{
-    QString display = "hh:mm:ss";
-    Media *m = _playlistPlayer->mediaPlayer()->media();
-    int t = m->duration()-time+_playlistPlayer->mediaPlayer()->currentPlayback()->mediaSettings()->inMark();
-    QTime currentTime = QTime(0,0,0,0).addMSecs(t);
-
-    ui->label_screen->setText(currentTime.toString(display));
-    ui->label_stream->setText(currentTime.toString(display));
-    ui->label_none->setText(currentTime.toString(display));
-
-    int totalTime = _playlistPlayer->currentPlaylist()->totalDuration();
-    int idx = _playlistPlayer->currentPlaylist()->indexOf(_playlistPlayer->mediaPlayer()->currentPlayback());
-    int timeAlreadyElapsed = 0;
-
-    for(int i = 0 ; i < idx ; i++){
-        timeAlreadyElapsed += _playlistPlayer->currentPlaylist()->at(i)->media()->duration();
-    }
-
-    int newTimeInMSec = totalTime-time-timeAlreadyElapsed+_playlistPlayer->mediaPlayer()->currentPlayback()->mediaSettings()->inMark();
-
-
-    QTime newQTime = QTime(0,0,0,0).addMSecs(newTimeInMSec);
-
-
-    ui->label_timeRemaining->setText(newQTime.toString("hh:mm:ss"));
 }
 
 void MainWindow::setScreensBack(QString urlA)
 {
     QPixmap pixmapA(urlA);
     ui->screen_none->setPixmap(pixmapA.scaled(ui->screenAfter->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
-
 }
 
 void MainWindow::on_subtitlesEncodecomboBox_currentIndexChanged(int index)
@@ -1635,7 +1467,6 @@ void MainWindow::on_subtitlesEncodecomboBox_currentIndexChanged(int index)
     Playback *playback = selectedPlayback();
 
     if (playback) {
-
         playback->mediaSettings()->setSubtitlesEncode(index);
     }
 
@@ -1999,23 +1830,6 @@ void MainWindow::closeMirePlayer(){
     }
 }
 
-
-void MainWindow::closeEvent (QCloseEvent *event)
-{
-    if(currentPlaylistModel()->isRunning()){
-        if (1 == QMessageBox::warning(this, tr("Save"), tr("A projection is running, are you sure you want to close the software ?") ,tr("No"), tr("Yes"))){
-            stop();
-        }else{
-            event->ignore();
-        }
-    }
-    else
-    {
-        if(verifSave() == 0)
-            event->ignore();
-    }
-}
-
 void MainWindow::on_actionTest_patterns_triggered()
 {
     openDir("mires");
@@ -2048,4 +1862,23 @@ void MainWindow::openDir(QString name){
        dir.mkdir(folder);
     }
     QDesktopServices::openUrl(folder);
+}
+
+/**********************************************************************************\
+                                        EVENTS
+\**********************************************************************************/
+void MainWindow::closeEvent (QCloseEvent *event)
+{
+    if(currentPlaylistModel()->isRunning()){
+        if (1 == QMessageBox::warning(this, tr("Save"), tr("A projection is running, are you sure you want to close the software ?") ,tr("No"), tr("Yes"))){
+            stop();
+        }else{
+            event->ignore();
+        }
+    }
+    else
+    {
+        if(verifSave() == 0)
+            event->ignore();
+    }
 }

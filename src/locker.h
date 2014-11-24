@@ -45,7 +45,10 @@ public:
      * @author Baptiste Rozière <bapt.roziere@gmail.com>
      */
     explicit Locker(QList<QWidget*> widgets, QObject *parent = 0);
+    explicit Locker(QObject *parent = 0);
     virtual ~Locker();
+
+    void setLockedWidgets(QList<QWidget*> widgets);
 
     /**
      * @brief getAutoLock

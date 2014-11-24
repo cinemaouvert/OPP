@@ -74,6 +74,11 @@ QVariant ScheduleListModel::headerData(int section, Qt::Orientation orientation,
         }
     }
 
+    if(orientation == Qt::Vertical && role == Qt::DisplayRole)
+    {
+        return QVariant(QString::number(section + 1));
+    }
+
     return QVariant();
 }
 

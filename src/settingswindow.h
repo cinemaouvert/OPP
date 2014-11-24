@@ -112,6 +112,11 @@ private slots:
      */
     void on_restart_clicked();
 
+    /**
+     * @brief on_openLastUsedListing_clicked
+     */
+    void on_openLastUsedListing_clicked();
+
 private:
     /**
      * @brief ui The UI

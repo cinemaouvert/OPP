@@ -38,18 +38,16 @@
 class MediaListModel;
 class PlaylistModel;
 class ScheduleListModel;
-class Application;
+class VLCApplication;
 class Media;
 class Playlist;
-
-// FIX : ref 0000001
 class MainWindow;
 
 class DataStorage : public QObject
 {
     Q_OBJECT
 public:
-    explicit DataStorage(Application *app, MainWindow *win/*FIX : ref 0000001*/, QObject *parent = 0);
+    explicit DataStorage(VLCApplication *app, MainWindow *win/*FIX : ref 0000001*/, QObject *parent = 0);
 
     /**
      * @brief Get project title
@@ -201,7 +199,7 @@ private:
     /**
      * @brief The application
      */
-    Application *_app;
+    VLCApplication *_app;
 
     // FIX : ref 0000001
     MainWindow *_win;

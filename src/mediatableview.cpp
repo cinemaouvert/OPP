@@ -33,6 +33,7 @@
 #include <QApplication>
 #include <QItemSelectionModel>
 #include <QDebug>
+#include <QHeaderView>
 
 #if (QT_VERSION >= 0x050000) // Qt version 5 and above
     #include <QMimeData>
@@ -44,6 +45,18 @@ MediaTableView::MediaTableView(QWidget *parent) :
 {
     setDragDropMode(QAbstractItemView::DragOnly);
     setSelectionMode(QTableView::ContiguousSelection);
+    verticalHeader()->setVisible(false);
+    horizontalHeader()->setVisible(false);
+}
+
+void MediaTableView::setModel(QAbstractItemModel *model)
+{
+    if(this->model() != NULL){
+        disconnect(((MediaListModel*)this->model()), SIGNAL(mediaListChanged(int)), this, SLOT(showHeaders(int)));
+    }
+    connect(((MediaListModel*)model), SIGNAL(mediaListChanged(int)), this, SLOT(showHeaders(int)));
+
+    QTableView::setModel(model);
 }
 
 void MediaTableView::mousePressEvent(QMouseEvent *event)
@@ -62,8 +75,6 @@ void MediaTableView::mouseReleaseEvent(QMouseEvent *event){
 void MediaTableView::dragLeaveEvent(QDragLeaveEvent *event){
     QTableView::dragLeaveEvent(event);
 }
-
-
 
 void MediaTableView::mouseMoveEvent(QMouseEvent *event)
 {
@@ -128,4 +139,15 @@ void MediaTableView::dragMoveEvent(QDragMoveEvent *event)
 void MediaTableView::dropEvent(QDropEvent *event)
 {
     QTableView::dropEvent(event);
+}
+
+void MediaTableView::showHeaders(int mediaCount)
+{
+    if(mediaCount <= 0){
+        horizontalHeader()->setVisible(false);
+        verticalHeader()->setVisible(false);
+    }else{
+        horizontalHeader()->setVisible(true);
+        verticalHeader()->setVisible(true);
+    }
 }

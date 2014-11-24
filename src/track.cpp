@@ -31,9 +31,17 @@
 
 #include <QDebug>
 
-Track::Track(libvlc_media_track_info_t *vlcTrackInfo, QObject *parent) :
+/** VLC before version 2.1.0 */
+Track::Track(libvlc_media_track_info_t* vlcTrackInfo, QObject *parent) :
     QObject(parent),
     _vlcTrackInfo(*vlcTrackInfo)
+{
+}
+
+/** VLC after version 2.1.0 */
+Track::Track(libvlc_media_track_t** vlcTrack, QObject *parent) :
+    QObject(parent),
+    _vlcTrack(**vlcTrack)
 {
 }
 
@@ -43,7 +51,8 @@ Track::Track(QObject *parent) :
     _vlcTrackInfo.i_id = -1;
 }
 
-Track::Track(const Track &track)
+Track::Track(const Track &track) :
+    QObject()
 {
     _vlcTrackInfo = track._vlcTrackInfo;
 }

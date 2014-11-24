@@ -26,6 +26,7 @@
 #ifndef TRACK_H
 #define TRACK_H
 
+#include "config.h"
 #include <QObject>
 
 #include <vlc/vlc.h>
@@ -38,7 +39,11 @@ class Track : public QObject
     Q_OBJECT            
 public:
 
-    explicit Track(libvlc_media_track_info_t *vlcTrackInfo, QObject *parent = 0);
+    /** VLC before version 2.1.0 */
+    explicit Track(libvlc_media_track_info_t* vlcTrackInfo, QObject *parent = 0);
+
+    /** VLC after version 2.1.0 */
+    explicit Track(libvlc_media_track_t** vlcTrack, QObject *parent = 0);
 
     explicit Track(QObject *parent = 0);
     virtual ~Track();
@@ -61,7 +66,7 @@ public:
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
-    inline int trackId() const { return _vlcTrackInfo.i_id; }
+    inline int trackId() const { if(config_opp::LIBVLC_MAJOR <= 2 && config_opp::LIBVLC_MINOR < 1){ return _vlcTrackInfo.i_id; }else{ return _vlcTrack.i_id;  }}
 
     /**
      * @brief Get libvlc codec identifier
@@ -69,7 +74,7 @@ public:
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
-    inline uint codec() const { return _vlcTrackInfo.i_codec; }
+    inline uint codec() const { if(config_opp::LIBVLC_MAJOR <= 2 && config_opp::LIBVLC_MINOR < 1){ return _vlcTrackInfo.i_codec; }else{ return _vlcTrack.i_codec; }}
 
     /**
      * @brief Get liblvc track type
@@ -77,7 +82,7 @@ public:
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
-    inline libvlc_track_type_t trackType() const { return _vlcTrackInfo.i_type; }
+    inline libvlc_track_type_t trackType() const { if(config_opp::LIBVLC_MAJOR <= 2 && config_opp::LIBVLC_MINOR < 1){ return _vlcTrackInfo.i_type; }else{ return _vlcTrack.i_type; }}
 
     /**
      * @brief Get codec description
@@ -92,7 +97,9 @@ protected:
     /**
      * @brief The libvlc structure where track informations are stored
      */
-    libvlc_media_track_info_t _vlcTrackInfo;
+    libvlc_media_track_info_t _vlcTrackInfo;  /** VLC before version 2.1.0 */
+
+    libvlc_media_track_t _vlcTrack; /** VLC after version 2.1.0 */
 };
 
 #endif // TRACK_H

@@ -228,7 +228,6 @@ public:
      */
     int usageCount(){ return this->_usageCount; }
 
-
     /**
      * @brief Media is used or not
      * @return True if the media is used, false otherwise.

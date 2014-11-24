@@ -46,6 +46,10 @@
 #include "loggersingleton.h"
 #include "videowindow.h"
 
+#include "PlaylistHandlerWidget.h"
+
+#include "PlayerControlWidget.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -57,14 +61,17 @@ class AdvancedSettings;
 class AdvancedPictureSettingsWindow;
 class AboutDialog;
 class PlaylistTableView;
+class PlaylistHandlerWidget;
 class StatusWidget;
+class PlaylistTabWidget;
 
 class PlaylistModel;
 class MediaListModel;
 class ScheduleListModel;
 
-class Application;
+class VLCApplication;
 class PlaylistPlayer;
+class PlayerControlWidget;
 class Playback;
 class Playlist;
 class Locker;
@@ -82,39 +89,51 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-
-    // FIX : ref 0000001
     /**
-     * @brief Restore playlist tab
-     * @param model
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>
+     * @brief return the playlist player
      */
-    void restorePlaylistTab(PlaylistModel *model);
-
-    /**
-     * @brief Returns the playlists tab widget
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>
-     */
-    QTabWidget * playlistTabWidget() const;
-
-    /**
-     * @brief Edit the name of the current playlist
-     */
-    void editPlaylistName();
-
-    /**
-     * @brief Delete the selected item on the playlist
-     */
-    void deletePlaylistItem();
+    inline PlaylistPlayer* playlistPlayer() const { return _playlistPlayer; }
 
     /**
      * @brief Getlocker
      *
      * @author Geoffrey Bergé <geoffrey.berge@live.fr>
      */
-    Locker* getLocker();
+    Locker* locker() const { return _locker; }
+
+    /**
+     * @brief filename
+     * @return
+     */
+    inline QString filename() { return _fileName; }
+
+    /**
+     * @brief playlistTabWidget
+     * @return
+     */
+    PlaylistTabWidget* playlistTabWidget() const { return _playlistTabWidget; }
+
+    /**
+     * @brief scheduleListModel
+     * @return
+     */
+    inline ScheduleListModel* scheduleListModel(){ return _scheduleListModel; }
+
+    /**
+     * @brief mediaListModel
+     * @return
+     */
+    inline MediaListModel* mediaListModel(){ return _mediaListModel; }
+
+    /**
+     * @brief playerControlWidget
+     * @return
+     */
+    PlayerControlWidget* playerControlWidget(){ return _playerControlWidget; }
+
+    QLabel* screenBefore() const;
+
+    QLabel* screenBack() const;
 
     /**
      * @brief request save if needed
@@ -124,18 +143,15 @@ public:
     int verifSave();
 
     /**
-     * @brief GetFilename
-     *
-     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
-     */
-    QString getFilename();
-
-    /**
      * @brief open the listing from the fileName
      *
      * @author Geoffrey Bergé <geoffrey.berge@live.fr>
      */
-    void openFile(QString fileName);
+    void openListing(QString fileName);
+
+    void takeScreenshot(QStringList fileNames);
+
+    void takeScreenshot(QString fileName);
 
     /**
      * @brief Get _playlistPlayer
@@ -158,6 +174,12 @@ public:
       */
     void setSelectedMediaTimeByIndex(int idx);
 
+    /**
+     * @brief addMedia
+     * @param location
+     */
+    int addMedia(QString location);
+
 	/**
       * @brief Create schedule in html
       *
@@ -172,6 +194,8 @@ public:
       */
     QString scheduleToHmlForPDF();
 
+    VideoWindow* videoWindow() const { return _videoWindow; }
+
     /**
       * @brief Redirect qmessages into a file and the log area
       *
@@ -184,19 +208,18 @@ public:
     #endif
 
 public slots:
-    /**
-      *@brief Method to stop the player
-      *
-      * @author Thibaud Lamarche <lamarchethibaud@hotmail.com>
-      */
-    void stop();
 
     /**
-     * @brief Update settings value in UI
+     * @brief Used to relaunch the video window if it was closed
      *
-     * @author Cyril Naud <futuramath@gmail.com>
+     * @author Lamarche Thibaud <lamarchethibaud@hotmail.fr>
      */
-    void updateSettings();
+    void needVideoWindow();
+
+    /**
+      *@brief Update the remaining time
+      */
+    void stop();
 
     /**
      * @brief Save the current project
@@ -208,14 +231,14 @@ public slots:
      *
      * @author Cyril Naud <futuramath@gmail.com>
      */
-    void on_advancedSettingsButton_clicked();
+    void openAdvancedSettingsWindow();
 
     /**
      * @brief Open the advanced picture settings window
      *
      * @author Cyril Naud <futuramath@gmail.com>
      */
-    void on_advancedPictureSettingsButton_clicked();
+    void openAdvancedPictureSettings();
 
 	/**
      * @brief Set a new screenshot in the screenBack
@@ -230,14 +253,6 @@ public slots:
       * @author Thomas Berthome <thoberthome@laposte.net>
       */
     void setScreensBack(QString url);
-
-    /**
-     * @brief Update the remaining time value
-     * @param time The new remaining time value
-     *
-     * @author Thomas Berthomé <thoberthome@laposte.net>
-     */
-    void updateBackTime(const int &time);
 
     /**
      * @brief Used to update the current screenshot
@@ -269,14 +284,33 @@ public slots:
      */
     void updateProjectSummary();
 
-private slots:
+    /**
+     * @brief Update settings value in UI
+     *
+     * @author Cyril Naud <futuramath@gmail.com>
+     */
+    void updateSettings();
 
     /**
-     * @brief Used to relaunch the video window if it was closed
+     * @brief Update Details
      *
-     * @author Lamarche Thibaud <lamarchethibaud@hotmail.fr>
+     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
      */
-    void needVideoWindow(Playlist *pl = NULL);
+    void updateDetails();
+
+    /**
+     * @brief switchVideoMode
+     */
+    void switchVideoMode();
+
+    /**
+     * @brief Update the list of playlists
+     *
+     * @author Florian Mhun <florian.mhun@gmail.com>
+     */
+    void updatePlaylistListCombox();
+
+private slots:
 
     /**
      * @brief Show timeout before the end of the current playlist
@@ -308,13 +342,6 @@ private slots:
     void on_binDeleteMediaButton_clicked();
 
     /**
-     * @brief Update Details
-     *
-     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
-     */
-    void updateDetails();
-
-    /**
      * @brief Open the settings window
      *
      * @author Cyril Naud <futuramath@gmail.com>
@@ -342,21 +369,6 @@ private slots:
      * @author Thomas Berthomé <thoberthome@laposte.net>
      */
     void on_disableButton_clicked();
-
-
-    /**
-     * @brief Launch the playback of the playlist
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>
-     */
-    void on_playerPlayButton_clicked(bool checked);
-
-    /**
-     * @brief Load the selected playlist
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>
-     */
-    void on_playlistsTabWidget_currentChanged(int index);
 
     /**
      * @brief Change the value of subtitles sync setting
@@ -423,6 +435,11 @@ private slots:
     void on_audioGainDoubleSpinBox_valueChanged(double arg1);
 
     /**
+     * @brief Add a media to the project
+     */
+    void on_addMediaAction_triggered();
+
+    /**
      * @brief Save the current project
      */
     void on_saveAsAction_triggered();
@@ -433,55 +450,14 @@ private slots:
     void on_quitAction_triggered();
 
     /**
-     * @brief Open a saved project
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>
+     * @brief Action to pen a saved project
      */
     void on_openListingAction_triggered();
 
     /**
      * @brief Create a new project
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>z
      */
     void on_newListingAction_triggered();
-
-    /**
-     * @brief Create a new playlist and its tab with a default name
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>
-     */
-    void createPlaylistTab();
-
-    /**
-     * @brief Create a new playlist and its tab with a name given by the user
-     * @param name The playlist name
-     *
-     * @author Thomas Berthome <thoberthome@laposte.net>
-     */
-    void createPlaylistTab(QString name);
-
-    /**
-     * @brief Delete a playlist and close its tab
-     * @param index The index of the playlist to delete
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>
-     */
-    void on_playlistsTabWidget_tabCloseRequested(int index);
-
-    /**
-     * @brief Open a window to rename the current playlist
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>
-     */
-    void on_renamePlaylistAction_triggered();
-
-    /**
-     * @brief Delete the selected item
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>
-     */
-    void on_removePlaylistItemAction_triggered();
 
     /**
      * @brief Change the value of the audio track setting
@@ -509,13 +485,6 @@ private slots:
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_subtitlesTrackComboBox_currentIndexChanged(int index);
-
-    /**
-     * @brief Update the list of playlists
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>
-     */
-    void updatePlaylistListCombox();
 
     /**
      * @brief Create a new schedule
@@ -547,45 +516,12 @@ private slots:
     void on_scheduleToggleEnabledButton_toggled(bool checked);
 
     /**
-     * @brief Move the selected playback up
-     *
-     * @author Cyril Naud <futuramath@gmail.com>
-     */
-    void on_playlistUpButton_clicked();
-    /**
-     * @brief Move the selected playback down
-     *
-     * @author Cyril Naud <futuramath@gmail.com>
-     */
-    void on_playlistDownButton_clicked();
-
-    /**
      * @brief Change the notes
      *
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void on_notesEdit_textChanged();
 
-    /**
-     * @brief Create a new playlist
-     *
-     * @author Cyril Naud <futuramath@gmail.com>
-     */
-    void on_addPlaylistButton_clicked();
-
-    /**
-     * @brief Edit playlist name
-     *
-     * @author Cyril Naud <futuramath@gmail.com>
-     */
-    void on_editNamePlaylistButton_clicked();
-
-    /**
-     * @brief Delete selected item
-     *
-     * @author Cyril Naud <futuramath@gmail.com>
-     */
-    void on_deletePlaylistItemButton_clicked();
     /**
      * @brief Open About window
      *
@@ -651,8 +587,6 @@ private slots:
       */
     void closeWindowTestPattern();
 
-
-
     void on_actionTest_patterns_triggered();
 
     void on_actionScreenshots_triggered();
@@ -672,24 +606,11 @@ protected:
      */
     Playback* selectedPlayback() const;
 
-
-
-    /**
-     * @brief Returns the playlist at the position index
-     * @return The playlist at the position index
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>
-     */
-    Playlist* playlistAt(int index) const;
-
-
 private:
 
     /**
-      * @brief Check if a playlist is running and advert the user
-      *
-      * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
-      */
+     * @brief Handle the close event.
+     */
     void closeEvent (QCloseEvent *event);
 
     /**
@@ -703,6 +624,7 @@ private:
      * @brief ui The UI
      */
     Ui::MainWindow *ui;
+
     /**
      * @brief _videoWindow The video window
      */
@@ -712,22 +634,27 @@ private:
      * @brief _settingsWindow The settings window
      */
     SettingsWindow *_settingsWindow;
+
     /**
      * @brief _lockSettingsWindow The lock settings window
      */
     LockSettingsWindow *_lockSettingsWindow;
+
     /**
      * @brief _advancedSettingsWindow The advanced settings window
      */
     AdvancedSettings *_advancedSettingsWindow;
+
     /**
      * @brief _advancedPictureSettingsWindow The advanced picture settings window
      */
     AdvancedPictureSettingsWindow *_advancedPictureSettingsWindow;
+
     /**
      * @brief _about The About window
      */
     AboutDialog *_aboutdialog;
+
     /**
      * @brief _statusWidget The status widget
      */
@@ -736,16 +663,28 @@ private:
     /**
      * @brief _app
      */
-    Application *_app;
+    VLCApplication *_app;
+
     /**
      * @brief _playlistPlayer
      */
     PlaylistPlayer *_playlistPlayer;
 
     /**
+     * @brief _playerControlWidget
+     */
+    PlayerControlWidget* _playerControlWidget;
+
+    /**
+     * @brief _playlistHandlerWidget
+     */
+    PlaylistHandlerWidget* _playlistHandlerWidget;
+
+    /**
      * @brief _mediaListModel The media list model
      */
     MediaListModel *_mediaListModel;
+
     /**
      * @brief _scheduleListModel The schedule list model
      */
@@ -760,11 +699,6 @@ private:
      * @brief _dataStorage
      */
     DataStorage* _dataStorage;
-
-    /**
-     * @brief used to disconnect signals
-     */
-    int _lastSelectedTab;
 
     /**
      * @brief _fileName
@@ -825,6 +759,10 @@ private:
      * @brief ui The timer for automation
      */
     QTimer *_timerOut;
+
+    PlaylistTabWidget* _playlistTabWidget;
+
+    QShortcut* _f1_shortcut;
 
     /**
      * @brief open dir and create if not exits

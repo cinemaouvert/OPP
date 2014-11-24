@@ -106,6 +106,13 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
     /**
+     * @brief index
+     * @param media
+     * @return
+     */
+    int index(Media* media);
+
+    /**
      * @brief Returns the flags applied to the model
      * @return The flags applied to the model
      *
@@ -166,7 +173,6 @@ signals:
     void mediaListChanged(int);
 
 private:
-
 
     /**
      * @brief _mediaList The media list

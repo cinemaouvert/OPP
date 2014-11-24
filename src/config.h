@@ -31,16 +31,51 @@
 #include <QObject>
 #include <QDebug>
 
+/** allow to hide the deprecated declarations during debug */
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 namespace config_opp {
     /**
      * @brief Test the Qt version and the libvlc version and define the version of OPP
      * @return {QString} The current version of OPP
      * @author Yohann Vioujard <y.vioujard@gmail.com>
      */
-    QString getVersion();
+    QString getOppVersion();
+
+    /**
+     * @brief Allow to get the libvlc version string in QString
+     * @return {QString} The current version of libvlc
+     * @author Yohann Vioujard <y.vioujard@gmail.com>
+     */
+    QString getLibVlcVersion();
+
+    /**
+     * @brief Allow to get the libvlc version major in int type
+     * @return {int} The current major version of libvlc
+     * @author Yohann Vioujard <y.vioujard@gmail.com>
+     */
+    int getLibVlcMajor();
+
+    /**
+     * @brief Allow to get the libvlc minor major in int type
+     * @return {int} The current minor version of libvlc
+     * @author Yohann Vioujard <y.vioujard@gmail.com>
+     */
+    int getLibVlcMinor();
+
+    /**
+     * @brief Allow to get the libvlc version patch in int type
+     * @return {int} The current patch version of libvlc
+     * @author Yohann Vioujard <y.vioujard@gmail.com>
+     */
+    int getLibVlcPatch();
 
     const QString URL = "http://cinemaouvert.fr/";
-    const QString VERSION = getVersion();
+    const QString VERSION = getOppVersion();
+    const QString LIBVLC_VERSION = getLibVlcVersion();
+    const int LIBVLC_MAJOR = getLibVlcMajor();
+    const int LIBVLC_MINOR = getLibVlcMinor();
+    const int LIBVLC_PATCH = getLibVlcPatch();
 
 
     #if defined(Q_OS_MAC)

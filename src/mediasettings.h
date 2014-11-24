@@ -217,6 +217,8 @@ public:
      */
     inline const int & subtitlesTrack() const { return _subtitlesTrack; }
 
+    QString subtitlesFile() const;
+
     /**
      * @brief Is test pattern enabled
      * @return True if test pattern is enabled, false otherwise
@@ -280,6 +282,8 @@ public:
      * @author Cyril Naud <futuramath@gmail.com>
      */
     void setSubtitlesSync(double sync);
+
+    void setSubtitlesFile(QString file);
 
     /**
      * @brief setGamma
@@ -535,6 +539,8 @@ signals:
      */
     void subtitlesSyncChanged(double);
 
+    void subtitlesFileChanged(QString);
+
     /**
      * @brief gammaChanged
      */
@@ -766,6 +772,8 @@ private:
      * @brief vdeo Fade in value.
      */
     int _videoFadeIn;
+
+    QString _subtitlesFile;
 };
 
 #endif // MEDIASETTINGS_H

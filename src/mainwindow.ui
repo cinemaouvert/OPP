@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1287</width>
-    <height>727</height>
+    <width>1166</width>
+    <height>662</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>OPP</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -21,11 +24,23 @@
     <property name="spacing">
      <number>0</number>
     </property>
-    <property name="margin">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
      <number>0</number>
     </property>
     <item>
      <widget class="QSplitter" name="splitter">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -39,25 +54,64 @@
          <height>16777215</height>
         </size>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="styleSheet">
+        <string notr="true">margin-top: 3px;</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,0,0">
         <property name="spacing">
+         <number>8</number>
+        </property>
+        <property name="leftMargin">
+         <number>10</number>
+        </property>
+        <property name="topMargin">
+         <number>3</number>
+        </property>
+        <property name="rightMargin">
          <number>0</number>
         </property>
-        <property name="margin">
-         <number>0</number>
+        <property name="bottomMargin">
+         <number>5</number>
         </property>
         <item>
          <widget class="QTabWidget" name="projectTabWidget">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="tabPosition">
+           <enum>QTabWidget::North</enum>
+          </property>
+          <property name="tabShape">
+           <enum>QTabWidget::Rounded</enum>
+          </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>4</number>
           </property>
           <widget class="QWidget" name="summaryTab">
            <attribute name="title">
             <string>Summary</string>
            </attribute>
            <layout class="QFormLayout" name="formLayout_3">
-            <property name="margin">
-             <number>1</number>
+            <property name="fieldGrowthPolicy">
+             <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+            </property>
+            <property name="labelAlignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="verticalSpacing">
+             <number>2</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>3</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
             </property>
             <item row="1" column="0">
              <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -66,6 +120,10 @@
               </property>
               <item>
                <widget class="QLabel" name="label_3">
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;
+margin-left: 3px;</string>
+                </property>
                 <property name="text">
                  <string>Number of movies :</string>
                 </property>
@@ -73,6 +131,9 @@
               </item>
               <item alignment="Qt::AlignLeft">
                <widget class="QLabel" name="countMoviesLabel">
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;</string>
+                </property>
                 <property name="text">
                  <string>0</string>
                 </property>
@@ -81,24 +142,38 @@
              </layout>
             </item>
             <item row="1" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_16">
+             <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="1,0">
               <property name="spacing">
                <number>2</number>
               </property>
               <item>
                <widget class="QLabel" name="label_4">
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;
+</string>
+                </property>
+                <property name="lineWidth">
+                 <number>1</number>
+                </property>
                 <property name="text">
                  <string>Number of pictures :</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QLabel" name="countPicturesLabel">
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;
+margin-right: 3px;</string>
+                </property>
                 <property name="text">
                  <string>0</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
               </item>
@@ -109,6 +184,9 @@
               <property name="spacing">
                <number>0</number>
               </property>
+              <property name="rightMargin">
+               <number>3</number>
+              </property>
               <item alignment="Qt::AlignLeft">
                <widget class="QLabel" name="labelprogEdit">
                 <property name="sizePolicy">
@@ -117,13 +195,23 @@
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;
+margin-left: 3px;</string>
+                </property>
                 <property name="text">
                  <string>Project name : </string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="progEdit"/>
+               <widget class="QLineEdit" name="progEdit">
+                <property name="styleSheet">
+                 <string notr="true">margin-right: 3px;
+border-radius: 0px;
+border-bottom: 1px solid rgb(180, 180, 180);</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -140,8 +228,12 @@
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;
+margin-left: 3px;</string>
+                </property>
                 <property name="text">
-                 <string>Notes : </string>
+                 <string>Notes</string>
                 </property>
                </widget>
               </item>
@@ -158,6 +250,9 @@
                   <width>16777215</width>
                   <height>16777215</height>
                  </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">border-top: 1px solid rgb(180, 180, 180);</string>
                 </property>
                </widget>
               </item>
@@ -176,6 +271,10 @@
               </property>
               <item>
                <widget class="QLabel" name="label_6">
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;
+margin-left: 3px;</string>
+                </property>
                 <property name="text">
                  <string>Playlists ends in :</string>
                 </property>
@@ -183,6 +282,9 @@
               </item>
               <item>
                <widget class="QLabel" name="label_timeRemaining">
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;</string>
+                </property>
                 <property name="text">
                  <string>00:00:00</string>
                 </property>
@@ -202,6 +304,10 @@
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;
+margin-left: 3px;</string>
                 </property>
                 <property name="text">
                  <string>Total duration of the automation : </string>
@@ -227,11 +333,469 @@
             <property name="spacing">
              <number>0</number>
             </property>
-            <property name="margin">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
              <number>0</number>
             </property>
             <item>
-             <widget class="QTextEdit" name="textEdit_Codecs"/>
+             <widget class="QTextEdit" name="textEdit_Codecs">
+              <property name="styleSheet">
+               <string notr="true">border-top: 1px solid rgb(180, 180, 180);</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab">
+           <attribute name="title">
+            <string>General</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <widget class="QWidget" name="generalSettingsWidget" native="true">
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <layout class="QFormLayout" name="formLayout">
+               <property name="horizontalSpacing">
+                <number>0</number>
+               </property>
+               <property name="verticalSpacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item row="0" column="0">
+                <widget class="QLabel" name="videoTrackLabel">
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Video track</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QComboBox" name="videoTrackComboBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;
+margin: 0px 0px 2px 0px;</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="ratioLabel">
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Ratio</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QComboBox" name="ratioComboBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;
+margin: 0px 0px 2px 0px;</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="subtitlesTrackLabel">
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Subtitles track</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QComboBox" name="subtitlesTrackComboBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;
+margin: 0px 0px 2px 0px;</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_SubtiltesEncode">
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Subtitles encode</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QComboBox" name="subtitlesEncodecomboBox">
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;
+margin: 0px 0px 2px 0px;</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="subtitlesSyncLabel">
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Subtitles sync</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QDoubleSpinBox" name="subtitlesSyncSpinBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="minimum">
+                  <double>-99.900000000000006</double>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_2">
+           <attribute name="title">
+            <string>Audio</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_9">
+            <item>
+             <widget class="QWidget" name="audioSettingsWidget" native="true">
+              <layout class="QFormLayout" name="formLayout_5">
+               <property name="fieldGrowthPolicy">
+                <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+               </property>
+               <property name="horizontalSpacing">
+                <number>0</number>
+               </property>
+               <property name="verticalSpacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item row="0" column="0">
+                <widget class="QLabel" name="audioTrackLabel">
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Audio track</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QComboBox" name="audioTrackComboBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;
+margin: 0px 0px 2px 0px;</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="audioGainLabel">
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Audio gain</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QDoubleSpinBox" name="audioGainDoubleSpinBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="maximum">
+                  <double>3.010000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.010000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="audioSyncLabel">
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Audio sync</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QDoubleSpinBox" name="audioSyncDoubleSpinBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="minimum">
+                  <double>-99.989999999999995</double>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_3">
+           <attribute name="title">
+            <string>Picture</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_18">
+            <item>
+             <widget class="QWidget" name="pictureSettingsWidget" native="true">
+              <layout class="QFormLayout" name="formLayout_2">
+               <property name="fieldGrowthPolicy">
+                <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+               </property>
+               <property name="horizontalSpacing">
+                <number>0</number>
+               </property>
+               <property name="verticalSpacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item row="0" column="0">
+                <widget class="QLabel" name="gammaLabel">
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Gamma</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QDoubleSpinBox" name="gammaSpinBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="maximum">
+                  <double>10.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="contrastLabel">
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Contrast</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QDoubleSpinBox" name="contrastSpinBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="maximum">
+                  <double>2.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="brightnessLabel">
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Brightness</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QDoubleSpinBox" name="brightnessSpinBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="maximum">
+                  <double>2.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="saturationLabel">
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Saturation</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QDoubleSpinBox" name="saturationSpinBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="maximum">
+                  <double>3.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="hueLabel">
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Hue</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QSpinBox" name="hueSpinBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-size: 13px;</string>
+                 </property>
+                 <property name="minimum">
+                  <number>0</number>
+                 </property>
+                 <property name="maximum">
+                  <number>20</number>
+                 </property>
+                 <property name="value">
+                  <number>1</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -243,18 +807,31 @@
             <property name="spacing">
              <number>0</number>
             </property>
-            <property name="margin">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
              <number>0</number>
             </property>
             <item>
              <widget class="QScrollArea" name="scrollArea">
               <property name="font">
                <font>
-                <stylestrategy>PreferDefault</stylestrategy>
+                <pointsize>-1</pointsize>
                </font>
               </property>
               <property name="focusPolicy">
                <enum>Qt::WheelFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border: 0px;
+font-size: 13px;</string>
               </property>
               <property name="widgetResizable">
                <bool>true</bool>
@@ -266,9 +843,9 @@
                <property name="geometry">
                 <rect>
                  <x>0</x>
-                 <y>0</y>
-                 <width>484</width>
-                 <height>248</height>
+                 <y>2</y>
+                 <width>480</width>
+                 <height>199</height>
                 </rect>
                </property>
                <layout class="QGridLayout" name="gridLayout_2">
@@ -298,26 +875,58 @@
         </item>
         <item>
          <widget class="QGroupBox" name="scheduleGroupBox">
+          <property name="styleSheet">
+           <string notr="true">QGroupBox{	
+	margin: 0;
+    font-weight: bold;
+}</string>
+          </property>
           <property name="title">
            <string>Automation</string>
           </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <property name="spacing">
-            <number>1</number>
+            <number>0</number>
            </property>
-           <property name="margin">
-            <number>1</number>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>20</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
            </property>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <property name="spacing">
               <number>0</number>
              </property>
+             <property name="bottomMargin">
+              <number>3</number>
+             </property>
              <item>
-              <widget class="QComboBox" name="schedulePlaylistListComboBox"/>
+              <widget class="QComboBox" name="schedulePlaylistListComboBox">
+               <property name="styleSheet">
+                <string notr="true">font-size: 13px;
+margin: 0px 2px 0px 0px;
+border-radius: 0px;
+border: 1px solid rgb(203, 203, 203);</string>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QDateEdit" name="scheduleLaunchAtDateEdit">
+               <property name="styleSheet">
+                <string notr="true">font-size: 13px;
+margin: 2px;</string>
+               </property>
                <property name="displayFormat">
                 <string>dd/MM/yyyy</string>
                </property>
@@ -325,6 +934,9 @@
              </item>
              <item>
               <widget class="QTimeEdit" name="scheduleLaunchAtTimeEdit">
+               <property name="styleSheet">
+                <string notr="true">font-size: 13px;</string>
+               </property>
                <property name="displayFormat">
                 <string>HH:mm:ss</string>
                </property>
@@ -332,33 +944,48 @@
              </item>
              <item>
               <widget class="QPushButton" name="scheduleAddButton">
+               <property name="styleSheet">
+                <string notr="true">padding: 3px;
+margin-left: 4px; 
+margin-right: 4px; </string>
+               </property>
                <property name="text">
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../images.qrc">
+                <iconset>
                  <normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</iconset>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QPushButton" name="scheduleDeleteButton">
+               <property name="styleSheet">
+                <string notr="true">padding: 3px;
+margin-left: 4px; 
+margin-right: 4px; </string>
+               </property>
                <property name="text">
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../images.qrc">
+                <iconset>
                  <normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</iconset>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QPushButton" name="viewExportPDFButton">
+               <property name="styleSheet">
+                <string notr="true">padding: 3px;
+margin-left: 5px; 
+</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../images.qrc">
+                <iconset>
                  <normaloff>:/icons/resources/glyphicons/glyphicons_045_calendar.png</normaloff>:/icons/resources/glyphicons/glyphicons_045_calendar.png</iconset>
                </property>
               </widget>
@@ -367,6 +994,15 @@
            </item>
            <item>
             <widget class="QTableView" name="scheduleTableView">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">margin: 0px 0px 1px 0px;</string>
+             </property>
              <property name="dragDropOverwriteMode">
               <bool>false</bool>
              </property>
@@ -382,6 +1018,9 @@
              <property name="selectionBehavior">
               <enum>QAbstractItemView::SelectRows</enum>
              </property>
+             <attribute name="horizontalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
              <attribute name="horizontalHeaderStretchLastSection">
               <bool>true</bool>
              </attribute>
@@ -396,71 +1035,91 @@
               <number>0</number>
              </property>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_17">
-               <property name="spacing">
-                <number>3</number>
+              <widget class="QPushButton" name="scheduleToggleEnabledButton">
+               <property name="minimumSize">
+                <size>
+                 <width>60</width>
+                 <height>0</height>
+                </size>
                </property>
-               <property name="rightMargin">
-                <number>0</number>
+               <property name="maximumSize">
+                <size>
+                 <width>60</width>
+                 <height>16777215</height>
+                </size>
                </property>
-               <item>
-                <widget class="QLabel" name="label_delay1">
-                 <property name="text">
-                  <string>Next automation in :</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_timeout">
-                 <property name="palette">
-                  <palette>
-                   <active>
-                    <colorrole role="Text">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>0</red>
-                       <green>0</green>
-                       <blue>0</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                   </active>
-                   <inactive>
-                    <colorrole role="Text">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>0</red>
-                       <green>0</green>
-                       <blue>0</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                   </inactive>
-                   <disabled>
-                    <colorrole role="Text">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>159</red>
-                       <green>158</green>
-                       <blue>158</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                   </disabled>
-                  </palette>
-                 </property>
-                 <property name="inputMethodHints">
-                  <set>Qt::ImhNone</set>
-                 </property>
-                 <property name="text">
-                  <string>None Scheduled</string>
-                 </property>
-                 <property name="textFormat">
-                  <enum>Qt::AutoText</enum>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string>Start</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_timeout">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="palette">
+                <palette>
+                 <active>
+                  <colorrole role="Text">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="255">
+                     <red>0</red>
+                     <green>0</green>
+                     <blue>0</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                 </active>
+                 <inactive>
+                  <colorrole role="Text">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="255">
+                     <red>0</red>
+                     <green>0</green>
+                     <blue>0</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                 </inactive>
+                 <disabled>
+                  <colorrole role="Text">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="255">
+                     <red>159</red>
+                     <green>158</green>
+                     <blue>158</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                 </disabled>
+                </palette>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font-size: 13px;
+margin-right: 3px;
+padding-top: 3px;
+padding-bottom: 3px;</string>
+               </property>
+               <property name="inputMethodHints">
+                <set>Qt::ImhNone</set>
+               </property>
+               <property name="text">
+                <string>None Scheduled</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::AutoText</enum>
+               </property>
+              </widget>
              </item>
              <item>
               <spacer name="horizontalSpacer">
@@ -477,6 +1136,15 @@
              </item>
              <item>
               <widget class="QSpinBox" name="scheduleDelaySpinBox">
+               <property name="styleSheet">
+                <string notr="true">QSpinBox{
+border-radius: 0px;
+border: 1px solid rgb(180, 180, 180);
+font-size: 13px;
+padding-top: 3px;
+padding-bottom: 3px;
+}</string>
+               </property>
                <property name="minimum">
                 <number>-180</number>
                </property>
@@ -487,6 +1155,16 @@
              </item>
              <item>
               <widget class="QPushButton" name="scheduleDelayButton">
+               <property name="styleSheet">
+                <string notr="true">font-size: 13px;
+margin-right: 0px;
+margin-left: 4px;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-right: 3px;
+padding-left: 3px;
+</string>
+               </property>
                <property name="text">
                 <string>Delay (mn)</string>
                </property>
@@ -494,65 +1172,48 @@
              </item>
             </layout>
            </item>
-           <item>
-            <widget class="QPushButton" name="scheduleToggleEnabledButton">
-             <property name="text">
-              <string>Start automation</string>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
           </layout>
          </widget>
         </item>
         <item>
          <widget class="QGroupBox" name="binGroupBox">
           <property name="styleSheet">
-           <string notr="true">border-color: rgb(0, 0, 0);</string>
+           <string notr="true">QGroupBox{
+	margin: 0px;
+    font-weight: bold;
+ }</string>
           </property>
           <property name="title">
            <string>Bin</string>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <property name="spacing">
-            <number>1</number>
+            <number>0</number>
            </property>
-           <property name="margin">
-            <number>1</number>
+           <property name="leftMargin">
+            <number>0</number>
            </property>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QPushButton" name="binAddMediaButton">
-               <property name="text">
-                <string>Add a media</string>
-               </property>
-               <property name="icon">
-                <iconset resource="../images.qrc">
-                 <normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="binDeleteMediaButton">
-               <property name="text">
-                <string>Delete</string>
-               </property>
-               <property name="icon">
-                <iconset resource="../images.qrc">
-                 <normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</iconset>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
+           <property name="topMargin">
+            <number>20</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
            <item>
             <widget class="MediaTableView" name="binTableView">
+             <property name="styleSheet">
+              <string notr="true">font-size: 13px;
+margin: 0px 0px 1px 0px;</string>
+             </property>
              <property name="editTriggers">
               <set>QAbstractItemView::SelectedClicked</set>
              </property>
@@ -565,12 +1226,12 @@
              <property name="defaultDropAction">
               <enum>Qt::CopyAction</enum>
              </property>
-             <property name="selectionMode">
-              <enum>QAbstractItemView::ExtendedSelection</enum>
-             </property>
              <property name="selectionBehavior">
               <enum>QAbstractItemView::SelectRows</enum>
              </property>
+             <attribute name="horizontalHeaderCascadingSectionResizes">
+              <bool>true</bool>
+             </attribute>
              <attribute name="horizontalHeaderStretchLastSection">
               <bool>true</bool>
              </attribute>
@@ -578,6 +1239,77 @@
               <bool>false</bool>
              </attribute>
             </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="sizeConstraint">
+              <enum>QLayout::SetNoConstraint</enum>
+             </property>
+             <property name="topMargin">
+              <number>3</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="binAddMediaButton">
+               <property name="styleSheet">
+                <string notr="true">padding-left: 8px;
+padding-right: 8px;
+margin-right: 10px;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="binDeleteMediaButton">
+               <property name="styleSheet">
+                <string notr="true">padding-left: 8px;
+padding-right: 8px;
+margin-left: 4px;
+</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
@@ -587,15 +1319,24 @@
       <widget class="QFrame" name="verticalFrame">
        <property name="minimumSize">
         <size>
-         <width>388</width>
+         <width>0</width>
          <height>0</height>
         </size>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout">
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
         <property name="spacing">
          <number>0</number>
         </property>
-        <property name="margin">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>10</number>
+        </property>
+        <property name="bottomMargin">
          <number>0</number>
         </property>
         <item>
@@ -604,7 +1345,16 @@
            <property name="spacing">
             <number>0</number>
            </property>
-           <property name="margin">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
             <number>0</number>
            </property>
            <item>
@@ -613,13 +1363,25 @@
               <property name="spacing">
                <number>0</number>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_12">
+               <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="0,0,0">
                 <property name="spacing">
                  <number>0</number>
+                </property>
+                <property name="sizeConstraint">
+                 <enum>QLayout::SetDefaultConstraint</enum>
                 </property>
                 <property name="leftMargin">
                  <number>0</number>
@@ -627,13 +1389,19 @@
                 <property name="topMargin">
                  <number>0</number>
                 </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
                 <item>
-                 <layout class="QGridLayout" name="gridLayout_Before">
+                 <layout class="QGridLayout" name="gridLayout_Before" rowstretch="0,0,0">
+                  <property name="sizeConstraint">
+                   <enum>QLayout::SetNoConstraint</enum>
+                  </property>
                   <property name="leftMargin">
                    <number>0</number>
                   </property>
                   <property name="topMargin">
-                   <number>7</number>
+                   <number>0</number>
                   </property>
                   <property name="rightMargin">
                    <number>0</number>
@@ -645,19 +1413,6 @@
                    <number>0</number>
                   </property>
                   <item row="1" column="0">
-                   <widget class="QLabel" name="labelBefore">
-                    <property name="frameShape">
-                     <enum>QFrame::NoFrame</enum>
-                    </property>
-                    <property name="text">
-                     <string>00:00:00</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignCenter</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="0">
                    <widget class="QLabel" name="screenBefore">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -667,9 +1422,12 @@
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>200</width>
-                      <height>200</height>
+                      <width>180</width>
+                      <height>180</height>
                      </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background: rgb(0, 0, 0);</string>
                     </property>
                     <property name="frameShape">
                      <enum>QFrame::StyledPanel</enum>
@@ -683,8 +1441,50 @@
                     <property name="text">
                      <string/>
                     </property>
-                    <property name="pixmap">
-                     <pixmap resource="../images.qrc">:/icons/resources/images/intertitle.jpg</pixmap>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="labelBefore">
+                    <property name="styleSheet">
+                     <string notr="true">font-size: 13px;
+ qproperty-alignment: AlignLeft;</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::NoFrame</enum>
+                    </property>
+                    <property name="text">
+                     <string>00:00:00</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="titleBefore">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>210</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">font-size: 13px;</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="scaledContents">
+                     <bool>false</bool>
+                    </property>
+                    <property name="wordWrap">
+                     <bool>true</bool>
                     </property>
                    </widget>
                   </item>
@@ -698,14 +1498,20 @@
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>250</width>
-                    <height>250</height>
-                   </size>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Plain</enum>
+                  </property>
+                  <property name="lineWidth">
+                   <number>1</number>
                   </property>
                   <property name="currentIndex">
-                   <number>0</number>
+                   <number>1</number>
                   </property>
                   <widget class="QWidget" name="page_stream">
                    <property name="sizePolicy">
@@ -714,10 +1520,81 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_13">
-                    <item>
-                     <layout class="QVBoxLayout" name="verticalLayout_stream">
-                      <property name="spacing">
+                   <layout class="QGridLayout" name="gridLayout">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item row="4" column="0">
+                     <widget class="QPushButton" name="disableButton">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>220</width>
+                        <height>27</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Disable</string>
+                      </property>
+                      <property name="icon">
+                       <iconset>
+                        <normaloff>:/icons/resources/glyphicons/glyphicons_086_display.png</normaloff>:/icons/resources/glyphicons/glyphicons_086_display.png</iconset>
+                      </property>
+                      <property name="checkable">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="6" column="0">
+                     <widget class="QLabel" name="label_stream">
+                      <property name="styleSheet">
+                       <string notr="true">font-size: 13px;
+ qproperty-alignment: AlignLeft;</string>
+                      </property>
+                      <property name="text">
+                       <string>00:00:00</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignLeading</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0">
+                     <widget class="QLabel" name="title_stream">
+                      <property name="maximumSize">
+                       <size>
+                        <width>210</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">font-size: 13px;</string>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="0">
+                     <layout class="QHBoxLayout" name="horizontalLayout_6">
+                      <property name="rightMargin">
                        <number>0</number>
                       </property>
                       <item>
@@ -730,45 +1607,9 @@
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>200</width>
-                          <height>173</height>
+                          <width>180</width>
+                          <height>153</height>
                          </size>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QPushButton" name="disableButton">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>200</width>
-                          <height>27</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string>Disable</string>
-                        </property>
-                        <property name="icon">
-                         <iconset resource="../images.qrc">
-                          <normaloff>:/icons/resources/glyphicons/glyphicons_086_display.png</normaloff>:/icons/resources/glyphicons/glyphicons_086_display.png</iconset>
-                        </property>
-                        <property name="checkable">
-                         <bool>true</bool>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QLabel" name="label_stream">
-                        <property name="text">
-                         <string>00:00:00</string>
-                        </property>
-                        <property name="alignment">
-                         <set>Qt::AlignCenter</set>
                         </property>
                        </widget>
                       </item>
@@ -784,6 +1625,21 @@
                     </sizepolicy>
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_14">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
                     <item>
                      <layout class="QGridLayout" name="gridLayout_screen">
                       <property name="leftMargin">
@@ -792,13 +1648,19 @@
                       <property name="spacing">
                        <number>0</number>
                       </property>
-                      <item row="2" column="0">
-                       <widget class="QLabel" name="label_screen">
-                        <property name="text">
-                         <string>00:00:00</string>
+                      <item row="0" column="0">
+                       <widget class="QLabel" name="title_screen">
+                        <property name="maximumSize">
+                         <size>
+                          <width>210</width>
+                          <height>16777215</height>
+                         </size>
                         </property>
-                        <property name="alignment">
-                         <set>Qt::AlignCenter</set>
+                        <property name="styleSheet">
+                         <string notr="true">font-size: 13px;</string>
+                        </property>
+                        <property name="text">
+                         <string/>
                         </property>
                        </widget>
                       </item>
@@ -818,8 +1680,8 @@
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>200</width>
-                          <height>200</height>
+                          <width>180</width>
+                          <height>180</height>
                          </size>
                         </property>
                         <property name="frameShape">
@@ -832,7 +1694,21 @@
                          <string/>
                         </property>
                         <property name="pixmap">
-                         <pixmap resource="../images.qrc">:/icons/resources/images/intertitle.jpg</pixmap>
+                         <pixmap>:/icons/resources/images/intertitle.jpg</pixmap>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="0">
+                       <widget class="QLabel" name="label_screen">
+                        <property name="styleSheet">
+                         <string notr="true">font-size: 13px;
+ qproperty-alignment: AlignLeft;</string>
+                        </property>
+                        <property name="text">
+                         <string>00:00:00</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignLeading</set>
                         </property>
                        </widget>
                       </item>
@@ -848,25 +1724,27 @@
                     </sizepolicy>
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_15">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
                     <item>
                      <layout class="QGridLayout" name="gridLayout_none">
                       <property name="spacing">
                        <number>0</number>
                       </property>
                       <item row="1" column="0">
-                       <widget class="QLabel" name="label_none">
-                        <property name="frameShape">
-                         <enum>QFrame::NoFrame</enum>
-                        </property>
-                        <property name="text">
-                         <string>00:00:00</string>
-                        </property>
-                        <property name="alignment">
-                         <set>Qt::AlignCenter</set>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="0" column="0">
                        <widget class="QLabel" name="screen_none">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -876,8 +1754,8 @@
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>200</width>
-                          <height>200</height>
+                          <width>180</width>
+                          <height>180</height>
                          </size>
                         </property>
                         <property name="frameShape">
@@ -890,7 +1768,43 @@
                          <string/>
                         </property>
                         <property name="pixmap">
-                         <pixmap resource="../images.qrc">:/icons/resources/images/intertitle.jpg</pixmap>
+                         <pixmap>:/icons/resources/images/intertitle.jpg</pixmap>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="0">
+                       <widget class="QLabel" name="label_none">
+                        <property name="styleSheet">
+                         <string notr="true">font-size: 13px;
+ qproperty-alignment: AlignLeft;</string>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::NoFrame</enum>
+                        </property>
+                        <property name="text">
+                         <string>00:00:00</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignLeading</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="0">
+                       <widget class="QLabel" name="title_none">
+                        <property name="maximumSize">
+                         <size>
+                          <width>210</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">font-size: 13px;</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="wordWrap">
+                         <bool>true</bool>
                         </property>
                        </widget>
                       </item>
@@ -906,7 +1820,7 @@
                    <number>0</number>
                   </property>
                   <property name="topMargin">
-                   <number>7</number>
+                   <number>0</number>
                   </property>
                   <property name="rightMargin">
                    <number>0</number>
@@ -917,8 +1831,31 @@
                   <property name="spacing">
                    <number>0</number>
                   </property>
-                  <item row="1" column="0">
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="titleAfter">
+                    <property name="maximumSize">
+                     <size>
+                      <width>210</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">font-size: 13px;</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="wordWrap">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
                    <widget class="QLabel" name="labelAfter">
+                    <property name="styleSheet">
+                     <string notr="true">font-size: 13px;
+ qproperty-alignment: AlignLeft;</string>
+                    </property>
                     <property name="frameShape">
                      <enum>QFrame::NoFrame</enum>
                     </property>
@@ -926,11 +1863,11 @@
                      <string>00:00:00</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignCenter</set>
+                     <set>Qt::AlignLeading</set>
                     </property>
                    </widget>
                   </item>
-                  <item row="0" column="0">
+                  <item row="1" column="0">
                    <widget class="QLabel" name="screenAfter">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -940,9 +1877,12 @@
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>200</width>
-                      <height>200</height>
+                      <width>180</width>
+                      <height>180</height>
                      </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background: rgb(0, 0, 0);</string>
                     </property>
                     <property name="frameShape">
                      <enum>QFrame::StyledPanel</enum>
@@ -953,450 +1893,11 @@
                     <property name="text">
                      <string/>
                     </property>
-                    <property name="pixmap">
-                     <pixmap resource="../images.qrc">:/icons/resources/images/intertitle.jpg</pixmap>
-                    </property>
                    </widget>
                   </item>
                  </layout>
                 </item>
                </layout>
-              </item>
-              <item>
-               <widget class="QWidget" name="mediaSettingsWidget" native="true">
-                <layout class="QHBoxLayout" name="horizontalLayout_7">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <property name="margin">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QFrame" name="frame">
-                   <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_10">
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
-                    <property name="margin">
-                     <number>1</number>
-                    </property>
-                    <item>
-                     <widget class="QGroupBox" name="groupBox_3">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="autoFillBackground">
-                       <bool>false</bool>
-                      </property>
-                      <property name="title">
-                       <string>General</string>
-                      </property>
-                      <layout class="QVBoxLayout" name="verticalLayout_11">
-                       <property name="spacing">
-                        <number>0</number>
-                       </property>
-                       <property name="margin">
-                        <number>0</number>
-                       </property>
-                       <item>
-                        <layout class="QFormLayout" name="formLayout_4">
-                         <property name="fieldGrowthPolicy">
-                          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-                         </property>
-                         <property name="formAlignment">
-                          <set>Qt::AlignHCenter|Qt::AlignTop</set>
-                         </property>
-                         <property name="horizontalSpacing">
-                          <number>0</number>
-                         </property>
-                         <property name="verticalSpacing">
-                          <number>0</number>
-                         </property>
-                         <item row="1" column="0">
-                          <widget class="QLabel" name="videoTrackLabel">
-                           <property name="text">
-                            <string>Video track</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="1" column="1">
-                          <widget class="QComboBox" name="videoTrackComboBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="4" column="0">
-                          <widget class="QLabel" name="ratioLabel">
-                           <property name="text">
-                            <string>Ratio</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="4" column="1">
-                          <widget class="QComboBox" name="ratioComboBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="7" column="1">
-                          <widget class="QComboBox" name="subtitlesTrackComboBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="7" column="0">
-                          <widget class="QLabel" name="subtitlesTrackLabel">
-                           <property name="text">
-                            <string>Subtitles track</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="10" column="1">
-                          <widget class="QDoubleSpinBox" name="subtitlesSyncSpinBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="minimum">
-                            <double>-99.900000000000006</double>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="10" column="0">
-                          <widget class="QLabel" name="subtitlesSyncLabel">
-                           <property name="text">
-                            <string>Subtitles sync</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="9" column="1">
-                          <widget class="QComboBox" name="subtitlesEncodecomboBox"/>
-                         </item>
-                         <item row="9" column="0">
-                          <widget class="QLabel" name="label_SubtiltesEncode">
-                           <property name="text">
-                            <string>Subtitles encode</string>
-                           </property>
-                          </widget>
-                         </item>
-                        </layout>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QFrame" name="frame_2">
-                   <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_12">
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
-                    <property name="margin">
-                     <number>1</number>
-                    </property>
-                    <item>
-                     <widget class="QGroupBox" name="groupBox_4">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="title">
-                       <string>Picture</string>
-                      </property>
-                      <layout class="QVBoxLayout" name="verticalLayout_13" stretch="0">
-                       <property name="spacing">
-                        <number>0</number>
-                       </property>
-                       <property name="margin">
-                        <number>0</number>
-                       </property>
-                       <item>
-                        <layout class="QFormLayout" name="formLayout">
-                         <property name="formAlignment">
-                          <set>Qt::AlignHCenter|Qt::AlignTop</set>
-                         </property>
-                         <property name="horizontalSpacing">
-                          <number>0</number>
-                         </property>
-                         <property name="verticalSpacing">
-                          <number>0</number>
-                         </property>
-                         <item row="0" column="0">
-                          <widget class="QLabel" name="gammaLabel">
-                           <property name="text">
-                            <string>Gamma</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="2" column="0">
-                          <widget class="QLabel" name="brightnessLabel">
-                           <property name="text">
-                            <string>Brightness</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="3" column="0">
-                          <widget class="QLabel" name="saturationLabel">
-                           <property name="text">
-                            <string>Saturation</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="4" column="0">
-                          <widget class="QLabel" name="hueLabel">
-                           <property name="text">
-                            <string>Hue</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="4" column="1">
-                          <widget class="QSpinBox" name="hueSpinBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="minimum">
-                            <number>0</number>
-                           </property>
-                           <property name="maximum">
-                            <number>20</number>
-                           </property>
-                           <property name="value">
-                            <number>1</number>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="0" column="1">
-                          <widget class="QDoubleSpinBox" name="gammaSpinBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="maximum">
-                            <double>10.000000000000000</double>
-                           </property>
-                           <property name="singleStep">
-                            <double>0.100000000000000</double>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="1" column="1">
-                          <widget class="QDoubleSpinBox" name="contrastSpinBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="maximum">
-                            <double>2.000000000000000</double>
-                           </property>
-                           <property name="singleStep">
-                            <double>0.100000000000000</double>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="2" column="1">
-                          <widget class="QDoubleSpinBox" name="brightnessSpinBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="maximum">
-                            <double>2.000000000000000</double>
-                           </property>
-                           <property name="singleStep">
-                            <double>0.100000000000000</double>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="3" column="1">
-                          <widget class="QDoubleSpinBox" name="saturationSpinBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="maximum">
-                            <double>3.000000000000000</double>
-                           </property>
-                           <property name="singleStep">
-                            <double>0.100000000000000</double>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="1" column="0">
-                          <widget class="QLabel" name="contrastLabel">
-                           <property name="text">
-                            <string>Contrast</string>
-                           </property>
-                          </widget>
-                         </item>
-                        </layout>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QFrame" name="frame_3">
-                   <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_14">
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
-                    <property name="margin">
-                     <number>1</number>
-                    </property>
-                    <item>
-                     <widget class="QGroupBox" name="groupBox_5">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="title">
-                       <string>Audio</string>
-                      </property>
-                      <layout class="QVBoxLayout" name="verticalLayout_15">
-                       <property name="spacing">
-                        <number>0</number>
-                       </property>
-                       <property name="margin">
-                        <number>0</number>
-                       </property>
-                       <item>
-                        <layout class="QFormLayout" name="formLayout_2">
-                         <property name="fieldGrowthPolicy">
-                          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-                         </property>
-                         <property name="formAlignment">
-                          <set>Qt::AlignHCenter|Qt::AlignTop</set>
-                         </property>
-                         <property name="horizontalSpacing">
-                          <number>0</number>
-                         </property>
-                         <property name="verticalSpacing">
-                          <number>0</number>
-                         </property>
-                         <item row="6" column="0">
-                          <widget class="QLabel" name="audioTrackLabel">
-                           <property name="text">
-                            <string>Audio track</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="6" column="1">
-                          <widget class="QComboBox" name="audioTrackComboBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="7" column="0">
-                          <widget class="QLabel" name="audioGainLabel">
-                           <property name="text">
-                            <string>Audio gain</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="7" column="1">
-                          <widget class="QDoubleSpinBox" name="audioGainDoubleSpinBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="maximum">
-                            <double>3.010000000000000</double>
-                           </property>
-                           <property name="singleStep">
-                            <double>0.010000000000000</double>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="8" column="0">
-                          <widget class="QLabel" name="audioSyncLabel">
-                           <property name="text">
-                            <string>Audio sync</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item row="8" column="1">
-                          <widget class="QDoubleSpinBox" name="audioSyncDoubleSpinBox">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="minimum">
-                            <double>-99.989999999999995</double>
-                           </property>
-                          </widget>
-                         </item>
-                        </layout>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
               </item>
              </layout>
             </widget>
@@ -1407,397 +1908,24 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_11">
           <property name="spacing">
+           <number>4</number>
+          </property>
+          <property name="sizeConstraint">
+           <enum>QLayout::SetDefaultConstraint</enum>
+          </property>
+          <property name="leftMargin">
            <number>0</number>
           </property>
-          <property name="margin">
-           <number>1</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="advancedSettingsButton">
-            <property name="text">
-             <string>Advanced settings</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../images.qrc">
-              <normaloff>:/icons/resources/glyphicons/glyphicons_137_cogwheels.png</normaloff>:/icons/resources/glyphicons/glyphicons_137_cogwheels.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="advancedPictureSettingsButton">
-            <property name="text">
-             <string>Advanced picture settings</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../images.qrc">
-              <normaloff>:/icons/resources/glyphicons/glyphicons_138_picture.png</normaloff>:/icons/resources/glyphicons/glyphicons_138_picture.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="lockButton">
-            <property name="text">
-             <string>Lock</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../images.qrc">
-              <normaloff>:/icons/resources/glyphicons/glyphicons_204_unlock.png</normaloff>
-              <normalon>:/icons/resources/glyphicons/glyphicons_203_lock.png</normalon>:/icons/resources/glyphicons/glyphicons_204_unlock.png</iconset>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="spacing">
+          <property name="topMargin">
            <number>0</number>
           </property>
-          <property name="margin">
-           <number>1</number>
+          <property name="rightMargin">
+           <number>0</number>
           </property>
-          <item>
-           <widget class="QTabWidget" name="playlistsTabWidget">
-            <property name="currentIndex">
-             <number>-1</number>
-            </property>
-            <property name="tabsClosable">
-             <bool>true</bool>
-            </property>
-            <property name="movable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_9">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="margin">
-             <number>1</number>
-            </property>
-            <item>
-             <widget class="QPushButton" name="addPlaylistButton">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>30</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Add a new playlist</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../images.qrc">
-                <normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="editNamePlaylistButton">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>30</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Rename current playlist</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../images.qrc">
-                <normaloff>:/icons/resources/glyphicons/glyphicons_030_pencil.png</normaloff>:/icons/resources/glyphicons/glyphicons_030_pencil.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QFrame" name="separatorFrame">
-              <property name="frameShape">
-               <enum>QFrame::HLine</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Sunken</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="playlistUpButton">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>30</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Move selected item up</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../images.qrc">
-                <normaloff>:/icons/resources/glyphicons/glyphicons_213_up_arrow.png</normaloff>:/icons/resources/glyphicons/glyphicons_213_up_arrow.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="deletePlaylistItemButton">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>30</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Remove selected item</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../images.qrc">
-                <normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="playlistDownButton">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>30</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Move selected item down</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../images.qrc">
-                <normaloff>:/icons/resources/glyphicons/glyphicons_212_down_arrow.png</normaloff>:/icons/resources/glyphicons/glyphicons_212_down_arrow.png</iconset>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
          </layout>
-        </item>
-        <item>
-         <widget class="SeekWidget" name="seekWidget" native="true">
-          <layout class="QGridLayout" name="gridLayout">
-           <property name="margin">
-            <number>0</number>
-           </property>
-           <property name="spacing">
-            <number>0</number>
-           </property>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QWidget" name="playerControlsWidget" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_6">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="margin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QPushButton" name="playerPlayButton">
-             <property name="minimumSize">
-              <size>
-               <width>50</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../images.qrc">
-               <normaloff>:/icons/resources/glyphicons/glyphicons_173_play.png</normaloff>
-               <normalon>:/icons/resources/glyphicons/glyphicons_174_pause.png</normalon>:/icons/resources/glyphicons/glyphicons_173_play.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="playerPreviousButton">
-             <property name="minimumSize">
-              <size>
-               <width>50</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../images.qrc">
-               <normaloff>:/icons/resources/glyphicons/glyphicons_170_step_backward.png</normaloff>:/icons/resources/glyphicons/glyphicons_170_step_backward.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="playerNextButton">
-             <property name="minimumSize">
-              <size>
-               <width>50</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../images.qrc">
-               <normaloff>:/icons/resources/glyphicons/glyphicons_178_step_forward.png</normaloff>:/icons/resources/glyphicons/glyphicons_178_step_forward.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="playerStopButton">
-             <property name="minimumSize">
-              <size>
-               <width>50</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../images.qrc">
-               <normaloff>:/icons/resources/glyphicons/glyphicons_175_stop.png</normaloff>:/icons/resources/glyphicons/glyphicons_175_stop.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string/>
-             </property>
-             <property name="pixmap">
-              <pixmap resource="../images.qrc">:/icons/resources/glyphicons/glyphicons_183_volume_down.png</pixmap>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSlider" name="playerVolumeSlider">
-             <property name="maximumSize">
-              <size>
-               <width>500</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="maximum">
-              <number>100</number>
-             </property>
-             <property name="value">
-              <number>50</number>
-             </property>
-             <property name="tracking">
-              <bool>true</bool>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_2">
-             <property name="text">
-              <string/>
-             </property>
-             <property name="pixmap">
-              <pixmap resource="../images.qrc">:/icons/resources/glyphicons/glyphicons_184_volume_up.png</pixmap>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="playerVolumeLabel">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>24</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>24</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="text">
-              <string notr="true">50</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
         </item>
        </layout>
       </widget>
@@ -1810,14 +1938,15 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1287</width>
-     <height>26</height>
+     <width>1166</width>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="addMediaAction"/>
     <addaction name="newListingAction"/>
     <addaction name="openListingAction"/>
     <addaction name="saveAction"/>
@@ -2142,45 +2271,28 @@
     <string>Log</string>
    </property>
   </action>
+  <action name="addMediaAction">
+   <property name="text">
+    <string>Add a media</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Return</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
    <class>VideoWidget</class>
    <extends>QWidget</extends>
-   <header location="global">videowidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SeekWidget</class>
-   <extends>QWidget</extends>
-   <header>seekwidget.h</header>
+   <header>videowidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>MediaTableView</class>
    <extends>QTableView</extends>
-   <header>mediatableview.h</header>
+   <header location="global">mediatableview.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../images.qrc"/>
- </resources>
- <connections>
-  <connection>
-   <sender>playerVolumeSlider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>playerVolumeLabel</receiver>
-   <slot>setNum(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1216</x>
-     <y>601</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1266</x>
-     <y>606</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <resources/>
+ <connections/>
 </ui>

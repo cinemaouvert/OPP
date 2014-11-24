@@ -37,7 +37,13 @@ class VideoTrack : public Track
 {
     Q_OBJECT
 public:
-    explicit VideoTrack(libvlc_media_track_info_t *vlcTrackInfo, QObject *parent = 0);
+
+    /** VLC before version 2.1.0 */
+    explicit VideoTrack(libvlc_media_track_info_t* vlcTrackInfo, QObject *parent = 0);
+
+    /** VLC after version 2.1.0 */
+    explicit VideoTrack(libvlc_media_track_t** vlcTrackInfo, QObject *parent = 0);
+
     explicit VideoTrack(QObject *parent = 0);
 
     /**

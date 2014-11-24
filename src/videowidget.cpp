@@ -39,13 +39,109 @@
     #include <qx11info_x11.h>
 #endif
 
+#if defined(Q_OS_MAC)
+/************ INTERFACE ***************/
+@interface CustomView : NSView {
+    NSPoint location;
+
+    NSColor *itemColor;
+
+    NSColor *backgroundColor;
+
+    id delegate;
+    NSColor * backColor;
+    BOOL stretchesVideo;
+
+}
+
+- (id)initWithFrame:(NSRect)rect;
+
+/****** Draw the View Content *******/
+
+- (void)drawRect:(NSRect)rect;
+
+    - (void)addVoutSubview:(NSView *)view;
+   - (void)removeVoutSubview:(NSView *)view;
+
+/* Properties */
+@property (assign) id delegate;
+@property (copy) NSColor *backColor;
+@property BOOL fillScreen;
+
+@end // End interface prototype
+
+
+/************** IMPLEMENTATION ****************/
+@implementation CustomView
+
+    - (id)initWithFrame:(NSRect)rect {
+        if (self = [super initWithFrame:rect])
+        {
+            self.delegate = nil;
+            self.backColor = [NSColor blackColor];
+            self.fillScreen = NO;
+            [self setAutoresizesSubviews:YES];
+        }
+
+        return self;
+    }
+
+    // Release the View
+    - (void)dealloc
+    {
+        // release the color items and set
+        // the instance variables to nil
+
+        [itemColor release];
+
+        itemColor=nil;
+
+        [backgroundColor release];
+
+        backgroundColor=nil;
+
+        self.delegate = nil;
+        self.backColor = nil;
+
+        // call super
+        [super dealloc];
+    }
+
+    // Draw the View Content
+    - (void)drawRect:(NSRect)rect
+    {
+        // Fill in background Color
+        CGContextRef context = (CGContextRef) [[NSGraphicsContext currentContext] graphicsPort];
+        CGContextSetRGBFillColor(context, 0.0, 0.0, 0.0, 1.0);
+        CGContextFillRect(context, NSRectToCGRect(rect));
+    }
+
+    - (void)addVoutSubview:(NSView *)view
+      {
+            [view setFrame:[self bounds]];
+            [self addSubview:view];
+            [view setAutoresizingMask: NSViewHeightSizable |NSViewWidthSizable];
+     }
+            - (void)removeVoutSubview:(NSView *)view
+            {
+            [view removeFromSuperview];
+            }
+
+    /* Properties */
+    @synthesize delegate;
+    @synthesize backColor;
+
+@end
+/************ END ******************/
+#endif
+
 VideoWidget::VideoWidget(QWidget *parent)
     :
-#if defined(Q_OS_MAC)
-      QMacCocoaViewContainer(0, parent)
-#else
-      QWidget(parent)
-#endif
+    #if defined(Q_OS_MAC)
+          QMacCocoaViewContainer(0, parent)
+    #else
+          QWidget(parent)
+    #endif
 {
     init();
 }
@@ -65,9 +161,42 @@ VideoWidget::~VideoWidget()
 void VideoWidget::init()
 {
 #if defined(Q_OS_MAC)
-    NSView *video = [[NSView alloc] init];
+    CustomView *video = [[CustomView alloc] init];
+
+    //CustomView *content = [[CustomView alloc] init];
+    //[video addSubview:content];
+    //[content setAutoresizingMask: NSViewHeightSizable|NSViewWidthSizable];
+
+    /***** A ENLEVER, NON UTILISE *********/
+    NSInteger osxVersion;
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6) {
+        //10.6.x or earlier systems
+        osxVersion = 106;
+        //NSLog(@"Mac OSX Snow Leopard");
+    } else if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7) {
+        /* On a 10.7 - 10.7.x system */
+        osxVersion = 107;
+        //NSLog(@"Mac OSX Lion");
+    } else if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_8) {
+        /* On a 10.8 - 10.8.x system */
+        osxVersion = 108;
+        //NSLog(@"Mac OSX Moutain Lion");
+    } else {
+        /* 10.9 or later system */
+        osxVersion = 109;
+        //NSLog(@"Mac OSX: Mavericks or Later");
+    }
+    /***************************************/
+
     setCocoaView(video);
+
+    // Used by libvlc to change the aspect ratio (IMPORTANT)
+
+    [video setAutoresizesSubviews: YES];
+    [video setAutoresizingMask: NSViewHeightSizable|NSViewWidthSizable];
+
     [video release];
+
 #else
     _layout = new QHBoxLayout(this);
     _layout->setContentsMargins(0, 0, 0, 0);

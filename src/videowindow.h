@@ -28,6 +28,7 @@
 #define VIDEOWINDOW_H
 
 #include <QMainWindow>
+#include <QShortcut>
 
 #include "videowidget.h"
 
@@ -53,7 +54,9 @@ public:
         PROJECTION = 1
     };
 
-    explicit VideoWindow(QWidget *parent = 0,const DisplayMode &mode = WINDOW);
+    VideoWindow(QWidget *parent, const DisplayMode &mode);
+
+    VideoWindow(QWidget *parent = 0, int width = 640, int height = 480);
 
     ~VideoWindow();
 
@@ -89,6 +92,11 @@ public:
      */
     void closeEvent (QCloseEvent *event);
 
+private slots:
+    void switchVideoMode();
+
+    void escapeFullscreen();
+
 signals:
     /**
      * @brief Signal launch when we close the window
@@ -96,6 +104,7 @@ signals:
      * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
      */
     void closed();
+
 private:
     /**
      * @brief _videoWidget The video widget
@@ -106,6 +115,10 @@ private:
      * @brief _mode The display mode
      */
     DisplayMode _mode;
+
+    QShortcut* _f1_shortcut;
+
+    QShortcut* _escape_shortcut;
 };
 
 #endif // VIDEOWINDOW_H

@@ -26,11 +26,12 @@
 #include "customeventfilter.h"
 #include <QDebug>
 
-CustomEventFilter::CustomEventFilter(Locker* lock, QObject *parent) :
+CustomEventFilter::CustomEventFilter(MainWindow* win, QObject *parent) :
     QObject(parent)
 {
-    _lock = lock;
+    _lock = win->locker();
     _timer = new QTimer();
+    _mw = win;
 }
 
 CustomEventFilter::~CustomEventFilter()
@@ -40,10 +41,39 @@ CustomEventFilter::~CustomEventFilter()
 
 bool CustomEventFilter::eventFilter(QObject * o, QEvent * e)
 {
-    if(e->type() == QEvent::MouseMove && _lock->getAutoLock() && _lock->getTime()!=-1){
+    /**
+     * Handle the autolock.
+     */
+    if(e->type() == QEvent::MouseMove && _lock->getAutoLock() && _lock->getTime() != -1){
         _timer->connect(_timer, SIGNAL(timeout()), _lock, SLOT(autoLock()));
         _timer->start(_lock->getTime()*60);
     }
+
+    /**
+     * If the user click anywhere left hand of the Playlist tab widget,
+     * the tab widget select the active track.
+     */
+    else if(e->type() == QEvent::MouseButtonPress)
+    {
+        QMouseEvent* event = static_cast<QMouseEvent*>(e);
+
+        QTabWidget* p = _mw->playlistTabWidget();
+
+        int mouseGlobalX = event->globalX() - _mw->x();
+        int pGlobalX = _mw->x() + p->x();
+
+        if((mouseGlobalX < pGlobalX
+            || mouseGlobalX > pGlobalX + p->width())
+          )
+        {
+            int currentIndex = p->currentIndex();
+            PlaylistTableView* view = (PlaylistTableView*) p->widget(currentIndex);
+            view->selectPlayingItem();
+        }
+    }
+
+    QObject::eventFilter(o, e);
+
     return false;
 }
 

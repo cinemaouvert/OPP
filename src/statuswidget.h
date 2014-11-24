@@ -27,6 +27,7 @@
 #define STATUSWIDGET_H
 
 #include <QWidget>
+#include <QPushButton>
 
 namespace Ui {
 class StatusWidget;
@@ -49,6 +50,11 @@ public slots:
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setMediaCount(int count);
+
+    /**
+     * @brief lockButton
+     */
+    QPushButton* lockButton() const;
 
 protected:
     /**

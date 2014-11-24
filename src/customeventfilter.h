@@ -26,25 +26,22 @@
 #ifndef CUSTOMEVENTFILTER_H
 #define CUSTOMEVENTFILTER_H
 
+#include "mainwindow.h"
+#include "playlisttableview.h"
 #include "locker.h"
 
 #include <QObject>
 #include <QEvent>
+#include <QMouseEvent>
 #include <QTimer>
 
 class CustomEventFilter : public QObject
 {
     Q_OBJECT
 public:
-    explicit CustomEventFilter(Locker* lock, QObject *parent = 0);
+    explicit CustomEventFilter(MainWindow* lock, QObject *parent = 0);
     virtual ~CustomEventFilter();
 
-    /**
-     * @brief GetFilename
-     * @return false
-     *
-     * @author Geoffrey Bergé <geoffrey.berge@live.fr>
-     */
     bool eventFilter(QObject * o, QEvent * e);
 
 private:
@@ -52,11 +49,16 @@ private:
      * @brief The timer
      */
     QTimer* _timer;
+
     /**
      * @brief The locker
      */
     Locker* _lock;
-    
+
+    /**
+     * @brief The main window
+     */
+    MainWindow* _mw;
 };
 
 #endif // CUSTOMEVENTFILTER_H

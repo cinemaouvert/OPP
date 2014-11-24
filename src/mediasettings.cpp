@@ -36,6 +36,11 @@ MediaSettings::MediaSettings(QObject *parent) :
     initDefault();
 }
 
+QString MediaSettings::subtitlesFile() const
+{
+    return _subtitlesFile;
+}
+
 void MediaSettings::setRatio(Ratio ratio) {
     _ratio = ratio;
     emit ratioChanged(_ratio);
@@ -69,6 +74,12 @@ void MediaSettings::setVideoTrack(const int &track){
 void MediaSettings::setSubtitlesTrack(const int &track){
     _subtitlesTrack = track;
     emit subtitlesTrackChanged(_subtitlesTrack);
+}
+
+void MediaSettings::setSubtitlesFile(QString file)
+{
+    _subtitlesFile = file;
+    emit subtitlesFileChanged(file);
 }
 
 void MediaSettings::setSubtitlesEncode(const int &encode){
@@ -174,6 +185,7 @@ void MediaSettings::initDefault()
     _audioFadeIn = 0;
     _videoFadeOut = 0;
     _videoFadeIn = 0;
+    _subtitlesFile = "";
 }
 
 QStringList MediaSettings::ratioValues()

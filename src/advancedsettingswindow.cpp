@@ -102,7 +102,6 @@ void AdvancedSettings::setPlayback(Playback* playback)
 
     //ui->comboBox_testPattern->setCurrentIndex(_playback->mediaSettings()->testPattern());
 
-
     /*Fill table*/
     while (ui->tableWidget_information->rowCount() > 0)
     {

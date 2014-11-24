@@ -26,7 +26,7 @@
 #include "schedule.h"
 #include <iostream>
 #include <cstdlib>
-#include "playlist.h"
+#include "Playlist.h"
 
 Schedule::Schedule(Playlist *playlist, const QDateTime &launchAt, QObject *parent) :
     QObject(parent),

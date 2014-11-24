@@ -37,7 +37,12 @@ class MediaTableView : public QTableView
     Q_OBJECT
 public:
     explicit MediaTableView(QWidget *parent = 0);
+
+    void setModel(QAbstractItemModel *model);
     
+public slots:
+    void showHeaders(int mediaCount);
+
 protected:
     /**
      * @brief mousePressEvent

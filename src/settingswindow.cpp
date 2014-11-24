@@ -51,6 +51,13 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     ui(new Ui::SettingsWindow)
 {
     ui->setupUi(this);
+
+    /**
+     * default
+     */
+    QSettings settings("opp","opp");
+    settings.setValue("openLastUsedListing", true);
+
     init();
 }
 
@@ -70,6 +77,10 @@ void SettingsWindow::init(){
     sl << "White" << "Yellow";
     ui->comboBox_SubtitleColor->addItems(sl);
     ui->comboBox_SubtitleColor->setCurrentIndex(settings.value("subtitleColor").toInt());
+
+    if(settings.value("openLastUsedListing").toBool()){
+        ui->openLastUsedListing->setChecked(true);
+    }
 }
 
 SettingsWindow::~SettingsWindow()
@@ -180,13 +191,25 @@ void SettingsWindow::on_radioButton_None_clicked()
 void SettingsWindow::on_restart_clicked()
 {
     accept();
+    QSettings settings("opp","opp");
+
     ((MainWindow *)this->parent())->verifSave();
-    if(((MainWindow *)this->parent())->getFilename().compare("")!=0) {
+    if(((MainWindow *)this->parent())->filename().compare("") != 0 && settings.value("openLastUsedListing").toBool()) {
         QStringList* arguments = new QStringList();
-        arguments->append(((MainWindow *)this->parent())->getFilename());
+        arguments->append(((MainWindow *)this->parent())->filename());
         QProcess::startDetached(QApplication::applicationFilePath(), *arguments);
     }
     else
         QProcess::startDetached(QApplication::applicationFilePath());
     exit(2);
+}
+
+void SettingsWindow::on_openLastUsedListing_clicked()
+{
+    QSettings settings("opp","opp");
+    if(ui->openLastUsedListing->isChecked()){
+        settings.setValue("openLastUsedListing", true);
+    }else{
+        settings.setValue("openLastUsedListing", false);
+    }
 }

@@ -35,7 +35,12 @@ class AudioTrack : public Track
 {
     Q_OBJECT
 public:
+    /** VLC before version 2.1.0 */
     explicit AudioTrack(libvlc_media_track_info_t *vlcTrackInfo, QObject *parent = 0);
+
+    /** VLC after version 2.1.0 */
+    explicit AudioTrack(libvlc_media_track_t** vlcTrackInfo, QObject *parent = 0);
+
     explicit AudioTrack(QObject *parent = 0);
 
     /**

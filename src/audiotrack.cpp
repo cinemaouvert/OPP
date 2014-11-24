@@ -25,10 +25,18 @@
 
 #include "audiotrack.h"
 
+/** VLC before version 2.1.0 */
 AudioTrack::AudioTrack(libvlc_media_track_info_t *vlcTrackInfo, QObject *parent) :
     Track(vlcTrackInfo, parent)
 {
 }
+
+/** VLC after version 2.1.0 */
+AudioTrack::AudioTrack(libvlc_media_track_t** vlcTrackInfo, QObject *parent) :
+    Track(vlcTrackInfo, parent)
+{
+}
+
 
 AudioTrack::AudioTrack(QObject *parent) :
     Track(parent)

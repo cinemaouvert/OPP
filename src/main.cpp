@@ -24,97 +24,11 @@
  * along with Open Projection Program. If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************************/
 
-#include <QDebug>
-#include <QTranslator>
-#include <QSettings>
-#include <QLibraryInfo>
-#include <QDir>
-#include <QCoreApplication>
-#include <QTextCodec>
-
-#if (QT_VERSION >= 0x050000) // Qt version 5 and above
-    #include <QApplication>
-    #include <QDesktopWidget>
-#else // until version 5
-    #include <QtGui/QApplication>
-    #include <QtGui/QDesktopWidget>
-#endif
-
-#include <QMessageBox>
-
-#include "mainwindow.h"
-#include "customeventfilter.h"
-#include "config.h"
-#include "utils.h"
+#include "application.h"
 
 int main(int argc, char *argv[])
 {
-
-    QApplication a(argc, argv);
-	
-	/** 
-	 * Set the library path to prevent the Qt default 
-	 * behaviour which is to load the Qt dependencies
-	 * from the Qt folder installed on the computer.
-	 * Useful for deploy the software.
-	 */
-	#if defined( Q_OS_MAC )
-		QStringList libPaths;
-		libPaths << a.applicationDirPath() + "/../PlugIns";
-		QApplication::setLibraryPaths( libPaths );
-	#endif
-
-    #if (QT_VERSION >= 0x050000) // Qt version 5 and above
-        QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
-    #else // until version 5
-        QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-    #endif
-
-    /*Settings initialization*/
-    QSettings settings("opp", "opp");
-
-    if(!settings.contains("moviesPath"))
-        settings.setValue("moviesPath", QDir::homePath ());
-
-    if(!settings.contains("updatePath"))
-        settings.setValue("updatePath", config_opp::URL);
-
-    if(!settings.contains("lang"))
-    {
-        /*Check if OS language is available, if not English is set as default language*/
-        QString locale = QLocale::system().name().section('_', 0, 0);
-        if(locale=="fr")
-            settings.setValue("lang","fr");
-        else
-            settings.setValue("lang","en");
-    }
-
-    //TODO TEST TRANSLATION FILES
-    /*Translation file*/
-    QString translationFile = "opp_";
-    translationFile+=settings.value("lang").toString();
-    //translationFile+="fr";
-
-    QTranslator translator;
-    translator.load(translationFile);
-    a.installTranslator(&translator);
-
-    QTranslator translator2;
-    translator2.load(QString("qt_") + settings.value("lang").toString(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    //translator2.load(QString("qt_fr"), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-
-    a.installTranslator(&translator2);
-
-    MainWindow win;
-    a.installEventFilter(new CustomEventFilter(win.getLocker(),&a));
-
-    #if (QT_VERSION >= 0x050000) // Qt version 5 and above
-        qInstallMessageHandler(MainWindow::myMessageHandler);
-    #else // until version 5
-        qInstallMsgHandler(MainWindow::myMessageHandler);
-    #endif
-
-    win.show();
+   Application a(argc, argv);
 
     return a.exec();
 }

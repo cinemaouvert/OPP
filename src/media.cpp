@@ -26,6 +26,7 @@
  * along with Open Projection Program. If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************************/
 
+#include "config.h"
 #include "media.h"
 
 #include <string.h>
@@ -38,9 +39,12 @@
 int Media::s_instanceCount = 0;
 
 Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *parent , bool isFile) :
-    QObject(parent),_original(NULL),
-    _usageCount(0)
+    QObject(parent), _usageCount(0), _original(NULL)
 {
+    _id = s_instanceCount;
+
+    s_instanceCount++;
+
     initMedia(location);
     if(isFile)
         _vlcMedia = libvlc_media_new_path(vlcInstance, location.toStdString().data());
@@ -51,8 +55,9 @@ Media::Media(const QString &location, libvlc_instance_t *vlcInstance, QObject *p
     parseMediaInfos();
 }
 
-Media::Media(Media *media,bool incrementParent)
+Media::Media(Media *media, bool incrementParent)
 {
+    s_instanceCount++;
 
     _original = media;
     initMedia(media->_location);
@@ -65,8 +70,6 @@ Media::Media(Media *media,bool incrementParent)
         media->usageCountAdd();
     _id = media->_id;
     parseMediaInfos();
-
-
 }
 
 Media::~Media()
@@ -74,35 +77,63 @@ Media::~Media()
     libvlc_media_release(_vlcMedia);
 }
 
-void Media::remove(){
+void Media::remove()
+{
     if(_original != NULL)
       _original->usageCountAdd(-1);
 }
 
-
 void Media::parseMediaInfos()
 {
     libvlc_media_parse(_vlcMedia);
+    int tracksCount;
+    libvlc_media_track_t** tracks;
 
-    libvlc_media_track_info_t* tracks;
-    int tracksCount = libvlc_media_get_tracks_info(_vlcMedia, &tracks);
+    /** VLC before the 2.1.0 version */
+    if(config_opp::LIBVLC_MAJOR <= 2 && config_opp::LIBVLC_MINOR < 1){
+        delete tracks;
+        libvlc_media_track_info_t* tracks;
+        tracksCount = libvlc_media_get_tracks_info(_vlcMedia, &tracks);
 
-    for (int track = 0; track < tracksCount; track++) {
-        switch (tracks[track].i_type)
-        {
-            case libvlc_track_audio:
-                _audioTracks << AudioTrack( &tracks[track] );
-                break;
-            case libvlc_track_video:
-                _videoTracks << VideoTrack( &tracks[track] );
-                break;
-            case libvlc_track_text:
-                _subtitlesTracks << Track( &tracks[track] );
-                break;
-            default:
-                break;
+        for (int track = 0; track < tracksCount; track++) {
+            switch (tracks[track].i_type)
+            {
+                case libvlc_track_audio:
+                    _audioTracks << AudioTrack( &tracks[track] );
+                    break;
+                case libvlc_track_video:
+                    _videoTracks << VideoTrack( &tracks[track] );
+                    break;
+                case libvlc_track_text:
+                    _subtitlesTracks << Track( &tracks[track] );
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    /** VLC after the 2.1.0 version */
+    }else{
+        tracksCount = libvlc_media_tracks_get(_vlcMedia, &tracks);
+
+        for (int track = 0; track < tracksCount; track++) {
+            switch (tracks[track]->i_type)
+            {
+                case libvlc_track_audio:
+                    _audioTracks << AudioTrack( &tracks[track] );
+                    break;
+                case libvlc_track_video:
+                    _videoTracks << VideoTrack( &tracks[track] );
+                    break;
+                case libvlc_track_text:
+                    _subtitlesTracks << Track( &tracks[track] );
+                    break;
+                default:
+                    break;
+            }
         }
     }
+
     _originalDuration = libvlc_media_get_duration(_vlcMedia);
     _duration = _originalDuration;
 

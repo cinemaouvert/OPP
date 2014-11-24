@@ -30,7 +30,7 @@
 #include <QDateTime>
 #include <QTimer>
 
-#include "playlist.h"
+#include "Playlist.h"
 
 /**
  * @brief Manage Playlist playback scheduling

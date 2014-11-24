@@ -33,8 +33,6 @@
 #include <QIcon>
 #include <QStandardItem>
 
-
-#include "utils.h"
 #include "media.h"
 #include "utils.h"
 
@@ -45,16 +43,19 @@ MediaListModel::MediaListModel(QObject *parent) :
 
 int MediaListModel::columnCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent);
     return 5;
 }
 
 int MediaListModel::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent);
     return _mediaList.size();
 }
 
 Qt::ItemFlags MediaListModel::flags(const QModelIndex &index) const
 {
+    Q_UNUSED(index);
     return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 
@@ -80,6 +81,10 @@ QVariant MediaListModel::headerData(int section, Qt::Orientation orientation, in
             return trUtf8("Size");
             break;
         }
+    }
+    if(orientation == Qt::Vertical && role == Qt::DisplayRole)
+    {
+        return QVariant(QString::number(section + 1));
     }
     return QVariant();
 }
@@ -165,7 +170,8 @@ bool MediaListModel::removeMedia(int index)
 
 bool MediaListModel::addMedia(Media *media)
 {   
-    if (_mediaFileList.contains(media->location()) || media->duration()<=0)
+    // Doesn't test the media duration because on some medias the duration is determined after playing
+    if (_mediaFileList.contains(media->location()))
         return false;
     const int count = _mediaList.count();
 
@@ -174,14 +180,23 @@ bool MediaListModel::addMedia(Media *media)
     _mediaList.append(media);
     connect(media, SIGNAL(usageCountChanged()), this, SIGNAL(layoutChanged()));
 
-
     endInsertRows();
-
 
     _mediaFileList.append(media->location());
 
     emit mediaListChanged(_mediaList.count());
     return true;
+}
+
+int MediaListModel::index(Media* media)
+{
+    for(int i = 0; i < _mediaFileList.count(); i++){
+        if(_mediaFileList.at(i) == media->location()){
+            return i;
+        }
+    }
+
+    return -1;
 }
 
 QDataStream & operator << (QDataStream & out, const QList<Media> &list)

@@ -44,6 +44,8 @@ StatusWidget::StatusWidget(QWidget *parent) :
 
     icon = QIcon(QString::fromUtf8(":/icons/resources/glyphicons/glyphicons_045_calendar.png"));
     ui->dateIconLabel->setPixmap(icon.pixmap(16));
+
+    ui->lockButton->setFocusPolicy(Qt::NoFocus);
 }
 
 StatusWidget::~StatusWidget()
@@ -62,9 +64,14 @@ void StatusWidget::setMediaCount(int count)
 
 void StatusWidget::timerEvent(QTimerEvent *event)
 {
+    Q_UNUSED(event);
     QDateTime now = QDateTime::currentDateTime();
 
     ui->timeLabel->setText(now.time().toString("hh:mm:ss"));
     ui->dateLabel->setText(now.date().toString("dd/MM/yy"));
 }
 
+QPushButton* StatusWidget::lockButton() const
+{
+    return ui->lockButton;
+};

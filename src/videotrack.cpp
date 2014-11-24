@@ -25,7 +25,14 @@
 
 #include "videotrack.h"
 
-VideoTrack::VideoTrack(libvlc_media_track_info_t *vlcTrackInfo, QObject *parent) :
+/** VLC before version 2.1.0 */
+VideoTrack::VideoTrack(libvlc_media_track_info_t* vlcTrackInfo, QObject *parent) :
+    Track(vlcTrackInfo, parent)
+{
+}
+
+/** VLC after version 2.1.0 */
+VideoTrack::VideoTrack(libvlc_media_track_t** vlcTrackInfo, QObject *parent) :
     Track(vlcTrackInfo, parent)
 {
 }

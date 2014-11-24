@@ -75,9 +75,10 @@ private:
      */
     void sync();
 
+     QLayout *_layout;
+
 #if !defined(Q_OS_MAC)
     QWidget *_video;
-    QLayout *_layout;
 #endif
 };
 

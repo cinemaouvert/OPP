@@ -53,14 +53,16 @@ void ScreenshotSelector::setMedia(Media *media){
 
     ui->startLabel->setText("00:00:00:000");
     uint duration = this->_media->duration();
+
+    if(duration == 0)
+        duration = 100;
+
     QTime durationTime = msecToQTime(duration);
     ui->endLabel->setText(durationTime.toString("hh:mm:ss:zzz"));
     ui->seekSlider->setMinimum(1);
-    ui->seekSlider->setMaximum(duration-1);
+    ui->seekSlider->setMaximum(duration - 1);
     ui->seekSlider->setPageStep(ui->stepInput->value());
     ui->seekSlider->setValue(1);
-
-
 
     _currentWId = ui->videoWidget->request();
 
@@ -78,14 +80,9 @@ void ScreenshotSelector::setMedia(Media *media){
     libvlc_media_player_set_media(vlcp, _media->core());
     libvlc_media_add_option(_media->core(),":noaudio");
 
-
     libvlc_media_player_play(vlcp);
     wait(750);
     libvlc_media_player_pause(vlcp);
-
-
-
-
 }
 
 void ScreenshotSelector::on_buttonBox_accepted()
@@ -95,10 +92,20 @@ void ScreenshotSelector::on_buttonBox_accepted()
     screenPath +=  _media->getLocation().replace(QDir::separator(),"_").remove(":");
     screenPath += ".png";
 
-    float width = libvlc_video_get_width(vlcp);
-    float height = libvlc_video_get_height(vlcp);
+    unsigned* width = new unsigned(0);
+    unsigned* height = new unsigned(0);
+    libvlc_video_get_size(vlcp, 0, width, height);
 
-    libvlc_video_take_snapshot(vlcp, 0, screenPath.toStdString().c_str(), width,height);
+    // reduce the size to a usable size
+    unsigned denom = *width / (unsigned)((MainWindow*)parent())->screenBefore()->width();
+    if(denom >= 1){
+        *width = *width/denom;
+        *height = *height/denom;
+    }
+    libvlc_video_take_snapshot(vlcp, 0, screenPath.toStdString().c_str(), *width, *height);
+
+    delete width;
+    delete height;
 
     ((MainWindow*) this->parent())->updateCurrentScreenshot();
     close();

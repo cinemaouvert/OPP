@@ -43,16 +43,16 @@
 #include "medialistmodel.h"
 #include "playlistmodel.h"
 #include "schedulelistmodel.h"
-#include "application.h"
+#include "VLCApplication.h"
 
-#include "mainwindow.h" // FIX : ref 0000001
+#include "mainwindow.h"
 
-DataStorage::DataStorage(Application *app, MainWindow *win /*FIX : ref 0000001*/, QObject *parent) :
+DataStorage::DataStorage(VLCApplication *app, MainWindow *win, QObject *parent) :
     QObject(parent),
     _mediaListModel(0),
     _scheduleListModel(0),
     _app(app),
-    _win(win) // FIX : ref 0000001
+    _win(win)
 {
 }
 
@@ -151,6 +151,7 @@ void DataStorage::save(QFile &file)
             playback.setAttribute("audioFadeIn", playbackElement->mediaSettings()->audioFadeIn());
             playback.setAttribute("videoFadeOut", playbackElement->mediaSettings()->videoFadeOut());
             playback.setAttribute("videoFadeIn", playbackElement->mediaSettings()->videoFadeIn());
+            playback.setAttribute("subtitlesFile", playbackElement->mediaSettings()->subtitlesFile());
 
             playlist.appendChild(playback);
         }
@@ -183,7 +184,6 @@ void DataStorage::save(QFile &file)
 
 void DataStorage::load(QFile &file)
 {
-    // FIX : ref 0000001
     int oldPlaylistCount = _win->playlistTabWidget()->count();
 
     // Remove all data from models
@@ -233,7 +233,7 @@ void DataStorage::load(QFile &file)
         PlaylistModel *model = new PlaylistModel(playlist, _mediaListModel, _scheduleListModel, _win);
 
         // FIX : ref 0000001
-        _win->restorePlaylistTab(model);
+        _win->playlistTabWidget()->restoreTab(model);
 
         // load playbacks
         for (int j = 0; j < playbackNodeList.count(); j++) {
@@ -271,6 +271,7 @@ void DataStorage::load(QFile &file)
             settings->setAudioFadeIn(playbackAttributes.namedItem("audioFadeIn").nodeValue().toInt());
             settings->setVideoFadeOut(playbackAttributes.namedItem("videoFadeOut").nodeValue().toInt());
             settings->setVideoFadeIn(playbackAttributes.namedItem("videoFadeIn").nodeValue().toInt());
+            settings->setSubtitlesFile(playbackAttributes.namedItem("subtitlesFile").nodeValue());
 
 
             int cropTop, cropLeft, cropRight, cropBot;
@@ -294,13 +295,9 @@ void DataStorage::load(QFile &file)
             libvlc_media_add_option(playback->media()->core(),optionIn);
             char* optionOut = (QString(":stop-time=") + QString::number(settings->outMark() / 1000)).toLocal8Bit().data();
             libvlc_media_add_option(playback->media()->core(),optionOut);
-
-
         }
-
     }
 
-    // FIX : ref 0000001
     // remove old tabs
     while(oldPlaylistCount > 0) {
         _win->playlistTabWidget()->removeTab(0);

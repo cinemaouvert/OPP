@@ -438,5 +438,10 @@
         <file>resources/icons/icon_dualscreen_droite.png</file>
         <file>resources/images/intertitle.jpg</file>
         <file>resources/images/intertitleSound.jpg</file>
+        <file>resources/glyphicons/flipHead.png</file>
+        <file>resources/glyphicons/empty.png</file>
+        <file>resources/glyphicons/bigLoop.png</file>
+        <file>resources/glyphicons/simpleLoop.png</file>
+        <file>resources/glyphicons/goToBlack.png</file>
     </qresource>
 </RCC>
