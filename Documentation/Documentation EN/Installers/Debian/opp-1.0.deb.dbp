@@ -17,8 +17,8 @@ Description: Open Projection Player
 <</CTRL>>
 <<FILES>>
 1
-/home/yohann/Documents/build-opp-Desktop_Qt_4_8_6_qt5-Debug/opp_fr.qm -> opp_fr.qm -> /bin
-/home/yohann/Documents/build-opp-Desktop_Qt_4_8_6_qt5-Debug/opp* -> opp -> /bin
+/home/yohann/Documents/build-opp-Desktop_Qt_4_8_6_qt4-Debug/opp_fr.qm -> opp_fr.qm -> /bin
+/home/yohann/Documents/build-opp-Desktop_Qt_4_8_6_qt4-Debug/opp* -> opp -> /bin
 <</FILES>>
 <<SCRIPTS>>
 <<PREINST>>

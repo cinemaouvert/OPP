@@ -8,7 +8,7 @@
 #include <QIcon>
 #include <QShortcut>
 
-#include "mediaplayer.h"
+#include "MediaPlayer.h"
 #include "PlaylistPlayer.h"
 #include "ForwardButton.h"
 #include "RewindButton.h"

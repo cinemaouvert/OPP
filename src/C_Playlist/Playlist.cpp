@@ -24,7 +24,7 @@
  * along with Open Projection Program. If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************************/
 
-#include "playlist.h"
+#include "Playlist.h"
 
 #include <QDebug>
 

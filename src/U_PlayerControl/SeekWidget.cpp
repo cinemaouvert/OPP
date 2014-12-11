@@ -36,7 +36,7 @@
 #include <vlc/vlc.h>
 
 #include "playback.h"
-#include "mediaplayer.h"
+#include "MediaPlayer.h"
 #include "SeekWidget.h"
 
 SeekWidget::SeekWidget(QWidget *parent)

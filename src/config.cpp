@@ -14,14 +14,14 @@ namespace config_opp {
         if(libvlcMajorVersion > 0){
             #if (QT_VERSION >= 0x050000) // Qt version 5 and above
                 if(libvlcMajorVersion >= 3){
-                    return QString("v2.0-stable");
+                    return QString("v2.2-stable");
                 }else{
                     qDebug() << "OPP error: you must use a VLC 3.X core";
                     abort();
                 }
             #else // until version 5
                 if(libvlcMajorVersion < 3){
-                    return QString("v1.0-stable");
+                    return QString("v1.2-stable");
                 }else{
                     qDebug() << "OPP error: you must use a Qt 5.X core.";
                     abort();
@@ -33,7 +33,7 @@ namespace config_opp {
             qDebug() << "OPP error: unable to determine the used libvlc version.";
             abort();
         #else
-            return QString("v1.0-stable");
+            return QString("v1.2-stable");
         #endif
     }
 
