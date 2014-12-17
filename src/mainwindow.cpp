@@ -132,6 +132,10 @@ MainWindow::MainWindow(QWidget *parent) :
      */
     _playerControlWidget = new PlayerControlWidget(_playlistPlayer, this);
 
+    // connect playercontrolwidget shortcut to videowindow.
+    // Important : Must be done after _playerControlWidget creation
+    _videoWindow->initShortcuts();
+
     /*********** Media list model and schedule list model *************/
     _mediaListModel = new MediaListModel();
     _scheduleListModel = new ScheduleListModel();

@@ -92,6 +92,13 @@ public:
      */
     void closeEvent (QCloseEvent *event);
 
+    /**
+     * @brief Connect the PlayerControlWidget shortcuts to the VideoWindow
+     *
+     * @author Jerome Blanchi <d.j.a.y@free.fr>
+     */
+    void initShortcuts();
+
 private slots:
     void switchVideoMode();
 
@@ -119,6 +126,12 @@ private:
     QShortcut* _f1_shortcut;
 
     QShortcut* _escape_shortcut;
+
+    QShortcut* _playPause_shortcut;
+    QShortcut* _previous_shortcut;
+    QShortcut* _next_shortcut;
+    QShortcut* _rewind_shortcut;
+    QShortcut* _forward_shortcut;
 };
 
 #endif // VIDEOWINDOW_H
