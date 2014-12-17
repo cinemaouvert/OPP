@@ -56,23 +56,29 @@ PlayerControlWidget::PlayerControlWidget(PlaylistPlayer* playlistPlayer, QWidget
     connect(_seekWidget->flipBar(), SIGNAL(positionManuallyChanged()), this, SLOT(enableRewindForwardBtn()));
 
     // Shortcuts
-    QShortcut* playPause_shortcut = new QShortcut(QKeySequence("space"), this);
-    QShortcut* previous_shortcut = new QShortcut(QKeySequence("up"), this);
-    QShortcut* next_shortcut = new QShortcut(QKeySequence("down"), this);
-    QShortcut* rewind_shortcut = new QShortcut(QKeySequence("left"), this);
-    QShortcut* forward_shortcut = new QShortcut(QKeySequence("right"), this);
+    _playPause_shortcut = new QShortcut(QKeySequence("space"), this);
+    _previous_shortcut = new QShortcut(QKeySequence("up"), this);
+    _next_shortcut = new QShortcut(QKeySequence("down"), this);
+    _rewind_shortcut = new QShortcut(QKeySequence("left"), this);
+    _forward_shortcut = new QShortcut(QKeySequence("right"), this);
 
-    connect(playPause_shortcut, SIGNAL(activated()), this, SLOT(playPauseKeyboard()));
-    connect(previous_shortcut, SIGNAL(activated()), _previousButton, SLOT(click()));
-    connect(next_shortcut, SIGNAL(activated()), _nextButton, SLOT(click()));
-    connect(rewind_shortcut, SIGNAL(activated()), _rewindButton, SLOT(click()));
-    connect(forward_shortcut, SIGNAL(activated()), _forwardButton, SLOT(click()));
+    connect(_playPause_shortcut, SIGNAL(activated()), this, SLOT(playPauseKeyboard()));
+    connect(_previous_shortcut, SIGNAL(activated()), _previousButton, SLOT(click()));
+    connect(_next_shortcut, SIGNAL(activated()), _nextButton, SLOT(click()));
+    connect(_rewind_shortcut, SIGNAL(activated()), _rewindButton, SLOT(click()));
+    connect(_forward_shortcut, SIGNAL(activated()), _forwardButton, SLOT(click()));
 }
 
 PlayerControlWidget::~PlayerControlWidget()
 {
     delete _seekWidget;
     delete _buttonBar;
+
+    delete _playPause_shortcut;
+    delete _previous_shortcut;
+    delete _next_shortcut;
+    delete _rewind_shortcut;
+    delete _forward_shortcut;
 }
 
 void PlayerControlWidget::createWidgets()
