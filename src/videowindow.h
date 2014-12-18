@@ -132,6 +132,11 @@ private:
     QShortcut* _next_shortcut;
     QShortcut* _rewind_shortcut;
     QShortcut* _forward_shortcut;
+
+    /**
+     * @brief initVideoWindow Shared initialization between constructors.
+     */
+    void initVideoWindow();
 };
 
 #endif // VIDEOWINDOW_H

@@ -36,10 +36,9 @@
 VideoWindow::VideoWindow(QWidget *parent, const DisplayMode &mode) :
     QMainWindow(parent)
 {
-    _videoWidget = new VideoWidget(this);
-    setCentralWidget(_videoWidget);
+    //Kind of delegate constructor
+    initVideoWindow();
 
-    setWindowTitle("Video");
     resize(640,480);
 
     setDisplayMode(mode);
@@ -55,24 +54,38 @@ VideoWindow::VideoWindow(QWidget *parent, const DisplayMode &mode) :
 VideoWindow::VideoWindow(QWidget *parent, int width, int height) :
     QMainWindow(parent)
 {
+    //Kind of delegate constructor
+    initVideoWindow();
+
+    resize(width, height);
+
+    //switchVideoMode and escapeFullScreen shortcyts are not connected this case
+    //because this constructor is used to generate screenshots
+}
+
+void VideoWindow::initVideoWindow()
+{
+    _playPause_shortcut= NULL;
+    _previous_shortcut= NULL;
+    _next_shortcut= NULL;
+    _rewind_shortcut= NULL;
+    _forward_shortcut= NULL;
+
     _videoWidget = new VideoWidget(this);
     setCentralWidget(_videoWidget);
 
     setWindowTitle("Video");
-    resize(width, height);
-
-    //TODO : why switchVideoMode and escapeFullScreen are not connected this case?
 }
 
 VideoWindow::~VideoWindow()
 {
     delete _videoWidget;
 
-    delete _playPause_shortcut;
-    delete _previous_shortcut;
-    delete _next_shortcut;
-    delete _rewind_shortcut;
-    delete _forward_shortcut;
+    if (_playPause_shortcut) delete _playPause_shortcut;
+    if (_previous_shortcut) delete _previous_shortcut;
+    if (_next_shortcut) delete _next_shortcut;
+    if (_rewind_shortcut) delete _rewind_shortcut;
+    if (_forward_shortcut) delete _forward_shortcut;
 }
 
 void VideoWindow::setDisplayMode(const DisplayMode &mode)
