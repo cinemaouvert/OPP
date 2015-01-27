@@ -32,4 +32,6 @@ Open Projection Program (OPP) is free software for open cinema projection.
 
 This software is free software published under GPL license.
 
+http://opp.cinemaouvert.fr/
+
 Copyright (C) 2013 Catalogue Ouvert du Cinéma <dev@cinemaouvert.fr>
