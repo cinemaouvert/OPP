@@ -36,14 +36,14 @@
 VideoWindow::VideoWindow(QWidget *parent, const DisplayMode &mode) :
     QMainWindow(parent)
 {
-    _videoWidget = new VideoWidget(this);
-    setCentralWidget(_videoWidget);
+    //Kind of delegate constructor
+    initVideoWindow();
 
-    setWindowTitle("Video");
     resize(640,480);
 
     setDisplayMode(mode);
 
+    //TODO Delete !
     _f1_shortcut = new QShortcut(QKeySequence("f1"), this);
     _escape_shortcut = new QShortcut(QKeySequence(tr("escape")), this);
 
@@ -54,16 +54,38 @@ VideoWindow::VideoWindow(QWidget *parent, const DisplayMode &mode) :
 VideoWindow::VideoWindow(QWidget *parent, int width, int height) :
     QMainWindow(parent)
 {
+    //Kind of delegate constructor
+    initVideoWindow();
+
+    resize(width, height);
+
+    //switchVideoMode and escapeFullScreen shortcyts are not connected this case
+    //because this constructor is used to generate screenshots
+}
+
+void VideoWindow::initVideoWindow()
+{
+    _playPause_shortcut= NULL;
+    _previous_shortcut= NULL;
+    _next_shortcut= NULL;
+    _rewind_shortcut= NULL;
+    _forward_shortcut= NULL;
+
     _videoWidget = new VideoWidget(this);
     setCentralWidget(_videoWidget);
 
     setWindowTitle("Video");
-    resize(width, height);
 }
 
 VideoWindow::~VideoWindow()
 {
     delete _videoWidget;
+
+    if (_playPause_shortcut) delete _playPause_shortcut;
+    if (_previous_shortcut) delete _previous_shortcut;
+    if (_next_shortcut) delete _next_shortcut;
+    if (_rewind_shortcut) delete _rewind_shortcut;
+    if (_forward_shortcut) delete _forward_shortcut;
 }
 
 void VideoWindow::setDisplayMode(const DisplayMode &mode)
@@ -108,4 +130,49 @@ void VideoWindow::escapeFullscreen()
             ((MainWindow*)parent())->switchVideoMode();
         }
     }
+}
+
+void VideoWindow::initShortcuts()
+{
+    // Possible improvement : create a list of widgets and iterate thrue
+
+    _playPause_shortcut = new QShortcut(
+                ((MainWindow*)parent())->playerControlWidget()->get_playPause_shortcut()->key(),
+                this);
+    connect(_playPause_shortcut,
+            SIGNAL(activated()),
+            ((MainWindow*)parent())->playerControlWidget()->playPauseButton(),
+           SLOT(click()));
+
+    _forward_shortcut = new QShortcut(
+                ((MainWindow*)parent())->playerControlWidget()->get_forward_shortcut()->key(),
+                this);
+    connect(_forward_shortcut,
+            SIGNAL(activated()),
+             ((MainWindow*)parent())->playerControlWidget()->forwardButton(),
+            SLOT(click()));
+
+    _next_shortcut = new QShortcut(
+                ((MainWindow*)parent())->playerControlWidget()->get_next_shortcut()->key(),
+                this);
+    connect(_next_shortcut,
+            SIGNAL(activated()),
+            ((MainWindow*)parent())->playerControlWidget()->nextButton(),
+           SLOT(click()));
+
+    _previous_shortcut = new QShortcut(
+                ((MainWindow*)parent())->playerControlWidget()->get_previous_shortcut()->key(),
+                this);
+    connect(_previous_shortcut,
+            SIGNAL(activated()),
+            ((MainWindow*)parent())->playerControlWidget()->previousButton(),
+           SLOT(click()));
+
+    _rewind_shortcut = new QShortcut(
+                ((MainWindow*)parent())->playerControlWidget()->get_rewind_shortcut()->key(),
+                this);
+    connect(_rewind_shortcut,
+            SIGNAL(activated()),
+            ((MainWindow*)parent())->playerControlWidget()->rewindButton(),
+           SLOT(click()));
 }

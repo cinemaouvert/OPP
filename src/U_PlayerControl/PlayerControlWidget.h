@@ -27,8 +27,18 @@ public:
     QPushButton* playPauseButton(){ return _playPauseButton; }
 
     QPushButton* stopButton(){ return _stopButton; }
+    QPushButton* previousButton(){ return _previousButton; }
+    QPushButton* nextButton(){ return _nextButton; }
+    QPushButton* rewindButton(){ return _rewindButton; }
+    QPushButton* forwardButton(){ return _forwardButton; }
 
     inline int currentVolume() const { return _volumeSlider->value(); }
+
+    QShortcut* get_playPause_shortcut( ){return _playPause_shortcut;}
+    QShortcut* get_previous_shortcut() {return _previous_shortcut;}
+    QShortcut* get_next_shortcut() {return _next_shortcut;}
+    QShortcut* get_rewind_shortcut() {return _rewind_shortcut;}
+    QShortcut* get_forward_shortcut() {return _forward_shortcut;}
 
 protected:
 
@@ -102,6 +112,12 @@ private:
     QLabel* _labelVolumeUp;
     QSlider* _volumeSlider;
     QLabel* _volumeLabel;
+
+    QShortcut* _playPause_shortcut;
+    QShortcut* _previous_shortcut;
+    QShortcut* _next_shortcut;
+    QShortcut* _rewind_shortcut;
+    QShortcut* _forward_shortcut;
 };
 
 #endif // PLAYERCONTROLWIDGET_H
