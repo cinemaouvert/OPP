@@ -27,6 +27,7 @@
 #include <iostream>
 #include <cstdlib>
 #include "Playlist.h"
+#include "mainwindow.h"
 
 Schedule::Schedule(Playlist *playlist, const QDateTime &launchAt, QObject *parent) :
     QObject(parent),
@@ -52,8 +53,12 @@ void Schedule::start()
     if (isExpired() || isActive())
         return;
 
+/////////////////////////////////////////////
     _timer->connect(_timer, SIGNAL(timeout()), this, SLOT(timeout()));
     _timer->start(QDateTime::currentDateTime().msecsTo(_launchAt));
+
+
+  //////////////////////////////////////////////
 }
 
 void Schedule::stop()

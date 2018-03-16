@@ -62,7 +62,7 @@ void wait(int t)
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }
 
-QString humanSize(int size)
+QString humanSize(qlonglong size)
 {
     float num = (float)size;
     QStringList list;

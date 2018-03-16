@@ -47,16 +47,23 @@ void PlaylistTabWidget::tabCloseRequested(int index)
             _mw->scheduleListModel()->removeScheduleWithDeps(playlist);
         }
 
-        if (count() == 1) {
-            createTab();
+        if (0 == QMessageBox::warning(this, tr("Remove playlist"), tr("Are you sure to remove this playlist ?") ,tr("No"), tr("Yes"))){
+            return;
         }
 
-        delete (PlaylistModel*) ((PlaylistTableView*) widget(index))->model();
+        if (count() == 1) {
+            createTab("playlist");
+        }else{
+            ((PlaylistTableView*) widget(index))->deleteLater();
+        }
+
         removeTab(index);
+
 
         _mw->updateSettings();
         _mw->updatePlaylistListCombox();
         _mw->updateDetails();
+        _mw->updateProjectSummary();
     }
 }
 
@@ -82,7 +89,7 @@ void PlaylistTabWidget::currentChanged(int index)
 
 void PlaylistTabWidget::createTab(QString name)
 {
-    if(name == NULL){
+    if(name == "playlist"){
         name = tr("New Playlist");
     }
 
@@ -95,6 +102,8 @@ void PlaylistTabWidget::createTab(QString name)
 
         connect(playlist, SIGNAL(titleChanged()), _mw->scheduleListModel(), SIGNAL(layoutChanged()));
         connect(playlist, SIGNAL(playlistChanged()), _mw, SLOT(updateDetails()));
+        connect(playlist, SIGNAL(titleChanged()), _mw->playlistHandlerWidget()->playlistDetailsWidget(), SLOT(updatePlaylistWidget()));
+        connect(playlist, SIGNAL(playlistChanged()), _mw->playlistHandlerWidget()->playlistDetailsWidget(), SLOT(updatePlaylistWidget()));
 
         newTab->setModel(newModel);
         newTab->setSelectionBehavior(QAbstractItemView::SelectRows);

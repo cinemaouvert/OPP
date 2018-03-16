@@ -33,6 +33,7 @@
 #include <cstdlib>
 
 #include "schedule.h"
+#include "mainwindow.h"
 
 class ScheduleListModel : public QAbstractTableModel
 {
@@ -201,6 +202,8 @@ public:
      */
     QDateTime *getNextSchedule();
 
+
+
 public slots:
     /**
      * @brief Enable or disable automation
@@ -220,6 +223,7 @@ private:
      * @brief _automationEnabled True if the automation is enabled, false otherwise
      */
     bool _automationEnabled;
+
 
 signals:
     /**

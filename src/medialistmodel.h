@@ -62,6 +62,10 @@ public:
      */
     inline const QList<Media*>& mediaList() { return _mediaList; }
 
+    inline const QList<int> indexfichiermanquant() { return _indexfichiermanquant; }
+
+    void addindexfichiermanquant (int i);
+
     /**
      * @brief Returns the number of columns
      * @return The number of columns
@@ -87,6 +91,8 @@ public:
      * @author Hamza Haddar <ham.haddar@gmail.com>
      */
     int countPictures();
+    int countUnusedPictures();
+
 
     /**
      * @brief Returns the number of movies in the media list
@@ -96,6 +102,8 @@ public:
      * @author Hamza Haddar <ham.haddar@gmail.com>
      */
     int countMovies();
+    int countUsedMovies();
+    int countUnusedMovies();
 
     /**
      * @brief Returns the number of rows
@@ -178,6 +186,8 @@ private:
      * @brief _mediaList The media list
      */
     QList<Media*> _mediaList;
+
+    QList<int> _indexfichiermanquant;
 
     /**
      * @brief _mediaFileList

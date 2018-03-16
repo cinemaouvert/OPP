@@ -32,7 +32,8 @@
 #include <QDebug>
 #include <QIcon>
 #include <QStandardItem>
-
+#include "Playlist.h"
+#include "PlaylistPlayer.h"
 #include "media.h"
 #include "utils.h"
 
@@ -109,7 +110,7 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
             return msecToQTime(_mediaList[index.row()]->duration()).toString("hh:mm:ss");
             break;
         case Size:
-            return humanSize(_mediaList[index.row()]->size());
+            return humanSize(_mediaList[index.row()]->fileInfo().size());
             break;
         case Used:
             return _mediaList[index.row()]->usageCount();
@@ -138,7 +139,7 @@ QVariant MediaListModel::data(const QModelIndex &index, int role) const
             return msecToQTime(_mediaList[index.row()]->duration()).toString("hh:mm:ss");
         }
         if (index.column() == Size) {
-            return humanSize(_mediaList[index.row()]->size());
+            return humanSize(_mediaList[index.row()]->fileInfo().size());
         }
         if (index.column() == Used) {
             if(_mediaList[index.row()]->usageCount()>0)
@@ -230,7 +231,30 @@ int MediaListModel::countPictures()
     int count = 0;
 
     foreach (Media* media, _mediaList)
-        if (media->isImage()) count++;
+        if (media->isImage()){
+            if(media->isUsed()==1){
+                count++;
+            }
+
+        }
+
+
+    return count;
+}
+
+int MediaListModel::countUnusedPictures()
+{
+    int count = 0;
+
+    foreach (Media* media, _mediaList)
+        if (media->isImage())
+        {
+            if(media->isUsed()==0)
+            {
+                count++;
+
+            }
+        }
 
     return count;
 }
@@ -245,6 +269,39 @@ int MediaListModel::countMovies()
     return count;
 }
 
+///////
+///////
+
+
+int MediaListModel::countUsedMovies()
+{
+
+    int count = 0;
+      foreach(Media* media, _mediaList)
+      { if(!media->isImage())
+          {
+          if (media->isUsed()==1)
+         count++;}}
+    return count;
+
+}
+
+int MediaListModel::countUnusedMovies()
+{
+
+    int count = 0;
+      foreach(Media* media, _mediaList)
+      {if(!media->isImage())
+         {
+              if (media->isUsed()==0)
+         count++;}
+      }
+    return count;
+
+
+}
+
+
 void MediaListModel::removeAll()
 {
     for (int i = _mediaList.count()-1; i >= 0; i--) {
@@ -253,3 +310,7 @@ void MediaListModel::removeAll()
 }
 
 
+void MediaListModel::addindexfichiermanquant(int i)
+{
+    _indexfichiermanquant.push_back(i);
+}

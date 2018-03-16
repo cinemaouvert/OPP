@@ -33,7 +33,9 @@
 
 #include <QStringList>
 #include <QDebug>
-
+#include <vlc/plugins/vlc_fourcc.h>
+#include <vlc/plugins/vlc_common.h>
+#include <vlc/plugins/vlc_es.h>
 #include <vlc/vlc.h>
 
 int Media::s_instanceCount = 0;
@@ -100,12 +102,16 @@ void Media::parseMediaInfos()
             {
                 case libvlc_track_audio:
                     _audioTracks << AudioTrack( &tracks[track] );
+                    _codec_audio << vlc_fourcc_GetDescription( AUDIO_ES, tracks[track].i_codec );
                     break;
                 case libvlc_track_video:
                     _videoTracks << VideoTrack( &tracks[track] );
+                     _codec_video<< vlc_fourcc_GetDescription( VIDEO_ES, tracks[track].i_codec );
                     break;
                 case libvlc_track_text:
                     _subtitlesTracks << Track( &tracks[track] );
+                    _subtitlesTracksName << ("Track " + QString::number(tracks[track].i_id));
+                     _codec_spu << vlc_fourcc_GetDescription( SPU_ES, tracks[track].i_codec );
                     break;
                 default:
                     break;
@@ -119,17 +125,23 @@ void Media::parseMediaInfos()
         for (int track = 0; track < tracksCount; track++) {
             switch (tracks[track]->i_type)
             {
-                case libvlc_track_audio:
-                    _audioTracks << AudioTrack( &tracks[track] );
-                    break;
-                case libvlc_track_video:
-                    _videoTracks << VideoTrack( &tracks[track] );
-                    break;
-                case libvlc_track_text:
-                    _subtitlesTracks << Track( &tracks[track] );
-                    break;
-                default:
-                    break;
+               case libvlc_track_audio:
+                _audioTracks << AudioTrack( &tracks[track] );
+                _codec_audio << vlc_fourcc_GetDescription( AUDIO_ES, tracks[track]->i_codec );
+            break;
+            case libvlc_track_video:
+                _videoTracks << VideoTrack( &tracks[track] );
+                _codec_video<< vlc_fourcc_GetDescription( VIDEO_ES, tracks[track]->i_codec );
+
+            break;
+            case libvlc_track_text:
+                _subtitlesTracks << Track( &tracks[track] );
+                _subtitlesTracksName << ("Track " + QString::number(tracks[track]->i_id) + " " + + tracks[track]->psz_language + " " + tracks[track]->psz_description);
+                _codec_spu << vlc_fourcc_GetDescription( SPU_ES, tracks[track]->i_codec );
+
+            break;
+            default:
+                break;
             }
         }
     }
@@ -188,6 +200,11 @@ uint Media::getOriginalDuration(){
 QString Media::name() const
 {
     return _fileInfo.fileName();
+}
+
+QString Media::extension() const
+{
+    return _fileInfo.suffix();
 }
 
 bool Media::exists() const
@@ -254,12 +271,7 @@ QStringList Media::videoTracksName() const
 
 QStringList Media::subtitlesTracksName() const
 {
-    QStringList list;
-
-    foreach (const Track &track, _subtitlesTracks)
-        list << ("Track " + QString::number(track.trackId()));
-
-    return list;
+    return _subtitlesTracksName;
 }
 
 QStringList Media::audioExtensions()
@@ -285,3 +297,10 @@ QStringList Media::mediaExtensions()
 QString Media::getLocation(){
     return _location;
 }
+
+ void Media::setRemainingTime(QTime rt){ _remainingTime = rt;}
+
+ void Media::addSubtitleTrackName(QString name)
+ {
+     _subtitlesTracksName << name;
+ }

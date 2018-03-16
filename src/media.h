@@ -48,7 +48,7 @@
 #include <QTime>
 #include <QPair>
 #include <QSize>
-
+#include <QStringList>
 #include "audiotrack.h"
 #include "videotrack.h"
 #include "track.h"
@@ -125,6 +125,10 @@ public:
      */
     inline int id() const { return _id; }
 
+    inline QStringList codec_audio() const { return _codec_audio; }
+       inline QStringList codec_video() const { return _codec_video; }
+       inline QStringList codec_spu() const { return _codec_spu; }
+
     /**
      * @brief Get duration
      * @return The duration in ms
@@ -132,6 +136,14 @@ public:
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     uint duration() const;
+
+    /**
+     * @brief Get file extension
+     * @return The file extension
+     *
+     * @author Anas SONTI <anas.sonti@gmail.com>
+     */
+    QString extension() const;
 
     /**
      * @brief Get file name
@@ -196,6 +208,8 @@ public:
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     QStringList subtitlesTracksName() const;
+
+    void addSubtitleTrackName(QString name);
 
     /**
      * @brief Media is an image
@@ -310,6 +324,11 @@ public:
       */
     int size(){return _size;}
 
+    QFileInfo fileInfo(){return _fileInfo;}
+
+    inline QTime remainingTime() const { return _remainingTime; }
+
+    void setRemainingTime(QTime rt);
 
 protected:
 
@@ -375,6 +394,8 @@ private:
      */
     QList<Track> _subtitlesTracks;
 
+    QStringList _subtitlesTracksName;
+
     /**
      * @brief If the value is 0, it means the media is not used.
      */
@@ -399,6 +420,16 @@ private:
       * @brief size of the file
       */
     int _size;
+
+    /**
+     * @brief remainingTime
+     */
+    QTime _remainingTime;
+
+
+    QStringList _codec_audio;
+    QStringList _codec_video;
+    QStringList _codec_spu;
 };
 
 #endif // MEDIA_H

@@ -28,9 +28,23 @@ public:
 
     QPushButton* stopButton(){ return _stopButton; }
 
+    QPushButton* loopButton(){ return _loopButton; }
+
+    QPushButton* lockButton(){ return _lockButton; }
+
+    QPushButton* nextButton(){ return _previousButton; }
+
+    QPushButton* previousButton(){ return _nextButton; }
+
+    QPushButton* rewindButton(){ return _rewindButton; }
+
+    QPushButton* forwardButton(){ return _forwardButton; }
+
     inline int currentVolume() const { return _volumeSlider->value(); }
 
-protected:
+    inline SeekWidget* seekWidget(){return _seekWidget;}
+
+   protected:
 
     /**
      * @brief create the widgets contained by the current player control widget.

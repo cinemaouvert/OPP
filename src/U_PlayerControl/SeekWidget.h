@@ -155,6 +155,7 @@ private:
      * @brief _labelFull Label for total time
      */
     QLabel *_labelRemaining;
+
 };
 
 #endif // SEEKWIDGET_H_

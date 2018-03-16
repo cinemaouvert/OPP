@@ -34,7 +34,7 @@
 #include <QItemSelectionModel>
 #include <QDebug>
 #include <QHeaderView>
-
+#include <QStandardItem>
 #if (QT_VERSION >= 0x050000) // Qt version 5 and above
     #include <QMimeData>
     #include <QDrag>
@@ -55,8 +55,16 @@ void MediaTableView::setModel(QAbstractItemModel *model)
         disconnect(((MediaListModel*)this->model()), SIGNAL(mediaListChanged(int)), this, SLOT(showHeaders(int)));
     }
     connect(((MediaListModel*)model), SIGNAL(mediaListChanged(int)), this, SLOT(showHeaders(int)));
-
     QTableView::setModel(model);
+    /*for(int i=0; i<((MediaListModel*)model)->indexfichiermanquant().count()+1; i++ )
+    {
+        int index = ((MediaListModel*)model)->indexfichiermanquant().at(i);
+        QTableView::selectRow(index);
+        QModelIndexList indexes = selectionModel()->selectedRows();
+        QStandardItem item(index);
+        item.setData(QColor(Qt::green), Qt::BackgroundRole);
+        item.setData(QColor(Qt::red), Qt::FontRole);
+    }*/
 }
 
 void MediaTableView::mousePressEvent(QMouseEvent *event)

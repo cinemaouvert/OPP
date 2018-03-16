@@ -35,7 +35,6 @@ StatusWidget::StatusWidget(QWidget *parent) :
     ui->setupUi(this);
 
     _timerId = startTimer(1000);
-    setMediaCount(0);
 
     QIcon icon;
 
@@ -52,14 +51,6 @@ StatusWidget::~StatusWidget()
 {
     killTimer(_timerId);
     delete ui;
-}
-
-void StatusWidget::setMediaCount(int count)
-{
-    ui->countLoadedFilesLabel->setText(QString("%1 %2")
-        .arg( QString::number(count) )
-        .arg( tr("files loaded") )
-    );
 }
 
 void StatusWidget::timerEvent(QTimerEvent *event)

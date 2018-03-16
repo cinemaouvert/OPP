@@ -25,7 +25,7 @@
  * along with Open Projection Program. If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************************/
 
-#include "playlisttableview.h"
+#include "PlaylistTableView.h"
 #include "playlistmodel.h"
 #include <QMouseEvent>
 #include <QApplication>
@@ -71,6 +71,7 @@ PlaylistTableView::PlaylistTableView(MainWindow* mainWindow, PlaylistTabWidget* 
     _playlistTabWidget = playlistTabWidget;
 
     connect(_playlistTabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
+    connect(_playlistTabWidget, SIGNAL(currentChanged(int)), _mainWindow->playlistHandlerWidget()->playlistDetailsWidget(), SLOT(updatePlaylistWidget()));
     connect(mainWindow->playerControlWidget(), SIGNAL(stopState()), this, SLOT(toggleIconParentTab()));
     connect(mainWindow->playlistPlayer(), SIGNAL(itemChanged(int)), this, SLOT(selectRow(int)));
 
@@ -104,20 +105,23 @@ void PlaylistTableView::selectPlayingItem()
 void PlaylistTableView::toggleIconParentTab()
 {
     PlaylistModel* playlistModel = (PlaylistModel*)model();
-    if(playlistModel->state() == PlaylistModel::Playing)
+    if(playlistModel != NULL)
     {
-        _mainWindow->playlistTabWidget()->iconPlayAt(_tabIndex);
-    }
-    else if(playlistModel->state() == PlaylistModel::Paused)
-    {
-        _mainWindow->playlistTabWidget()->iconPauseAt(_tabIndex);
-    }
-    else if(playlistModel->state() == PlaylistModel::Idle)
-    {
-        if(selectionModel()->selectedRows().count() > 0){
-            _mainWindow->playlistTabWidget()->iconStopAt(_tabIndex);
-        }else{
-            _mainWindow->playlistTabWidget()->removeIconAt(_tabIndex);
+        if(playlistModel->state() == PlaylistModel::Playing)
+        {
+            _mainWindow->playlistTabWidget()->iconPlayAt(_tabIndex);
+        }
+        else if(playlistModel->state() == PlaylistModel::Paused)
+        {
+            _mainWindow->playlistTabWidget()->iconPauseAt(_tabIndex);
+        }
+        else if(playlistModel->state() == PlaylistModel::Idle)
+        {
+            if(selectionModel()->selectedRows().count() > 0){
+                _mainWindow->playlistTabWidget()->iconStopAt(_tabIndex);
+            }else{
+                _mainWindow->playlistTabWidget()->removeIconAt(_tabIndex);
+            }
         }
     }
 }
@@ -172,11 +176,24 @@ void PlaylistTableView::mousePressEvent(QMouseEvent *event)
             {
                QSettings settings("opp", "opp");
                QString fileName = QFileDialog::getOpenFileName(this, tr("Add subtitle"), settings.value("moviesPath").toString(), tr("File (*.srt *.ass)"));
+               //On ajoute ça pour windows pour que ce soit le vrai chemin avec les "\".
+             const QString nativePath = QDir::toNativeSeparators(fileName);
 
-               if(!fileName.isEmpty()){
-                   ((Playback*)((PlaylistModel*)model())->playlist()->at(indexes.row()))->mediaSettings()->setSubtitlesFile(fileName.toStdString().c_str());
-                   ((PlaylistModel*)model())->setData(_mainWindow->currentPlaylistModel()->index(indexes.row(), 5), fileName, Qt::DisplayRole);
-               }
+             if(!fileName.isEmpty()){
+
+               ((Playback*)((PlaylistModel*)model())->playlist()->at(indexes.row()))->mediaSettings()->setSubtitlesFile( nativePath.toStdString().c_str());
+               ((PlaylistModel*)model())->setData(_mainWindow->currentPlaylistModel()->index(indexes.row(), 5), nativePath, Qt::DisplayRole);
+               _mainWindow->add_Item_SubtitleTrackComboBox(nativePath.toStdString().c_str());
+               ((Playback*)((PlaylistModel*)model())->playlist()->at(indexes.row()))->mediaSettings()->setSubtitlesTrack(1);
+
+               //((Playback*)((PlaylistModel*)model())->playlist()->at(indexes.row()))->media()->subtitlesTracks() << nativePath;
+               ((Playback*)((PlaylistModel*)model())->playlist()->at(indexes.row()))->media()->addSubtitleTrackName(nativePath);
+
+               //_mainWindow->subtitleSave(nativePath)
+               int index = ((Playback*)((PlaylistModel*)model())->playlist()->at(indexes.row()))->media()->subtitlesTracksName().count();
+               _mainWindow->set_SubtitleTrackComboBox_index(0);
+               _mainWindow->set_SubtitleTrackComboBox_index(index);
+             }
             }
         }
     }
@@ -335,12 +352,16 @@ bool PlaylistTableView::shown(){
 }
 
 void PlaylistTableView::clearSelection(){
-    selectionModel()->clear();
+    if(selectionModel() != NULL){
+        selectionModel()->clear();
+    }
 
     // Remove tab icon
     PlaylistModel* playlistModel = (PlaylistModel*)model();
-    if(playlistModel->state() == PlaylistModel::Idle)
-        _mainWindow->playlistTabWidget()->removeIconAt(_tabIndex);
+    if(playlistModel != NULL){
+        if(playlistModel->state() == PlaylistModel::Idle)
+            _mainWindow->playlistTabWidget()->removeIconAt(_tabIndex);
+    }
 }
 
 void PlaylistTableView::showHeaders(){

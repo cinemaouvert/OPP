@@ -31,6 +31,8 @@
 #define SETTINGSWINDOW_H
 
 #include <QDialog>
+#include <QShortcut>
+#include "mainwindow.h"
 
 
 namespace Ui {
@@ -44,6 +46,16 @@ class SettingsWindow : public QDialog
 public:
     explicit SettingsWindow(QWidget *parent = 0);
     ~SettingsWindow();
+
+    /**
+     * @brief initializes shortcut settings comboboxes
+     */
+    void initShorcuctsSettings();
+
+    /**
+     * @brief resets shortcut settings to default
+     */
+    void resetShorcuctsSettingsDefault();
 
     /**
      * @brief Get the index of a language
@@ -62,6 +74,11 @@ public:
      */
     QString getLang(int index);
     
+    void applyShortcuts();
+    void initShortcuts();
+    void loadShortcuts();
+    void connectShortcuts();
+    void disconnectShortcuts();
 private slots:
     /**
      * @brief Save modified settings and close the window
@@ -117,11 +134,83 @@ private slots:
      */
     void on_openLastUsedListing_clicked();
 
+    /**
+     * @brief sets combobox to default value
+     */
+    void on_playPauseDefaultButton_clicked();
+
+    /**
+     * @brief sets combobox to default value
+     */
+    void on_stopDefaultButton_clicked();
+
+    /**
+     * @brief sets combobox to default value
+     */
+    void on_previousDefaultButton_clicked();
+
+    /**
+     * @brief sets combobox to default value
+     */
+    void on_nextDefaultButton_clicked();
+
+    /**
+     * @brief sets combobox to default value
+     */
+    void on_rewindDefaultButton_clicked();
+
+    /**
+     * @brief sets combobox to default value
+     */
+    void on_forwardDefaultButton_clicked();
+
+    /**
+     * @brief sets combobox to default value
+     */
+    void on_lockDefaultButton_clicked();
+
+    /**
+     * @brief sets combobox to default value
+     */
+    void on_loopDefaultButton_clicked();
+
+    /**
+     * @brief sets combobox to default value
+     */
+    void on_switchVideoModesDefaultButton_clicked();
+
+    /**
+     * @brief sets combobox to default value
+     */
+    void on_defaultShortcutsButton_clicked();
+
+    void on_playPause_changed();
+    void on_stop_changed();
+    void on_previous_changed();
+    void on_next_changed();
+    void on_rewind_changed();
+    void on_forward_changed();
+    void on_loop_changed();
+    void on_lock_changed();
+    void on_switchVideoModes_changed();
+
 private:
     /**
      * @brief ui The UI
      */
     Ui::SettingsWindow *ui;
+
+    QShortcut* playPause_shortcut;
+    QShortcut* previous_shortcut;
+    QShortcut* next_shortcut;
+    QShortcut* rewind_shortcut;
+    QShortcut* forward_shortcut;
+    QShortcut* stop_shortcut;
+    QShortcut* loop_shortcut;
+    QShortcut* lock_shortcut;
+    QShortcut* switchVideoModes_shortcut;
+    QStringList listOfShortcuts;
+    MainWindow* _mw;
 
     /**
      * @brief set the value of the video return mode

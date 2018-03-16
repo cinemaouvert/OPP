@@ -154,10 +154,14 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             if (media->videoTracks().count() == 0 || mediaSettings->videoTrack() < 0) {
                 return "Disabled";
             } else {
-                return QString("%1 x %2 ")
-                        .arg(media->videoTracks().at(mediaSettings->videoTrack()).width())
-                        .arg(media->videoTracks().at(mediaSettings->videoTrack()).height())
-                        + media->videoTracks().at(mediaSettings->videoTrack()).codecDescription();
+                libvlc_media_player_t *mp;
+                mp = libvlc_media_player_new_from_media(media->core());
+                return media->extension().toUpper()
+                        +(" (")
+                        +QString("%1 x %2")
+                        .arg(libvlc_video_get_width(mp))
+                        .arg(libvlc_video_get_height(mp))
+                        +(")");
             }
         }
         else if (index.column() == Audio) {

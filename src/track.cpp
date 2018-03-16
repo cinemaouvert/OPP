@@ -55,6 +55,7 @@ Track::Track(const Track &track) :
     QObject()
 {
     _vlcTrackInfo = track._vlcTrackInfo;
+    _vlcTrack = track._vlcTrack;
 }
 
 Track::~Track()
@@ -65,6 +66,7 @@ Track & Track::operator=(const Track &track)
 {
     if (this != &track) {
         _vlcTrackInfo = track._vlcTrackInfo;
+        _vlcTrack = track._vlcTrack;
     }
 
     return *this;

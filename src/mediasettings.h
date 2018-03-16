@@ -218,6 +218,7 @@ public:
     inline const int & subtitlesTrack() const { return _subtitlesTrack; }
 
     QString subtitlesFile() const;
+    inline const int &indexSutitleComboBox() const {return _indexSubtitleComboBox;}
 
     /**
      * @brief Is test pattern enabled
@@ -364,6 +365,10 @@ public:
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setSubtitlesTrack(const int &track);
+
+
+    void setIndexSubtitleComboBox(const int &index);
+     void setIndexSubtitleComboBox2(const int &index);
 
     /**
      * @brief setSubtitlesEncode
@@ -586,6 +591,7 @@ signals:
      * @brief subtitlesTrackChanged
      */
     void subtitlesTrackChanged(int);
+    void indexSubtitleComboBoxChanged(int);
 
     /**
      * @brief testPatternChanged
@@ -707,6 +713,9 @@ private:
      * @brief _subtitlesTrack
      */
     int _subtitlesTrack;
+
+
+    int _indexSubtitleComboBox;
 
     /**
      * @brief _testPattern

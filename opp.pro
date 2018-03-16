@@ -56,5 +56,7 @@ include(src/UI.pri)
 include(src/U_PlayerControl/U_PlayerControl.pri)
 include(src/U_PlaylistHandler/U_PlaylistHandler.pri)
 
+
+
 RESOURCES += images.qrc
 TRANSLATIONS = opp_fr.ts

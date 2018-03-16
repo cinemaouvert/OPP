@@ -60,13 +60,15 @@ mac:INCLUDEPATH += "/Applications/VLC.app/Contents/MacOS/include"
 unix:LIBS += -lvlc -lvlccore
 unix:!macx:LIBS += -lX11
 unix:!macx:INCLUDEPATH += /usr/include/vlc/plugins
+unix:!macx:INCLUDEPATH += /usr/include/vlc
 unix:!macx:INCLUDEPATH += /usr/include
 
 
-windows:LIBS += -L"C:/Program Files (x86)/VideoLAN/VLC/sdk/lib" -llibvlc -llibvlccore
-windows:INCLUDEPATH += "C:/Program Files (x86)/VideoLAN/VLC/sdk/include"
-windows:INCLUDEPATH += "C:/Program Files (x86)/VideoLAN/VLC/sdk/include/vlc"
-windows:INCLUDEPATH += "C:/Program Files (x86)/VideoLAN/VLC/sdk/include/vlc/plugins"
+windows:INCLUDEPATH += $$_PRO_FILE_PWD_/sdk/lib
+windows:LIBS += -L"$$_PRO_FILE_PWD_/sdk/lib" -llibvlc -llibvlccore
+windows:INCLUDEPATH += $$_PRO_FILE_PWD_/sdk/include
+windows:INCLUDEPATH += $$_PRO_FILE_PWD_/sdk/include/vlc
+windows:INCLUDEPATH += $$_PRO_FILE_PWD_/sdk/include/vlc/plugins
 #windows:INCLUDEPATH += ./windows/include   #USE THAT LINE WITH VISUAL STUDIO
 
 mac:LIBS += -framework Cocoa

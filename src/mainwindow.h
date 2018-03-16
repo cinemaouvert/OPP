@@ -29,7 +29,6 @@
  * You should have received a copy of the GNU General Public License
  * along with Open Projection Program. If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************************/
-
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -39,6 +38,7 @@
 #include <QLabel>
 #include <QModelIndexList>
 #include <QTime>
+#include <QProcess>
 #include <vlc/vlc.h>
 
 #include "plugins.h"
@@ -95,6 +95,11 @@ public:
     inline PlaylistPlayer* playlistPlayer() const { return _playlistPlayer; }
 
     /**
+     * @brief return the playlist handler widget
+     */
+    inline PlaylistHandlerWidget* playlistHandlerWidget() const { return _playlistHandlerWidget; }
+
+    /**
      * @brief Getlocker
      *
      * @author Geoffrey Bergé <geoffrey.berge@live.fr>
@@ -107,6 +112,17 @@ public:
      */
     inline QString filename() { return _fileName; }
 
+    /**
+     * @brief subtitleSave
+     * @return
+     */
+    inline QString subtitleSave() { return _subtitleSave; }
+
+    /**
+     * @brief subtitleSave
+     * @return
+     */
+    void subtitleSave(QString subtitleSave);
     /**
      * @brief playlistTabWidget
      * @return
@@ -187,12 +203,17 @@ public:
       */
     QString scheduleToHml();
 
+    QString playlistToHml();
+    void playlistToExcel();
     /**
       * @brief Create schedule in html for pdf
       *
       * @author Denis Sauneir <saunier.denis.86@gmail.com>
       */
     QString scheduleToHmlForPDF();
+    QString playlistToHmlForPDF();
+
+
 
     VideoWindow* videoWindow() const { return _videoWindow; }
 
@@ -206,6 +227,12 @@ public:
     #else // until version 5
         static void myMessageHandler(QtMsgType type, const char* msg);
     #endif
+    /**
+      * @brief add item to subtitleTrackComboBox
+      */
+        void add_Item_SubtitleTrackComboBox(const char* filename);
+        void set_SubtitleTrackComboBox_index(const int index);
+        void remove_SubtitleTrackComboBox_item(const int index);
 
 public slots:
 
@@ -217,9 +244,15 @@ public slots:
     void needVideoWindow();
 
     /**
+     * @brief Set the value of media counter
+     * @param count The new value of media counter
+     */
+    void setMediaCount(int count);
+
+    /**
       *@brief Update the remaining time
       */
-    void stop();
+    //void stop();
 
     /**
      * @brief Save the current project
@@ -309,6 +342,10 @@ public slots:
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void updatePlaylistListCombox();
+
+    void on_default_general();
+    void on_default_audio();
+    void on_default_picture();
 
 private slots:
 
@@ -573,6 +610,8 @@ private slots:
      */
     void on_viewExportPDFButton_clicked();
 
+    void on_exportPlaylist_triggered();
+
     /**
       * @brief slot to close the mire player
       *
@@ -596,6 +635,9 @@ private slots:
     void on_helpAction_triggered();
 
     void on_actionLog_triggered();
+
+    void printConsoleStdMsg();
+    void printConsoleErrMsg();
 
 protected:
     /**
@@ -706,6 +748,11 @@ private:
     QString _fileName;
 
     /**
+     * @brief _subtitleSave
+     */
+    QString _subtitleSave;
+
+    /**
       * @brief store the selected projection mode
       */
     VideoWindow::DisplayMode _projectionMode;
@@ -768,6 +815,8 @@ private:
      * @brief open dir and create if not exits
      */
     void openDir(QString name);
+
+    QProcess* process;
 };
 
 #endif // MAINWINDOW_H

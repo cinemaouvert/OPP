@@ -70,22 +70,24 @@ void PlaylistPlayer::playItemAt(const int &index)
 
 void PlaylistPlayer::initItemAt(const int &index)
 {
-    if (index >= _playlist->count())
-        return;
+    _mediaPlayer->stop();
 
-    _currentIndex = index;
+      if (index >= _playlist->count())
+            return;
 
-    ((MainWindow *)this->parent())->setSelectedMediaTimeByIndex(index);
+        _currentIndex = index;
 
-    _mediaPlayer->open(_playlist->at(index));
+        ((MainWindow *)this->parent())->setSelectedMediaTimeByIndex(index);
 
-    emit itemChanged(_currentIndex);
+        _mediaPlayer->open(_playlist->at(index));
+
+        emit itemChanged(_currentIndex);
 }
 
 void PlaylistPlayer::next()
 {
     if(_mediaPlayer->isStopped() || _mediaPlayer->isPaused()){
-        if (_currentIndex >= _playlist->count() - 1) {
+        if (_currentIndex >= _playlist->count() - 1) {            
             initItemAt(0);
         } else {
             initItemAt(++_currentIndex);
@@ -105,6 +107,7 @@ void PlaylistPlayer::previous()
 {
     if(_mediaPlayer->isStopped() || _mediaPlayer->isPaused()){
         if (_currentIndex == 0) {
+
             initItemAt(_playlist->count() - 1);
         } else {
             initItemAt(--_currentIndex);
@@ -114,7 +117,7 @@ void PlaylistPlayer::previous()
     {
         if (_currentIndex == 0) {
             playItemAt(_playlist->count() - 1);
-        } else {
+        } else { 
             playItemAt(--_currentIndex);
         }
     }
@@ -146,8 +149,15 @@ int PlaylistPlayer::rewind()
 
 void PlaylistPlayer::stop()
 {
+
     _mediaPlayer->stop();
+    if(!_playlist->count()==0)
+    {
+    initItemAt(_currentIndex);
+
     _mediaPlayer->close(_playlist->at(_currentIndex));
+    }
+
 }
 
 void PlaylistPlayer::play()

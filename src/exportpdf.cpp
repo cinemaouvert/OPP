@@ -61,6 +61,11 @@ void ExportPDF::setHtmlPDF(const QString &pdf){
     _pdf = pdf;
     ui->textEdit_viewPDF->setHtml(_pdf.toUtf8());
 }
+void ExportPDF::setHtmlEXCEL(const QString &xls){
+    _xls = xls;
+    ui->textEdit_viewPDF->setHtml(_xls.toUtf8());
+}
+
 
 void ExportPDF::on_exportPDF_Button_clicked()
 {
@@ -117,3 +122,36 @@ void ExportPDF::on_pushButton_ExportHtml_clicked()
      }
      this->hide();
 }
+
+////////////////////////////export excel
+void ExportPDF::on_exportEXCEL_Button_clicked()
+{
+   QString fileName = QFileDialog::getSaveFileName(this, tr("Save Schedule"), "", tr("Excel file (*.xls)"));
+
+    if (fileName.isEmpty()) {
+        return;
+    } else {
+        if(fileName.right(6)!=".xls")
+            fileName+=".xls";
+
+  //      QFile
+
+       QFile htmlFile(fileName);
+        htmlFile.open(QIODevice::WriteOnly);
+        htmlFile.write(_xls.toUtf8());
+        htmlFile.close();
+        _html = "";
+        _dir = "";
+        QApplication::restoreOverrideCursor();
+
+     }
+     this->hide();
+
+
+
+
+
+}
+
+/////////////////////////////
+

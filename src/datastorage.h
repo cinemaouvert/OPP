@@ -175,6 +175,7 @@ private:
      * @brief The media list model
      */
     MediaListModel* _mediaListModel;
+MediaListModel* _mediaListModelManquant;
 
     /**
      * @brief List of playlist model

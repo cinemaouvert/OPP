@@ -443,5 +443,7 @@
         <file>resources/glyphicons/bigLoop.png</file>
         <file>resources/glyphicons/simpleLoop.png</file>
         <file>resources/glyphicons/goToBlack.png</file>
+        <file>resources/icons/icon_lock.png</file>
+        <file>resources/icons/icon_unlock.png</file>
     </qresource>
 </RCC>

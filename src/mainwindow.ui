@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1166</width>
-    <height>662</height>
+    <height>687</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,16 +24,7 @@
     <property name="spacing">
      <number>0</number>
     </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
+    <property name="margin">
      <number>0</number>
     </property>
     <item>
@@ -57,7 +48,7 @@
        <property name="styleSheet">
         <string notr="true">margin-top: 3px;</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,0,0">
+       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0">
         <property name="spacing">
          <number>8</number>
         </property>
@@ -85,7 +76,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>4</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="summaryTab">
            <attribute name="title">
@@ -113,72 +104,6 @@
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item row="1" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_9">
-              <property name="spacing">
-               <number>2</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="label_3">
-                <property name="styleSheet">
-                 <string notr="true">font-size: 13px;
-margin-left: 3px;</string>
-                </property>
-                <property name="text">
-                 <string>Number of movies :</string>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignLeft">
-               <widget class="QLabel" name="countMoviesLabel">
-                <property name="styleSheet">
-                 <string notr="true">font-size: 13px;</string>
-                </property>
-                <property name="text">
-                 <string>0</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="1" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="1,0">
-              <property name="spacing">
-               <number>2</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="label_4">
-                <property name="styleSheet">
-                 <string notr="true">font-size: 13px;
-</string>
-                </property>
-                <property name="lineWidth">
-                 <number>1</number>
-                </property>
-                <property name="text">
-                 <string>Number of pictures :</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="countPicturesLabel">
-                <property name="styleSheet">
-                 <string notr="true">font-size: 13px;
-margin-right: 3px;</string>
-                </property>
-                <property name="text">
-                 <string>0</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
             <item row="0" column="0" colspan="2">
              <layout class="QHBoxLayout" name="horizontalLayout_8">
               <property name="spacing">
@@ -215,7 +140,160 @@ border-bottom: 1px solid rgb(180, 180, 180);</string>
               </item>
              </layout>
             </item>
-            <item row="5" column="0" colspan="2">
+            <item row="4" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_7">
+              <item>
+               <widget class="QLabel" name="label_9">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>-1</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;
+margin-left: 3px;</string>
+                </property>
+                <property name="text">
+                 <string>Number of unused Movies :</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="unusedMoviesLabel">
+                <property name="font">
+                 <font>
+                  <pointsize>-1</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;
+margin-right: 3px;</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="4" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
+              <item>
+               <widget class="QLabel" name="label_2">
+                <property name="font">
+                 <font>
+                  <pointsize>-1</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;
+</string>
+                </property>
+                <property name="text">
+                 <string>Number of unused pictures :</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="unusedPicturesLabel">
+                <property name="font">
+                 <font>
+                  <pointsize>-1</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;
+margin-right: 3px;</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="5" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_3">
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;
+margin-left: 3px;</string>
+                </property>
+                <property name="text">
+                 <string>Number of playlists :</string>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignLeft">
+               <widget class="QLabel" name="countMoviesLabel">
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="7" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_18">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_6">
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;
+margin-left: 3px;
+margin-top:10px;
+margin-bottom: 10px;</string>
+                </property>
+                <property name="text">
+                 <string>Total duration of the automation :</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="totalDurationLabel">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>00:00:00</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="9" column="0" colspan="2">
              <layout class="QVBoxLayout" name="verticalLayout_17">
               <property name="spacing">
                <number>0</number>
@@ -230,7 +308,8 @@ border-bottom: 1px solid rgb(180, 180, 180);</string>
                 </property>
                 <property name="styleSheet">
                  <string notr="true">font-size: 13px;
-margin-left: 3px;</string>
+margin-left: 3px;
+margin-top: 10px;</string>
                 </property>
                 <property name="text">
                  <string>Notes</string>
@@ -258,41 +337,45 @@ margin-left: 3px;</string>
               </item>
              </layout>
             </item>
-            <item row="3" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_18">
+            <item row="3" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="1,0">
               <property name="spacing">
                <number>2</number>
               </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
               <item>
-               <widget class="QLabel" name="label_6">
+               <widget class="QLabel" name="label_4">
                 <property name="styleSheet">
                  <string notr="true">font-size: 13px;
-margin-left: 3px;</string>
+</string>
+                </property>
+                <property name="lineWidth">
+                 <number>1</number>
                 </property>
                 <property name="text">
-                 <string>Playlists ends in :</string>
+                 <string>Number of pictures used :</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_timeRemaining">
+               <widget class="QLabel" name="countPicturesLabel">
                 <property name="styleSheet">
-                 <string notr="true">font-size: 13px;</string>
+                 <string notr="true">font-size: 13px;
+margin-right: 3px;</string>
                 </property>
                 <property name="text">
-                 <string>00:00:00</string>
+                 <string>0</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                 </property>
                </widget>
               </item>
              </layout>
             </item>
-            <item row="2" column="0">
+            <item row="3" column="0">
              <layout class="QHBoxLayout" name="horizontalLayout_10">
               <property name="spacing">
                <number>2</number>
@@ -310,18 +393,37 @@ margin-left: 3px;</string>
 margin-left: 3px;</string>
                 </property>
                 <property name="text">
-                 <string>Total duration of the automation : </string>
+                 <string>Number of movies used : </string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="totalDurationLabel">
+               <widget class="QLabel" name="usedMoviesLabel">
+                <property name="font">
+                 <font>
+                  <pointsize>-1</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">font-size: 13px;
+margin-right: 3px;</string>
+                </property>
                 <property name="text">
-                 <string/>
+                 <string>0</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
               </item>
              </layout>
+            </item>
+            <item row="7" column="1">
+             <widget class="QLabel" name="label_timeRemaining">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -333,16 +435,7 @@ margin-left: 3px;</string>
             <property name="spacing">
              <number>0</number>
             </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
+            <property name="margin">
              <number>0</number>
             </property>
             <item>
@@ -371,16 +464,7 @@ margin-left: 3px;</string>
                <property name="verticalSpacing">
                 <number>0</number>
                </property>
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
+               <property name="margin">
                 <number>0</number>
                </property>
                <item row="0" column="0">
@@ -499,6 +583,13 @@ margin: 0px 0px 2px 0px;</string>
                  </property>
                 </widget>
                </item>
+               <item row="5" column="0">
+                <widget class="QPushButton" name="qPushButton_default_general">
+                 <property name="text">
+                  <string>Default</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
             </item>
@@ -521,16 +612,7 @@ margin: 0px 0px 2px 0px;</string>
                <property name="verticalSpacing">
                 <number>0</number>
                </property>
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
+               <property name="margin">
                 <number>0</number>
                </property>
                <item row="0" column="0">
@@ -612,6 +694,13 @@ margin: 0px 0px 2px 0px;</string>
                  </property>
                 </widget>
                </item>
+               <item row="3" column="0">
+                <widget class="QPushButton" name="qPushButton_Default_Audio">
+                 <property name="text">
+                  <string>Default</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
             </item>
@@ -634,16 +723,7 @@ margin: 0px 0px 2px 0px;</string>
                <property name="verticalSpacing">
                 <number>0</number>
                </property>
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
+               <property name="margin">
                 <number>0</number>
                </property>
                <item row="0" column="0">
@@ -762,7 +842,7 @@ margin: 0px 0px 2px 0px;</string>
                  </property>
                 </widget>
                </item>
-               <item row="4" column="0">
+               <item row="5" column="0">
                 <widget class="QLabel" name="hueLabel">
                  <property name="styleSheet">
                   <string notr="true">font-size: 13px;</string>
@@ -772,7 +852,7 @@ margin: 0px 0px 2px 0px;</string>
                  </property>
                 </widget>
                </item>
-               <item row="4" column="1">
+               <item row="5" column="1">
                 <widget class="QSpinBox" name="hueSpinBox">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -794,6 +874,13 @@ margin: 0px 0px 2px 0px;</string>
                  </property>
                 </widget>
                </item>
+               <item row="6" column="0">
+                <widget class="QPushButton" name="qPushButton_Default_Picture">
+                 <property name="text">
+                  <string>Default</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
             </item>
@@ -807,16 +894,7 @@ margin: 0px 0px 2px 0px;</string>
             <property name="spacing">
              <number>0</number>
             </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
+            <property name="margin">
              <number>0</number>
             </property>
             <item>
@@ -843,9 +921,9 @@ font-size: 13px;</string>
                <property name="geometry">
                 <rect>
                  <x>0</x>
-                 <y>2</y>
-                 <width>480</width>
-                 <height>199</height>
+                 <y>0</y>
+                 <width>482</width>
+                 <height>283</height>
                 </rect>
                </property>
                <layout class="QGridLayout" name="gridLayout_2">
@@ -953,7 +1031,7 @@ margin-right: 4px; </string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../images.qrc">
                  <normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</iconset>
                </property>
               </widget>
@@ -969,7 +1047,7 @@ margin-right: 4px; </string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../images.qrc">
                  <normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</iconset>
                </property>
               </widget>
@@ -985,7 +1063,7 @@ margin-left: 5px;
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../images.qrc">
                  <normaloff>:/icons/resources/glyphicons/glyphicons_045_calendar.png</normaloff>:/icons/resources/glyphicons/glyphicons_045_calendar.png</iconset>
                </property>
               </widget>
@@ -1210,6 +1288,9 @@ padding-left: 3px;
            </property>
            <item>
             <widget class="MediaTableView" name="binTableView">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="styleSheet">
               <string notr="true">font-size: 13px;
 margin: 0px 0px 1px 0px;</string>
@@ -1241,7 +1322,7 @@ margin: 0px 0px 1px 0px;</string>
             </widget>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0">
+            <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -1262,7 +1343,7 @@ margin-right: 10px;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../images.qrc">
                  <normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</normaloff>:/icons/resources/glyphicons/glyphicons_190_circle_plus.png</iconset>
                </property>
                <property name="iconSize">
@@ -1285,7 +1366,7 @@ margin-left: 4px;
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../images.qrc">
                  <normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</normaloff>:/icons/resources/glyphicons/glyphicons_016_bin.png</iconset>
                </property>
                <property name="iconSize">
@@ -1293,6 +1374,18 @@ margin-left: 4px;
                  <width>16</width>
                  <height>16</height>
                 </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="binCountMedia">
+               <property name="styleSheet">
+                <string notr="true">padding-left: 8px;
+margin-left: 4px;
+</string>
+               </property>
+               <property name="text">
+                <string>TextLabel</string>
                </property>
               </widget>
              </item>
@@ -1345,16 +1438,7 @@ margin-left: 4px;
            <property name="spacing">
             <number>0</number>
            </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
+           <property name="margin">
             <number>0</number>
            </property>
            <item>
@@ -1363,16 +1447,7 @@ margin-left: 4px;
               <property name="spacing">
                <number>0</number>
               </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -1397,16 +1472,7 @@ margin-left: 4px;
                   <property name="sizeConstraint">
                    <enum>QLayout::SetNoConstraint</enum>
                   </property>
-                  <property name="leftMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="topMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="rightMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="bottomMargin">
+                  <property name="margin">
                    <number>0</number>
                   </property>
                   <property name="spacing">
@@ -1521,16 +1587,7 @@ margin-left: 4px;
                     </sizepolicy>
                    </property>
                    <layout class="QGridLayout" name="gridLayout">
-                    <property name="leftMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="bottomMargin">
+                    <property name="margin">
                      <number>0</number>
                     </property>
                     <property name="spacing">
@@ -1554,7 +1611,7 @@ margin-left: 4px;
                        <string>Disable</string>
                       </property>
                       <property name="icon">
-                       <iconset>
+                       <iconset resource="../images.qrc">
                         <normaloff>:/icons/resources/glyphicons/glyphicons_086_display.png</normaloff>:/icons/resources/glyphicons/glyphicons_086_display.png</iconset>
                       </property>
                       <property name="checkable">
@@ -1628,16 +1685,7 @@ margin-left: 4px;
                     <property name="spacing">
                      <number>0</number>
                     </property>
-                    <property name="leftMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="bottomMargin">
+                    <property name="margin">
                      <number>0</number>
                     </property>
                     <item>
@@ -1694,7 +1742,7 @@ margin-left: 4px;
                          <string/>
                         </property>
                         <property name="pixmap">
-                         <pixmap>:/icons/resources/images/intertitle.jpg</pixmap>
+                         <pixmap resource="../images.qrc">:/icons/resources/images/intertitle.jpg</pixmap>
                         </property>
                        </widget>
                       </item>
@@ -1727,16 +1775,7 @@ margin-left: 4px;
                     <property name="spacing">
                      <number>0</number>
                     </property>
-                    <property name="leftMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="bottomMargin">
+                    <property name="margin">
                      <number>0</number>
                     </property>
                     <item>
@@ -1768,7 +1807,7 @@ margin-left: 4px;
                          <string/>
                         </property>
                         <property name="pixmap">
-                         <pixmap>:/icons/resources/images/intertitle.jpg</pixmap>
+                         <pixmap resource="../images.qrc">:/icons/resources/images/intertitle.jpg</pixmap>
                         </property>
                        </widget>
                       </item>
@@ -1816,16 +1855,7 @@ margin-left: 4px;
                 </item>
                 <item>
                  <layout class="QGridLayout" name="gridLayout_After">
-                  <property name="leftMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="topMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="rightMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="bottomMargin">
+                  <property name="margin">
                    <number>0</number>
                   </property>
                   <property name="spacing">
@@ -1913,16 +1943,7 @@ margin-left: 4px;
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
+          <property name="margin">
            <number>0</number>
           </property>
          </layout>
@@ -1939,7 +1960,7 @@ margin-left: 4px;
      <x>0</x>
      <y>0</y>
      <width>1166</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1951,6 +1972,7 @@ margin-left: 4px;
     <addaction name="openListingAction"/>
     <addaction name="saveAction"/>
     <addaction name="saveAsAction"/>
+    <addaction name="exportPlaylist"/>
     <addaction name="separator"/>
     <addaction name="quitAction"/>
    </widget>
@@ -2279,6 +2301,14 @@ margin-left: 4px;
     <string>Ctrl+Return</string>
    </property>
   </action>
+  <action name="exportPlaylist">
+   <property name="text">
+    <string>Export Playlist</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+E</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -2293,6 +2323,8 @@ margin-left: 4px;
    <header location="global">mediatableview.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../images.qrc"/>
+ </resources>
  <connections/>
 </ui>

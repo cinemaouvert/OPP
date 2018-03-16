@@ -94,19 +94,6 @@
       <property name="bottomMargin">
        <number>0</number>
       </property>
-      <item>
-       <widget class="QLabel" name="countLoadedFilesLabel">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -179,8 +166,8 @@ padding-bottom: 6px;</string>
      </property>
      <property name="icon">
       <iconset resource="../images.qrc">
-       <normaloff>:/icons/resources/glyphicons/glyphicons_204_unlock.png</normaloff>
-       <normalon>:/icons/resources/glyphicons/glyphicons_203_lock.png</normalon>:/icons/resources/glyphicons/glyphicons_204_unlock.png</iconset>
+       <normaloff>:/icons/resources/icons/icon_unlock.png</normaloff>
+       <normalon>:/icons/resources/icons/icon_lock.png</normalon>:/icons/resources/icons/icon_unlock.png</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>

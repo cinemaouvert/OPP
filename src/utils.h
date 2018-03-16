@@ -60,6 +60,6 @@ void wait(int t);
  *
  * @author Thibaud Lamarche <lamarchethibaud@hotmail.fr>
  */
-QString humanSize(int size);
+QString humanSize(qlonglong size);
 
 #endif // UTILS_H

@@ -76,6 +76,15 @@ void MediaSettings::setSubtitlesTrack(const int &track){
     emit subtitlesTrackChanged(_subtitlesTrack);
 }
 
+void MediaSettings::setIndexSubtitleComboBox(const int &index){
+    _indexSubtitleComboBox = index;
+    emit indexSubtitleComboBoxChanged(_indexSubtitleComboBox);
+}
+
+void MediaSettings::setIndexSubtitleComboBox2(const int &index){
+    _indexSubtitleComboBox = index;
+}
+
 void MediaSettings::setSubtitlesFile(QString file)
 {
     _subtitlesFile = file;
@@ -161,7 +170,8 @@ void MediaSettings::initDefault()
 {
     _audioTrack = 0; /* audio disabled */
     _videoTrack = 0; /* video disabled */
-    _subtitlesTrack = 0; /* subtitles disabled */
+    _subtitlesTrack = -1; /* subtitles disabled */
+    _indexSubtitleComboBox = 0;
     _ratio = Original;
     _scale = NoScale;
     _deinterlacing = Discard;

@@ -44,14 +44,6 @@ public:
 public slots:
 
     /**
-     * @brief Set the value of media counter
-     * @param count The new value of media counter
-     *
-     * @author Florian Mhun <florian.mhun@gmail.com>
-     */
-    void setMediaCount(int count);
-
-    /**
      * @brief lockButton
      */
     QPushButton* lockButton() const;

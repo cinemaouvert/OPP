@@ -30,6 +30,8 @@
  * along with Open Projection Program. If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************************/
 
+
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -106,6 +108,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setMediaCount(0);
+
     /****************** internal core initalization *********************/
     _app = new VLCApplication();
     _playlistPlayer = new PlaylistPlayer(_app->vlcInstance(), this);
@@ -122,7 +126,7 @@ MainWindow::MainWindow(QWidget *parent) :
     MediaPlayer* mediaPlayer = _playlistPlayer->mediaPlayer();
     mediaPlayer->setVideoView( (VideoView*) _videoWindow->videoWidget() );
     mediaPlayer->setVideoBackView( (VideoView*) ui->backWidget );
-    mediaPlayer->initStream();
+
 
     connect(mediaPlayer, SIGNAL(stopped()), this, SLOT(stop()));
 
@@ -137,7 +141,6 @@ MainWindow::MainWindow(QWidget *parent) :
     _scheduleListModel = new ScheduleListModel();
 
     connect(ui->scheduleToggleEnabledButton, SIGNAL(toggled(bool)), _scheduleListModel, SLOT(toggleAutomation(bool)));
-
     ui->binTableView->setModel(_mediaListModel);
     ui->scheduleTableView->setModel(_scheduleListModel);
 
@@ -149,7 +152,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _statusWidget = new StatusWidget;
 
     ui->statusBar->addPermanentWidget(_statusWidget);
-    connect(_mediaListModel, SIGNAL(mediaListChanged(int)), _statusWidget, SLOT(setMediaCount(int)));
+    connect(_mediaListModel, SIGNAL(mediaListChanged(int)), this, SLOT(setMediaCount(int)));
 
     connect(_locker, SIGNAL(toggled(bool)), _statusWidget->lockButton(), SLOT(setChecked(bool)));
     connect(_statusWidget->lockButton(), SIGNAL(clicked(bool)), _locker, SLOT(toggle(bool)));
@@ -165,7 +168,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->verticalLayout->addWidget(_playerControlWidget);
 
     /**** Create a first default playlist *******/
-    _playlistTabWidget->createTab();
+    _playlistTabWidget->createTab("playlist");
 
     /***************** Give the widgets to the locker ***************/
     _locker->setLockedWidgets(getLockedWidget());
@@ -372,6 +375,26 @@ MainWindow::MainWindow(QWidget *parent) :
     _f1_shortcut = new QShortcut(QKeySequence("f1"), this);
 
     connect(_f1_shortcut, SIGNAL(activated()), this, SLOT(switchVideoMode()));
+    connect(ui->subtitlesTrackComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(on_subtitlesTrackComboBox_currentIndexChanged(int)));
+
+    //button default in General, audio, picture
+    connect(ui->qPushButton_default_general, SIGNAL(clicked()), this, SLOT(on_default_general()));
+    connect(ui->qPushButton_Default_Audio, SIGNAL(clicked()), this, SLOT(on_default_audio()));
+    connect(ui->qPushButton_Default_Picture, SIGNAL(clicked()), this, SLOT(on_default_picture()));
+
+    /*process = this->
+
+    connect(process,SIGNAL(readyReadStandartOutput()), this,SLOT(printConsoleStdMsg()));
+    connect(process,SIGNAL(readyReadStarndartError()), this,SLOT(printConsoleErrMsg()));
+
+    process->start("echo");*/
+}
+
+void MainWindow::printConsoleStdMsg(){
+    LoggerSingleton::getInstance()->writeMessage(process->readAllStandardOutput());
+}
+void MainWindow::printConsoleErrMsg(){
+    LoggerSingleton::getInstance()->writeMessage(process->readAllStandardError());
 }
 
 MainWindow::~MainWindow()
@@ -444,8 +467,12 @@ QLabel* MainWindow::screenBefore() const
 
 void MainWindow::updateProjectSummary()
 {
-    ui->countMoviesLabel->setText( QString::number(_mediaListModel->countMovies()) );
+    ui->countMoviesLabel->setText( QString::number(_playlistTabWidget->count()) );
+    ui->usedMoviesLabel->setText( QString::number(_mediaListModel->countUsedMovies()) );
+    ui->unusedMoviesLabel->setText( QString::number(_mediaListModel->countUnusedMovies()) );
+
     ui->countPicturesLabel->setText( QString::number(_mediaListModel->countPictures()) );
+    ui->unusedPicturesLabel->setText( QString::number(_mediaListModel->countUnusedPictures()) );
     ui->totalDurationLabel->setText( _scheduleListModel->totalDuration().toString("hh:mm:ss") );
 }
 
@@ -455,8 +482,9 @@ void MainWindow::updateDetails() {
     for(int i=0; i< _playlistTabWidget->count();i++) {
         PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) _playlistTabWidget->widget(i))->model();
         foreach(Playback *playback, model->playlist()->playbackList()) {
-            foreach(AudioTrack audioTrack, playback->media()->audioTracks()) {
-                QString codec = audioTrack.codecDescription();
+            foreach(QString codeca, playback->media()->codec_audio()) {
+
+                QString codec = codeca;
                 if(!ui->textEdit_Codecs->toHtml().contains(codec))
                     ui->textEdit_Codecs->append(codec);
             }
@@ -467,8 +495,8 @@ void MainWindow::updateDetails() {
     for(int i=0; i< _playlistTabWidget->count();i++) {
         PlaylistModel *model = (PlaylistModel*) ((PlaylistTableView*) _playlistTabWidget->widget(i))->model();
         foreach(Playback *playback, model->playlist()->playbackList()) {
-            foreach(VideoTrack videoTrack, playback->media()->videoTracks()) {
-                QString codec = videoTrack.codecDescription();
+            foreach(QString codecv, playback->media()->codec_video()) {
+                QString codec = codecv;
                 if(!ui->textEdit_Codecs->toHtml().contains(codec))
                     ui->textEdit_Codecs->append(codec);
             }
@@ -502,7 +530,9 @@ void MainWindow::on_binAddMediaButton_clicked()
 
 int MainWindow::addMedia(QString location)
 {
+
     Media *media = new Media(location, _app->vlcInstance());
+
 
     if (media->exists() == false) {
         QMessageBox::warning(this, tr("Import media"), QString(tr("The file %1 does not exist. Maybe it was deleted.")).arg(media->location()));
@@ -562,7 +592,7 @@ void MainWindow::takeScreenshot(QStringList fileNames)
         screenPath +=  media->getLocation().replace(QDir::separator(),"_").remove(":");
         screenPath += ".png";
 
-        if(!QFile(screenPath).exists() && !media->isAudio() && !media->isImage())
+        if(/*!QFile(screenPath).exists() &&*/ !media->isAudio() && !media->isImage())
         {
             libvlc_media_player_set_media(vlcMP, media->core());
             libvlc_media_add_option(media->core(),":noaudio");
@@ -590,9 +620,9 @@ void MainWindow::takeScreenshot(QStringList fileNames)
             libvlc_video_take_snapshot(vlcMP, 0, screenPath.toStdString().c_str(), *width, *height);
 
             /*** Wait the screenshot creation to release the function ****/
-            while(!QFile::exists(screenPath)){
+            /*while(!QFile::exists(screenPath)){
                 wait(3);
-            }
+            }*/
 
             delete width;
             delete height;
@@ -666,7 +696,7 @@ void MainWindow::on_disableButton_clicked()
         _playlistPlayer->mediaPlayer()->setBackMode(MediaPlayer::NONE);
         if(_playlistPlayer->mediaPlayer()->isPlaying())
         {
-            _playlistPlayer->mediaPlayer()->stopStream();
+            _playlistPlayer->mediaPlayer()->pauseStream();
         }
     }
 }
@@ -739,7 +769,31 @@ void MainWindow::on_subtitlesTrackComboBox_currentIndexChanged(int index)
     Playback *playback = selectedPlayback();
 
     if (playback) {
-        playback->mediaSettings()->setSubtitlesTrack(index);
+        //playback->mediaSettings()->setSubtitlesTrack(index);
+        if(index==0)
+        {
+            playback->mediaSettings()->setSubtitlesTrack(-1);
+            playback->mediaSettings()->setIndexSubtitleComboBox2(index);
+            playback->mediaSettings()->setSubtitlesFile("empty");
+            currentPlaylistModel()->setData(currentPlaylistModel()->index(currentPlaylistModel()->activeItemIndex(), 5), "Disabled", Qt::DisplayRole);
+
+
+        }
+        else
+        {
+            if(!playback->media()->subtitlesTracksName().at(index-1).contains("Track"))
+            {
+                playback->mediaSettings()->setSubtitlesFile(playback->media()->subtitlesTracksName().at(index-1));
+                playback->mediaSettings()->setIndexSubtitleComboBox2(index);
+                currentPlaylistModel()->setData(currentPlaylistModel()->index(currentPlaylistModel()->activeItemIndex(), 5), playback->media()->subtitlesTracksName().at(index-1), Qt::DisplayRole);
+
+            }
+            else{
+                playback->mediaSettings()->setSubtitlesTrack(playback->media()->subtitlesTracks().at(index - 1).trackId());
+                playback->mediaSettings()->setIndexSubtitleComboBox2(index);
+                currentPlaylistModel()->setData(currentPlaylistModel()->index(currentPlaylistModel()->activeItemIndex(), 5), playback->media()->subtitlesTracksName().at(index-1), Qt::DisplayRole);
+            }
+        }
     }
 
     currentPlaylistModel()->updateLayout();
@@ -850,6 +904,10 @@ void MainWindow::updateSettings()
     ui->subtitlesTrackComboBox->clear();
     ui->subtitlesTrackComboBox->addItem(tr("Disabled"));
     ui->subtitlesTrackComboBox->addItems(playback->media()->subtitlesTracksName());
+    /*if(_subtitleSave!=NULL)
+    {
+        ui->subtitlesTrackComboBox->addItem(tr(_subtitleSave.toStdString().c_str()));
+    }*/
 
     ui->subtitlesSyncSpinBox->setValue(playback->mediaSettings()->subtitlesSync());
     ui->audioSyncDoubleSpinBox->setValue(playback->mediaSettings()->audioSync());
@@ -865,7 +923,7 @@ void MainWindow::updateSettings()
     ui->videoTrackComboBox->setCurrentIndex( track == -1 ? 0 : track+1);
 
     ui->audioTrackComboBox->setCurrentIndex( playback->mediaSettings()->audioTrack() );
-    ui->subtitlesTrackComboBox->setCurrentIndex( playback->mediaSettings()->subtitlesTrack() );
+    ui->subtitlesTrackComboBox->setCurrentIndex( playback->mediaSettings()->indexSutitleComboBox());
 
     ui->ratioComboBox->setCurrentIndex( playback->mediaSettings()->ratio() );
 
@@ -878,6 +936,10 @@ void MainWindow::updateSettings()
     ui->scheduleLaunchAtTimeEdit->setCurrentSectionIndex(1);
 }
 
+void MainWindow::subtitleSave(QString subtitleSave)
+{
+    _subtitleSave = subtitleSave;
+}
 
 /***********************************************************************************************\
                                           Player
@@ -909,9 +971,9 @@ void MainWindow::switchVideoMode(){
     }
 }
 
-void MainWindow::stop(){
+/*void MainWindow::stop(){
     ui->label_timeRemaining->setText("00:00:00");
-}
+}*/
 
 /***********************************************************************************************\
                                           Project import/export
@@ -934,6 +996,21 @@ int MainWindow::verifSave ()
 void MainWindow::on_addMediaAction_triggered()
 {
     on_binAddMediaButton_clicked();
+}
+
+void MainWindow::setMediaCount(int count)
+{
+    if(count == 0 || count == 1) {
+        ui->binCountMedia->setText(QString("%1 %2")
+            .arg( QString::number(count) )
+            .arg( tr("file loaded") )
+        );
+    }else {
+        ui->binCountMedia->setText(QString("%1 %2")
+            .arg( QString::number(count) )
+            .arg( tr("files loaded") )
+        );
+    }
 }
 
 void MainWindow::on_saveAction_triggered()
@@ -986,7 +1063,7 @@ void MainWindow::on_openListingAction_triggered()
     if(_playlistPlayer->mediaPlayer()->isPlaying() || _playlistPlayer->mediaPlayer()->isPaused()){
         QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before open a listing."));
     }else{
-        //TODO Mettre test si modification de la programmation actuelle à la place
+        //TODO Mettre test si modification de la programmation actuelle �  la place
         if(verifSave() != 0){
             QString listingPath = QFileDialog::getOpenFileName(this, tr("Open listing"), QDir::homePath(), tr("OPP file (*.opp)"));
             openListing(listingPath);
@@ -999,12 +1076,12 @@ void MainWindow::on_newListingAction_triggered()
     if(_playlistPlayer->mediaPlayer()->isPlaying() || _playlistPlayer->mediaPlayer()->isPaused()){
         QMessageBox::critical(this, tr("Playlist is running"), tr("Playlist is running. \nPlease stop playlist before new listing."));
     }else{
-        //TODO Mettre test si modification de la programamtion actuelle à la place
+        //TODO Mettre test si modification de la programamtion actuelle �  la place
         if(verifSave() != 0){
             _dataStorage->clear();
 
             // add empty tab and remove all other one (init state)
-            _playlistTabWidget->createTab();
+            _playlistTabWidget->createTab("playlist");
             int size = ui->schedulePlaylistListComboBox->count();
 
             while (_playlistTabWidget->count() > 1)
@@ -1025,7 +1102,7 @@ void MainWindow::on_newListingAction_triggered()
 
 void MainWindow::on_quitAction_triggered()
 {
-    //TODO Mettre test si modification de la programamtion actuelle à la place
+    //TODO Mettre test si modification de la programamtion actuelle �  la place
     if(_mediaListModel->rowCount()!=0)
     {
         //0:ne pas enregistrer ni quitter / 1:ne pas enregistrer mais quitter / 2:enregistrer puis quitter
@@ -1083,12 +1160,17 @@ void MainWindow::on_scheduleAddButton_clicked()
     }
 
     Playlist *playlist = _playlistHandlerWidget->playlistAt(playlistIndex);
-    Schedule *schedule = new Schedule(playlist, launchAt);
+    Schedule *schedule = new Schedule(playlist, launchAt, this);
 
     if (_scheduleListModel->isSchedulable(schedule)) {
-        connect(schedule, SIGNAL(triggered(Playlist*)), _playlistPlayer, SLOT(playPlaylist(Playlist*)));
-        connect(schedule, SIGNAL(triggered(Playlist*)), this, SLOT(needVideoWindow(Playlist*)));
+       connect(schedule, SIGNAL(triggered(Playlist*)), _playlistPlayer, SLOT(playPlaylist(Playlist*)));
+       connect(schedule, SIGNAL(triggered(Playlist*)), this, SLOT(needVideoWindow()));
+       connect(schedule, SIGNAL(triggered(Playlist*)), _playerControlWidget->playPauseButton(), SLOT(toggle()));
+       connect(schedule, SIGNAL(triggered(Playlist*)), _playlistHandlerWidget->currentPlaylistModel(), SLOT(playItem()));
+
         _scheduleListModel->addSchedule(schedule);
+
+
     } else {
         delete schedule;
     }
@@ -1226,7 +1308,8 @@ QList<QWidget*> MainWindow::getLockedWidget()
     lockedWidget << ui->audioSettingsWidget;
     lockedWidget << ui->pictureSettingsWidget;
     lockedWidget << ui->disableButton;
-    lockedWidget << _playlistHandlerWidget;
+    lockedWidget << _playerControlWidget;
+    lockedWidget << _playlistTabWidget;
     lockedWidget << _playerControlWidget;
 
     return lockedWidget;
@@ -1243,11 +1326,17 @@ QLabel* MainWindow::screenBack() const
     return ui->screenBack;
 }
 
+void MainWindow::add_Item_SubtitleTrackComboBox(const char* filename)
+{
+    ui->subtitlesTrackComboBox->addItem(tr(filename));
+}
+
 /****** PLUGIN LOADER***********/
 
 void MainWindow::loadPlugins(){
     QDir pluginsDir = QDir(qApp->applicationDirPath());
     pluginsDir.cd("pluginsOPP");
+    bool empty = true;
     if(pluginsDir.exists()){
         foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
             QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
@@ -1266,14 +1355,26 @@ void MainWindow::loadPlugins(){
                     ui->horizontalLayout_11->addWidget(button);
 
                     connect ( button, SIGNAL( clicked() ), this, SLOT( ocpmSecondaryAction() ) );
+
+                    if(empty){
+                        empty = false;
+                    }
                 }else{
                     OPP_GENERIC_PLUGIN *oppGEN = qobject_cast<OPP_GENERIC_PLUGIN *>(plugin);
                     if(oppGEN != 0){
                         oppGEN->setMainWindow(this);
+
+                        if(empty){
+                            empty = false;
+                        }
                     }
                 }
             }
         }
+    }
+
+    if(empty){
+        ui->menuPlugins->menuAction()->setVisible(false);
     }
 }
 
@@ -1539,13 +1640,19 @@ QString MainWindow::scheduleToHml(){
 
             " <div class=\"title\">"
 
-              + QString("<strong>Nom de la séance : </strong>%1 - <strong>Durée total : </strong>%2 –  <strong>Début : </strong>%3 – <strong>Fin : </strong>%4 –  <strong>Jour : </strong>%5").arg(
+              /* + QString("<strong>Nom de la séance : </strong>%1 - <strong>Durée total : </strong>%2 –  <strong>Début : </strong>%3 – <strong>Fin : </strong>%4 –  <strong>Jour : </strong>%5").arg(
                   schedule->playlist()->title(),
                   msecToQTime(schedule->playlist()->totalDuration()).toString("hh:mm:ss"),
                   schedule->launchAt().time().toString("hh:mm:ss"),
                   schedule->finishAt().time().toString("hh:mm:ss"),
                   schedule->launchAt().date().toString("dd/MM/yyyy")
-                  )
+                  )*/
+                + QString("<strong>Nom de la playlist : </strong>%1 - <strong>Durée total : </strong>%2 –  <strong>Nombre de films : </strong>%3 – <strong>").arg(
+                  this->currentPlaylistModel()->playlist()->title(),
+                  msecToQTime(this->currentPlaylistModel()->playlist()->totalDuration()).toString("hh:mm:ss"),
+                  QString::number(this->currentPlaylistModel()->playlist()->playbackList().count()));
+
+
               +
 
             " </div>"
@@ -1606,6 +1713,119 @@ QString MainWindow::scheduleToHml(){
     return out.toUtf8();
 }
 
+QString MainWindow::playlistToHml(){
+    QString out;
+    out = "<!DOCTYPE html>"
+            "<html>"
+            "<head>"
+            "<title>OPP Schedule</title>"
+            "<meta charset=\"UTF-8\">"
+            "<meta name=\"viewport\" content=\"width=device-width\">"
+            "<style type=\"text/css\">"
+            "body{"
+            " font-family: arial;"
+            " }"
+            " .marge{"
+            " padding-left: 10px;"
+            "  padding-right: 10px; "
+            " }"
+            "  .page{"
+            " width: 29.7cm;"
+            "  //min-height: 21cm;"
+
+            "   }    "
+            "  .title {"
+            " border: solid 1px #000;"
+            " padding-left: 2px;"
+            "text-align: center;"
+            "  font-size: 16px;"
+            " margin-bottom: 10px;"
+            "   }"
+            "   thead{"
+            "   background-color: lightgray;"
+            " line-height: 24px;"
+            " }"
+            " .droit{"
+            "   text-align: right;"
+            " vertical-align: top;"
+            "  padding-right: 2px;"
+            " }"
+            " .titre{"
+            "  width: 50%;"
+            " }"
+            "  td, img{"
+            "      text-align: center;"
+            "    padding: 2px;"
+            "   width: 220px;"
+            " height: 120px;"
+            "  }"
+            " </style>"
+            " </head>"
+            " <body>"
+             "  <div class=\"page marge\">";
+
+     //foreach(Schedule *schedule, _scheduleListModel->scheduleList()){
+    out+=  " <div class=\"title\">"
+
+              + QString("<strong>Nom de la playlist : </strong>%1 - <strong>Durée total : </strong>%2 –  <strong>Nombre de films : </strong>%3 – <strong>").arg(
+                  this->currentPlaylistModel()->playlist()->title(),
+                    msecToQTime(this->currentPlaylistModel()->playlist()->totalDuration()).toString("hh:mm:ss"),
+                    QString::number(this->currentPlaylistModel()->playlist()->playbackList().count()));
+
+
+
+
+             //   QList<Playback*> myList = this->currentPlaylistModel()->playlist()->playbackList();
+
+
+
+         out +=   " </div>"
+        "<table border='1' cellspacing='0' class='page'>"
+            "<thead>"
+            "  <tr>"
+            "<th>Titre</th>"
+            "<th>Durée</th>"
+            "<th>Video</th>"
+            "    </tr>"
+            "  </thead>"
+            " <tbody>";
+
+            foreach(Playback *playback, currentPlaylistModel()->playlist()->playbackList()){
+                out += "<tr>"
+                + QString("<td class=\"droit titre\">%1</td>").arg(
+                    playback->media()->name()
+                 )
+                + QString("<td class=\"droit\">%1</td>").arg(
+                    msecToQTime((int)playback->media()->duration()).toString("hh:mm:ss")
+                 );
+                libvlc_media_player_t *mp;
+                mp = libvlc_media_player_new_from_media(playback->media()->core());
+                QString myString = playback->media()->extension().toUpper()
+                        +(" (")
+                        +QString("%1 x %2")
+                        .arg(libvlc_video_get_width(mp))
+                        .arg(libvlc_video_get_height(mp))
+                        +(")");
+                out+= QString("<td class=\"droit\">%1</td>").arg(
+                    myString
+                 )
+                +
+                "  </tr>";
+
+   // }
+
+    out+=
+            "  </tbody>"
+            " </table><br />";
+          "   </div>"
+          "     </body>"
+          "   </html>";
+}
+    return out.toAscii();
+
+
+}
+
 QString MainWindow::scheduleToHmlForPDF(){
     QString out;
     out = "<!DOCTYPE html>"
@@ -1662,51 +1882,54 @@ QString MainWindow::scheduleToHmlForPDF(){
 
             " <div class=\"title\">"
 
-              + QString("<strong>Nom de la séance : </strong>%1 - <strong>Durée total : </strong>%2 –  <strong>Début : </strong>%3 – <strong>Fin : </strong>%4 –  <strong>Jour : </strong>%5").arg(
+             /* + QString("<strong>Nom de la séance : </strong>%1 - <strong>Durée total : </strong>%2 –  <strong>Début : </strong>%3 – <strong>Fin : </strong>%4 –  <strong>Jour : </strong>%5").arg(
                   schedule->playlist()->title(),
                   msecToQTime(schedule->playlist()->totalDuration()).toString("hh:mm:ss"),
                   schedule->launchAt().time().toString("hh:mm:ss"),
                   schedule->finishAt().time().toString("hh:mm:ss"),
                   schedule->launchAt().date().toString("dd/MM/yyyy")
-                  )
-              +
+                  )*/
 
-            " </div>"
-        "<table border='1' cellspacing='0' class='page'>"
-            "<thead>"
-            "  <tr>"
-            "<th>Titre</th>"
-            " <th>Durée</th>"
-            "<th>Début</th>"
-            " <th>Fin</th>"
-            "    </tr>"
-            "  </thead>"
-            " <tbody>";
-            int timeMedia = qTimeToMsec(schedule->launchAt().time());
-            foreach(Playback *playback, schedule->playlist()->playbackList()){
-                int dure = (int)playback->media()->duration();
-                timeMedia += dure;
+                + QString("<strong>Nom de la playlist : </strong>%1 - <strong>Durée total : </strong>%2 –  <strong>Nombre de films : </strong>%3 – <strong>").arg(
+                  this->currentPlaylistModel()->playlist()->title(),
+                  msecToQTime(this->currentPlaylistModel()->playlist()->totalDuration()).toString("hh:mm:ss"),
+                  QString::number(this->currentPlaylistModel()->playlist()->playbackList().count()));
 
-                QString screenPath = qApp->applicationDirPath() + "/screenshot/";
-                screenPath = screenPath.replace("/",QDir::separator());
-                screenPath +=  playback->media()->getLocation().replace(QDir::separator(),"_").remove(":");
-                screenPath += ".png";
 
-                out += "<tr>"
-                + QString("<td class=\"droit titre\">%1</td>").arg(
-                    playback->media()->name()
-                 )
-                + QString("<td class=\"droit\">%1</td>").arg(
-                    msecToQTime(dure).toString("hh:mm:ss")
-                 )
-                + QString("<td class=\"droit\">%1</td>").arg(
-                    msecToQTime(timeMedia - dure).toString("hh:mm:ss")
-                 )
-                +QString("<td class=\"droit\">%1</td>").arg(
-                     msecToQTime(timeMedia).toString("hh:mm:ss")
-                 )
-                +
-                "  </tr>";
+
+        out +=   " </div>"
+       "<table border='1' cellspacing='0' class='page'>"
+           "<thead>"
+           "  <tr>"
+           "<th>Titre</th>"
+           "<th>Durée</th>"
+           "<th>Video</th>"
+           "    </tr>"
+           "  </thead>"
+           " <tbody>";
+
+           foreach(Playback *playback, currentPlaylistModel()->playlist()->playbackList()){
+               out += "<tr>"
+               + QString("<td class=\"droit titre\">%1</td>").arg(
+                   playback->media()->name()
+                )
+               + QString("<td class=\"droit\">%1</td>").arg(
+                   msecToQTime((int)playback->media()->duration()).toString("hh:mm:ss")
+                );
+               libvlc_media_player_t *mp;
+               mp = libvlc_media_player_new_from_media(playback->media()->core());
+               QString myString = playback->media()->extension().toUpper()
+                       +(" (")
+                       +QString("%1 x %2")
+                       .arg(libvlc_video_get_width(mp))
+                       .arg(libvlc_video_get_height(mp))
+                       +(")");
+               out+= QString("<td class=\"droit\">%1</td>").arg(
+                   myString
+                )
+               +
+               "  </tr>";
+
             }
             out+=
                   "  </tbody>"
@@ -1720,6 +1943,136 @@ QString MainWindow::scheduleToHmlForPDF(){
     return out.toUtf8();
 }
 
+QString MainWindow::playlistToHmlForPDF(){
+    QString out;
+    out = "<!DOCTYPE html>"
+            "<html>"
+            "<head>"
+            "<title>OPP Schedule</title>"
+            "<meta charset=\"UTF-8\">"
+            "<meta name=\"viewport\" content=\"width=device-width\">"
+            "<style type=\"text/css\">"
+            "body{"
+            " font-family: arial;"
+            " }"
+            " .marge{"
+            " padding-left: 10px;"
+            "  padding-right: 10px; "
+            " }"
+            "  .page{"
+            " width: 29.7cm;"
+            "  //min-height: 21cm;"
+
+            "   }    "
+            "  .title {"
+            " border: solid 1px #000;"
+            " padding-left: 2px;"
+            "text-align: center;"
+            "  font-size: 16px;"
+            " margin-bottom: 10px;"
+            "   }"
+            "   thead{"
+            "   background-color: lightgray;"
+            " line-height: 24px;"
+            " }"
+            " .droit{"
+            "   text-align: right;"
+            " vertical-align: top;"
+            "  padding-right: 2px;"
+            " }"
+            " .titre{"
+            "  width: 50%;"
+            " }"
+            "  td, img{"
+            "      text-align: center;"
+            "    padding: 2px;"
+            "   width: 220px;"
+            " height: 120px;"
+            "  }"
+            " </style>"
+            " </head>"
+            " <body>"
+             "  <div class=\"page marge\">";
+
+
+        out+=
+
+            " <div class=\"title\">"
+
+             /* + QString("<strong>Nom de la séance : </strong>%1 - <strong>Durée total : </strong>%2 –  <strong>Début : </strong>%3 – <strong>Fin : </strong>%4 –  <strong>Jour : </strong>%5").arg(
+                  schedule->playlist()->title(),
+                  msecToQTime(schedule->playlist()->totalDuration()).toString("hh:mm:ss"),
+                  schedule->launchAt().time().toString("hh:mm:ss"),
+                  schedule->finishAt().time().toString("hh:mm:ss"),
+                  schedule->launchAt().date().toString("dd/MM/yyyy")
+                  )*/
+
+                + QString("<strong>Nom de la playlist : </strong>%1 - <strong>Durée total : </strong>%2 –  <strong>Nombre de films : </strong>%3 – <strong>").arg(
+                  this->currentPlaylistModel()->playlist()->title(),
+                  msecToQTime(this->currentPlaylistModel()->playlist()->totalDuration()).toString("hh:mm:ss"),
+                  QString::number(this->currentPlaylistModel()->playlist()->playbackList().count()));
+
+
+
+        out +=   " </div>"
+       "<table border='1' cellspacing='0' class='page'>"
+           "<thead>"
+           "  <tr>"
+           "<th>Titre</th>"
+           "<th>Durée</th>"
+           "<th>Video</th>"
+           "    </tr>"
+           "  </thead>"
+           " <tbody>";
+        foreach(Playback *playback, currentPlaylistModel()->playlist()->playbackList()){
+            out += "<tr>"
+            + QString("<td class=\"droit titre\">%1</td>").arg(
+                playback->media()->name()
+             )
+            + QString("<td class=\"droit\">%1</td>").arg(
+                msecToQTime((int)playback->media()->duration()).toString("hh:mm:ss")
+             );
+            libvlc_media_player_t *mp;
+            mp = libvlc_media_player_new_from_media(playback->media()->core());
+            QString myString = playback->media()->extension().toUpper()
+                    +(" (")
+                    +QString("%1 x %2")
+                    .arg(libvlc_video_get_width(mp))
+                    .arg(libvlc_video_get_height(mp))
+                    +(")");
+            out+= QString("<td class=\"droit\">%1</td>").arg(
+                myString
+             )
+            +
+            "  </tr>";
+
+            }
+            out+=
+                  "  </tbody>"
+                  " </table><br />";
+
+
+    out+=
+          "   </div>"
+          "     </body>"
+          "   </html>";
+    return out.toUtf8();
+}
+
+//////////////PLAYLIST TO EXCEL/////////////////////
+
+void MainWindow::playlistToExcel(){
+
+
+
+
+
+
+}
+
+/////////////////////////////////////
+
+
 void MainWindow::on_viewExportPDFButton_clicked()
 {
     _exportPDF->setHtml(scheduleToHml());
@@ -1727,14 +2080,23 @@ void MainWindow::on_viewExportPDFButton_clicked()
     _exportPDF->show();
 }
 
+void MainWindow::on_exportPlaylist_triggered()
+{
+    _exportPDF->setHtml(playlistToHmlForPDF());
+    _exportPDF->setHtmlPDF(playlistToHmlForPDF());
+    _exportPDF->setHtmlEXCEL(playlistToHmlForPDF());
+
+    _exportPDF->show();
+}
+
+
 #if (QT_VERSION >= 0x050000) // Qt version 5 and above
     void MainWindow::myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString& msg)
 #else // until version 5
     void MainWindow::myMessageHandler(QtMsgType type, const char* msg)
 #endif
 {
-    QString dt = QDateTime::currentDateTime().toString("dd/MM/yyyy hh:mm:ss");
-    QString txt = QString("[%1]\n").arg(dt);
+    QString txt;
 
     switch (type)
     {
@@ -1769,6 +2131,7 @@ void MainWindow::on_viewExportPDFButton_clicked()
         break;
     }
 
+    //Reporter dans le LoggerSingleton
     QFile outFile(QDir(qApp->applicationDirPath()).path() + "/" + "opp.log");
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
 
@@ -1871,14 +2234,57 @@ void MainWindow::closeEvent (QCloseEvent *event)
 {
     if(currentPlaylistModel()->isRunning()){
         if (1 == QMessageBox::warning(this, tr("Save"), tr("A projection is running, are you sure you want to close the software ?") ,tr("No"), tr("Yes"))){
-            stop();
+            //stop();
+            if(verifSave() == 0){
+                event->ignore();
+            }else{
+                event->accept();
+            }
         }else{
             event->ignore();
         }
     }
     else
     {
-        if(verifSave() == 0)
+        if(verifSave() == 0){
             event->ignore();
+        }else{
+            event->accept();
+        }
     }
+}
+void MainWindow::set_SubtitleTrackComboBox_index(const int index)
+{
+    ui->subtitlesTrackComboBox->setCurrentIndex(index);
+}
+
+void MainWindow::remove_SubtitleTrackComboBox_item(const int index)
+{
+    ui->subtitlesTrackComboBox->removeItem(index);
+}
+
+/*****************Bouton default************************************/
+
+void MainWindow::on_default_general()
+{
+    ui->videoTrackComboBox->setCurrentIndex(1);
+    ui->ratioComboBox->setCurrentIndex(0);
+    ui->subtitlesTrackComboBox->setCurrentIndex(0);
+    ui->subtitlesEncodecomboBox->setCurrentIndex(0);
+    ui->subtitlesSyncSpinBox->setValue(0.00);
+
+}
+void MainWindow::on_default_audio()
+{
+    ui->audioTrackComboBox->setCurrentIndex(1);
+    ui->audioGainDoubleSpinBox->setValue(0.00);
+    ui->audioSyncDoubleSpinBox->setValue(0.00);
+}
+void MainWindow::on_default_picture()
+{
+    ui->gammaSpinBox->setValue(1.00);
+    ui->contrastSpinBox->setValue(1.00);
+    ui->brightnessSpinBox->setValue(1.00);
+    ui->saturationSpinBox->setValue(1.00);
+    ui->hueSpinBox->setValue(1);
 }

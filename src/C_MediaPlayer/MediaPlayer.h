@@ -423,6 +423,7 @@ public slots:
      * @author Florian Mhun <florian.mhun@gmail.com>
      */
     void setCurrentSubtitlesTrack(const int &track);
+    void setCurrentIndexSubtitle(const int &track);
 
     /**
      * @brief Set current gamma

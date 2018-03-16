@@ -26,6 +26,11 @@
 #include "loggersingleton.h"
 #include "iostream"
 
+#include <QFileDialog>
+#include <QDebug>
+#include <QApplication>
+#include <QDateTime>
+
 LoggerSingleton* LoggerSingleton::_single = NULL;
 QPointer<QLabel> LoggerSingleton::_textEdit = NULL;
 QMutex LoggerSingleton::_mutex;
@@ -60,10 +65,21 @@ void LoggerSingleton::setTextEdit(QLabel *textEdit)
 
 void LoggerSingleton::writeMessage(const QString &message)
 {
+    QString dt = QDateTime::currentDateTime().toString("dd/MM/yyyy hh:mm:ss");
+    QString txt = QString("[%1]\n").arg(dt);
+
+    txt += message;
+
+    QFile outFile(QDir(qApp->applicationDirPath()).path() + "/" + "opp.log");
+    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+
+    QTextStream textStream(&outFile);
+    textStream << txt << endl;
+
     if(_textEdit)
     {
         _mutex.lock();
-        _textEdit->setText(message+"\n"+_textEdit->text());
+        _textEdit->setText(txt+"\n"+_textEdit->text());
         _mutex.unlock();
     }
 }

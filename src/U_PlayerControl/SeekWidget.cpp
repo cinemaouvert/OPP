@@ -132,6 +132,7 @@ void SeekWidget::connection(){
         connect(_mediaPlayer, SIGNAL(timeChanged(int)), this, SLOT(updateTime(int)));
         connect(_mediaPlayer, SIGNAL(end()), this, SLOT(end()));
         connect(_mediaPlayer, SIGNAL(stopped()), this, SLOT(end()));
+
     }
 }
 
@@ -172,7 +173,7 @@ void SeekWidget::updateTime(const int &time)
     /** Update the remaining time */
     int t = _mediaPlayer->currentPlayback()->media()->duration() - time + _mediaPlayer->currentPlayback()->mediaSettings()->inMark();
     QTime remainingTime = QTime(0,0,0,0).addMSecs(t);
-
+     _mediaPlayer->currentPlayback()->media()->setRemainingTime(remainingTime);
     display = "- hh:mm:ss";
 
     _labelRemaining->setText(remainingTime.toString(display));
@@ -183,6 +184,7 @@ void SeekWidget::updateLength(const int &time){
     QTime remainingTime = QTime(0,0,0,0).addMSecs(t);
 
     QString display = "- hh:mm:ss";
+    _mediaPlayer->currentPlayback()->media()->setRemainingTime(remainingTime);
 
     _labelRemaining->setText(remainingTime.toString(display));
 

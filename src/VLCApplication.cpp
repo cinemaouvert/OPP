@@ -28,6 +28,7 @@
 #include <QStringList>
 #include <QSettings>
 #include <QDebug>
+#include <iostream>
 
 #include <vlc/vlc.h>
 
@@ -37,6 +38,7 @@ VLCApplication::VLCApplication()
     QStringList vlcargs;
         vlcargs << "--intf=dummy"
                 << "--no-media-library"
+                << "--ffmpeg-skip-frame=1"
 
     #if !defined(Q_OS_MAC)
                 << "--no-one-instance" // Allow multiple starts
@@ -68,9 +70,18 @@ VLCApplication::~VLCApplication()
 
 void VLCApplication::initVlcInstanceFromArgs(const QStringList &args)
 {
-    char **argV = (char **)malloc(sizeof(char **) * args.count());
-    for (int i = 0; i < args.count(); ++i)
-        argV[i] = (char *)qstrdup(args.at(i).toLocal8Bit().data());
+    int s = args.count();
+    char **argV = new char* [s];
+
+    for (int i = 0; i < s; ++i){
+        argV[i] = new char[args.at(i).length()];
+        QByteArray array = args.at(i).toLocal8Bit();
+        argV[i]= array.data();
+    }
+
+    for (int i = 0; i < s; ++i){
+        std::cout << argV[i] << std::endl;
+    }
 
     // Create new libvlc instance
     _vlcInstance = libvlc_new(args.count(), argV);

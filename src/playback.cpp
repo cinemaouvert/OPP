@@ -38,6 +38,9 @@ Playback::Playback(Media *media, QObject *parent) :
 
     if (_media->audioTracks().count() > 0)
         _mediaSettings->setAudioTrack(1); /* set first audio track */
+    if(_media->subtitlesTracks().count() >0)
+        _mediaSettings->setSubtitlesTrack(0);
+    _mediaSettings->setIndexSubtitleComboBox(0);
 
     _mediaSettings->setOutMark(_media->duration());
 }

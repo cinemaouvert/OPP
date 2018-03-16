@@ -40,7 +40,8 @@ Playlist::Playlist(const QString &title, QObject *parent) :
 {
     _id = Playlist::s_instanceCount++;
 }
-
+///////
+///////
 Playlist::~Playlist()
 { 
     foreach(Playback *playback, _playbackList) {
@@ -67,7 +68,7 @@ Playback* Playlist::at(const int &index) const
 
 void Playlist::append(Playback *playback, int idx)
 {
-    playback->media()->usageCountAdd();
+    playback->media()->usageCountAdd(1);
     if(idx != -1)
         _playbackList.insert(idx,playback);
     else
@@ -79,7 +80,7 @@ void Playlist::removeAt(int index)
 {
     _playbackList[index]->media()->usageCountAdd(-1);
 
-    delete _playbackList[index];
+    //delete _playbackList[index];
     _playbackList.removeAt(index);
     emit playlistChanged();
 }

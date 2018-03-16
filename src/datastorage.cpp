@@ -137,6 +137,7 @@ void DataStorage::save(QFile &file)
             playback.setAttribute("audioSync", playbackElement->mediaSettings()->audioSync());
             playback.setAttribute("audioTrack", playbackElement->mediaSettings()->audioTrack());
             playback.setAttribute("videoTrack", playbackElement->mediaSettings()->videoTrack());
+            int t = playbackElement->mediaSettings()->subtitlesTrack();
             playback.setAttribute("subtitlesTrack", playbackElement->mediaSettings()->subtitlesTrack());
             playback.setAttribute("testPattern", playbackElement->mediaSettings()->testPattern());
             playback.setAttribute("inMark", playbackElement->mediaSettings()->inMark());
@@ -207,16 +208,33 @@ void DataStorage::load(QFile &file)
     QDomNodeList scheduleNodeList = root.elementsByTagName("schedule");
 
     // load media
+    QString fichiermanquant;
+
     for (uint i = 0; i < mediaNodeList.length(); i++) {
         QDomNamedNodeMap mediaAttributes = mediaNodeList.at(i).attributes();
 
         Media *media = new Media(mediaAttributes.namedItem("location").nodeValue(), _app->vlcInstance());
         media->setId(mediaAttributes.namedItem("id").nodeValue().toInt());
 
-        if (media->exists())
-            _mediaListModel->addMedia(media);
-        else
-            delete media;
+        //if (media->exists())
+        _mediaListModel->addMedia(media);
+        if(!media->exists())
+        {
+            fichiermanquant.push_back("Le fichier: ");
+            fichiermanquant.push_back(mediaAttributes.namedItem("location").nodeValue());
+            fichiermanquant.push_back(" n'existe pas ou a été déplacé.");
+            fichiermanquant.push_back("\n");
+            //_mediaListModel->addindexfichiermanquant(mediaAttributes.namedItem("id").nodeValue().toInt());
+        }
+
+
+        /*else
+            delete media;*/
+    }
+    if(!fichiermanquant.isEmpty())
+    {
+        QMessageBox::information(_win, tr("Fichier manquant"), fichiermanquant);
+
     }
 
     // load playlist
@@ -261,6 +279,7 @@ void DataStorage::load(QFile &file)
             settings->setAudioSync( playbackAttributes.namedItem("audioSync").nodeValue().toDouble() );
             settings->setAudioTrack( playbackAttributes.namedItem("audioTrack").nodeValue().toInt() );
             settings->setVideoTrack( playbackAttributes.namedItem("videoTrack").nodeValue().toInt() );
+            int t =  playbackAttributes.namedItem("subtitlesTrack").nodeValue().toInt();
             settings->setSubtitlesTrack( playbackAttributes.namedItem("subtitlesTrack").nodeValue().toInt() );
             settings->setTestPattern( playbackAttributes.namedItem("testPattern").nodeValue().toInt() );
             settings->setInMark( playbackAttributes.namedItem("inMark").nodeValue().toInt() );

@@ -31,8 +31,10 @@
 
 #include "schedule.h"
 #include "utils.h"
+#include "mainwindow.h"
 
 ScheduleListModel::ScheduleListModel(QObject *parent) :
+
     QAbstractTableModel(parent),
     _automationEnabled(false)
 {
@@ -118,8 +120,10 @@ QVariant ScheduleListModel::data(const QModelIndex &index, int role) const
         case State:
             if (index.column() == State) {
                 if (_scheduleList[index.row()]->isExpired()) {
-                    if (_scheduleList[index.row()]->canceled())
+                    if (_scheduleList[index.row()]->canceled()){
+
                         return tr("Played");
+                }
                     else
                         return tr("Ignored");
                 } else if (_automationEnabled){
@@ -145,8 +149,10 @@ QVariant ScheduleListModel::data(const QModelIndex &index, int role) const
         case State:
             if (index.column() == State) {
                 if (_scheduleList[index.row()]->isExpired()) {
-                    if (_scheduleList[index.row()]->canceled())
+                    if (_scheduleList[index.row()]->canceled()){
+
                         return tr("Played");
+                }
                     else
                         return tr("Ignored");
                 } else if (_automationEnabled){
@@ -326,3 +332,5 @@ QDateTime *ScheduleListModel::getNextSchedule()
     }
     return next;
 }
+
+

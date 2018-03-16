@@ -56,17 +56,25 @@ PlayerControlWidget::PlayerControlWidget(PlaylistPlayer* playlistPlayer, QWidget
     connect(_seekWidget->flipBar(), SIGNAL(positionManuallyChanged()), this, SLOT(enableRewindForwardBtn()));
 
     // Shortcuts
+    /*
     QShortcut* playPause_shortcut = new QShortcut(QKeySequence("space"), this);
     QShortcut* previous_shortcut = new QShortcut(QKeySequence("up"), this);
     QShortcut* next_shortcut = new QShortcut(QKeySequence("down"), this);
     QShortcut* rewind_shortcut = new QShortcut(QKeySequence("left"), this);
     QShortcut* forward_shortcut = new QShortcut(QKeySequence("right"), this);
+    QShortcut* stop_shortcut = new QShortcut(QKeySequence("s"), this);
+    QShortcut* lock_shortcut = new QShortcut(QKeySequence("l"), this);
+    QShortcut* loop_shortcut = new QShortcut(QKeySequence("p"), this);
 
     connect(playPause_shortcut, SIGNAL(activated()), this, SLOT(playPauseKeyboard()));
     connect(previous_shortcut, SIGNAL(activated()), _previousButton, SLOT(click()));
     connect(next_shortcut, SIGNAL(activated()), _nextButton, SLOT(click()));
     connect(rewind_shortcut, SIGNAL(activated()), _rewindButton, SLOT(click()));
     connect(forward_shortcut, SIGNAL(activated()), _forwardButton, SLOT(click()));
+    connect(stop_shortcut, SIGNAL(activated()), _stopButton, SLOT(click()));
+    connect(lock_shortcut, SIGNAL(activated()), _lockButton, SLOT(click()));
+    connect(loop_shortcut, SIGNAL(activated()), _loopButton, SLOT(click()));
+    */
 }
 
 PlayerControlWidget::~PlayerControlWidget()
@@ -284,9 +292,14 @@ void PlayerControlWidget::playPause(){
         if (_playlistPlayer->mediaPlayer()->isStopped() || _playlistPlayer->mediaPlayer()->isPaused()) {
             _playlistPlayer->play();
 
+            if(!_playPauseButton->isChecked())
+                _playPauseButton->setChecked(true);
+
             emit playState();  // Must be after, Important !
         } else {
             _playlistPlayer->mediaPlayer()->pause();
+            if(_playPauseButton->isChecked())
+                _playPauseButton->setChecked(false);
 
             emit pauseState(); // Must be after, Important !
         }

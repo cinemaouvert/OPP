@@ -55,6 +55,8 @@ public:
      * @author Denis Saunier <saunier.denis.86@gmail.com>
      */
     void setHtmlPDF(const QString &pdf);
+    void setHtmlEXCEL(const QString &xls);
+
 
 private slots:
     /**
@@ -72,6 +74,8 @@ private slots:
     void on_CancelButton_clicked();
 
     void on_pushButton_ExportHtml_clicked();
+    void on_exportEXCEL_Button_clicked();
+
 
 private:
     /**
@@ -93,6 +97,8 @@ private:
      * @brief The html text for pdf
      */
     QString _pdf;
+    QString _xls;
+
 };
 
 #endif // EXPORTPDF_H

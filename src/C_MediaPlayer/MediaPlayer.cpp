@@ -222,6 +222,7 @@ void MediaPlayer::open(Playback *playback)
         emit lengthChanged((int)libvlc_media_get_duration(playback->media()->core()));
 
         libvlc_media_player_set_media(_vlcMediaPlayer, playback->media()->core());
+        initStream();
         MediaSettings* mediaSettings = _currentPlayback->mediaSettings();
 
         connect(mediaSettings, SIGNAL(gainChanged(float)), this, SLOT(setCurrentGain(float)));
@@ -238,6 +239,7 @@ void MediaPlayer::open(Playback *playback)
         connect(mediaSettings, SIGNAL(audioTrackChanged(int)), this, SLOT(setCurrentAudioTrack(int)));
         connect(mediaSettings, SIGNAL(videoTrackChanged(int)), this, SLOT(setCurrentVideoTrack(int)));
         connect(mediaSettings, SIGNAL(subtitlesTrackChanged(int)), this, SLOT(setCurrentSubtitlesTrack(int)));
+        connect(mediaSettings, SIGNAL(indexSubtitleComboBoxChanged(int)),((MainWindow *)((PlaylistPlayer *)this->parent())->parent()), SLOT(on_subtitlesTrackComboBox_currentIndexChanged(int)));
         connect(mediaSettings, SIGNAL(subtitlesEncodeChanged(int)), this, SLOT(setCurrentSubtitlesEncode(int)));
         connect(mediaSettings, SIGNAL(cropChanged(int,int,int,int)), this, SLOT(applyCrop(int,int,int,int)));
         connect(mediaSettings, SIGNAL(audioFadeOutChanged(int)), this, SLOT(setCurrentAudioFadeOut(int)));
@@ -282,38 +284,29 @@ void MediaPlayer::close(Playback *playback){
         disconnect(mediaSettings, SIGNAL(videoFadeInChanged(int)), this, SLOT(setCurrentVideoFadeIn(int)));
     }
 }
-
 void MediaPlayer::initStream()
 {
-    const char* params[] = {"screen-fragment-size=16",
-            _sizeScreen.c_str(),
-            "screen-fps=25"};
+    Playback *playback = _currentPlayback;
+    //playback->mediaSettings()->setSubtitlesTrack(0);
+    libvlc_media_player_set_media(_vlcBackMediaPlayer, playback->media()->core());
+    libvlc_media_player_set_time(_vlcBackMediaPlayer, currentTime());
 
-    libvlc_vlm_add_broadcast(_inst, "mybroad",
-        "screen:// --sout",
-        "#transcode{vcodec=mp2v,acodec=none,ab=128}:standard{access=http,mux=ts,dst=127.0.0.1:8080/stream}",
-        3, params, 1 , 0);
-
-    Media *m = new Media("http://127.0.0.1:8080/stream", _inst, 0, false);
-    libvlc_media_player_set_media(_vlcBackMediaPlayer, m->core());
 }
 
 void MediaPlayer::playStream()
 {
-    libvlc_vlm_play_media(_inst, "mybroad");
+    libvlc_media_player_set_time(_vlcBackMediaPlayer, currentTime());
     libvlc_media_player_play(_vlcBackMediaPlayer);
 }
 
 void MediaPlayer::pauseStream()
 {
     libvlc_media_player_pause(_vlcBackMediaPlayer);
-    libvlc_vlm_pause_media(_inst, "mybroad");
 }
 
 void MediaPlayer::stopStream()
 {
     libvlc_media_player_stop(_vlcBackMediaPlayer);
-    libvlc_vlm_stop_media(_inst, "mybroad");
 }
 
 void MediaPlayer::playScreen()
@@ -473,6 +466,7 @@ void MediaPlayer::setCurrentTime(int time)
         }
 
         libvlc_media_player_set_time(_vlcMediaPlayer, time);
+        libvlc_media_player_set_time(_vlcBackMediaPlayer, time);
         startAudioFadeOut(time);
         startVideoFadeOut(time);
 
@@ -507,6 +501,7 @@ int MediaPlayer::volume() const {
 void MediaPlayer::setPosition(const float &position)
 {
     libvlc_media_player_set_position(_vlcMediaPlayer, position);
+    libvlc_media_player_set_position(_vlcBackMediaPlayer, position);
 }
 
 int MediaPlayer::jumpForward(int timeMs)
@@ -606,6 +601,7 @@ void MediaPlayer::applyCurrentPlaybackSettings()
     setCurrentGain(_currentPlayback->mediaSettings()->gain());
 
     setCurrentSubtitlesTrack(_currentPlayback->mediaSettings()->subtitlesTrack());
+    setCurrentIndexSubtitle(_currentPlayback->mediaSettings()->indexSutitleComboBox());
     setCurrentVideoTrack(_currentPlayback->mediaSettings()->videoTrack());
     setCurrentAudioTrack(_currentPlayback->mediaSettings()->audioTrack());
 
@@ -632,6 +628,7 @@ void MediaPlayer::applyCurrentPlaybackSettings()
     setCurrentVideoFadeIn(_currentPlayback->mediaSettings()->videoFadeIn());
 
     setSubtitlesFile(_currentPlayback->mediaSettings()->subtitlesFile());
+
 }
 
 void MediaPlayer::setCurrentGain(float gain)
@@ -661,26 +658,35 @@ void MediaPlayer::setCurrentVideoFadeOut(int time){
 void MediaPlayer::setCurrentAudioTrack(const int &track)
 {
     // call libvlc_video_set_audio() when media does not contains any audio track cause trouble
-    if (_currentPlayback->media()->audioTracks().size() > 0)
-        libvlc_audio_set_track(_vlcMediaPlayer, track);
+    //if (_currentPlayback->media()->audioTracks().size() > 0)
+        libvlc_audio_set_track(_vlcMediaPlayer, track == 0 ? -1 : track);
+        libvlc_audio_set_track(_vlcBackMediaPlayer,-1);
 }
 
 void MediaPlayer::setCurrentVideoTrack(const int &track)
 {
         libvlc_video_set_track(_vlcMediaPlayer, track);
+        libvlc_video_set_track(_vlcBackMediaPlayer, track);
 }
 
 void MediaPlayer::setCurrentSubtitlesTrack(const int &track)
 {
     // call libvlc_video_set_spu() when media does not contains any subtitles track cause trouble
-    if (_currentPlayback->media()->subtitlesTracks().size() > 0)
-        libvlc_video_set_spu(_vlcMediaPlayer, track);
+    //if (_currentPlayback->media()->subtitlesTracks().size() > 0)
+    libvlc_video_set_spu(_vlcMediaPlayer,  track);
+    libvlc_video_set_spu(_vlcBackMediaPlayer,track);
+
+}
+
+void MediaPlayer::setCurrentIndexSubtitle(const int &track)
+{
+    _currentPlayback->mediaSettings()->setIndexSubtitleComboBox(track);
 }
 
 bool MediaPlayer::setSubtitlesFile(QString subtitleFile)
 {
     if(!subtitleFile.isEmpty()){
-        return libvlc_video_set_subtitle_file(_vlcMediaPlayer, subtitleFile.toStdString().c_str());
+        return libvlc_video_set_subtitle_file(_vlcMediaPlayer, subtitleFile.toStdString().c_str()) && libvlc_video_set_subtitle_file(_vlcBackMediaPlayer, subtitleFile.toStdString().c_str());
     }
     return false;
 }
@@ -830,6 +836,7 @@ void MediaPlayer::libvlc_callback(const libvlc_event_t *event, void *data)
         emit player->paused();
         break;
     case libvlc_MediaPlayerStopped:
+        player->stopStream();
         emit player->stopped();
         break;
     case libvlc_MediaPlayerForward:
