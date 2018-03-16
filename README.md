@@ -7,10 +7,10 @@ Open Projection Program (OPP) is free software for open cinema projection.
    - Récuperer la dernière version du projet sur le git (ajout d'une option de compilation)
    - Installer vlc, libvlccore-dev, libvlc-dev, g++
    - Installer qt-everywhere-opensource-src-4.8.7
-	- https://download.qt.io/official_releases/qt/4.8/4.8.7/
-	- Tutoriel d'installation : https://doc.qt.io/archives/qt-4.8/install-x11.html
+	  - https://download.qt.io/official_releases/qt/4.8/4.8.7/
+	  - Tutoriel d'installation : https://doc.qt.io/archives/qt-4.8/install-x11.html
    - Installer la version 2.6.2 de qtCreator (ou n'importe quel version basée sur qt 4.8)
-    - Sinon changer les options de compilation de qtcreator pour compiler a partir de qt4 et non qt5              
+      - Sinon changer les options de compilation de qtcreator pour compiler a partir de qt4 et non qt5              
    - Importer le projet a qtCreator et compiler
    
    
