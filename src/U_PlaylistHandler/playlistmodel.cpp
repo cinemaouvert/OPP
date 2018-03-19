@@ -168,7 +168,8 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             if (media->audioTracks().count() == 0  || mediaSettings->audioTrack() == 0) {
                 return "Disabled";
             } else {
-                return media->audioTracks().at(mediaSettings->audioTrack()-1).codecDescription();
+                //return media->audioTracks().at(mediaSettings->audioTrack()-1).codecDescription();
+                return media->codec_audio().at(0);
             }
         }
         else if (index.column() == Subtitles) {

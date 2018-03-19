@@ -28,7 +28,15 @@ Open Projection Program (OPP) is free software for open cinema projection.
             (http://fr.openclassrooms.com/forum/sujet/tuto-installer-qt-sous-windows#.U3sDDHV_vWQ)
    - (Si vous avez l'erreur : poll undefined, allez dans le dossier contenant les fichiers .h et modifier la ligne qui pose problème : le #define poll est situé 10 lignes trop bas il faut le remonter un peu)
    - Une fois la première compilation effectuée, pour lancer le logiciel il faut prendre les dossiers plugins et les fichiers libvlc.dll et libvlccore.dll  qui trouve dans le fichier DLL.zip du projet, pour les mettre dans /CHEMIN VERS LE DEBUG/ ou /CHEMIN VERS LE RELEASE/ en fonction de si vous compiler en mode debug ou release.
-      
+   
+
+      ###### Généreration et utilisation du fichier de traduction :
+   La traduction est gérée par le module QtLinguist. Ce module permet de modifier le fichier "opp_fr.ts" qui contient la traduction du logiciel
+   en français.
+   - Pour compiler ce fichier il faut cliquer sur Qt : Outils > Externe > Linguist > Publier les traductions (lrelease) afin de générer le fichier
+   "opp_fr.qm".
+   - Il faut ensuite copier ce fichier "opp_fr.qm" dans le répértoire de compilation (release ou debug) à côté du fichier "opp.exe".
+
 #License
 
 This software is free software published under GPL license.
